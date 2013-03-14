@@ -121,6 +121,9 @@ Voyage = (function() {
   };
 
   Voyage.prototype.push = function(voyage) {
+    if (!this.activeBackVoyage()) {
+      this.activeBackVoyage(voyage);
+    }
     return this._backVoyages.push(voyage);
   };
 
@@ -287,19 +290,14 @@ Voyage = (function() {
   };
 
   Voyage.prototype.sort = function() {
-    if (!(this.already_sorted != null)) {
-      this.act = this._backVoyages[0];
-      this.already_sorted = true;
-    }
     this._backVoyages.sort(function(a, b) {
       return a.departureInt() - b.departureInt();
     });
-    return this.activeBackVoyage(this.act);
+    return this.activeBackVoyage(this._backVoyages[0]);
   };
 
   Voyage.prototype.removeSimilar = function() {
     var item, key, voyage, _helper, _i, _len, _ref;
-    return;
     if (this._backVoyages.length < 2) {
       return;
     }
@@ -426,17 +424,22 @@ AviaResult = (function() {
     this.freeWeightText = data.freeWeightDescription;
     flights[0].flightKey = data.flightKey;
     this.activeVoyage = new Voyage(flights[0], this.airline);
-    this.old_price = this.price;
     if (this.roundTrip) {
       flights[1].flightKey = data.flightKey;
       v = new Voyage(flights[1], this.airline);
       this.activeVoyage.push(v);
-      this.price += v.stopoverPrice;
     }
-    this.price += this.activeVoyage.stopoverPrice;
     this.voyages = [];
     this.voyages.push(this.activeVoyage);
     this.activeVoyage = ko.observable(this.activeVoyage);
+    this.rating = ko.computed(function() {
+      var result;
+      result = _this.price + _this.activeVoyage().stopoverPrice;
+      if (_this.roundTrip) {
+        result += _this.activeVoyage().activeBackVoyage().stopoverPrice;
+      }
+      return Math.floor(result);
+    });
     this.stackedMinimized = ko.observable(true);
     this.rtStackedMinimized = ko.observable(true);
     this.flightCodesText = _.size(this.activeVoyage().parts) > 1 ? "Рейсы" : "Рейс";
@@ -659,10 +662,6 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.sort = function() {
-    if (!(this.already_sorted != null)) {
-      this.act = this.activeVoyage();
-      this.already_sorted = true;
-    }
     this.voyages.sort(function(a, b) {
       return a.departureInt() - b.departureInt();
     });
@@ -672,12 +671,11 @@ AviaResult = (function() {
         return x.removeSimilar();
       });
     }
-    return this.activeVoyage(this.act);
+    return this.activeVoyage(this.voyages[0]);
   };
 
   AviaResult.prototype.removeSimilar = function() {
     var item, key, voyage, _helper, _i, _len, _ref, _results;
-    return;
     if (this.voyages.length < 2) {
       return;
     }
@@ -844,7 +842,6 @@ AviaResultSet = (function() {
     this.tours = false;
     this.selected_key = ko.observable('');
     this.selected_best = ko.observable(false);
-    this.showBest = ko.observable(false);
     this.creationMoment = moment();
     this._results = {};
     this.noresults = rawVoyages.length === 0;
@@ -976,16 +973,8 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.postInit = function() {
-    var bCheapest, data, eCheapest,
-      _this = this;
+    var bCheapest, data, eCheapest;
     this.filters = new AviaFiltersT(this);
-    this.filters.serviceClass.selection.subscribe(function(newValue) {
-      if (newValue === 'B') {
-        _this.showBest(true);
-        return;
-      }
-      return _this.showBest(false);
-    });
     if (this.siblings) {
       eCheapest = _.reduce(this.data, function(el1, el2) {
         if (el1.price < el2.price) {

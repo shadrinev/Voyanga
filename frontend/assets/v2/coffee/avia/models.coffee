@@ -105,6 +105,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   # pushes available back flight variants
   push: (voyage)->
+    if ! @activeBackVoyage()
+      @activeBackVoyage voyage
     @_backVoyages.push voyage
 
   stacked: ->
@@ -214,16 +216,11 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     '<span class="cup tooltip" rel="' + tooltip.join("<br>") + '"></span>'
 
   sort: ->
-    #console.log "SORTENG "
-    if not @already_sorted?
-      @act = @_backVoyages[0]
-      @already_sorted = true
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
-    @activeBackVoyage(@act)
+    @activeBackVoyage(@_backVoyages[0])
 
   # FIXME copypaste
   removeSimilar: ->
-    return
     if @_backVoyages.length < 2
       return
     _helper = {}
@@ -291,17 +288,22 @@ class AviaResult
     @freeWeightText = data.freeWeightDescription
     flights[0].flightKey = data.flightKey
     @activeVoyage = new Voyage(flights[0], @airline)
-    @old_price = @price
     if @roundTrip
       flights[1].flightKey = data.flightKey
       v = new Voyage(flights[1], @airline)
       @activeVoyage.push v
-      @price += v.stopoverPrice
-    @price += @activeVoyage.stopoverPrice
+
 
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
+
+    @rating = ko.computed =>
+      result = @price + @activeVoyage().stopoverPrice
+      if @roundTrip
+        result += @activeVoyage().activeBackVoyage().stopoverPrice
+      return Math.floor(result)
+
 
     @stackedMinimized = ko.observable true
     @rtStackedMinimized = ko.observable true
@@ -454,20 +456,15 @@ class AviaResult
     @activeVoyage()._backVoyages
 
   sort: ->
-    if not @already_sorted?
-      @act = @activeVoyage()
-      @already_sorted = true
-
     @voyages.sort((a,b) -> a.departureInt() - b.departureInt())
     if @roundTrip
       _.each @voyages,
        (x)->
         x.sort()
-        x.removeSimilar() 
-    @activeVoyage(@act)
+        x.removeSimilar()
+    @activeVoyage(@voyages[0])
 
   removeSimilar: ->
-    return
     if @voyages.length < 2
       return
     _helper = {}
@@ -578,7 +575,6 @@ class AviaResultSet
     @selected_key = ko.observable ''
     @selected_best = ko.observable false
     # if we want to show best flight instead of +-3 days
-    @showBest = ko.observable false
     @creationMoment = moment()
     
     @_results = {}
@@ -690,11 +686,6 @@ class AviaResultSet
 
   postInit: =>
     @filters = new AviaFiltersT @
-    @filters.serviceClass.selection.subscribe (newValue)=>
-      if newValue == 'B'
-        @showBest true
-        return
-      @showBest false
     if @siblings
       eCheapest = _.reduce @data,
         (el1, el2)->

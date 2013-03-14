@@ -277,12 +277,10 @@ ListFilter = (function(_super) {
     if (this.selection().length === 0) {
       return true;
     }
-    console.log('servFilters', this.selection());
     _ref = this.keys;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
       propValue = this.get(result, key);
-      console.log('servFiltersProp', propValue);
       if (typeof propValue !== 'object') {
         if (this.selection().indexOf(propValue) < 0) {
           return false;
@@ -423,8 +421,6 @@ StarsFilter = (function(_super) {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
       propValue = this.get(result, key);
-      console.log(this.selection());
-      console.log(propValue);
       if (this.selection().indexOf(propValue) < 0) {
         return false;
       }
@@ -433,7 +429,6 @@ StarsFilter = (function(_super) {
   };
 
   StarsFilter.prototype.starClick = function() {
-    console.log(this);
     if (!$(this).hasClass('active')) {
       return $(this).addClass('active');
     } else {
@@ -763,13 +758,11 @@ AviaFiltersT = (function() {
         config[key] = this[key].getConfig();
       }
     }
-    console.log('getConfig', config);
     return config;
   };
 
   AviaFiltersT.prototype.setConfig = function(config) {
     var cfg, key, _results;
-    console.log('setConfig', config);
     _results = [];
     for (key in config) {
       cfg = config[key];
@@ -842,8 +835,6 @@ HotelFiltersT = (function() {
   }
 
   HotelFiltersT.prototype.showFullMap = function() {
-    console.log('FM');
-    console.log();
     return this.results.showFullMapFunc();
   };
 
@@ -935,13 +926,11 @@ HotelFiltersT = (function() {
       key = _ref1[_j];
       config[key] = this[key].getConfig();
     }
-    console.log('getConfig', config);
     return config;
   };
 
   HotelFiltersT.prototype.setConfig = function(config) {
     var cfg, key, _results;
-    console.log('setConfig', config);
     _results = [];
     for (key in config) {
       cfg = config[key];

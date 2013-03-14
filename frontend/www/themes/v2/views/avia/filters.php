@@ -1,7 +1,7 @@
 <?php
     $images = Yii::app()->assetManager->getPublishedUrl(Yii::getPathOfAlias('frontend.www.themes.v2.assets'));
 ?>
-<script type="text/html" id="avia-filters">
+<script id="avia-filters"  type="text/html">
 
 <div class="filter-content avia">
   
