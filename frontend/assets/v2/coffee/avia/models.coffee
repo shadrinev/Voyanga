@@ -570,7 +570,7 @@ class AviaResult
       result += '2'
     else
       result += '1'
-    passangers = [@rawSP.adt, @rawSP.chd, @rawSP.inf]
+    passangers = [@parent.rawSP.adt, @parent.rawSP.chd, @parent.rawSP.inf]
     result +=', ' + passangers.join(" - ")
     result += ', ' + moment(@departureDate()).format('D.M.YYYY')
     if @roundTrip
@@ -669,14 +669,14 @@ class AviaResultSet
       selection = ctx
 
     ticketValidCheck = $.Deferred()
-    ticketValidCheck.done (selection)->
+    ticketValidCheck.done (selection)=>
       result = {}
       result.module = 'Avia'
       result.type = 'avia'
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
-      _gaq.push(['_trackEvent', 'Avia_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), selection.airline, true])
+      _gaq.push(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline, true])
 
       Utils.toBuySubmit [result]
       

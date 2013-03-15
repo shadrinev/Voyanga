@@ -810,7 +810,7 @@ AviaResult = (function() {
     } else {
       result += '1';
     }
-    passangers = [this.rawSP.adt, this.rawSP.chd, this.rawSP.inf];
+    passangers = [this.parent.rawSP.adt, this.parent.rawSP.chd, this.parent.rawSP.inf];
     result += ', ' + passangers.join(" - ");
     result += ', ' + moment(this.departureDate()).format('D.M.YYYY');
     if (this.roundTrip) {
@@ -934,7 +934,8 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.select = function(ctx) {
-    var selection, ticketValidCheck;
+    var selection, ticketValidCheck,
+      _this = this;
     if (ctx.ribbon) {
       selection = ctx.data;
     } else {
@@ -948,7 +949,7 @@ AviaResultSet = (function() {
       result.type = 'avia';
       result.searchId = selection.cacheId;
       result.searchKey = selection.flightKey();
-      _gaq.push(['_trackEvent', 'Avia_press_button_buy', this.rawSP.GAKey(), this.rawSP.GAData(), selection.airline, true]);
+      _gaq.push(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(), selection.GAData(), selection.airline, true]);
       return Utils.toBuySubmit([result]);
     });
     return this.checkTicket(selection, ticketValidCheck);
