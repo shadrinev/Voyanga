@@ -489,7 +489,7 @@ class AviaResult
     arrivalComfort = false
     departureComfort = false
     
-    diff = moment(@departureDate()).diff(moment(@rtDepartureDate()), 'days')
+    diff = Math.abs moment(@departureDate()).diff(moment(@rtDepartureDate()), 'days')
     # FIXME CHECK CORNERZ
     if diff > 3
       return

@@ -706,7 +706,7 @@ AviaResult = (function() {
     }
     arrivalComfort = false;
     departureComfort = false;
-    diff = moment(this.departureDate()).diff(moment(this.rtDepartureDate()), 'days');
+    diff = Math.abs(moment(this.departureDate()).diff(moment(this.rtDepartureDate()), 'days'));
     if (diff > 3) {
       return;
     }
