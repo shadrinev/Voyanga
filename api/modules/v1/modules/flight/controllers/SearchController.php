@@ -263,6 +263,8 @@ class SearchController extends ApiController
     {
         $this->checkCredentials($partner, $password);
         $destinations = array();
+        $from = $this->normalizeIataCodeToCityCode($from);
+        $to = $this->normalizeIataCodeToCityCode($to);
         $destinations[] = array(
             'departure' => $from,
             'arrival' => $to,
@@ -300,6 +302,17 @@ class SearchController extends ApiController
         }
         $this->sendError(403, 'Permission denied');
         Yii::app()->end();
+    }
+
+    private function normalizeIataCodeToCityCode($code)
+    {
+        $city = City::model()->findByAttributes(array('code'=>$code));
+        if (!$city)
+        {
+            $airport = Airport::getAirportByCode($code);
+            $city = City::getCityByPk($airport->cityId);
+        }
+        return $city->code;
     }
 
     private function prepareForAviasales(&$results, $cabin)

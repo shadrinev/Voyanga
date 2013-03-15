@@ -72,8 +72,8 @@ return CMap::mergeArray(array(
     'php.exePath' => '/usr/bin/php',
     'pdfConverterPath' => '/usr/local/bin/wkhtmltopdf',
 
-    'hotel.markupPercentage' => 12,
-    'hotel.markdownPercentage' => 8.5,
+    'hotel.markupPercentage' => 6,
+    'hotel.markdownPercentage' => 3,
 
     'salt' => 'ofuihnaser@#$@#Rwergvnw2342',
 
