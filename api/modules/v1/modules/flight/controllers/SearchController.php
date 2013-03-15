@@ -316,23 +316,24 @@ class SearchController extends ApiController
                 'url' => $url,
                 'validatingCarrier' => $variant['valCompany'],
             );
+
             foreach ($variant['flights'] as $u=>$flight)
             {
                 foreach ($flight['flightParts'] as $j=>$flightPart)
                 {
-                    $departureCity = City::getCityByPk($flightPart['departureCityId']);
+                    $departureAirport = Airport::getAirportByPk($flightPart['departureAirportId']);
                     $departureDate = strtotime($flightPart['datetimeBegin']);
-                    $arrivalCity = City::getCityByPk($flightPart['arrivalCityId']);
+                    $arrivalAirport = Airport::getAirportByPk($flightPart['arrivalAirportId']);
                     $arrivalDate = strtotime($flightPart['datetimeEnd']);
                     $marketingCarrier = $flightPart['markAirline'];
                     $transportAirline = $flightPart['transportAirline'];
                     $prepared[$i]['segment'.$u]['flight'.$j] = array(
                         'operatingCarrier' => $transportAirline,
                         'number' => $flightPart['flightCode'],
-                        'departure' => $departureCity->code,
+                        'departure' => $departureAirport->code,
                         'departureDate' => date('Y-m-d', $departureDate),
                         'departureTime' => date('H:i', $departureDate),
-                        'arrival' => $arrivalCity->code,
+                        'arrival' => $arrivalAirport->code,
                         'arrivalDate' => date('Y-m-d', $arrivalDate),
                         'arrivalTime' => date('H:i', $arrivalDate),
                         'equipment' => $flightPart['aircraftCode'],
