@@ -803,14 +803,19 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.GAData = function() {
-    var passangers, result;
+    var passangers, rawSP, result;
     result = '';
     if (this.roundTrip) {
       result += '2';
     } else {
       result += '1';
     }
-    passangers = [this.parent.rawSP.adt, this.parent.rawSP.chd, this.parent.rawSP.inf];
+    if (this.parent.rawSP) {
+      rawSP = this.parent.rawSP;
+    } else {
+      rawSP = this.rawSP;
+    }
+    passangers = [rawSP.adt, rawSP.chd, rawSP.inf];
     result += ', ' + passangers.join(" - ");
     result += ', ' + moment(this.departureDate()).format('D.M.YYYY');
     if (this.roundTrip) {

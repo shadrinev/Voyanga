@@ -570,7 +570,13 @@ class AviaResult
       result += '2'
     else
       result += '1'
-    passangers = [@parent.rawSP.adt, @parent.rawSP.chd, @parent.rawSP.inf]
+    if @parent.rawSP
+      # avia results
+      rawSP = @parent.rawSP
+    else
+      # tours
+      rawSP = @rawSP
+    passangers = [rawSP.adt, rawSP.chd, rawSP.inf]
     result +=', ' + passangers.join(" - ")
     result += ', ' + moment(@departureDate()).format('D.M.YYYY')
     if @roundTrip
