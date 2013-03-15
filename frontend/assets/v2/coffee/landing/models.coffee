@@ -31,7 +31,10 @@ class landBestPrice
     @date = moment(data.date)
     @_results = {}
     if data.price
-      @minPrice = ko.observable(parseInt(data.price) * 2 + 5)
+      if data.dateBack
+        @minPrice = ko.observable(parseInt(data.price) * 2 + 5)
+      else
+        @minPrice = ko.observable(parseInt(data.price) * 2)
       @backMaxPrice = ko.observable(1)
       @backMinPrice = ko.observable(@minPrice())
       @showPrice = ko.computed =>

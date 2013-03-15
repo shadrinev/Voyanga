@@ -9,12 +9,14 @@
 $frontendParamsLocal = file_exists('frontend/config/params-local.php') ? require('frontend/config/params-local.php') : array();
 $commonParams = require_once ('common/config/params.php');
 $titleParams = require_once ('titles.php');
+$descriptionParams = require_once ('descriptions.php');
 $environmentParams = require_once (dirname(__FILE__) . '/environments/params-' . $commonParams['env.code'] . '.php');
 $templates = require_once('frontend/assets/v2/coffee/app/templates.php');
 
 return CMap::mergeArray(
     $commonParams,
     $titleParams,
+    $descriptionParams,
     CMap::mergeArray(array(
         // this is used in contact page
         'sharedMemory' => array(

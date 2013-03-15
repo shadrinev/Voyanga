@@ -29,6 +29,8 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <?php if (!isset($this->title)) $title = Yii::app()->params['title.default']; else $title = $this->title ?>
     <title><?php echo $title ?></title>
+    <?php if (!isset($this->description)) $metadesc = Yii::app()->params['description.default']; else $metadesc = $this->description ?>
+    <meta name="description" content="<?php echo $metadesc ?>"/>
     <?php if (!YII_DEBUG): ?>
         <script>
             var _rollbarParams = {"server.environment": "<?php echo Yii::app()->params['env.code'] ?>"};

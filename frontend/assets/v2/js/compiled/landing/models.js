@@ -59,7 +59,11 @@ landBestPrice = (function() {
     this.date = moment(data.date);
     this._results = {};
     if (data.price) {
-      this.minPrice = ko.observable(parseInt(data.price) * 2 + 5);
+      if (data.dateBack) {
+        this.minPrice = ko.observable(parseInt(data.price) * 2 + 5);
+      } else {
+        this.minPrice = ko.observable(parseInt(data.price) * 2);
+      }
       this.backMaxPrice = ko.observable(1);
       this.backMinPrice = ko.observable(this.minPrice());
       this.showPrice = ko.computed(function() {

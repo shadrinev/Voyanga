@@ -26,6 +26,16 @@
     })
 </script>
 <div class="headBlockOne">
+    <?php
+    $this->widget('common.components.BreadcrumbsVoyanga', array(
+        'links'=>$this->breadLinks,
+        'separator'=>' &rarr; ',
+        'homeLink'=>CHtml::link('Главная','/'),
+        'htmlOptions' => array(
+            'class' => 'breadcrumbs'
+        )
+    ));
+    ?>
 <div class="center-block">
     <h1>Авиабилеты и отели по всему миру!</h1>
 

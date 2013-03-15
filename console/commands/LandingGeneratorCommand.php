@@ -133,10 +133,10 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
         }
 
 
-        echo "RU:".implode(',',$ruCityIds)."\n";
+        //echo "RU:".implode(',',$ruCityIds)."\n";
 
-        echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
-        echo "count:".count($citiesInfo);
+        //echo "Memory usageB: {peak:" . (ceil(memory_get_peak_usage() /1024)) . "kb , now: ".(ceil(memory_get_usage() /1024))."kb }\n";
+        //echo "count:".count($citiesInfo);
         fclose($fp);
 
         // -------------------------- Only to one City
@@ -174,7 +174,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
         }
 
         fclose($fp);
-        echo "ok";
+        //echo "ok";
 
     }
 
@@ -296,6 +296,6 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
         }
 
         fclose($fp);
-        echo 'ok';
+        //echo 'ok';
     }
 }

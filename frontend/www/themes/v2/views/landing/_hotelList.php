@@ -1,7 +1,13 @@
 <?php if ($hotelsInfo): ?>
 <div class="headBlockTwo">
     <div class="center-block">
+        <?php if(!isset($hotelsUrl)) $hotelsUrl = false;?>
+        <?php if($hotelsUrl && ($city->hotelbookId > 0)):?>
+        <h2><a href="/land/hotels/<?php echo $city->country->code.'/'.$city->code;?>">Отели в <?php echo $city->casePre;?></a></h2>
+        <?php else:?>
         <h2>Отели в <?php echo $city->casePre;?></h2>
+        <?php endif;?>
+
         <?php foreach ($hotelsInfo as $hotInfo): ?>
         <div class="hotels-tickets parkPage">
             <div class="content">

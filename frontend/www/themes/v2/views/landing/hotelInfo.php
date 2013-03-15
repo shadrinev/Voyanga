@@ -64,9 +64,18 @@
         //eventPhotos = new EventPhotoBox(window.eventPhotos);
     })
 </script>
-    11
 <div class="center-block">
     <div class="main-block" style="width: 935px; margin-left: auto; margin-right: auto;">
+        <?php
+        $this->widget('common.components.BreadcrumbsVoyanga', array(
+            'links'=>$this->breadLinks,
+            'separator'=>' &rarr; ',
+            'homeLink'=>CHtml::link('Главная','/'),
+            'htmlOptions' => array(
+                'class' => 'breadcrumbs'
+            )
+        ));
+        ?>
         <div id="content" style="width: 935px;">
             <div class="title hotel" style="margin-top: 0px">
                 <h1><?php echo $hotelInfo->hotelName;?></h1>

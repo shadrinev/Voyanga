@@ -71,6 +71,16 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 
 </script>
 <div class="headBlockOne">
+    <?php
+    $this->widget('common.components.BreadcrumbsVoyanga', array(
+        'links'=>$this->breadLinks,
+        'separator'=>' &rarr; ',
+        'homeLink'=>CHtml::link('Главная','/'),
+        'htmlOptions' => array(
+            'class' => 'breadcrumbs'
+        )
+    ));
+    ?>
     <?php if (!$fromCity): ?>
     <div class="center-block">
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>

@@ -1,0 +1,28 @@
+<?php
+
+return array(
+    'description.default' => 'Сервис для заказа авиабилетов в разные уголки нашего мира. Покупка авиабилетов без наценки. Поиск дешевых авиабилетов.',
+    'description.prefix' => 'Voyanga, ',
+    'description.suffix' => '',
+    'description.main' => 'Сервис для заказа авиабилетов в разные уголки нашего мира. Покупка авиабилетов без наценки. Поиск дешевых авиабилетов.',
+    'description.enterCredentials' => 'Ввод паспортных данных',
+    'description.event' => '##eventTitle##',
+    'description.tour' => 'Путешествие',
+    'description.error' => 'Ошибка',
+    'description.iata'  => 'Пользовательское соглашение ИАТА',
+    'description.faq'  => 'Часто задаваемые вопросы',
+    'description.agreement' => 'Пользовательское соглашение',
+    'description.agreementAvia' => 'Пользовательское соглашение, Авиабилеты',
+    'description.agreementHotel' => 'Пользовательское соглашение, Отели',
+    'description.landFromTo' => 'Удобный поиск билетов на самолет из ##cityFromCaseGen## в ##cityToCaseAcc##. Специальные предложения на авиабилеты ##cityFrom## - ##cityTo##. Продажа билетов без дополнительных сборов. Voyanga любит вас!',
+    'description.landToCountry' => 'Поиск и покупка авиабилетов на самолет в различные города ##countryCaseGen##. Авиабилеты в ##countryCaseAcc## без дополнительных сборов, возможностью заказа трансфера и бронирования отеля. Voyanga любит вас!',
+    'description.landTo' => 'Онлайн бронирование авиабилетов в ##cityToCaseAcc##. Продажа билетов в ##cityToCaseAcc## без дополнительных сборов. Voyanga любит вас!',
+    'description.landCountries' => 'Продажа билетов в разные уголки мира. Выберете страну и интересующий вас город. Voyanga любит вас!',
+    'description.landFrom' => 'Авиарейсы из ##cityFromCaseGen##. Список направлений. Международные рейсы и перелеты внутри страны. Voyanga любит вас!',
+    'description.landEurope' => 'Бронирование дешевых билетов на самолет в крупнейшие города Европы. Скидки на авиабилеты в Европу, возможность заказа трансфера и бронирования отеля онлайн. Voyanga любит вас!',
+    'description.landHotels' => 'Сервис для поиска и бронирования гостиниц и отелей в разных уголках мира. Возможность заказа трансфера до отеля онлайн. Voyanga любит вас!',
+    'description.landHotelsCountry' => 'Удобный сервис для поиска и бронирования отелей в ##countryCaseGen##.  Рейтинг отелей ##countryCaseGen##. Voyanga любит вас!',
+    'description.landHotelsCity' => 'Удобный сервис для поиска и бронирования отелей в ##cityCasePre##.  Рейтинг отелей ##cityCaseGen##. Voyanga любит вас!',
+    'description.landHotel' => 'Voyanga - удобный сервис для онлайн-бронирования отелей по самым выгодным ценам. Скидки и спецпредложения на отели в ##cityCasePre##. Заказ номеров через интернет.',
+    //'description.landTo' => 'Онлайн бронирование авиабилетов в ##cityToCaseAcc##. Продажа билетов в ##cityToCaseAcc## без дополнительных сборов. Voyanga любит вас!',
+); ?>
