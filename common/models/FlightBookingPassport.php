@@ -131,6 +131,7 @@ class FlightBookingPassport extends CActiveRecord
     public function populate($passport, $flightBookerId)
     {
         $this->birthday = DateTime::createFromFormat('d.m.Y', $passport->birthday)->format('Y-m-d');
+        $this->expiration = DateTime::createFromFormat('d.m.Y', $passport->getExpirationDate())->format('Y-m-d');
         $this->firstName = $passport->firstName;
         $this->lastName = $passport->lastName;
         $this->countryId = $passport->countryId;
