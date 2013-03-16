@@ -330,7 +330,7 @@ class OrderBookingController extends Controller
         }
         //! force serialization, save will be called on later status change
         $booking->getCurrent()->flightVoyage = $flightVoyage;
-        if($booking->getCurrent()->status = 'swFlightBooker/ticketing') {
+        if($booking->getCurrent()->status == 'swFlightBooker/ticketing') {
             //! Does nothing but sets ticketingError status
             $booking->status('ticketingRepeat');
         }

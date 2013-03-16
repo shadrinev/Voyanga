@@ -163,11 +163,9 @@ class ListFilter extends Filter
   filter: (result)=>
     if @selection().length == 0
       return true
-    console.log('servFilters',@selection())
 
     for key in @keys
       propValue = @get(result,key)
-      console.log('servFiltersProp',propValue)
       if typeof propValue != 'object'
         if @selection().indexOf(propValue) < 0
           return false
@@ -255,14 +253,11 @@ class StarsFilter extends Filter
       return true
     for key in @keys
       propValue = @get(result,key)
-      console.log(@selection())
-      console.log(propValue)
       if @selection().indexOf(propValue) < 0
         return false
     return true
 
   starClick: ()->
-    console.log(this)
     if !$(this).hasClass('active')
         $(this).addClass('active')
     else
@@ -445,11 +440,9 @@ class AviaFiltersT
     if @rt
       for key in @rtVoyageFilters
         config[key] = @[key].getConfig()
-    console.log('getConfig',config)
     return config
 
   setConfig: (config)=>
-    console.log('setConfig',config)
     for key,cfg of config
       @[key].setConfig(cfg)
 
@@ -492,8 +485,6 @@ class HotelFiltersT
     #@results.postFilters()
 
   showFullMap: =>
-    console.log('FM')
-    console.log()
     @results.showFullMapFunc()
   updateLimitsHotel: (result) =>
     @runFiltersFunc result, @hotelFilters, 'updateLimits'
@@ -551,10 +542,8 @@ class HotelFiltersT
       config[key] = @[key].getConfig()
     for key in @roomFilters
       config[key] = @[key].getConfig()
-    console.log('getConfig',config)
     return config
 
   setConfig: (config)=>
-    console.log('setConfig',config)
     for key,cfg of config
       @[key].setConfig(cfg)

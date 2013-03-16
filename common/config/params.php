@@ -12,7 +12,7 @@ $commonParamsEnv = require('common/config/environments/params-'.$commonParamsLoc
 
 return CMap::mergeArray(array(
 
-    'flight_search_cache_time' => 15*60, //seconds before show notification message for flight page + cache expiration time
+    'flight_search_cache_time' => 45*60, //seconds before show notification message for flight page + cache expiration time
     'flight_search_cache_time_partner' => 3*60, //как долго выдача для партнёра лежит в нашем кэше
     //Price factor for flight optimal
     'flight_price_factor' => 100,
@@ -72,8 +72,8 @@ return CMap::mergeArray(array(
     'php.exePath' => '/usr/bin/php',
     'pdfConverterPath' => '/usr/local/bin/wkhtmltopdf',
 
-    'hotel.markupPercentage' => 12,
-    'hotel.markdownPercentage' => 8.5,
+    'hotel.markupPercentage' => 6,
+    'hotel.markdownPercentage' => 3,
 
     'salt' => 'ofuihnaser@#$@#Rwergvnw2342',
 

@@ -105,6 +105,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   # pushes available back flight variants
   push: (voyage)->
+    if ! @activeBackVoyage()
+      @activeBackVoyage voyage
     @_backVoyages.push voyage
 
   stacked: ->
@@ -214,16 +216,11 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     '<span class="cup tooltip" rel="' + tooltip.join("<br>") + '"></span>'
 
   sort: ->
-    #console.log "SORTENG "
-    if not @already_sorted?
-      @act = @_backVoyages[0]
-      @already_sorted = true
     @_backVoyages.sort((a,b) -> a.departureInt() - b.departureInt())
-    @activeBackVoyage(@act)
+    @activeBackVoyage(@_backVoyages[0])
 
   # FIXME copypaste
   removeSimilar: ->
-    return
     if @_backVoyages.length < 2
       return
     _helper = {}
@@ -237,7 +234,8 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     @_backVoyages = []
     for key, item of _helper
       @_backVoyages.push item
-    @activeBackVoyage(@_backVoyages[0])
+    best = _.sortBy @_backVoyages, "stopoverPrice"
+    @activeBackVoyage(best[0])
 
 
   chooseActive: ->
@@ -291,17 +289,23 @@ class AviaResult
     @freeWeightText = data.freeWeightDescription
     flights[0].flightKey = data.flightKey
     @activeVoyage = new Voyage(flights[0], @airline)
-    @old_price = @price
     if @roundTrip
       flights[1].flightKey = data.flightKey
       v = new Voyage(flights[1], @airline)
       @activeVoyage.push v
-      @price += v.stopoverPrice
-    @price += @activeVoyage.stopoverPrice
+
 
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
+
+    @ratingAugment = ko.observable 0
+    @rating = ko.computed =>
+      result = @price + @activeVoyage().stopoverPrice
+      if @roundTrip
+        result += @activeVoyage().activeBackVoyage().stopoverPrice
+      return Math.floor(result + @ratingAugment())
+
 
     @stackedMinimized = ko.observable true
     @rtStackedMinimized = ko.observable true
@@ -454,20 +458,15 @@ class AviaResult
     @activeVoyage()._backVoyages
 
   sort: ->
-    if not @already_sorted?
-      @act = @activeVoyage()
-      @already_sorted = true
-
     @voyages.sort((a,b) -> a.departureInt() - b.departureInt())
     if @roundTrip
       _.each @voyages,
        (x)->
         x.sort()
-        x.removeSimilar() 
-    @activeVoyage(@act)
+        x.removeSimilar()
+    @activeVoyage(@voyages[0])
 
   removeSimilar: ->
-    return
     if @voyages.length < 2
       return
     _helper = {}
@@ -478,13 +477,29 @@ class AviaResult
         _helper[key] = if item.stopoverLength < voyage.stopoverLength then item else voyage
       else
         _helper[key] = voyage
-    @activeVoyage(_helper[key])
     @voyages = []
     for key, item of _helper
-      if item.stopoverLength < @activeVoyage().stopoverLength
-        @activeVoyage item
       @voyages.push item
+    best = _.sortBy @voyages, "stopoverPrice"
+    best = best[0]
+    @activeVoyage(best)
 
+    if !@roundTrip
+      return
+    arrivalComfort = false
+    departureComfort = false
+    
+    diff = Math.abs moment(@departureDate()).diff(moment(@rtDepartureDate()), 'days')
+    # FIXME CHECK CORNERZ
+    if diff > 3
+      return
+    if @arrivalTimeNumeric() >= 6 * 60 && @arrivalTimeNumeric() <= 12.5 *60
+      arrivalComfort = true
+    if @rtDepartureTimeNumeric() >= 18.5 * 60 && @arrivalTimeNumeric() <= 24 *60
+      departureComfort = true
+
+    if arrivalComfort && departureComfort
+      @ratingAugment -2000
 
   # show details popup
   showDetailsPopup: =>
@@ -555,7 +570,13 @@ class AviaResult
       result += '2'
     else
       result += '1'
-    passangers = [@rawSP.adt, @rawSP.chd, @rawSP.inf]
+    if @parent.rawSP
+      # avia results
+      rawSP = @parent.rawSP
+    else
+      # tours
+      rawSP = @rawSP
+    passangers = [rawSP.adt, rawSP.chd, rawSP.inf]
     result +=', ' + passangers.join(" - ")
     result += ', ' + moment(@departureDate()).format('D.M.YYYY')
     if @roundTrip
@@ -578,7 +599,6 @@ class AviaResultSet
     @selected_key = ko.observable ''
     @selected_best = ko.observable false
     # if we want to show best flight instead of +-3 days
-    @showBest = ko.observable false
     @creationMoment = moment()
     
     @_results = {}
@@ -655,14 +675,14 @@ class AviaResultSet
       selection = ctx
 
     ticketValidCheck = $.Deferred()
-    ticketValidCheck.done (selection)->
+    ticketValidCheck.done (selection)=>
       result = {}
       result.module = 'Avia'
       result.type = 'avia'
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
-      _gaq.push(['_trackEvent', 'Avia_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), selection.airline, true])
+      _gaq.push(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline, true])
 
       Utils.toBuySubmit [result]
       
@@ -690,11 +710,6 @@ class AviaResultSet
 
   postInit: =>
     @filters = new AviaFiltersT @
-    @filters.serviceClass.selection.subscribe (newValue)=>
-      if newValue == 'B'
-        @showBest true
-        return
-      @showBest false
     if @siblings
       eCheapest = _.reduce @data,
         (el1, el2)->
@@ -776,28 +791,13 @@ class AviaResultSet
     if data.length == 0
       return
  
-    data = _.sortBy data, (el)-> el.price    
-    for result in data
-      # Choose fastest first
-      voyages = _.sortBy result.voyages, (el) -> el._duration
-      for voyage in voyages
-        if voyage.visible() && voyage.maxStopoverLength < 60*60*3
-          if result.roundTrip
-            # Choose fastest first
-            backVoyages = _.sortBy voyage._backVoyages, (el) -> el._duration
-            for backVoyage in backVoyages
-              if backVoyage.visible() && backVoyage.maxStopoverLength < 60*60*3
-                voyage.activeBackVoyage backVoyage
-                result.activeVoyage voyage
-                @setBest result
-                return
-          else
-            result.activeVoyage voyage
-            @setBest result
-            return
-    @setBest data[0], true
+    data = _.sortBy data, (el)-> el.rating()
+    @setBest data[0]
+
+    # 6 -12
+    # 19 - 2400
           
-  setBest: (oldresult, unconditional=false)=>
+  setBest: (oldresult)=>
     # FIXME could leak as hell
     key = oldresult.key
     result = new AviaResult oldresult._data, @
@@ -807,13 +807,6 @@ class AviaResultSet
     result.removeSimilar()
     result.best = true
     result.key = key + '_optima'
-
-    if !unconditional
-      result.voyages = _.filter result.voyages, (el)->el.maxStopoverLength <60*60*3
-      _.each result.voyages, (voyage)->
-    #    voyage.activeBackVoyage = ko.observable voyage.activeBackVoyage()
-        voyage._backVoyages = _.filter voyage._backVoyages, (el)-> el.maxStopoverLength <60*60*3
-    result.chooseStacked oldresult.activeVoyage()
     
     if @best() == undefined
       @best result

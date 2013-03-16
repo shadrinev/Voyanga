@@ -187,12 +187,12 @@
 <div class="buy-ticket">
     <div class="text">
       <!-- FIXME -->
-        <span class="txtBuy" data-bind="text: old_price"></span>
-        <a href="#" class="pressButton" data-bind="click:$parent.select, css:{selected:$parent.selected_key()==key}">
-            <span class="l"></span>
-            <span class="price" data-bind="text: Utils.formatPrice(price)">3 250</span>
-            <span class="rur">o</span>
-        </a>
+      <span class="txtBuy" data-bind="text: $parent.tours?($parent.selected_key()==key?'Выбран':'Выбрать'):'Купить'"></span> 
+      <a href="#" class="pressButton" data-bind="click:$parent.select, css:{selected:$parent.selected_key()==key}">
+        <span class="l"></span>
+        <span class="price" data-bind="text: Utils.formatPrice(price)">3 250</span>
+        <span class="rur">o</span>
+      </a>
     </div>
     <a href="#" data-bind="click: showDetails" class="details">Подробнее <span>о перелете</span></a> <!-- span data-bind="text:searchService"></span  -->
 </div>
