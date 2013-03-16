@@ -346,8 +346,10 @@ landBestPriceSet = (function() {
       if (_this.directBestPriceData()) {
         if (_this.directBestPriceData().date) {
           dateFrom = moment(_this.directBestPriceData().date);
-          console.log('SETTING UP BACK DATE', _this.directBestPriceData());
-          strDate = dateUtils.formatDayMonthYear(dateFrom._d);
+          strDate = dateUtils.formatDayMonth(dateFrom._d);
+          if (_this.directBestPriceData().dateBack) {
+            strDate = strDate + ' - ' + dateUtils.formatDayMonth(moment(_this.directBestPriceData().dateBack)._d);
+          }
           return strDate;
         }
       }
@@ -477,7 +479,6 @@ landingCitySelector = (function() {
       var val;
       if (_this.currentCityCode()) {
         val = _this.landBestPriceSets[_this.currentCityCode()].bestDate();
-        console.log('valueeeee:', val, typeof val);
         return val;
       }
       return false;
@@ -487,7 +488,36 @@ landingCitySelector = (function() {
         return _this.landBestPriceSets[_this.currentCityCode()].selectedPrice();
       }
     });
-    console.log('AFTER RENDER CitySelector', this.citiesInfo);
+    this.bestPrice = ko.computed(function() {
+      if (_this.currentCityCode()) {
+        if (_this.landBestPriceSets[_this.currentCityCode()].directBestPriceData()) {
+          return _this.landBestPriceSets[_this.currentCityCode()].directBestPriceData().price;
+        }
+      }
+      return false;
+    });
+    this.selectedDates = ko.computed(function() {
+      var dates;
+      dates = '';
+      if (_this.currentCityCode()) {
+        if (_this.landBestPriceSets[_this.currentCityCode()].directBestPrice()) {
+          if (_this.landBestPriceSets[_this.currentCityCode()].directBestPriceData().date) {
+            dates = dateUtils.formatDayMonth(moment(_this.landBestPriceSets[_this.currentCityCode()].directBestPriceData().date)._d);
+          }
+          if (_this.landBestPriceSets[_this.currentCityCode()].directBestPriceData().dateBack) {
+            dates = dates + ' - ' + dateUtils.formatDayMonth(moment(_this.landBestPriceSets[_this.currentCityCode()].directBestPriceData().dateBack)._d);
+          }
+        } else {
+          if (_this.active()) {
+            dates = dateUtils.formatDayMonth(_this.active().date._d);
+            if (_this.active().active()) {
+              dates = dates + ' - ' + dateUtils.formatDayMonth(_this.active().active().backDate._d);
+            }
+          }
+        }
+      }
+      return dates;
+    });
   }
 
   landingCitySelector.prototype.selectCity = function(cityCode) {

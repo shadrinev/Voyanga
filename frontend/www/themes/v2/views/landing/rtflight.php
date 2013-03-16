@@ -77,7 +77,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     $this->widget('common.components.BreadcrumbsVoyanga', array(
         'links'=>$this->breadLinks,
         'separator'=>' &rarr; ',
-        'homeLink'=>CHtml::link('Главная','/'),
+        'homeLink'=>CHtml::link('Voyanga','/'),
         'htmlOptions' => array(
             'class' => 'breadcrumbs'
         )
@@ -124,9 +124,12 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
             <div class="cena" data-bind="if: landBP.selectedPrice() != '???'"> от <span class="price" data-bind="text: landBP.selectedPrice()">3 250</span> <span
                 class="rur">o</span>
             </div>
-            <div data-bind="visible: landBP.bestDate()">
-                Самая низкая цена<br>
-                по этому направлению:<br>
+            <div>
+                <span data-bind="text: landBP.selectedDates()"></span>
+            </div>
+            <div data-bind="visible: landBP.bestDate()" class="landBestPrice">
+                Самая низкая цена:<br>
+                от <span data-bind="text: Utils.formatPrice(landBP.bestPrice())"></span> р
                 <a href="#" data-bind="text: landBP.bestDate(),click: landBP.bestDateClick">12 июня 2012</a>
             </div>
         </div>
