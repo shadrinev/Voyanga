@@ -35,7 +35,7 @@ class HotelsController
       throw new Error("Unable to build HotelResultSet from search response")
 
     @results stacked
-    GAPush ['_trackEvent', 'Hotel_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data.length, true]
+    GAPush ['_trackEvent', 'Hotel_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data().length, true]
 
     @render 'results', {'results' : @results}
 

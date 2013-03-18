@@ -177,6 +177,7 @@ class HotelResult
     if !hotelDatails
       hotelDatails = {}
     @totalPeople = 0
+    @parent = parent
     @tours = parent.tours || @falseFunction
     @hotelId = data.hotelId
     @checkIn = moment(data.checkIn) || false
@@ -635,7 +636,11 @@ class HotelResult
 
           result.cots += room.cots * 1
 
-        GAPush ['_trackEvent', 'Hotel_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), roomSet.parent.hotelName, true]
+        if @rawSP
+          sp = @rawSP
+        else
+          sp = @parent.rawSP
+        GAPush ['_trackEvent', 'Hotel_press_button_buy', sp.GAKey(),  sp.GAData(), roomSet.parent.hotelName, true]
         Utils.toBuySubmit [result]
 
       @parent.checkTicket room, ticketValidCheck

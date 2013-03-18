@@ -330,6 +330,7 @@ HotelResult = (function() {
       hotelDatails = {};
     }
     this.totalPeople = 0;
+    this.parent = parent;
     this.tours = parent.tours || this.falseFunction;
     this.hotelId = data.hotelId;
     this.checkIn = moment(data.checkIn) || false;
@@ -807,7 +808,7 @@ HotelResult = (function() {
     } else {
       ticketValidCheck = $.Deferred();
       ticketValidCheck.done(function(roomSet) {
-        var result, _i, _len, _ref;
+        var result, sp, _i, _len, _ref;
         result = {};
         result.module = 'Hotels';
         result.type = 'hotel';
@@ -825,7 +826,12 @@ HotelResult = (function() {
           }
           result.cots += room.cots * 1;
         }
-        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.rawSP.GAKey(), _this.rawSP.GAData(), roomSet.parent.hotelName, true]);
+        if (_this.rawSP) {
+          sp = _this.rawSP;
+        } else {
+          sp = _this.parent.rawSP;
+        }
+        GAPush(['_trackEvent', 'Hotel_press_button_buy', sp.GAKey(), sp.GAData(), roomSet.parent.hotelName, true]);
         return Utils.toBuySubmit([result]);
       });
       return this.parent.checkTicket(room, ticketValidCheck);
