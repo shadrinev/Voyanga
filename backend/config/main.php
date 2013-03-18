@@ -100,6 +100,9 @@ return CMap::mergeArray(
                     'partners' => array(
                         'class' => 'application.modules.admin.modules.partners.PartnersAdminModule'
                     ),
+                    'dictionaries' => array(
+                        'class' => 'application.modules.admin.modules.dictionaries.DictionariesAdminModule'
+                    ),
                 )
             )
         ),
