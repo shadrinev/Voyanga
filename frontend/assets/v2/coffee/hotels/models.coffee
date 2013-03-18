@@ -646,7 +646,7 @@ class HotelResult
       sp = @rawSP
     else
       sp = @parent.rawSP
-    @sp.city
+    sp.city
 
   GAData: =>
     if @rawSP

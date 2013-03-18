@@ -840,7 +840,7 @@ HotelResult = (function() {
     } else {
       sp = this.parent.rawSP;
     }
-    return this.sp.city;
+    return sp.city;
   };
 
   HotelResult.prototype.GAData = function() {
