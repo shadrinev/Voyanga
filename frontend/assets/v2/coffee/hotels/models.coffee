@@ -656,8 +656,10 @@ class HotelResult
     result = "1"
     passangers = [0, 0, 0]
     for room in sp.rooms
-      passangers[0] += room.adt*1
-      passangers[1] += room.chd*1
+      adt = room.adultCount || room.adt
+      chd = room.childCount || room.adt
+      passangers[0] += adt*1
+      passangers[1] += chd*1
       passangers[2] += room.cots*1
     result += ", " + passangers.join(" - ")
     result += ", " + moment(sp.checkIn).format('D.M.YYYY') + ' - ' + moment(sp.checkIn).add(sp.duration, 'days').format('D.M.YYYY')

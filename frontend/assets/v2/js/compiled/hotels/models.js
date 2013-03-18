@@ -844,7 +844,7 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.GAData = function() {
-    var passangers, result, room, sp, _i, _len, _ref;
+    var adt, chd, passangers, result, room, sp, _i, _len, _ref;
     if (this.rawSP) {
       sp = this.rawSP;
     } else {
@@ -855,8 +855,10 @@ HotelResult = (function() {
     _ref = sp.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
-      passangers[0] += room.adt * 1;
-      passangers[1] += room.chd * 1;
+      adt = room.adultCount || room.adt;
+      chd = room.childCount || room.adt;
+      passangers[0] += adt * 1;
+      passangers[1] += chd * 1;
       passangers[2] += room.cots * 1;
     }
     result += ", " + passangers.join(" - ");
