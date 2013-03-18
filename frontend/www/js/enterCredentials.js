@@ -78,7 +78,6 @@ $(function () {
             var statuses = [],
                 ids = [];
             disableAllFieldsAndHideButton();
-	    window.app.itemsToBuy.trackBuyClick();
             $('#loadPayFly').find('.armoring').show();
             loadPayFly();
             $('#loadPayFly').find('.loadJet').show();
@@ -95,6 +94,7 @@ $(function () {
                         $('#loadPayFly').find('.loadJet').hide();
                         return false;
                     }
+		    window.app.itemsToBuy.trackBuyClick();
                     _.each(window.tripRaw.items, function (item, i) {
                         statuses[i] = 0;
                     });
