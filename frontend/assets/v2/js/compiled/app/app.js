@@ -42,6 +42,8 @@ Application = (function(_super) {
 
     this.initCalendar = __bind(this.initCalendar, this);
 
+    this.forceNavigate = __bind(this.forceNavigate, this);
+
     var result,
       _this = this;
     this.activeModule = ko.observable(null);
@@ -108,6 +110,13 @@ Application = (function(_super) {
     this.debugMode = ko.observable(false);
     this.breakdown = ko.observable(false);
   }
+
+  Application.prototype.forceNavigate = function(url) {
+    if (Backbone.history.fragment === url) {
+      Backbone.history.fragment = null;
+      return Backbone.history.navigate(url, true);
+    }
+  };
 
   Application.prototype.initCalendar = function() {
     throw "Deprecated";

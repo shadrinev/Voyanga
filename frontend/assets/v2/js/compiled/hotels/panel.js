@@ -123,9 +123,7 @@ HotelsPanel = (function(_super) {
       return;
     }
     GAPush(['_trackEvent', 'Hotel_press_button_search', this.sp.GAKey(), this.sp.GAData()]);
-    app.navigate(this.sp.getHash(), {
-      trigger: true
-    });
+    app.forceNavigate(this.sp.getHash());
     return this.minimizedCalendar(true);
   };
 

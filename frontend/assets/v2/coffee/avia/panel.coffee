@@ -170,7 +170,7 @@ class AviaPanel extends SearchPanel
 
     GAPush ['_trackEvent','Avia_press_button_search', @sp.GAKey(), @sp.GAData()]
 
-    app.navigate @sp.getHash(), {trigger: true}
+    app.forceNavigate @sp.getHash()
     @minimizedCalendar(true)
 
   # FIXME decouple!
