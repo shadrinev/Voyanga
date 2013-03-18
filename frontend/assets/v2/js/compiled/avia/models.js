@@ -397,7 +397,6 @@ AviaResult = (function() {
     this.isFlight = true;
     this.isHotel = false;
     _.extend(this, Backbone.Events);
-    console.log(data);
     this._data = data;
     this._stacked_data = [];
     flights = data.flights;

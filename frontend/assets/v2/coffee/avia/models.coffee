@@ -260,7 +260,6 @@ class AviaResult
     @isHotel = false
     # Mix in events
     _.extend @, Backbone.Events
-    console.log data
     # for cloning result to best later
     @_data = data
     @_stacked_data = []
