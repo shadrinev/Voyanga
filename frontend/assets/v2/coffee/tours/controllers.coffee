@@ -36,6 +36,8 @@ class ToursController
       @stacked = @handleResults data
       @stacked.on 'inner-template', (data)=>
         @trigger 'inner-template', data
+
+      GAPush ['_trackEvent', 'Trip_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), "", true]
       @trigger "results", @stacked
       @render 'results', @stacked
       ko.processAllDeferredBindingUpdates()

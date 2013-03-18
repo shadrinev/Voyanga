@@ -1233,10 +1233,11 @@ ToursResultSet = (function() {
         }
       }
       if (hasHotel) {
-        return GAPush(['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'), GAHotelData.join('//'), "", true]);
+        GAPush(['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'), GAHotelData.join('//'), "", true]);
       } else if (hasAvia) {
-        return GAPush(['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'), GAAviaData.join('//'), "", true]);
+        GAPush(['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'), GAAviaData.join('//'), "", true]);
       }
+      return Utils.toBuySubmit(toBuy);
     });
     return this.checkTicket(this.data(), ticketValidCheck);
   };

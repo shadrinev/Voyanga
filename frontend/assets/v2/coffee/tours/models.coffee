@@ -795,11 +795,11 @@ class ToursResultSet
             hasHotel = true
           toBuy.push {module: 'Tours'}
           toBuy.push x.toBuyRequest()
-      #Utils.toBuySubmit toBuy
       if hasHotel
         GAPush ['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'),  GAHotelData.join('//'), "", true]
       else if hasAvia
         GAPush ['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'),  GAAviaData.join('//'), "", true]
+      Utils.toBuySubmit toBuy
       
     @checkTicket @data(), ticketValidCheck
 
