@@ -63,6 +63,13 @@ class Application extends Backbone.Router
 
     @breakdown = ko.observable false
 
+  forceNavigate: (url) =>
+    if (Backbone.history.fragment == url)
+      # need to null out Backbone.history.fragement because
+      # navigate method will ignore when it is the same as newFragment
+      Backbone.history.fragment = null
+      Backbone.history.navigate url, true
+
   initCalendar: =>
     throw "Deprecated"
 
