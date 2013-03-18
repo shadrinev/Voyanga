@@ -114,7 +114,6 @@ Application = (function(_super) {
   };
 
   Application.prototype.minimizeCalendar = function() {
-    console.log('activeSearchPanel', this.activeSearchPanel());
     if (this.activeSearchPanel()) {
       return this.activeSearchPanel().minimizedCalendar(true);
     }

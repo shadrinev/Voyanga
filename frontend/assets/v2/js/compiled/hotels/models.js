@@ -252,7 +252,6 @@ RoomSet = (function() {
         }
         return 0;
       });
-      console.log('adding cancel rules', roomSetData.cancelCharges);
       _ref = roomSetData.cancelCharges;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         cancelObject = _ref[_i];
@@ -265,7 +264,6 @@ RoomSet = (function() {
 
   RoomSet.prototype.showCancelationRules = function(el, e) {
     var offset, widthThisElement;
-    console.log(e);
     widthThisElement = $(e.currentTarget).width();
     this.parent.activeRoomSet(this);
     this.parent.showRulesPopup(true);
@@ -499,9 +497,6 @@ HotelResult = (function() {
     set = new RoomSet(data, this, this.duration);
     set.resultId = data.resultId;
     set.searchId = data.searchId;
-    if (this.hotelId === '17897') {
-      console.log('setPrice', set.price);
-    }
     if (this.roomSets().length === 0) {
       this.cheapest = set.price;
       this.cheapestSet = set;
@@ -510,7 +505,6 @@ HotelResult = (function() {
     } else {
       if (set.price < this.cheapest) {
         this.cheapestSet = set;
-        console.log('set cheapest setPrice', set.price);
       }
       this.cheapest = set.price < this.cheapest ? set.price : this.cheapest;
       this.minPrice = set.pricePerNight < this.minPrice ? set.pricePerNight : this.minPrice;
@@ -576,8 +570,7 @@ HotelResult = (function() {
         results: ko.observable(hotel.parent)
       }, 'results');
       return window.setTimeout(function() {
-        Utils.scrollTo(hotel.oldPageTop, false);
-        return console.log(hotel.oldPageTop);
+        return Utils.scrollTo(hotel.oldPageTop, false);
       }, 50);
     });
     hotel.getFullInfo();
@@ -732,7 +725,6 @@ HotelResult = (function() {
           roomSet = _ref2[ind];
           key = roomSet.resultId;
           cancelObjs[key] = roomSet;
-          console.log(cancelObjs);
         }
         _ref3 = _this.roomSets();
         for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
@@ -801,7 +793,6 @@ HotelResult = (function() {
   HotelResult.prototype.select = function(room) {
     var ticketValidCheck,
       _this = this;
-    console.log(room);
     if (room.roomSets) {
       room = room.roomSets()[0];
       Utils.scrollTo('.info-trip');
@@ -854,7 +845,6 @@ HotelResult = (function() {
     var city, country, gMarker, latLng,
       _this = this;
     if (this.lat && this.lng) {
-      console.log('add point to coords', this.lat, this.lng);
       latLng = new google.maps.LatLng(this.lat, this.lng);
       this.parent.addMapPoint(latLng);
       gMarker = new google.maps.Marker({
@@ -886,7 +876,6 @@ HotelResult = (function() {
       return this.parent.gMapGeocoder.geocode({
         address: this.address + ', ' + city + country
       }, function(geoInfo, status) {
-        console.log(geoInfo);
         if (status === google.maps.GeocoderStatus.OK) {
           _this.lat = geoInfo[0].geometry.location.lat();
           _this.lng = geoInfo[0].geometry.location.lng();
@@ -910,7 +899,6 @@ HotelResult = (function() {
       gMapGeocoder.geocode({
         address: this.address + ', ' + city + country
       }, function(geoInfo, status) {
-        console.log(geoInfo);
         if (status === google.maps.GeocoderStatus.OK) {
           _this.lat = geoInfo[0].geometry.location.lat();
           _this.lng = geoInfo[0].geometry.location.lng();
@@ -1041,15 +1029,11 @@ HotelsResultSet = (function() {
         hotel = _ref[_i];
         if (typeof hotel.duration === 'undefined') {
           checkIn = dateUtils.fromIso(hotel.checkIn);
-          console.log(checkIn);
           checkOut = dateUtils.fromIso(hotel.checkOut);
-          console.log(hotel.checkOut);
-          console.log(checkOut);
           duration = checkOut.valueOf() - checkIn.valueOf();
           duration = Math.floor(duration / (3600 * 24 * 1000));
         } else {
           duration = hotel.duration;
-          console.log('yes set');
         }
         break;
       }
@@ -1182,12 +1166,10 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.findAndSelect = function(roomSet) {
     var hotel, possibleRoomSet, _i, _j, _len, _len1, _ref, _ref1;
-    console.log('find roomSet', roomSet, 'hotelId', roomSet.parent.hotelId);
     _ref = this.data();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       hotel = _ref[_i];
       if (hotel.hotelId === roomSet.parent.hotelId) {
-        console.log('ok, hotel found2');
         _ref1 = hotel.roomSets();
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           possibleRoomSet = _ref1[_j];
@@ -1209,7 +1191,6 @@ HotelsResultSet = (function() {
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         hotel = _ref[_i];
         if (hotel.hotelId === roomSet.parent.hotelId) {
-          console.log('ok, hotel found');
           _ref1 = hotel.roomSets();
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             possibleRoomSet = _ref1[_j];
@@ -1275,7 +1256,6 @@ HotelsResultSet = (function() {
     if (fromFilters == null) {
       fromFilters = false;
     }
-    console.log('show full map', fromBackAction, fromFilters);
     this.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
     if (!this.showFullMap()) {
       Utils.scrollTo('#content');
@@ -1308,10 +1288,8 @@ HotelsResultSet = (function() {
         _this.gMapGeocoder = new google.maps.Geocoder();
         _this.resetMapCenter();
         _this.gMapOverlay = new googleInfoDiv();
-        console.log(_this.gMapOverlay);
         _this.gMapOverlay.setPosition(center);
         _this.gMapOverlay.setMap(_this.gAllMap);
-        console.log(_this.gMapOverlay);
         _this.gMapOverlay.hide();
         _this.clusterStyle = [
           {
@@ -1354,8 +1332,6 @@ HotelsResultSet = (function() {
       } else {
         _this.mapCluster.addMarkers(_this.gMarkers);
       }
-      console.log(_this.gAllMap);
-      console.log(_this.gMapInfoWin);
       if (fromBackAction && _this.gMapCenter && _this.gMapZoom) {
         _this.gAllMap.setCenter(_this.gMapCenter);
         _this.gAllMap.setZoom(_this.gMapZoom);
@@ -1363,7 +1339,6 @@ HotelsResultSet = (function() {
         _this.setFullMapZoom();
       }
       if (!fromFilters) {
-        console.log('minimizeFilter');
         return minimizeFilter();
       }
     }, stime);
@@ -1371,7 +1346,6 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.hideFullMap = function() {
     var _this = this;
-    console.log('hideFullMap');
     $('#all-hotels-results').show();
     $('#all-hotels-map').hide();
     this.showFullMap(false);
@@ -1384,19 +1358,16 @@ HotelsResultSet = (function() {
 
   HotelsResultSet.prototype.gMapPointShowWin = function(event, hotel) {
     var div;
-    console.log('showDiv', event);
     div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> <span class="rur">o</span>/ночь</div></div></div></div>';
     this.gMapOverlay.setContent(div);
     this.gMapOverlay.setPosition(event.latLng);
     this.gMapOverlay.show();
-    console.log(this.gMapOverlay);
     return hotel.gMarker.setIcon(this.markerImageHover);
   };
 
   HotelsResultSet.prototype.gMapPointHideWin = function(event, hotel) {
     var rnd;
     hotel.gMarker.setIcon(this.markerImage);
-    console.log('mouseout');
     rnd = Math.round(Math.random() * 5);
     this.gMapOverlay.hide();
     if (rnd === 40) {
@@ -1407,9 +1378,7 @@ HotelsResultSet = (function() {
   HotelsResultSet.prototype.gMapPointClick = function(event, hotel) {
     this.gMapCenter = this.gAllMap.getCenter();
     this.gMapZoom = this.gAllMap.getZoom();
-    console.log('save map params', this.gMapCenter, this.gMapZoom);
-    this.select(hotel);
-    return console.log('gMapEventClick', event, hotel);
+    return this.select(hotel);
   };
 
   HotelsResultSet.prototype.selectFromPopup = function(hotel, event) {
@@ -1439,13 +1408,11 @@ HotelsResultSet = (function() {
     var fv, sv;
     fv = this.data()[0];
     sv = this.data()[1];
-    console.log('before more results', fv, sv, this.showParts());
     if (this.numResults() > (this.showParts() * this.showLimit)) {
       this.showParts(this.showParts() + 1);
     }
     fv = this.data()[0];
-    sv = this.data()[1];
-    return console.log('after more results', fv, sv, this.showParts(), 'resultsForRender length', this.resultsForRender().length);
+    return sv = this.data()[1];
   };
 
   HotelsResultSet.prototype.checkShowMore = function(ev) {

@@ -120,7 +120,6 @@ class AviaPanel extends SearchPanel
         arrow = ' ↔ '
       else
         arrow = ' → '
-      console.log "updating"
       if (@departureCityReadable().length == 0)
         result = 'Выберите город вылета'
       else if (@arrivalCityReadable().length == 0)

@@ -13,7 +13,6 @@ class ToursController
     _.extend @, Backbone.Events
 
   indexAction: (args...) =>
-    window.voyanga_debug "TOURS: Invoking indexAction", args
     @trigger "index", {}
     @render 'index'
     ResizeAvia()
@@ -22,6 +21,10 @@ class ToursController
     args[0] = exTrim args[0], '/'
     args = args[0].split('/')
     @searchParams.fromList(args)
+    # Searcheng
+    sp = @searchParams
+    GAPush ['_trackEvent','Trip_press_button_search', sp.GAKey(), sp.GAData()]
+
     window.VisualLoaderInstance.start(@api.loaderDescription)
     @doSearch()
 
@@ -38,7 +41,6 @@ class ToursController
       ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
-    console.log "Handling results", data
     #data.allVariants[1].hotels = []
     stacked = new ToursResultSet data, @searchParams
 

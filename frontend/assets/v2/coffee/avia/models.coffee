@@ -682,7 +682,7 @@ class AviaResultSet
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
-      _gaq.push(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline, true])
+      GAPush ['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline, true]
 
       Utils.toBuySubmit [result]
       
@@ -935,4 +935,4 @@ class AviaSearchParams extends SearchParams
     result += ', ' + moment(@date()).diff(moment(), 'days')
     if @rt()
       result += ' - ' + moment(@rtDate()).diff(moment(@date()), 'days')
-      
+    return result

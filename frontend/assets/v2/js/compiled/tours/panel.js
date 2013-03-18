@@ -48,7 +48,6 @@ TourPanelSet = (function() {
     this.selectionIndex = ko.observable('');
     this.selectionIndex.subscribe(function(newValue) {
       if (newValue === 1) {
-        console.log('now we are clear values');
         VoyangaCalendarStandart.checkCalendarValue(false);
         _this.activeCalendarPanel().checkIn('');
         return _this.activeCalendarPanel().checkOut('');
@@ -139,7 +138,6 @@ TourPanelSet = (function() {
       return;
     }
     sp = _.last(this.panels()).sp;
-    _gaq.push(['_trackEvent', 'Trip_press_button_search', sp.GAKey(), sp.GAData()]);
     _.last(this.panels()).handlePanelSubmit();
     return _.last(this.panels()).minimizedCalendar(true);
   };
@@ -221,7 +219,6 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
-    console.log('SPC1');
     this.activeCalendarPanel(args[0]);
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
@@ -259,7 +256,6 @@ TourPanelSet = (function() {
   };
 
   TourPanelSet.prototype.afterRender = function(el) {
-    console.log('SPC2');
     resizePanel();
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
       return this.activeCalendarPanel().showCalendar(false);
@@ -331,7 +327,6 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", _this);
     });
     this.city.subscribe(function(newValue) {
-      console.log('SPC3');
       if (_this.sp.calendarActivated()) {
         return _this.showCalendar();
       }
@@ -414,7 +409,6 @@ TourPanel = (function(_super) {
     }
     ch = $('.calenderWindow').height();
     if (ch === 0) {
-      console.log('show calendar func');
       $('.calenderWindow').show();
       window.setTimeout(function() {
         return VoyangaCalendarStandart.scrollToDate(VoyangaCalendarStandart.scrollDate, true);

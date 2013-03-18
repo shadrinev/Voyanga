@@ -954,7 +954,7 @@ AviaResultSet = (function() {
       result.type = 'avia';
       result.searchId = selection.cacheId;
       result.searchKey = selection.flightKey();
-      _gaq.push(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(), selection.GAData(), selection.airline, true]);
+      GAPush(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(), selection.GAData(), selection.airline, true]);
       return Utils.toBuySubmit([result]);
     });
     return this.checkTicket(selection, ticketValidCheck);
@@ -1309,8 +1309,9 @@ AviaSearchParams = (function(_super) {
     }
     result += ', ' + moment(this.date()).diff(moment(), 'days');
     if (this.rt()) {
-      return result += ' - ' + moment(this.rtDate()).diff(moment(this.date()), 'days');
+      result += ' - ' + moment(this.rtDate()).diff(moment(this.date()), 'days');
     }
+    return result;
   };
 
   return AviaSearchParams;

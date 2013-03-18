@@ -141,7 +141,6 @@ AviaPanel = (function(_super) {
       } else {
         arrow = ' → ';
       }
-      console.log("updating");
       if (_this.departureCityReadable().length === 0) {
         result = 'Выберите город вылета';
       } else if (_this.arrivalCityReadable().length === 0) {

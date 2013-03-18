@@ -33,18 +33,19 @@ ToursController = (function() {
   ToursController.prototype.indexAction = function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    window.voyanga_debug("TOURS: Invoking indexAction", args);
     this.trigger("index", {});
     this.render('index');
     return ResizeAvia();
   };
 
   ToursController.prototype.searchAction = function() {
-    var args;
+    var args, sp;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     args[0] = exTrim(args[0], '/');
     args = args[0].split('/');
     this.searchParams.fromList(args);
+    sp = this.searchParams;
+    GAPush(['_trackEvent', 'Trip_press_button_search', sp.GAKey(), sp.GAData()]);
     window.VisualLoaderInstance.start(this.api.loaderDescription);
     return this.doSearch();
   };
@@ -69,7 +70,6 @@ ToursController = (function() {
   ToursController.prototype.handleResults = function(data) {
     var hotel, item, items, postData, resultSet, stacked, _i, _j, _len, _len1, _ref, _ref1,
       _this = this;
-    console.log("Handling results", data);
     stacked = new ToursResultSet(data, this.searchParams);
     if (data.items) {
       items = [];

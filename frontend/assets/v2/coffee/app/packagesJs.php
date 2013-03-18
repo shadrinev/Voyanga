@@ -83,6 +83,7 @@
             'ko.bindings.swapPanel.js',
             'ko.bindings.gmap.js',
 
+            'GAWrapper.js',
             'travellers.js',
             'searchParams.js',
             'ko.rangeobservable.js',
@@ -115,6 +116,7 @@
     'tours' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.tours',
         'js' => array(
+            'searchParams.js',
             'voyasha.js',
             'timeline.js',
             'panel.js',

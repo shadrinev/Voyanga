@@ -11,8 +11,6 @@ VoyangaCalendarTimeline = new VoyangaCalendarClass({jObj:'#voyanga-calendar-time
     monthNames: new Array('ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК')});
 VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
     init: function(){
-        //console.log(this.monthArray);
-        console.log(this.jObj);
         if(typeof this.jObj == 'string'){
             this.jObj = $(this.jObj);
         }
@@ -50,7 +48,6 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
                 if(!this.monthShowArray[i].lineReal)
                     this.monthShowArray[i].lineReal = 0;
                 leftPercent = this.monthShowArray[i].lineReal / (tLines - this.linesWidth);
-                console.log('mmmm',this.monthShowArray[i].lineReal,tLines,this.linesWidth);
                 leftPercent =  Math.round((1 - (this.linesWidth / tLines) )*leftPercent*1000 )/10;
                 newHtml.data('clickable',true);
                 newHtml.data('leftPos',leftPercent);
@@ -72,7 +69,6 @@ VoyangaCalendarTimeline.slider = new VoyangaCalendarSlider({
         $(window).load(function(){self.onresize();self.knobMove();});
 
         this.jObj.find('.calendarGridVoyanga').on('scroll',function(e){self.scrollEvent(e);});
-        //console.log('set wheel actions2');
         this.jObj.find('.calendarGridVoyanga').on('mousewheel',function (e){self.mousewheelEvent(e);
             if(e.preventDefault)
                 e.preventDefault();
@@ -161,7 +157,6 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var endMoment = moment(this.maxDate);
     var startDraw = moment(startMoment);
     var endDraw = moment(endMoment);
-    console.log('dates',this.minDate,this.maxDate);
     var firstDay = this.minDate;
     //var firstDay = new Date('2012-04-10');
     var dayToday = new Date();
@@ -176,7 +171,6 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var tmpDate = moment(startMoment)._d;
     var weekDiff  = this.getDay(this.maxDate) - this.getDay(this.minDate);
     var dateDiff = Math.floor(endMoment.diff(startMoment,'days',true));
-    console.log('diff',weekDiff,dateDiff);
     if(weekDiff == dateDiff){
         startDraw.subtract('d',7);
         endDraw.add('d',7);
@@ -187,11 +181,9 @@ VoyangaCalendarTimeline.generateGrid = function(){
         endDraw.add('d',7);
         dateDiff = Math.floor(endDraw.diff(startDraw,'days',true)) + 1;
     }
-    console.log('ds',startDraw,'de',endDraw,dateDiff);
     if(dateDiff % 7 != 0){
         endDraw.add('d',7 - (dateDiff % 7));
     }
-    console.log('ds',startDraw,'de',endDraw,dateDiff);
     dateDiff = Math.floor(endDraw.diff(startDraw,'days',true))+1;
     var centerDiff = Math.floor((365 - dateDiff)/2)
     tmpDate = moment(startMoment)._d;
@@ -217,7 +209,6 @@ VoyangaCalendarTimeline.generateGrid = function(){
     var lineNumber = 0;
     var lineNumberReal = 0;
     var fullYear  = false;
-    console.log('date params',tmpDate,'st',startDraw,'en',endDraw,'stp', stopDate);
     this.slider.monthArray = new Array();
     this.slider.monthShowArray = new Array();
     this.slider.startLine = false;
@@ -266,7 +257,6 @@ VoyangaCalendarTimeline.generateGrid = function(){
 
         lineNumber++;
     }
-    console.log('monthArr', this.slider.monthArray.length,this.slider.monthArray);
 
     if((this.slider.monthShowArray.length > 0) && (this.slider.monthShowArray[this.slider.monthShowArray.length - 1])){
         var lastLineMonth = this.slider.monthShowArray[this.slider.monthShowArray.length - 1].line;
@@ -283,7 +273,7 @@ VoyangaCalendarTimeline.generateGrid = function(){
 
     this.slider.totalLines = lineNumberReal;
     this.slider.totalShowLines = lineNumber;
-    console.log(this.slider.totalLines);
+
 }
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -339,7 +329,6 @@ VoyangaCalendarTimeline.generateHotelDiv = function (HotelEvent) {
     if (totalDays == 0) {
         totalDays = 1;
     }
-    console.log(totalDays);
     var dayWidth = this.dayCellWidth;
     var deltaLeft = (dayWidth / HotelEvent.startInfo.count)*(0.5);
     var deltaRight = (dayWidth / HotelEvent.endInfo.count)*(0.5);
@@ -405,7 +394,6 @@ VoyangaCalendarTimeline.generateFlightDiv = function (FlightEvent) {
     }
     var deltaLeft = (dayWidth / FlightEvent.startInfo.count)*(0.5 + FlightEvent.startInfo.position);
     var deltaRight = (totalDays-1)*dayWidth + (dayWidth / FlightEvent.endInfo.count)*(0.5 + FlightEvent.endInfo.position);
-    console.log('flightDiv',deltaLeft,deltaRight)
     var deltaWidth = deltaRight - deltaLeft;
     if(FlightEvent.startInfo.count == 3){
         names[0] = FlightEvent.cityFrom;
@@ -465,7 +453,6 @@ VoyangaCalendarTimeline.generateEvents = function () {
         eventDays[dateLabel].types[this.calendarEvents[i].type].e.push(i);
         eventDays[dateLabel].count++;
     }
-    console.log('eventDays',eventDays);
 
     // а этот цикл необходим чтобы понять сколько точек будет отображено в обрабатываемом дне
     for(var key in eventDays){
@@ -635,8 +622,6 @@ VoyangaCalendarTimeline.generateEvents = function () {
 
 
     }
-    console.log('eventDays',eventDays);
-    console.log('calendarEvents',this.calendarEvents);
 
     var firstElem = true;
     var lastId = 0;
@@ -764,7 +749,6 @@ VoyangaCalendarTimeline.generateEvents = function () {
 }
 
 VoyangaCalendarTimeline.prepareEvents = function () {
-    console.log(this.calendarEvents);
     var self = this;
     $.each(this.calendarEvents, function (ind, el) {
         el.dayStart = Date.fromIso(el.dayStart);

@@ -24,7 +24,6 @@ class TourPanelSet
     @selectionIndex.subscribe(
       (newValue)=>
         if(newValue == 1)
-          console.log('now we are clear values')
           VoyangaCalendarStandart.checkCalendarValue(false)
           @activeCalendarPanel().checkIn('')
           @activeCalendarPanel().checkOut('')
@@ -103,8 +102,6 @@ class TourPanelSet
       return
 
     sp = _.last(@panels()).sp
-    _gaq.push(['_trackEvent','Trip_press_button_search', sp.GAKey(), sp.GAData()])
-
     _.last(@panels()).handlePanelSubmit()
     _.last(@panels()).minimizedCalendar(true)
 
@@ -163,7 +160,6 @@ class TourPanelSet
     @activeCityGen('')
 
   showPanelCalendar: (args) =>
-    console.log('SPC1')
     @activeCalendarPanel args[0]
     if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
       @activeCalendarPanel().showCalendar(false)
@@ -191,7 +187,6 @@ class TourPanelSet
     @activeCalendarPanel().calendarHidden()
 
   afterRender: (el) =>
-    console.log('SPC2')
     do resizePanel
     if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
       @activeCalendarPanel().showCalendar(false)
@@ -243,7 +238,6 @@ class TourPanel extends SearchPanel
       @trigger "tourPanel:hasFocus", @
 
     @city.subscribe (newValue) =>
-      console.log('SPC3')
       if @sp.calendarActivated()
         @showCalendar()
 
@@ -303,7 +297,6 @@ class TourPanel extends SearchPanel
   showCalendar: (trig = true) =>
     ch = $('.calenderWindow').height()
     if(ch == 0)
-      console.log('show calendar func')
       $('.calenderWindow').show()
       window.setTimeout(
         ->

@@ -146,7 +146,6 @@ class RoomSet
           return 0
       )
       #cancelObject = roomSetData.cancelCharges.shift()
-      console.log('adding cancel rules', roomSetData.cancelCharges)
       for cancelObject in roomSetData.cancelCharges
         cancelObject.cancelDate = moment.unix(cancelObject.fromTimestamp)
         console.log('date convert', cancelObject, cancelObject.fromTimestamp, cancelObject.cancelDate)
@@ -154,7 +153,6 @@ class RoomSet
 
   showCancelationRules: (el, e)=>
     #miniPopUp = '<div class="miniPopUp"></div>'
-    console.log(e)
     widthThisElement = $(e.currentTarget).width()
     @parent.activeRoomSet(@)
     @parent.showRulesPopup(true)
@@ -167,11 +165,7 @@ class RoomSet
 
   hideCancelationRules: (el, ev)=>
     @parent.showRulesPopup(false)
-#price: ->
-#  console.log prm
-#  console.log 'tt'
-#  return 22
-#
+
 # Stacked hotel, FIXME can we use this as roomset ?
 #
 class HotelResult
@@ -319,8 +313,6 @@ class HotelResult
     set = new RoomSet data, @, @duration
     set.resultId = data.resultId
     set.searchId = data.searchId
-    if @hotelId == '17897'
-      console.log('setPrice', set.price)
     if @roomSets().length == 0
       @cheapest = set.price
       @cheapestSet = set
@@ -330,7 +322,6 @@ class HotelResult
       #@cheapestSet = if set.price < @cheapest then set else @cheapestSet
       if set.price < @cheapest
         @cheapestSet = set
-        console.log('set cheapest setPrice', set.price)
       @cheapest = if set.price < @cheapest then set.price else @cheapest
       @minPrice = if set.pricePerNight < @minPrice then set.pricePerNight else @minPrice
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
@@ -405,7 +396,6 @@ class HotelResult
       window.setTimeout(
         ->
           Utils.scrollTo(hotel.oldPageTop, false)
-          console.log(hotel.oldPageTop)
         , 50
       )
 
@@ -532,7 +522,6 @@ class HotelResult
         for ind,roomSet of data.hotel.oldHotels
           key = roomSet.resultId
           cancelObjs[key] = roomSet
-          console.log(cancelObjs)
         for roomSet in @roomSets()
           key = roomSet.resultId
           if cancelObjs[key]
@@ -619,7 +608,6 @@ class HotelResult
 
   select: (room) =>
     # it is actually cheapest click
-    console.log room
     if room.roomSets
       room = room.roomSets()[0]
       Utils.scrollTo('.info-trip')
@@ -662,7 +650,6 @@ class HotelResult
 
   putToMap: (gMap)=>
     if(@lat && @lng)
-      console.log('add point to coords', @lat, @lng)
       latLng = new google.maps.LatLng(@lat, @lng)
       @parent.addMapPoint(latLng)
       gMarker = new google.maps.Marker({
@@ -701,7 +688,6 @@ class HotelResult
       @parent.gMapGeocoder.geocode(
         {address: @address + ', ' + city + country},
         (geoInfo, status)=>
-          console.log(geoInfo)
           if status == google.maps.GeocoderStatus.OK
             @lat = geoInfo[0].geometry.location.lat()
             @lng = geoInfo[0].geometry.location.lng()
@@ -719,7 +705,6 @@ class HotelResult
       gMapGeocoder.geocode(
         {address: @address + ', ' + city + country},
         (geoInfo, status)=>
-          console.log(geoInfo)
           if status == google.maps.GeocoderStatus.OK
             @lat = geoInfo[0].geometry.location.lat()
             @lng = geoInfo[0].geometry.location.lng()
@@ -783,15 +768,12 @@ class HotelsResultSet
       for hotel in rawData.hotels
         if typeof hotel.duration == 'undefined'
           checkIn = dateUtils.fromIso hotel.checkIn
-          console.log checkIn
           checkOut = dateUtils.fromIso hotel.checkOut
-          console.log hotel.checkOut
-          console.log checkOut
           duration = checkOut.valueOf() - checkIn.valueOf()
           duration = Math.floor(duration / (3600 * 24 * 1000))
         else
           duration = hotel.duration
-          console.log('yes set')
+        #FIXME: WAT???
         break
     @wordDays = Utils.wordAfterNum(duration, 'день', 'дня', 'дней')
     @wordNights = Utils.wordAfterNum(duration, 'ночь', 'ночи', 'ночей')
@@ -910,10 +892,8 @@ class HotelsResultSet
     Utils.scrollTo('#content', false)
 
   findAndSelect: (roomSet)=>
-    console.log('find roomSet', roomSet, 'hotelId', roomSet.parent.hotelId)
     for hotel in @data()
       if hotel.hotelId == roomSet.parent.hotelId
-        console.log('ok, hotel found2')
         for possibleRoomSet in hotel.roomSets()
           if possibleRoomSet.similarityHash() == roomSet.similarityHash()
             return possibleRoomSet
@@ -925,7 +905,6 @@ class HotelsResultSet
     if(!result)
       for hotel in @data()
         if hotel.hotelId == roomSet.parent.hotelId
-          console.log('ok, hotel found')
           for possibleRoomSet in hotel.roomSets()
             return possibleRoomSet
     return result
@@ -964,8 +943,6 @@ class HotelsResultSet
     @gAllMap.setCenter(@computedCenter.getCenter())
 
   showFullMapFunc: (targetObject, event, fromBackAction = false, fromFilters = false)=>
-    console.log('show full map', fromBackAction, fromFilters)
-
     @oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     if !@showFullMap()
       Utils.scrollTo('#content')
@@ -997,10 +974,8 @@ class HotelsResultSet
           @gMapGeocoder = new google.maps.Geocoder()
           @resetMapCenter()
           @gMapOverlay = new googleInfoDiv()
-          console.log(@gMapOverlay)
           @gMapOverlay.setPosition(center)
           @gMapOverlay.setMap(@gAllMap)
-          console.log(@gMapOverlay)
           @gMapOverlay.hide()
 
           @clusterStyle = [
@@ -1038,15 +1013,12 @@ class HotelsResultSet
           @fullMapInitialized = true
         else
           @mapCluster.addMarkers(@gMarkers)
-        console.log(@gAllMap)
-        console.log(@gMapInfoWin)
         if fromBackAction && @gMapCenter && @gMapZoom
           @gAllMap.setCenter(@gMapCenter)
           @gAllMap.setZoom(@gMapZoom)
         else if @gMarkers.length > 0
           @setFullMapZoom()
         if !fromFilters
-          console.log('minimizeFilter')
           minimizeFilter()
       , stime
     )
@@ -1054,7 +1026,6 @@ class HotelsResultSet
 
 
   hideFullMap: =>
-    console.log('hideFullMap')
     $('#all-hotels-results').show()
     $('#all-hotels-map').hide()
     @showFullMap(false)
@@ -1068,19 +1039,16 @@ class HotelsResultSet
 
 
   gMapPointShowWin: (event, hotel) =>
-    console.log('showDiv', event)
     div = '<div id="relInfoPosition"><div id="infoWrapperDiv"><div class="hotelMapInfo"><div class="hotelMapImage"><img src="' + hotel.frontPhoto.largeUrl + '"></div><div class="stars ' + hotel.stars + '"></div><div class="hotelMapName">' + hotel.hotelName + '</div><div class="mapPriceDiv">от <div class="mapPriceValue">' + hotel.minPrice + '</div> <span class="rur">o</span>/ночь</div></div></div></div>'
     @gMapOverlay.setContent(div)
     @gMapOverlay.setPosition(event.latLng)
     @gMapOverlay.show()
-    console.log(@gMapOverlay)
 
     hotel.gMarker.setIcon(@markerImageHover)
 
 
   gMapPointHideWin: (event, hotel) =>
     hotel.gMarker.setIcon(@markerImage)
-    console.log('mouseout')
     rnd = Math.round(Math.random() * 5)
     @gMapOverlay.hide()
     if rnd == 40
@@ -1090,9 +1058,8 @@ class HotelsResultSet
     #@hideFullMap()
     @gMapCenter = @gAllMap.getCenter()
     @gMapZoom = @gAllMap.getZoom()
-    console.log('save map params', @gMapCenter, @gMapZoom)
     @select(hotel)
-    console.log('gMapEventClick', event, hotel)
+
 
   selectFromPopup: (hotel, event) =>
     hotel.activePopup.close()
@@ -1117,14 +1084,12 @@ class HotelsResultSet
   showMoreResults: =>
     fv = @data()[0]
     sv = @data()[1]
-    console.log('before more results', fv, sv, @showParts())
 
     if @numResults() > (@showParts() * @showLimit)
       @showParts(@showParts() + 1)
 
     fv = @data()[0]
     sv = @data()[1]
-    console.log('after more results', fv, sv, @showParts(), 'resultsForRender length', @resultsForRender().length)
 
 
 

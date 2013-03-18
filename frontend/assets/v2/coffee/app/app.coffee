@@ -70,7 +70,6 @@ class Application extends Backbone.Router
     #  new Calendar(@fakoPanel)
     #  @calendarInitialized = true
   minimizeCalendar: =>
-    console.log('activeSearchPanel',@activeSearchPanel())
     @activeSearchPanel().minimizedCalendar(true) if @activeSearchPanel()
 
   reRenderCalendar:(elements) =>
