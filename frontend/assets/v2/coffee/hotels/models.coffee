@@ -748,23 +748,6 @@ class HotelResult
     result.type = 'hotel'
     return result
 
-  GAKey: =>
-    @cityCode
-
-  GAData: =>
-    result = "1"
-    passangers = [0, 0, 0]
-    _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
-
-    for room in @rawSP.rooms
-      passangers[0] += room.adultCount/1
-      passangers[1] += room.childCount/1
-      passangers[2] += room.cots/1
-    result += ", " + passangers.join(" - ")
-    result += ", " + moment(@checkIn()).format('D.M.YYYY') + ' - ' + moment(@checkOut()).format('D.M.YYYY')
-    result += ", " + moment(@checkIn()).diff(moment(), 'days') + " - " + moment(@checkOut()).diff(moment(@checkIn()), 'days')
-    return result
-
 #
 # Result container
 # Stacks them by price and company
