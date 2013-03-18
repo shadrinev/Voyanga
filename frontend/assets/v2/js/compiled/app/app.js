@@ -115,6 +115,10 @@ Application = (function(_super) {
     if (Backbone.history.fragment === url) {
       Backbone.history.fragment = null;
       return Backbone.history.navigate(url, true);
+    } else {
+      return Backbone.history.navigate(url, {
+        trigger: true
+      });
     }
   };
 

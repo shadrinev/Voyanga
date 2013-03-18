@@ -69,6 +69,8 @@ class Application extends Backbone.Router
       # navigate method will ignore when it is the same as newFragment
       Backbone.history.fragment = null
       Backbone.history.navigate url, true
+    else
+      Backbone.history.navigate url, {trigger: true}
 
   initCalendar: =>
     throw "Deprecated"
