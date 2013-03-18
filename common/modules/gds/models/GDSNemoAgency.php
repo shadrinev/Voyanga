@@ -26,14 +26,22 @@ class GDSNemoAgency extends CComponent
             'CancelBook' => 'CancelBook',
             'GetAirRules'=> 'GetAirRules'
         );
+        $bookingMethods = array(
+            'BookFlight'=>true,
+            'Ticketing'=>true
+        );
 
         if (!($wsdl = isset($methodMap[$methodName]) ? $methodMap[$methodName] : false))
         {
             throw new CException('Unknown method request');
         }
 
+        $wsdlUri = Yii::app()->params['GDSNemo']['agencyWsdlUri'];
+        if(isset($bookingMethods[$methodName])){
+            $wsdlUri = Yii::app()->params['GDSNemo']['agencyBookingWsdlUri'];
+        }
         $client = new GDSNemoSoapClient(
-            Yii::app()->params['GDSNemo']['agencyWsdlUri'] . $wsdl,
+            $wsdlUri . $wsdl,
             array(
                 'trace' => Yii::app()->params['GDSNemo']['trace'],
                 'exceptions' => true,
