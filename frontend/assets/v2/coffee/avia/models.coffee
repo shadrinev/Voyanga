@@ -260,7 +260,7 @@ class AviaResult
     @isHotel = false
     # Mix in events
     _.extend @, Backbone.Events
-
+    console.log data
     # for cloning result to best later
     @_data = data
     @_stacked_data = []
@@ -562,7 +562,11 @@ class AviaResult
     return result
 
   GAKey: =>
-    @departureAirport() + "/" + @arrivalAirport()
+    if @rawSP
+      sp = @rawSP
+    else
+      sp = @parent.rawSP
+    sp.destinations[0].departure_iata + "/" + sp.destinations[0].arriaval_iata
 
   GAData: =>
     result = ''
@@ -919,7 +923,7 @@ class AviaSearchParams extends SearchParams
       @rtDate new Date(data.destinations[1].date)
 
   GAKey: =>
-    @parent.rawSP.destinations[0].departure_iata + "/" +     @parent.rawSP.destinations[0].arriaval_iata
+    @dep() + '/' + @arr()
 
   GAData: =>
     result = ''

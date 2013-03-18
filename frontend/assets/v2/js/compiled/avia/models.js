@@ -397,6 +397,7 @@ AviaResult = (function() {
     this.isFlight = true;
     this.isHotel = false;
     _.extend(this, Backbone.Events);
+    console.log(data);
     this._data = data;
     this._stacked_data = [];
     flights = data.flights;
@@ -799,7 +800,13 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.GAKey = function() {
-    return this.departureAirport() + "/" + this.arrivalAirport();
+    var sp;
+    if (this.rawSP) {
+      sp = this.rawSP;
+    } else {
+      sp = this.parent.rawSP;
+    }
+    return sp.destinations[0].departure_iata + "/" + sp.destinations[0].arriaval_iata;
   };
 
   AviaResult.prototype.GAData = function() {
@@ -1290,7 +1297,7 @@ AviaSearchParams = (function(_super) {
   };
 
   AviaSearchParams.prototype.GAKey = function() {
-    return this.parent.rawSP.destinations[0].departure_iata + "/" + this.parent.rawSP.destinations[0].arriaval_iata;
+    return this.dep() + '/' + this.arr();
   };
 
   AviaSearchParams.prototype.GAData = function() {
