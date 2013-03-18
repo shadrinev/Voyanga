@@ -204,7 +204,7 @@ class PaymentsComponent extends CApplicationComponent
         }
         $url = '/index.php?go=payment/bill&';
         $url.= implode('&', $requestParams);
-        list($code, $data) =  Yii::app()->httpClient->get('http://easytrip.nemo-ibe.com' . $url);
+        list($code, $data) =  Yii::app()->httpClient->get(Yii::app()->params['GDSNemo']['apiHost'] . $url);
         if($code!=200)
             return false;
 //            throw new Exception("Nemo callback failure");
