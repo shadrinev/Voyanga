@@ -856,7 +856,7 @@ HotelResult = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
       adt = room.adultCount || room.adt;
-      chd = room.childCount || room.adt;
+      chd = room.childCount || room.chd;
       passangers[0] += adt * 1;
       passangers[1] += chd * 1;
       passangers[2] += room.cots * 1;

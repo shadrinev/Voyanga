@@ -657,7 +657,7 @@ class HotelResult
     passangers = [0, 0, 0]
     for room in sp.rooms
       adt = room.adultCount || room.adt
-      chd = room.childCount || room.adt
+      chd = room.childCount || room.chd
       passangers[0] += adt*1
       passangers[1] += chd*1
       passangers[2] += room.cots*1
