@@ -825,7 +825,7 @@ HotelResult = (function() {
           }
           result.cots += room.cots * 1;
         }
-        _gaq.push(['_trackEvent', 'Hotel_press_button_buy', _this.rawSP.GAKey(), _this.rawSP.GAData(), roomSet.parent.hotelName, true]);
+        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.rawSP.GAKey(), _this.rawSP.GAData(), roomSet.parent.hotelName, true]);
         return Utils.toBuySubmit([result]);
       });
       return this.parent.checkTicket(room, ticketValidCheck);

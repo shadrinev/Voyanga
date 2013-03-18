@@ -168,7 +168,7 @@ class AviaPanel extends SearchPanel
       return
 
 
-    _gaq.push(['_trackEvent','Avia_press_button_search', @sp.GAKey(), @sp.GAData()])
+    GAPush ['_trackEvent','Avia_press_button_search', @sp.GAKey(), @sp.GAData()]
 
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)

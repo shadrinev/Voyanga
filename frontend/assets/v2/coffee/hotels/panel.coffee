@@ -95,7 +95,7 @@ class HotelsPanel extends SearchPanel
       window.location.href = '/#' + @sp.getHash()
       return
 
-    _gaq.push(['_trackEvent','Hotel_press_button_search', @sp.GAKey(), @sp.GAData()])
+    GAPush ['_trackEvent','Hotel_press_button_search', @sp.GAKey(), @sp.GAData()]
     app.navigate @sp.getHash(), {trigger: true}
     @minimizedCalendar(true)
 

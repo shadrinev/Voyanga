@@ -207,7 +207,7 @@ AviaPanel = (function(_super) {
       window.location.href = '/#' + this.sp.getHash();
       return;
     }
-    _gaq.push(['_trackEvent', 'Avia_press_button_search', this.sp.GAKey(), this.sp.GAData()]);
+    GAPush(['_trackEvent', 'Avia_press_button_search', this.sp.GAKey(), this.sp.GAData()]);
     app.navigate(this.sp.getHash(), {
       trigger: true
     });

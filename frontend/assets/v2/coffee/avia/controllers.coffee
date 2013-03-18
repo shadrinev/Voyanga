@@ -32,7 +32,7 @@ class AviaController
 
     @results stacked
     
-    _gaq.push(['_trackEvent', 'Avia_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data.length, true])
+    GAPush ['_trackEvent', 'Avia_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data.length, true]
     @render 'results', {results: @results}
     ko.processAllDeferredBindingUpdates()
 

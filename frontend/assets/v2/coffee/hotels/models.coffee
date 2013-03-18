@@ -635,7 +635,7 @@ class HotelResult
 
           result.cots += room.cots * 1
 
-        _gaq.push(['_trackEvent', 'Hotel_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), roomSet.parent.hotelName, true])
+        GAPush ['_trackEvent', 'Hotel_press_button_buy', @rawSP.GAKey(),  @rawSP.GAData(), roomSet.parent.hotelName, true]
         Utils.toBuySubmit [result]
 
       @parent.checkTicket room, ticketValidCheck
