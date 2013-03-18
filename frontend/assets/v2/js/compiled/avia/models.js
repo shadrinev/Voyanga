@@ -805,7 +805,7 @@ AviaResult = (function() {
     } else {
       sp = this.parent.rawSP;
     }
-    return sp.destinations[0].departure_iata + "/" + sp.destinations[0].arriaval_iata;
+    return sp.destinations[0].departure_iata + "/" + sp.destinations[0].arrival_iata;
   };
 
   AviaResult.prototype.GAData = function() {

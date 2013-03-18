@@ -565,7 +565,7 @@ class AviaResult
       sp = @rawSP
     else
       sp = @parent.rawSP
-    sp.destinations[0].departure_iata + "/" + sp.destinations[0].arriaval_iata
+    sp.destinations[0].departure_iata + "/" + sp.destinations[0].arrival_iata
 
   GAData: =>
     result = ''
