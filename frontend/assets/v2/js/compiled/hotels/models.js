@@ -353,6 +353,7 @@ HotelResult = (function() {
       this.description = "";
     }
     this.limitDesc = Utils.limitTextLenght(this.description, 195);
+    this.limitDescPopup = Utils.limitTextLenght(this.description, 600);
     this.showMoreDesc = ko.observable(true);
     this.showMoreDescText = ko.computed(function() {
       if (_this.showMoreDesc()) {

@@ -197,6 +197,7 @@ class HotelResult
     if !@description
       @description = ""
     @limitDesc = Utils.limitTextLenght(@description, 195)
+    @limitDescPopup = Utils.limitTextLenght(@description, 600)
     @showMoreDesc = ko.observable(true)
     @showMoreDescText = ko.computed =>
       if @showMoreDesc()

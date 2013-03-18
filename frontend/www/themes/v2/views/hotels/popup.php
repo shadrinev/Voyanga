@@ -75,11 +75,11 @@
           
           <h3>Описание отеля</h3>
           	<div class="text">
-                  <span data-bind="html: limitDesc.startText"></span>
-                  <span data-bind="visible: limitDesc.isBigText && showMoreDesc()">...</span>
-                  <span class="endDesc" data-bind="html: limitDesc.endText" style="display: none"></span>
+                  <span data-bind="html: limitDescPopup.startText"></span>
+                  <span data-bind="visible: limitDescPopup.isBigText && showMoreDesc()">...</span>
+                  <span class="endDesc" data-bind="html: limitDescPopup.endText" style="display: none"></span>
           	</div>
-            <a href="#" class="read-more" data-bind="visible: limitDesc.isBigText,click: readMore,text: showMoreDescText">Подробнее</a>
+            <a href="#" class="read-more" data-bind="visible: limitDescPopup.isBigText,click: readMore,text: showMoreDescText">Подробнее</a>
           
 	</div>
     </div>

@@ -96,7 +96,7 @@ class HotelsPanel extends SearchPanel
       return
 
     GAPush ['_trackEvent','Hotel_press_button_search', @sp.GAKey(), @sp.GAData()]
-    app.navigate @sp.getHash(), {trigger: true}
+    app.forceNavigate @sp.getHash()
     @minimizedCalendar(true)
 
   checkInHtml: =>
