@@ -14,8 +14,8 @@ class LandingController extends FrontendController
     public function actionBestHotels()
     {
         $currentCity = Geoip::getCurrentCity();
-        $this->breadLinks['список стран'] = '/land/';
-        $this->breadLinks['отели'] = '/land/hotels/';
+        $this->breadLinks['Страны'] = '/land/';
+        $this->breadLinks['Отели'] = '/land/hotels/';
 
         $sql = 'SELECT count(*) as cnt, cityId  FROM `hotel`  GROUP BY `cityId` ORDER BY cnt DESC LIMIT 3';
         $cityIds = array();
@@ -72,8 +72,8 @@ class LandingController extends FrontendController
     {
         if (!($country = $this->testCountry($countryCode)))
             return false;
-        $this->breadLinks['список стран'] = '/land/';
-        $this->breadLinks['отели'] = '/land/hotels/';
+        $this->breadLinks['Страны'] = '/land/';
+        $this->breadLinks['Отели'] = '/land/hotels/';
         $this->breadLinks[$country->localRu] = '/land/hotels/'.$country->code.'/';
         $this->morphy = Yii::app()->morphy;
         $countryUp = mb_strtoupper($country->localRu, 'utf-8');
@@ -200,8 +200,8 @@ class LandingController extends FrontendController
         Yii::import('site.common.modules.hotel.models.*');
         $hotelClient = new HotelBookClient();
 
-        $this->breadLinks['список стран'] = '/land/';
-        $this->breadLinks['отели'] = '/land/hotels/';
+        $this->breadLinks['Страны'] = '/land/';
+        $this->breadLinks['Отели'] = '/land/hotels/';
 
 
         $criteria = new CDbCriteria();
@@ -287,7 +287,7 @@ class LandingController extends FrontendController
         if (!($country = $this->testCountry($countryCode)))
             return false;
 
-        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['Страны'] = '/land/';
         $this->breadLinks[$country->localRu] = '/land/'.$country->code.'/';
 
         $this->morphy = Yii::app()->morphy;
@@ -447,7 +447,7 @@ class LandingController extends FrontendController
     {
         if (!($country = $this->testCountry($countryCode)))
             return false;
-        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['Страны'] = '/land/';
         $this->breadLinks[$country->localRu] = '/land/'.$country->code.'/';
 
         $this->morphy = Yii::app()->morphy;
@@ -554,7 +554,7 @@ class LandingController extends FrontendController
 
     public function actionCountries()
     {
-        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['Страны'] = '/land/';
         $countries = Country::model()->findAll();
         $this->layout = 'static';
         $this->assignTitle('landCountries');
@@ -570,7 +570,7 @@ class LandingController extends FrontendController
     {
         if (!($country = $this->testCountry($countryCode)))
             return false;
-        $this->breadLinks['список стран'] = '/land/';
+        $this->breadLinks['Страны'] = '/land/';
         $this->breadLinks[$country->localRu] = '/land/'.$country->code.'/';
 
         $this->morphy = Yii::app()->morphy;

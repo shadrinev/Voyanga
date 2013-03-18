@@ -87,7 +87,7 @@
     $this->widget('common.components.BreadcrumbsVoyanga', array(
         'links'=>$this->breadLinks,
         'separator'=>' &rarr; ',
-        'homeLink'=>CHtml::link('Главная','/'),
+        'homeLink'=>CHtml::link('Voyanga','/'),
         'htmlOptions' => array(
             'class' => 'breadcrumbs'
         )

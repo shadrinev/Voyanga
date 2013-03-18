@@ -230,10 +230,13 @@ class landBestPriceSet
       if @directBestPriceData()
         if @directBestPriceData().date
           dateFrom = moment(@directBestPriceData().date)
-          console.log('SETTING UP BACK DATE',@directBestPriceData())
-          strDate = dateUtils.formatDayMonthYear(dateFrom._d)
+          strDate = dateUtils.formatDayMonth(dateFrom._d)
+          if @directBestPriceData().dateBack
+            strDate = strDate + ' - ' +dateUtils.formatDayMonth(moment(@directBestPriceData().dateBack)._d)
           return strDate
       return false
+
+
 
 
 
@@ -322,13 +325,33 @@ class landingCitySelector
     @bestDate = ko.computed =>
       if @currentCityCode()
         val = @landBestPriceSets[@currentCityCode()].bestDate()
-        console.log('valueeeee:',val, (typeof(val)))
         return val
       return false
+
     @selectedPrice = ko.computed =>
       if @currentCityCode()
         return @landBestPriceSets[@currentCityCode()].selectedPrice()
-    console.log('AFTER RENDER CitySelector',@citiesInfo)
+
+    @bestPrice = ko.computed =>
+      if @currentCityCode()
+        if @landBestPriceSets[@currentCityCode()].directBestPriceData()
+          return @landBestPriceSets[@currentCityCode()].directBestPriceData().price
+      return false
+    @selectedDates = ko.computed =>
+      dates = ''
+      if @currentCityCode()
+        if @landBestPriceSets[@currentCityCode()].directBestPrice()
+          if @landBestPriceSets[@currentCityCode()].directBestPriceData().date
+            dates = dateUtils.formatDayMonth(moment(@landBestPriceSets[@currentCityCode()].directBestPriceData().date)._d)
+          if @landBestPriceSets[@currentCityCode()].directBestPriceData().dateBack
+            dates = dates + ' - ' + dateUtils.formatDayMonth(moment(@landBestPriceSets[@currentCityCode()].directBestPriceData().dateBack)._d)
+        else
+          if @active()
+            dates = dateUtils.formatDayMonth(@active().date._d)
+            if @active().active()
+              dates = dates + ' - ' + dateUtils.formatDayMonth(@active().active().backDate._d)
+      return dates
+
 
   selectCity: (cityCode)=>
     console.log('select city')

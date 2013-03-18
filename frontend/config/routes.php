@@ -10,6 +10,7 @@ return array(
     'land/hotel/<hotelid:\w+>' => 'landing/hotelInfo/hotelId/<hotelid>',
     'land/<countrycode:\w+>' => 'landing/country/countryCode/<countrycode>',
     'land/<countrycode:\w+>/<citycode:\w+>' => 'landing/rtflight/countryCode/<countrycode>/cityCodeTo/<citycode>',
+    'land/<countrycode:\w+>/<citycode:\w+>/trip/OW' => 'landing/city/countryCode/<countrycode>/cityCodeTo/<citycode>',
     'land/<countrycode:\w+>/<citycode:\w+>/<citycodeto:\w+>' => 'landing/rtflight/countryCode/<countrycode>/cityCodeFrom/<citycode>/cityCodeTo/<citycodeto>',
     'land/<countrycode:\w+>/<citycode:\w+>/<citycodeto:\w+>/trip/OW' => 'landing/owflight/countryCode/<countrycode>/cityCodeFrom/<citycode>/cityCodeTo/<citycodeto>',
     //rule for parsing short urls
