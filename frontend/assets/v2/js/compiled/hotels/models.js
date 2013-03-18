@@ -299,6 +299,10 @@ HotelResult = (function() {
 
     this.smallMapUrl = __bind(this.smallMapUrl, this);
 
+    this.GAData = __bind(this.GAData, this);
+
+    this.GAKey = __bind(this.GAKey, this);
+
     this.select = __bind(this.select, this);
 
     this.back = __bind(this.back, this);
@@ -808,7 +812,7 @@ HotelResult = (function() {
     } else {
       ticketValidCheck = $.Deferred();
       ticketValidCheck.done(function(roomSet) {
-        var result, sp, _i, _len, _ref;
+        var result, _i, _len, _ref;
         result = {};
         result.module = 'Hotels';
         result.type = 'hotel';
@@ -826,16 +830,43 @@ HotelResult = (function() {
           }
           result.cots += room.cots * 1;
         }
-        if (_this.rawSP) {
-          sp = _this.rawSP;
-        } else {
-          sp = _this.parent.rawSP;
-        }
-        GAPush(['_trackEvent', 'Hotel_press_button_buy', sp.GAKey(), sp.GAData(), roomSet.parent.hotelName, true]);
+        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.GAKey(), _this.GAData(), roomSet.parent.hotelName, true]);
         return Utils.toBuySubmit([result]);
       });
       return this.parent.checkTicket(room, ticketValidCheck);
     }
+  };
+
+  HotelResult.prototype.GAKey = function() {
+    var sp;
+    if (this.rawSP) {
+      sp = this.rawSP;
+    } else {
+      sp = this.parent.rawSP;
+    }
+    return this.sp.city;
+  };
+
+  HotelResult.prototype.GAData = function() {
+    var passangers, result, room, sp, _i, _len, _ref;
+    if (this.rawSP) {
+      sp = this.rawSP;
+    } else {
+      sp = this.parent.rawSP;
+    }
+    result = "1";
+    passangers = [0, 0, 0];
+    _ref = sp.rooms;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      room = _ref[_i];
+      passangers[0] += room.adt * 1;
+      passangers[1] += room.chd * 1;
+      passangers[2] += room.cots * 1;
+    }
+    result += ", " + passangers.join(" - ");
+    result += ", " + moment(sp.checkIn).format('D.M.YYYY') + ' - ' + moment(sp.checkIn).add(sp.duration, 'days').format('D.M.YYYY');
+    result += ", " + moment(sp.checkIn).diff(moment(), 'days') + " - " + sp.duration;
+    return result;
   };
 
   HotelResult.prototype.smallMapUrl = function() {

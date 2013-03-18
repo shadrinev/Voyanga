@@ -636,14 +636,33 @@ class HotelResult
 
           result.cots += room.cots * 1
 
-        if @rawSP
-          sp = @rawSP
-        else
-          sp = @parent.rawSP
-        GAPush ['_trackEvent', 'Hotel_press_button_buy', sp.GAKey(),  sp.GAData(), roomSet.parent.hotelName, true]
+        GAPush ['_trackEvent', 'Hotel_press_button_buy', @GAKey(),  @GAData(), roomSet.parent.hotelName, true]
         Utils.toBuySubmit [result]
 
       @parent.checkTicket room, ticketValidCheck
+
+  GAKey: =>
+    if @rawSP
+      sp = @rawSP
+    else
+      sp = @parent.rawSP
+    @sp.city
+
+  GAData: =>
+    if @rawSP
+      sp = @rawSP
+    else
+      sp = @parent.rawSP
+    result = "1"
+    passangers = [0, 0, 0]
+    for room in sp.rooms
+      passangers[0] += room.adt*1
+      passangers[1] += room.chd*1
+      passangers[2] += room.cots*1
+    result += ", " + passangers.join(" - ")
+    result += ", " + moment(sp.checkIn).format('D.M.YYYY') + ' - ' + moment(sp.checkIn).add(sp.duration, 'days').format('D.M.YYYY')
+    result += ", " + moment(sp.checkIn).diff(moment(), 'days') + " - " + sp.duration
+    return result
 
 
   smallMapUrl: =>
