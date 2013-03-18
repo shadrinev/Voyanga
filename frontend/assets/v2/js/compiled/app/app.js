@@ -265,7 +265,9 @@ Application = (function(_super) {
 
   Application.prototype.route = function(route, name, callback) {
     return Backbone.Router.prototype.route.call(this, route, name, function() {
-      GAPush(['_trackPageview', '/' + window.location.hash.replace('#', '')]);
+      if (window.location.hash.replace('#', '') !== '') {
+        GAPush(['_trackPageview', '/' + window.location.hash.replace('#', '')]);
+      }
       this.trigger.apply(this, ['beforeroute:' + name].concat(_.toArray(arguments)));
       return callback.apply(this, arguments);
     });

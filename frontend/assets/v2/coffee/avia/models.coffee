@@ -919,7 +919,7 @@ class AviaSearchParams extends SearchParams
       @rtDate new Date(data.destinations[1].date)
 
   GAKey: =>
-    @dep() + "/" + @arr()
+    @parent.rawSP.destinations[0].departure_iata + "/" +     @parent.rawSP.destinations[0].arriaval_iata
 
   GAData: =>
     result = ''

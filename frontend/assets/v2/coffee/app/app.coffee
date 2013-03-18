@@ -188,7 +188,9 @@ class Application extends Backbone.Router
   # beforeroute event, cuz backbone cant do this for us
   route: (route, name, callback) ->
     Backbone.Router.prototype.route.call this, route, name, ->
-      GAPush ['_trackPageview', '/' + window.location.hash.replace('#', '')]
+      # index
+      if window.location.hash.replace('#', '') != ''
+        GAPush ['_trackPageview', '/' + window.location.hash.replace('#', '')]
       @trigger.apply(@, ['beforeroute:' + name].concat(_.toArray(arguments)))
       callback.apply(@, arguments)
 

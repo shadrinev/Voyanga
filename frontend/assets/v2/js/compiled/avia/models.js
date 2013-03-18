@@ -1290,7 +1290,7 @@ AviaSearchParams = (function(_super) {
   };
 
   AviaSearchParams.prototype.GAKey = function() {
-    return this.dep() + "/" + this.arr();
+    return this.parent.rawSP.destinations[0].departure_iata + "/" + this.parent.rawSP.destinations[0].arriaval_iata;
   };
 
   AviaSearchParams.prototype.GAData = function() {
