@@ -2,6 +2,5 @@
 var GAPush;
 
 GAPush = function(data) {
-  console.log("GA LOGGING", data);
   return _gaq.push(data);
 };
