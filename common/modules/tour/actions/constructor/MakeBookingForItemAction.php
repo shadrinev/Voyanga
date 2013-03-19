@@ -45,6 +45,8 @@ class MakeBookingForItemAction extends CAction
             if (!($pf instanceof FlightAdultPassportForm)
                 and !($pf instanceof FlightChildPassportForm)
                 and !($pf instanceof FlightInfantPassportForm)
+                and !($pf instanceof HotelAdultPassportForm)
+                and !($pf instanceof HotelChildPassportForm)
                )
             return false;
 

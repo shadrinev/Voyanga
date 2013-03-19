@@ -206,7 +206,6 @@ class MakeBookingAction extends CAction
                 }
                 elseif ($item instanceof HotelTripElement)
                 {
-                    //todo: discuss with Oleg
                     foreach ($item->rooms as $i=>$room)
                     {
                         $roomPassport = ($i==0) ? array(
@@ -221,6 +220,108 @@ class MakeBookingAction extends CAction
             }
             return true;
         }
+        else
+            return $this->fillOutAmbigousPassports();
+    }
+
+    private function fillOutAmbigousPassports()
+    {
+        $formsData = array();
+        $errorCounter = 0;
+        if (isset($_POST['FlightAdultPassportForm']))
+        {
+            foreach ($_POST['FlightAdultPassportForm'] as $j => $formData)
+            {
+                foreach ($formData as $i => $data)
+                {
+                    $adultPassport = new FlightAdultPassportForm();
+                    $adultPassport->attributes = $data;
+                    $adultPassport->handleFields();
+                    $formsData[$j][$i] = $adultPassport;
+                }
+            }
+        }
+        if (isset($_POST['FlightChildPassportForm']))
+        {
+            foreach ($_POST['FlightChildPassportForm'] as $j => $formData)
+            {
+                foreach ($formData as $i => $data)
+                {
+                    $childPassport = new FlightChildPassportForm();
+                    $childPassport->attributes = $data;
+                    $childPassport->handleFields();
+                    $formsData[$j][$i] = $childPassport;
+                }
+            }
+        }
+        if (isset($_POST['FlightInfantPassportForm']))
+        {
+            foreach ($_POST['FlightInfantPassportForm'] as $formData)
+            {
+                foreach ($formData as $i => $data)
+                {
+                    $infantPassport = new FlightInfantPassportForm();
+                    $infantPassport->attributes = $data;
+                    $infantPassport->handleFields();
+                    $formsData[$j][$i] = $infantPassport;
+                }
+            }
+        }
+
+        foreach ($formsData as $i => $datas)
+        {
+            foreach ($datas as $j => $data)
+            {
+                if (!$data->validate())
+                {
+                    $this->validationErrors['passports'][$i][$j] = $data->errors;
+                    $errorCounter++;
+                }
+            }
+        }
+
+        if ($errorCounter>0)
+            return false;
+
+        $i = 0;
+        foreach ($this->tripItems as $item)
+        {
+            if ($item instanceof FlightTripElement)
+            {
+                $adultsPassports = $this->getPassportsByType('FlightAdultPassportForm', $formsData[$i]);
+                $childrenPassports = $this->getPassportsByType('FlightChildPassportForm', $formsData[$i]);
+                $infantsPassports = $this->getPassportsByType('FlightInfantPassportForm', $formsData[$i]);
+                $item->setPassports($adultsPassports, $childrenPassports, $infantsPassports);
+                Yii::app()->shoppingCart->update($item, 1);
+            }
+            elseif ($item instanceof HotelTripElement)
+            {
+                $adultsPassports = $this->getPassportsByType('FlightAdultPassportForm', $formsData[$i]);
+                $childrenPassports = $this->getPassportsByType('FlightChildPassportForm', $formsData[$i]);
+
+                foreach ($item->rooms as $i=>$room)
+                {
+                    $roomPassport = ($i==0) ? array(
+                        'adults' => $adultsPassports,
+                        'children' => $childrenPassports
+                    ) : array();
+                    $roomPassports[] = $roomPassport;
+                }
+                $item->setPassports($this->bookingForm, $roomPassports);
+                Yii::app()->shoppingCart->update($item, 1);
+            }
+            $i++;
+        }
+        return true;
+    }
+
+    private function getPassportsByType($className, $elements)
+    {
+        $result = array();
+        foreach ($elements as $element)
+            if (get_class($element) == $className)
+                $result[] = $element;
+        return $result;
     }
 
     private function areNotAllItemsLinked()
