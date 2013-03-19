@@ -25,6 +25,12 @@
                 </td>
             </tr>
         <?php endif ?>
+        <script type="text/javascript">
+            $(function () {
+                $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
+                $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
+            });
+        </script>
         <?php $hotelCounter++ ?>
         <?php if (!$hotelHeaderPrinted): ?>
             <thead>
@@ -36,7 +42,7 @@
                     Фамилия
                 </td>
                 <td class="tdSex">
-
+                    Пол
                 </td>
                 <td class="tdBirthday">
                 </td>
@@ -53,13 +59,18 @@
         <tbody>
         <tr>
             <td class="tdName">
-                <input type="text" name="name">
+                <?php echo CHtml::textField('FlightAdultPassportForm['.$i.']firstName', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
             </td>
             <td class="tdLastname">
-                <input type="text" name="lastname">
+                <?php echo CHtml::textField('FlightAdultPassportForm['.$i.']lastName', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'PETROV')); ?>
             </td>
             <td class="tdSex">
-
+                <label class="male" for="male<?php echo $i ?>">
+                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                </label>
+                <label class="female" for="female<?php echo $i ?>">
+                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                </label>
             </td>
             <td class="tdBirthday">
 
@@ -125,11 +136,11 @@
                 <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
             </td>
             <td class="tdSex">
-                <label class="male" for="male">
-                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                <label class="male" for="male<?php echo $i ?>">
+                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
-                <label class="female" for="female">
-                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                <label class="female" for="female<?php echo $i ?>">
+                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             </td>
             <td class="tdBirthday">
@@ -164,7 +175,7 @@
                 ); ?>
             </td>
             <td class="tdDocumentNumber">
-                <input type="text" name="documentNumber">
+                <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
             </td>
             <td class="tdDuration">
                 <div class="divInputBirthday">
