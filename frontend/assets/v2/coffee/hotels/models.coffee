@@ -637,7 +637,7 @@ class HotelResult
 
           result.cots += room.cots * 1
 
-        GAPush ['_trackEvent', 'Hotel_press_button_buy', @GAKey(),  @GAData(), roomSet.parent.hotelName, true]
+        GAPush ['_trackEvent', 'Hotel_press_button_buy', @GAKey(),  @GAData(), roomSet.parent.hotelName]
         Utils.toBuySubmit [result]
 
       @parent.checkTicket room, ticketValidCheck

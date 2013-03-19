@@ -685,7 +685,7 @@ class AviaResultSet
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
-      GAPush ['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline, true]
+      GAPush ['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline]
 
       Utils.toBuySubmit [result]
       

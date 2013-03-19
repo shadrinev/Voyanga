@@ -960,7 +960,7 @@ AviaResultSet = (function() {
       result.type = 'avia';
       result.searchId = selection.cacheId;
       result.searchKey = selection.flightKey();
-      GAPush(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(), selection.GAData(), selection.airline, true]);
+      GAPush(['_trackEvent', 'Avia_press_button_buy', selection.GAKey(), selection.GAData(), selection.airline]);
       return Utils.toBuySubmit([result]);
     });
     return this.checkTicket(selection, ticketValidCheck);

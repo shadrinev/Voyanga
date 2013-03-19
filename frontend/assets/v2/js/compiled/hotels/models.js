@@ -827,7 +827,7 @@ HotelResult = (function() {
           }
           result.cots += room.cots * 1;
         }
-        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.GAKey(), _this.GAData(), roomSet.parent.hotelName, true]);
+        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.GAKey(), _this.GAData(), roomSet.parent.hotelName]);
         return Utils.toBuySubmit([result]);
       });
       return this.parent.checkTicket(room, ticketValidCheck);
