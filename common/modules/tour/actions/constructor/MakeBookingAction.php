@@ -69,18 +69,17 @@ class MakeBookingAction extends CAction
 
     private function weGotPassportsAndBooking()
     {
-        VarDumper::dump($this->passportForms); die();
         foreach ($this->passportForms as $i=>$pf)
         {
-            if (($pf instanceof FlightAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'][$i])))
+            if (($pf instanceof FlightAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'])))
                 return false;
-            if (($pf instanceof FlightChildPassportForm) and (!isset($_POST['FlightChildPassportForm'][$i])))
+            if (($pf instanceof FlightChildPassportForm) and (!isset($_POST['FlightChildPassportForm'])))
                 return false;
-            if (($pf instanceof FlightInfantPassportForm) and (!isset($_POST['FlightInfantPassportForm'][$i])))
+            if (($pf instanceof FlightInfantPassportForm) and (!isset($_POST['FlightInfantPassportForm'])))
                 return false;
-            if (($pf instanceof HotelAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'][$i])))
+            if (($pf instanceof HotelAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'])))
                 return false;
-            if (($pf instanceof HotelChildPassportForm) and (!isset($_POST['FlightChildPassportForm'][$i])))
+            if (($pf instanceof HotelChildPassportForm) and (!isset($_POST['FlightChildPassportForm'])))
                 return false;
         }
         return isset($_POST['BookingForm']);
