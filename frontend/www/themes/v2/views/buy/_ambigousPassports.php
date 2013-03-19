@@ -169,7 +169,7 @@
                 ); ?>
             </td>
             <td class="tdDocumentNumber">
-                <input type="text" name="documentNumber">
+                <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
             </td>
             <td class="tdDuration">
                 <div class="divInputBirthday">
