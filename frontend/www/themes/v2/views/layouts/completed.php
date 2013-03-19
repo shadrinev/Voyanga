@@ -39,6 +39,14 @@ Yii::app()->clientScript->registerScriptFile('/js/completed.js');
     <script type="text/javascript"
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
+    <script type="text/javascript">
+        $(function() {
+            $.ajax({
+                url: encodeURI('http://calltracker.mn-team.ru/sites/get/?input=ИМЯМАГАЗИНА;'+escape(document.referrer)+';'+escape(document.URL)),
+                dataType: 'script'
+            });
+        });
+    </script>
 </head>
 <body>
 <?php $this->renderPartial('//layouts/_counters'); ?>
@@ -63,5 +71,6 @@ foreach ($templates as $template)
 }
 ?>
 <?php echo $this->renderPartial('//layouts/_popup', array('theme'=>$theme)); ?>
+<div id="trackCode">11-11</div>
 </body>
 </html>

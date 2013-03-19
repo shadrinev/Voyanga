@@ -3090,7 +3090,8 @@ input.hotel-input {
 }
 
 .headBlockOne .center-block, .headBlockTwo .center-block {
-    max-width: 960px !important;
+    min-width: 960px !important;
+    width: 960px;
     color: #1d222b;
 }
 .headBlockOne h1 {
@@ -3348,18 +3349,18 @@ a.whereData span {
     text-decoration: underline;
 }
 .tableFlight.first.up .tdHostel {
-    width: 100px;
+    width: 92px;
 }
 .tableFlight.first.up td a, .tableFlight.second.up td a {
     color: #1c81bb;
     text-decoration: underline;
 }
 .tableFlight.first.up .tdFly {
-    width: 100px;
+    width: 92px;
     border-right: 1px solid #c9cece;
 }
 .tableFlight.second.up .tdFly, .tableFlight.second.up .tdHostel {
-    width: 100px;
+    width: 92px;
 }
 .tableFlight tr.select {
     background: #e6eaec;
@@ -3811,7 +3812,7 @@ a.whereData span {
 
 #socialButtons {
     float: left;
-    width: 300px;
+    width: 135px;
     position: relative;
     padding-left: 114px;
 }
