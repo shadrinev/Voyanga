@@ -25,6 +25,12 @@
                 </td>
             </tr>
         <?php endif ?>
+        <script type="text/javascript">
+            $(function () {
+                $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
+                $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
+            });
+        </script>
         <?php $hotelCounter++ ?>
         <?php if (!$hotelHeaderPrinted): ?>
             <thead>
@@ -53,10 +59,10 @@
         <tbody>
         <tr>
             <td class="tdName">
-                <input type="text" name="name">
+                <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
             </td>
             <td class="tdLastname">
-                <input type="text" name="lastname">
+                <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
             </td>
             <td class="tdSex">
                 <label class="male" for="male<?php echo $i ?>">
