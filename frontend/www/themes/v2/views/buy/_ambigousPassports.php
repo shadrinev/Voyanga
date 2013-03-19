@@ -59,10 +59,10 @@
                 <input type="text" name="lastname">
             </td>
             <td class="tdSex">
-                <label class="male" for="male">
+                <label class="male" for="male<?php echo $i ?>">
                     <input name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
-                <label class="female" for="female">
+                <label class="female" for="female<?php echo $i ?>">
                     <input name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             </td>
@@ -130,10 +130,10 @@
                 <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
             </td>
             <td class="tdSex">
-                <label class="male" for="male">
+                <label class="male" for="male<?php echo $i ?>">
                     <input name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
-                <label class="female" for="female">
+                <label class="female" for="female<?php echo $i ?>">
                     <input name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             </td>
