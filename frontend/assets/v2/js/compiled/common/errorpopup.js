@@ -81,7 +81,7 @@ ErrorPopup = (function(_super) {
     data = ERRORS[key];
     data.text = data.text.format(params);
     cat = 'error-' + activeModule;
-    GAPush(['_trackEvent', 'error-message', cat, data.text.substring(0, 200), '', true]);
+    GAPush(['_trackEvent', 'error-message', cat, data.text.substring(0, 200), void 0, true]);
     if (!this.onclose) {
       this.onclose = data.onclose;
     }

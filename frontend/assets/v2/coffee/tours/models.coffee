@@ -800,9 +800,9 @@ class ToursResultSet
           toBuy.push {module: 'Tours'}
           toBuy.push x.toBuyRequest()
       if hasHotel
-        GAPush ['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'),  GAHotelData.join('//'), GAAviaExtra.join('//')]
+        GAPush ['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'),  GAHotelData.join('//')]
       else if hasAvia
-        GAPush ['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'),  GAAviaData.join('//'), GAHotelExtra.join('//')]
+        GAPush ['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'),  GAAviaData.join('//')]
       Utils.toBuySubmit toBuy
       
     @checkTicket @data(), ticketValidCheck
@@ -989,13 +989,13 @@ class TourTripResultSet
     if @hasFlight && @items.length == 1
       # Один самолет -> пришли с авиа
       aviaResult = @items[0]
-      GAPush ['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline]
+      GAPush ['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData()]
       return
       
     if @hasHotel && @items.length == 1
       # Один отель -> пришли с отелей
       hotelResult = @items[0]
-      GAPush ['_trackEvent', 'Hotel_press_button_data', hotelResult.GAKey(), hotelResult.GAData(), hotelResult.hotelName]
+      GAPush ['_trackEvent', 'Hotel_press_button_data', hotelResult.GAKey(), hotelResult.GAData()]
       return
 
     # almost copy of tobuy
@@ -1020,12 +1020,34 @@ class TourTripResultSet
         hasHotel = true
 
     if hasHotel
-      GAPush ['_trackEvent', 'Trip_press_button_data', GAHotelKeys.join('//'),  GAHotelData.join('//'), GAHotelExtra.join('//')]
+      GAPush ['_trackEvent', 'Trip_press_button_data', GAHotelKeys.join('//'),  GAHotelData.join('//')]
     else if hasAvia
-      GAPush ['_trackEvent', 'Avia_press_button_data', GAAviaKeys.join('//'),  GAAviaData.join('//'), GAAviaExtra.join('//')]
+      GAPush ['_trackEvent', 'Avia_press_button_data', GAAviaKeys.join('//'),  GAAviaData.join('//')]
 
 
-  trackBuyDoneAvia: (aviaResult, orderId, total) =>
+  trackBuyDoneAvia: (aviaResult, orderId) =>
+    GAPush ['_addItem',
+      orderId,             # Ваш внутренний ID транзакции (номер заказа) - тот же, что и в методе _addTrans.
+      aviaResult.GAKey(),          # Буквенные коды аэропорта города отправления, аэропорта приземления. Через слэш.
+      aviaResult.GAData(),           # %составные детали перелета%
+      'Avia',             # Константа - Категория товаров - Авиабилеты.
+      Math.round(aviaResult.price/aviaResult.GAAdults()),            # Стоимость перелета (прямого, или всех составных перелетов) на одного пассажира - Целочисленное значение, рублей
+      aviaResult.GAAdults()          # Количество взрослых пассажиров
+      ]
+    
+
+  trackBuyDoneHotel: (hotelResult, orderId) =>
+    GAPush ['_addItem',
+      orderId,  # Ваш внутренний ID транзакции (номер заказа) - тот же, что и в методе _addTrans.
+      hotelResult.GAKey(), # Город бронирования отеля. Если у городов в системе есть ID то лучше подставлять ID, а город перенести в следующий слот
+      hotelResult.GAData(), # Город бронирования, если в предыдущем слоте указан ID города бронирования  
+      'Hotel',      # Константа - Категория товаров продаж - отели.
+      hotelResult.roomSets()[0].pricePerNight,       # Стоимость бронирования за одну ночь
+      hotelResult.duration          # Количество ночей
+      ]
+
+
+  trackBuyDone: (orderId, total) =>
     GAPush ['_addTrans',
       orderId,             # ID транзакции от Воянги (номер заказа)
       'BankCard',         # Выбранный способ оплаты (BankCard)
@@ -1038,32 +1060,12 @@ class TourTripResultSet
       ]
 
 
-    GAPush ['_addItem',
-      '1234',             # Ваш внутренний ID транзакции (номер заказа) - тот же, что и в методе _addTrans.
-      aviaResult.GAKey(),          # Буквенные коды аэропорта города отправления, аэропорта приземления. Через слэш.
-      aviaResult.GAData(),           # %составные детали перелета%
-      'Avia',             # Константа - Категория товаров - Авиабилеты.
-      '10000',            # Стоимость перелета (прямого, или всех составных перелетов) на одного пассажира - Целочисленное значение, рублей
-      '2'                 # Количество взрослых пассажиров
-      ]
-
+    for item in @items
+      if item.isFlight
+        @trackBuyDoneAvia item, orderId
+      if item.isHotel
+        @trackBuyDoneHotel item, orderId
     GAPush ['_trackTrans']
-
-    
-
-  trackBuyDone: (orderId, total) =>
-    if @hasFlight && @items.length == 1
-      # Один самолет -> пришли с авиа
-      aviaResult = @items[0]
-      @trackBuyDoneAvia @items[0], orderId, total
-      GAPush ['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline, true]
-      return
-      
-    if @hasHotel && @items.length == 1
-      # Один отель -> пришли с отелей
-      hotelResult = @items[0]
-      GAPush ['_trackEvent', 'Hotel_press_button_data', hotelResult.GAKey(), hotelResult.GAData(), hotelResult.hotelName, true]
-      return
 
 
 

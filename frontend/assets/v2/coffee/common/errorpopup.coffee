@@ -59,7 +59,7 @@ class ErrorPopup extends GenericPopup
     data.text = data.text.format params
 
     cat = 'error-' + activeModule
-    GAPush ['_trackEvent', 'error-message', cat, data.text.substring(0,200), '', true]
+    GAPush ['_trackEvent', 'error-message', cat, data.text.substring(0,200), undefined, true]
 
     
     if !@onclose

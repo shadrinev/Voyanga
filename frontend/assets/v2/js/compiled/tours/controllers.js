@@ -61,7 +61,7 @@ ToursController = (function() {
       _this.stacked.on('inner-template', function(data) {
         return _this.trigger('inner-template', data);
       });
-      GAPush(['_trackEvent', 'Trip_show_search_results', _this.searchParams.GAKey(), _this.searchParams.GAData(), "", true]);
+      GAPush(['_trackEvent', 'Trip_show_search_results', _this.searchParams.GAKey(), _this.searchParams.GAData()]);
       _this.trigger("results", _this.stacked);
       _this.render('results', _this.stacked);
       return ko.processAllDeferredBindingUpdates();

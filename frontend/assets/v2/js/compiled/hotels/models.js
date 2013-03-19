@@ -827,7 +827,7 @@ HotelResult = (function() {
           }
           result.cots += room.cots * 1;
         }
-        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.GAKey(), _this.GAData(), roomSet.parent.hotelName]);
+        GAPush(['_trackEvent', 'Hotel_press_button_buy', _this.GAKey(), _this.GAData()]);
         return Utils.toBuySubmit([result]);
       });
       return this.parent.checkTicket(room, ticketValidCheck);
@@ -857,7 +857,12 @@ HotelResult = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
       adt = room.adultCount || room.adt;
-      chd = room.childCount || room.chd;
+      if (room.childCount != null) {
+        chd = room.childCount;
+      } else {
+        chd = room.chd;
+      }
+      console.log(room, "!", room.childCount, "!", room.chd);
       passangers[0] += adt * 1;
       passangers[1] += chd * 1;
       passangers[2] += room.cots * 1;
