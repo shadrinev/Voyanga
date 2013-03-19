@@ -1565,12 +1565,18 @@ TourTripResultSet = (function() {
   };
 
   TourTripResultSet.prototype.trackBuyDoneHotel = function(hotelResult, orderId) {
-    return GAPush(['_addItem', orderId, hotelResult.GAKey(), hotelResult.GAData(), 'Hotel', hotelResult.roomSets()[0].pricePerNight, hotelResult.duration]);
+    var ppn;
+    if (this.tour) {
+      ppn = Math.ceil(hotelResult.roomSets()[0].discountPrice / hotelResult.duration);
+    } else {
+      ppn = hotelResult.roomSets()[0].pricePerNight;
+    }
+    return GAPush(['_addItem', orderId, hotelResult.GAKey(), hotelResult.GAData(), 'Hotel', ppn, hotelResult.duration]);
   };
 
-  TourTripResultSet.prototype.trackBuyDone = function(orderId, total) {
+  TourTripResultSet.prototype.trackBuyDone = function(orderId) {
     var item, _i, _len, _ref;
-    GAPush(['_addTrans', orderId, 'BankCard', total, '', '', '', '', '']);
+    GAPush(['_addTrans', orderId, 'BankCard', this.totalCost, '', '', '', '', '']);
     _ref = this.items;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];

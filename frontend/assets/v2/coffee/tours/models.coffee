@@ -1037,21 +1037,26 @@ class TourTripResultSet
     
 
   trackBuyDoneHotel: (hotelResult, orderId) =>
+    if @tour
+      ppn = Math.ceil(hotelResult.roomSets()[0].discountPrice / hotelResult.duration)
+    else
+      ppn = hotelResult.roomSets()[0].pricePerNight
+
     GAPush ['_addItem',
       orderId,  # Ваш внутренний ID транзакции (номер заказа) - тот же, что и в методе _addTrans.
       hotelResult.GAKey(), # Город бронирования отеля. Если у городов в системе есть ID то лучше подставлять ID, а город перенести в следующий слот
       hotelResult.GAData(), # Город бронирования, если в предыдущем слоте указан ID города бронирования  
       'Hotel',      # Константа - Категория товаров продаж - отели.
-      hotelResult.roomSets()[0].pricePerNight,       # Стоимость бронирования за одну ночь
+      ppn,       # Стоимость бронирования за одну ночь
       hotelResult.duration          # Количество ночей
       ]
 
 
-  trackBuyDone: (orderId, total) =>
+  trackBuyDone: (orderId) =>
     GAPush ['_addTrans',
       orderId,             # ID транзакции от Воянги (номер заказа)
       'BankCard',         # Выбранный способ оплаты (BankCard)
-      total,            # Общая стоимость транзакции - Целочисленное значение, рублей
+      @totalCost,            # Общая стоимость транзакции - Целочисленное значение, рублей
       '',                 # tax - Пустое поле
       '',                 # shipping - Пустое поле
       '',                 # city - Пустое поле

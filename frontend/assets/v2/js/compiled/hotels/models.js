@@ -862,7 +862,6 @@ HotelResult = (function() {
       } else {
         chd = room.chd;
       }
-      console.log(room, "!", room.childCount, "!", room.chd);
       passangers[0] += adt * 1;
       passangers[1] += chd * 1;
       passangers[2] += room.cots * 1;
