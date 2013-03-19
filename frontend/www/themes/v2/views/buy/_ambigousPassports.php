@@ -1,14 +1,16 @@
-<?php $flightHeaderPrinted = false; $hotelHeaderPrinted = false; $flightCounter = 0; $hotelCounter = 0; $curNumCounter = 0; $curNum = 0; ?>
+<?php $flightHeaderPrinted = false; $hotelHeaderPrinted = false; $curEl = -1; $flightCounter = 0; $hotelCounter = 0; $curNumCounter = 0; $curNum = 0; ?>
 <div class="oneBlock">
 <!--=== ===-->
 <div class="paybuyContent">
 <table class="infoPassengers">
 <?php foreach ($passportForms as $i => $model): ?>
     <?php if (($model instanceof HotelAdultPassportForm) or ($model instanceof HotelChildPassportForm)): ?>
+        <?php $prefix = ($model instanceof HotelAdultPassportForm) ? 'FlightAdultPassportForm' : 'FlightChildPassportForm' ?>
         <?php if (!$hotelHeaderPrinted): ?>
             <tr>
                 <td colspan="7">
                     <h2><span class="ico-hotel"></span><?php echo $headers['hotels'][$hotelCounter]['common'] ?></h2>
+                    <?php $curEl++; ?>
                 </td>
             </tr>
         <?php endif ?>
@@ -16,11 +18,12 @@
             <tr>
                 <td colspan="7">
                     <h3><?php echo $headers['hotels'][$hotelCounter]['rooms'][$curNum]['name'] ?></h3>
-                    <?php if (++$curNumCounter >= $headers['hotels'][$hotelCounter]['rooms'][$curNum]['counter'])
+                    <?php if (++$curNumCounter > $headers['hotels'][$hotelCounter]['rooms'][$curNum]['counter'])
                     {
                         $curNumCounter = 0;
                         $curNum++;
-                    }?>
+                    }
+                    ?>
                     </h3>
                 </td>
             </tr>
@@ -31,7 +34,6 @@
                 $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
             });
         </script>
-        <?php $hotelCounter++ ?>
         <?php if (!$hotelHeaderPrinted): ?>
             <thead>
             <tr>
@@ -59,30 +61,32 @@
         <tbody>
         <tr>
             <td class="tdName">
-                <?php echo CHtml::textField('FlightAdultPassportForm['.$i.']firstName', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
+                <?php echo CHtml::textField($prefix.'['.$curEl.']['.$i.'][firstName]','', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
             </td>
             <td class="tdLastname">
-                <?php echo CHtml::textField('FlightAdultPassportForm['.$i.']lastName', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'PETROV')); ?>
+                <?php echo CHtml::textField($prefix.'['.$curEl.']['.$i.'][lastName]','', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'PETROV')); ?>
             </td>
             <td class="tdSex">
                 <label class="male" for="male<?php echo $i ?>">
-                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                    <input name="<?php echo $prefix ?>[<?php echo $curEl?>][<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
                 <label class="female" for="female<?php echo $i ?>">
-                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                    <input name="<?php echo $prefix ?>[<?php echo $curEl?>][<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             </td>
             <td class="tdBirthday">
-
+                <?php echo CHtml::hiddenField($prefix.'['.$curEl.']['.$i.'][birthdayDay]', '01'); ?>
+                <?php echo CHtml::hiddenField($prefix.'['.$curEl.']['.$i.'][birthdayMonth]', '01'); ?>
+                <?php echo CHtml::hiddenField($prefix.'['.$curEl.']['.$i.'][birthdayYear]', '1980'); ?>
             </td>
             <td class="tdNationality">
-
+                <input type='hidden' name="<?php echo $prefix.'['.$curEl.']['.$i.'][countryId]' ?>" value="174">
             </td>
             <td class="tdDocumentNumber">
-
+                <?php echo CHtml::hiddenField($prefix.'['.$curEl.']['.$i.'][seriesNumber]', '123'); ?>
             </td>
             <td class="tdDuration">
-
+                <input type="hidden" value="1" name="<?php echo $prefix.'['.$curEl.']['.$i.'][srok]' ?>">
             </td>
         </tr>
         </tbody>
@@ -93,8 +97,8 @@
             <tr>
                 <td colspan="7">
                     <h3>Данные пассажиров</h3>
-
                     <h2><span class="ico-fly"></span><?php echo $headers['flights'][$flightCounter++]; ?></h2>
+                    <?php $curEl++; ?>
                 </td>
             </tr>
         <?php endif ?>
@@ -130,32 +134,32 @@
         <tbody>
         <tr>
             <td class="tdName">
-                <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i)); ?>
+                <?php echo CHtml::activeTextField($model, "[$curEl][$i]firstName", array('id' => 'syncTranslitFirstName' . $i)); ?>
             </td>
             <td class="tdLastname">
-                <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
+                <?php echo CHtml::activeTextField($model, "[$curEl][$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
             </td>
             <td class="tdSex">
                 <label class="male" for="male<?php echo $i ?>">
-                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
+                    <input name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
                 <label class="female" for="female<?php echo $i ?>">
-                    <input name="FlightAdultPassportForm[<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
+                    <input name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i ?>][genderId]" type="radio" name="sex" id="female<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_FEMALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_FEMALE) echo 'checked="checked"' ?>>
                 </label>
             </td>
             <td class="tdBirthday">
                 <div class="divInputBirthday">
-                    <?php echo CHtml::activeTextField($model, "[$i]birthdayDay", array(
+                    <?php echo CHtml::activeTextField($model, "[$curEl][$i]birthdayDay", array(
                         "placeholder" => "ДД",
                         "class" => "dd next",
                         "maxlength" => "2"
                     )); ?>
-                    <?php echo CHtml::activeTextField($model, "[$i]birthdayMonth", array(
+                    <?php echo CHtml::activeTextField($model, "[$curEl][$i]birthdayMonth", array(
                         "placeholder" => "ММ",
                         "class" => "mm next",
                         "maxlength" => "2"
                     )); ?>
-                    <?php echo CHtml::activeTextField($model, "[$i]birthdayYear", array(
+                    <?php echo CHtml::activeTextField($model, "[$curEl][$i]birthdayYear", array(
                         "placeholder" => "ГГГГ",
                         "class" => "yy",
                         "maxlength" => "4"
@@ -165,7 +169,7 @@
             <td class="tdNationality">
                 <?php echo CHtml::activeDropDownList(
                     $model,
-                    "[$i]countryId",
+                    "[$curEl][$i]countryId",
                     Country::model()->findAllOrderedByPopularity(),
                     array(
                         'data-placeholder' => "Страна...",
@@ -175,21 +179,21 @@
                 ); ?>
             </td>
             <td class="tdDocumentNumber">
-                <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
+                <?php echo CHtml::activeTextField($model, "[$curEl][$i]seriesNumber"); ?>
             </td>
             <td class="tdDuration">
                 <div class="divInputBirthday">
-                    <?php echo CHtml::activeTextField($model, "[$i]expirationDay", array(
+                    <?php echo CHtml::activeTextField($model, "[$curEl][$i]expirationDay", array(
                         "placeholder" => "ДД",
                         "class" => "dd next",
                         "maxlength" => "2"
                     )); ?>
-                    <?php echo CHtml::activeTextField($model, "[$i]expirationMonth", array(
+                    <?php echo CHtml::activeTextField($model, "[$curEl][$i]expirationMonth", array(
                         "placeholder" => "ММ",
                         "class" => "mm next",
                         "maxlength" => "2"
                     )); ?>
-                    <?php echo CHtml::activeTextField($model, "[$i]expirationYear", array(
+                    <?php echo CHtml::activeTextField($model, "[$curEl][$i]expirationYear", array(
                         "placeholder" => "ГГГГ",
                         "class" => "yy",
                         "maxlength" => "4"
@@ -217,9 +221,9 @@
             </td>
             <td class="tdDuration">
                 <input type="hidden" value="0"
-                       name="FlightAdultPassportForm[<?php echo $i;?>][srok]">
+                       name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i;?>][srok]">
                 <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked"
-                       name="FlightAdultPassportForm[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
+                       name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
         </tbody>
