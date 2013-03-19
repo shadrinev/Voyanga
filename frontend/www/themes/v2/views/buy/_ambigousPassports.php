@@ -59,10 +59,10 @@
         <tbody>
         <tr>
             <td class="tdName">
-                <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
+                <?php echo CHtml::textField('FlightAdultPassportForm['.$i.']firstName', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
             </td>
             <td class="tdLastname">
-                <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
+                <?php echo CHtml::textField('FlightAdultPassportForm['.$i.']lastName', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'PETROV')); ?>
             </td>
             <td class="tdSex">
                 <label class="male" for="male<?php echo $i ?>">
