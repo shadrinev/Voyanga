@@ -1437,6 +1437,11 @@ TourTripResultSet = (function() {
         aviaResult.sort();
         aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
         aviaResult.totalPeopleGen = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек');
+        if (aviaResult.totalPeople !== '1 человек') {
+          aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen;
+        } else {
+          aviaResult.totalPeopleGenAlmost = '1 человек';
+        }
         aviaResult.rawSP = item.searchParams;
         if (_this.roundTrip) {
           _this.cities.push({
@@ -1478,6 +1483,11 @@ TourTripResultSet = (function() {
         _this.lastHotel.rawSP = item.searchParams;
         _this.lastHotel.totalPeople = Utils.wordAfterNum(totalPeople, 'человек', 'человека', 'человек');
         _this.lastHotel.totalPeopleGen = Utils.wordAfterNum(totalPeople, 'человека', 'человек', 'человек');
+        if (_this.lastHotel.totalPeople !== '1 человек') {
+          _this.lastHotel.totalPeopleGenAlmost = 'за ' + _this.lastHotel.totalPeopleGen;
+        } else {
+          _this.lastHotel.totalPeopleGenAlmost = '1 человек';
+        }
         _this.items.push(_this.lastHotel);
         _this.totalCostWithDiscount += _this.lastHotel.roomSets()[0].discountPrice;
         return _this.totalCostWithoutDiscount += _this.lastHotel.roomSets()[0].price;

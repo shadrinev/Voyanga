@@ -621,15 +621,18 @@ class AviaResultSet
     _interlines = {}
     for flightVoyage in rawVoyages
       key = ''
+      if flightVoyage.serviceClass == 'E'
+        key = 'E'
       for flight in flightVoyage.flights
         for part in flight.flightParts
           key += part.datetimeBegin
           key += part.datetimeEnd
-       if _interlines[key]
+
+      if _interlines[key]
         if _interlines[key].price > flightVoyage.price
           _interlines[key] = flightVoyage
-       else
-          _interlines[key] = flightVoyage
+      else
+        _interlines[key] = flightVoyage
 
     filteredVoyages = []
     for key, item of _interlines

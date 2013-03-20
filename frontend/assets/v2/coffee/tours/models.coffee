@@ -933,6 +933,10 @@ class TourTripResultSet
         aviaResult.sort()
         aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
         aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'
+        if (aviaResult.totalPeople != '1 человек')
+          aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen
+        else
+          aviaResult.totalPeopleGenAlmost = '1 человек'
         aviaResult.rawSP = item.searchParams
         if (@roundTrip)
           @cities.push {isLast: false, cityName: item.flights[0].departureCity}
@@ -955,6 +959,10 @@ class TourTripResultSet
         @lastHotel.rawSP = item.searchParams
         @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
         @lastHotel.totalPeopleGen = Utils.wordAfterNum totalPeople, 'человека', 'человек', 'человек'
+        if (@lastHotel.totalPeople  != '1 человек')
+          @lastHotel.totalPeopleGenAlmost = 'за ' + @lastHotel.totalPeopleGen
+        else
+          @lastHotel.totalPeopleGenAlmost = '1 человек'
         @items.push(@lastHotel)
         @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
