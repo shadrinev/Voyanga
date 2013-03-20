@@ -53,9 +53,10 @@ class RSentryComponent extends CApplicationComponent
             $this->_client->captureException($event->exception);
     }
 
-    public function logException($exception)
+    public function logException($exception, $param=null)
     {
+        // param => array('culprit' => 'test') => to get unique
         if (!($exception instanceof CHttpException))
-            $this->_client->captureException($exception);
+            $this->_client->captureException($exception, $param);
     }
 }
