@@ -2108,7 +2108,7 @@ input.hotel-input {
     border-radius: 6px 6px 6px 6px;
     -webkit-border-radius:  6px 6px 6px 6px;
     -moz-border-radius: 6px 6px 6px 6px;
-    box-shadow: 0 1px 1px rgba(26, 27, 31, 0.6);
+
     color: #1D222B;
     overflow: hidden;
     position: relative;
@@ -2119,12 +2119,13 @@ input.hotel-input {
 }
 .allTicketsDIV .tdPrice {
     border-left: 1px solid #DBDCDC;
-    padding-left: 20px;
-    width: 155px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
     height: 100%;
+    padding-left: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 165px;
+    z-index: 3;
 }
 .allTicketsDIV .tdPrice .statusOrder {
     font-size: 11px;
@@ -2264,7 +2265,7 @@ input.hotel-input {
     margin-top: -12px;
     position: absolute;
     top: 50%;
-    width: 100%;
+    width: 155px;
 }
 .allTicketsDIV .tdPrice .people {
     color: #1D222B;
@@ -2272,7 +2273,7 @@ input.hotel-input {
     height: 14px;
     line-height: 14px;
     position: absolute;
-    top: -18px;
+    top: 8px;
 }
 .allTicketsDIV .price {
     color: #1D222B;
@@ -2280,6 +2281,8 @@ input.hotel-input {
     font-size: 22px;
     height: 20px;
     margin-right: 5px;
+    position: absolute;
+    top: -16px;
 }
 .allTicketsDIV .price .rur {
     font-size: 21px;
@@ -2292,6 +2295,9 @@ input.hotel-input {
 .allTicketsDIV .priceSale {
     display: inline-block;
     height: 30px;
+    position: absolute;
+    right: 5px;
+    top: -12px;
     vertical-align: middle;
 }
 .allTicketsDIV .icoTours {
@@ -2347,9 +2353,9 @@ input.hotel-input {
 }
 .allTicketsDIV .ticketBox {
     position: relative;
-    overflow: hidden;
     border-top: 1px solid #808186;
     margin-top: -1px;
+    border-bottom: 1px solid rgba(26, 27, 31, 0.6);
 }
 .allTicketsDIV .ticketBox.first-child  {
     border-radius: 6px 6px 0px 0px;
@@ -2394,7 +2400,7 @@ input.hotel-input {
     margin-right: -5px;
 }
 .allTicketsDIV .ticketBox:hover {
-     background: #eceff1;
+
  }
 .allTicketsDIV .ticketBox.inactive:hover {
     background: inherit !important;
@@ -3867,4 +3873,20 @@ a.whereData span {
     width: 746px;
     height: 700px;
     margin: 0 auto;
+}
+
+#trackCode {
+    background: none repeat scroll 0 0 #DEDEDE;
+    border: 1px solid #FFFFFF;
+    border-radius: 3px 3px 3px 3px;
+    height: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 0 13px;
+    position: absolute;
+    right: 5px;
+    text-align: center;
+    top: 4px;
+    z-index: 100;
+    visibility: hidden;
 }

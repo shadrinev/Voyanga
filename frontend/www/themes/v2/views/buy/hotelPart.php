@@ -43,5 +43,7 @@
         </div>
         <div class="moreDetails"><a href="#" data-bind="click: showDetails">Подробнее</a></div>
     </div>
+        <span class="lb"></span>
+        <span class="rb"></span>
     </div>
 </script>

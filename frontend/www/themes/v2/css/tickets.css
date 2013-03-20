@@ -45,6 +45,60 @@
 	display: block;
 	z-index: 1;
 }
+.allTicketsDIV .lv {
+    background: url("../images/border-new-bilets.png") no-repeat scroll 0 bottom transparent;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 10px;
+    z-index: 2;
+}
+.allTicketsDIV .rv {
+    background: url("../images/border-new-bilets.png") no-repeat scroll -10px bottom transparent;
+    display: block;
+    height: 100%;
+    right: 0;
+    position: absolute;
+    top: 0;
+    width: 10px;
+    z-index: 2;
+}
+.allTicketsDIV .lt {
+    background: url("../images/border-new-bilets.png") no-repeat 0px 0px;
+    position: absolute; top: 0px; left: 0px;
+    width: 10px; height: 5px;
+    display: block;
+    z-index: 3;
+}
+.allTicketsDIV .rt {
+    background: url("../images/border-new-bilets.png") no-repeat -10px 0px;
+    position: absolute; top: 0px; right: 0px;
+    width: 10px; height: 5px;
+    display: block;
+    z-index: 3;
+}
+.ticketBox .lb {
+    background: url("../images/stick-new-bilets.png") no-repeat scroll 0 0 transparent;
+    bottom: -4px;
+    display: block;
+    height: 7px;
+    left: 0;
+    position: absolute;
+    width: 10px;
+    z-index: 3;
+}
+.ticketBox .rb {
+    background: url("../images/stick-new-bilets.png") no-repeat scroll -10px 0 transparent;
+    bottom: -4px;
+    display: block;
+    height: 7px;
+    position: absolute;
+    right: 0;
+    width: 10px;
+    z-index: 3;
+}
 .ticket-items .content {
 	position: relative; z-index: 10;
 	padding: 0 160px 0px 120px;

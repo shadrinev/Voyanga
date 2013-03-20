@@ -60,12 +60,12 @@ $dayFormat = "d|n|w";
             </tbody>
         </table>
         <img src="images/vertLine.png" class="hr">
-        <h2 style="margin-bottom: 20px"><?php echo $ticket->hotelName;?></h2>
+        <h2 style="margin-bottom: 20px"><?php echo $ticket->hotelName;?> <?php echo $ticket->categoryId.'*';?></h2>
         <table>
             <tr>
                 <td class="tdMaps">
                     <div class="maps">
-                        <img src="//maps.googleapis.com/maps/api/staticmap?zoom=15&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $ticket->latitude.','.$ticket->longitude;?>&sensor=false">
+                        <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=310x259&maptype=roadmap&markers=icon:http://test.voyanga.com/themes/v2/images/pin1.png%7Ccolor:red%7Ccolor:red%7C%7C<?php echo $ticket->latitude.','.$ticket->longitude;?>&sensor=false">
                     </div>
                 </td>
                 <td class="tdInfo">

@@ -43,7 +43,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <script type="text/javascript">
         $(function() {
             $.ajax({
-                url: encodeURI('http://calltracker.mn-team.ru/sites/get/?input=ИМЯМАГАЗИНА;'+escape(document.referrer)+';'+escape(document.URL)),
+                url: encodeURI('http://calltracker.mn-team.ru/sites/get/?input=voyanga;'+escape(document.referrer)+';'+escape(document.URL)),
                 dataType: 'script'
             });
         });
