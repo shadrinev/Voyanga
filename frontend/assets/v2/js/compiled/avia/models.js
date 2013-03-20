@@ -889,6 +889,9 @@ AviaResultSet = (function() {
     for (_i = 0, _len = rawVoyages.length; _i < _len; _i++) {
       flightVoyage = rawVoyages[_i];
       key = '';
+      if (flightVoyage.serviceClass === 'E') {
+        key = 'E';
+      }
       _ref = flightVoyage.flights;
       for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
         flight = _ref[_j];
