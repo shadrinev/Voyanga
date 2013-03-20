@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Hotels',
+	'Dictionaries',
 );
 
 $this->menu=array(
@@ -8,103 +8,256 @@ $this->menu=array(
 	array('label'=>'Manage Event','url'=>array('admin')),
 );
 ?>
-
-<h1>Сопоставление русских названий и названий hotelbook</h1>
-<form method="get">
-    <input type="text" name="filterName" value="<?php echo $filterName; ?>">
-    <select name="rusId" value="<?php echo $rusId; ?>">
-        <option value="1">не важно</option>
-        <option value="2">null</option>
-        <option value="3">not null</option>
-    </select>
-    <input type="submit" name="smb" value="Ok">
-</form>
+<script type="text/javascript" src="http://knockoutjs.com/js/knockout-2.2.0.js"></script>
 <script>
-    function convertRoomNameToCanoical(){
-        var roomName = $('#originalRoomName').val()
-        if(roomName){
-            $.ajax({
-                url: "/admin/hotels/roomNames/getCanonicalName/roomName/"+ roomName,
-                dataType: 'json',
-                type: 'post',
-                beforeSend: function(){
-                    $('#roomNameCanonicalResult').val('Идет запрос...');
-                },
-                success: function(data, textStatus, jqXHR){
-                    $('#roomNameCanonicalResult').val(data.roomNameCanonical);
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    $('#roomNameCanonicalResult').val('Ошибка!');
-                }
-            });
-        }
+
+    var CityManager = {};
+    CityManager.cityInfo = {};
+    CityManager.airportInfo = {};
+    CityManager.init = function(){
+        CityManager.ajaxSending = false;
+        CityManager.cityInfo.set = ko.observable(true);
+        CityManager.cityInfo.code = ko.observable('');
+        CityManager.cityInfo.lacalRu = ko.observable('');
+        CityManager.cityInfo.lacalEn = ko.observable('');
+        CityManager.cityInfo.countryCode = ko.observable('');
+        CityManager.cityInfo.countryName = ko.observable('');
+        CityManager.cityInfo.position = ko.observable(0);
+        CityManager.cityInfo.countAirports = ko.observable(1);
+        CityManager.cityInfo.latitude = ko.observable('');
+        CityManager.cityInfo.longitude = ko.observable('');
+        CityManager.cityInfo.hotelbookId = ko.observable('');
+        CityManager.cityInfo.metaphoneRu = ko.observable('');
+        CityManager.cityInfo.caseNom = ko.observable('');
+        CityManager.cityInfo.caseGen = ko.observable('');
+        CityManager.cityInfo.caseDat = ko.observable('');
+        CityManager.cityInfo.caseAcc = ko.observable('');
+        CityManager.cityInfo.caseIns = ko.observable('');
+        CityManager.cityInfo.casePre = ko.observable('');
+        CityManager.hotelbookIds = ko.observableArray();
+        CityManager.airportInfo.set = ko.observable(true);
+        CityManager.airportInfo.code = ko.observable('');
+        CityManager.airportInfo.icaoCode = ko.observable('');
+        CityManager.airportInfo.lacalRu = ko.observable('');
+        CityManager.airportInfo.lacalEn = ko.observable('');
+        CityManager.airportInfo.cityCode = ko.observable('');
+        CityManager.airportInfo.cityName = ko.observable('');
+        CityManager.airportInfo.position = ko.observable(0);
+        CityManager.airportInfo.latitude = ko.observable('');
+        CityManager.airportInfo.longitude = ko.observable('');
+        CityManager.airportInfo.site = ko.observable('');
     }
+
+    CityManager.updateInfo = function(data){
+        CityManager.ajaxSending = false;
+        CityManager.cityInfo.set = ko.observable(true);
+        CityManager.cityInfo.code = ko.observable('');
+        CityManager.cityInfo.lacalRu = ko.observable('');
+        CityManager.cityInfo.lacalEn = ko.observable('');
+        CityManager.cityInfo.countryCode = ko.observable('');
+        CityManager.cityInfo.countryName = ko.observable('');
+        CityManager.cityInfo.position = ko.observable(0);
+        CityManager.cityInfo.countAirports = ko.observable(1);
+        CityManager.cityInfo.latitude = ko.observable('');
+        CityManager.cityInfo.longitude = ko.observable('');
+        CityManager.cityInfo.hotelbookId = ko.observable('');
+        CityManager.cityInfo.metaphoneRu = ko.observable('');
+        CityManager.cityInfo.caseNom = ko.observable('');
+        CityManager.cityInfo.caseGen = ko.observable('');
+        CityManager.cityInfo.caseDat = ko.observable('');
+        CityManager.cityInfo.caseAcc = ko.observable('');
+        CityManager.cityInfo.caseIns = ko.observable('');
+        CityManager.cityInfo.casePre = ko.observable('');
+        CityManager.hotelbookIds = ko.observableArray();
+        CityManager.airportInfo.set = ko.observable(true);
+        CityManager.airportInfo.code = ko.observable('');
+        CityManager.airportInfo.icaoCode = ko.observable('');
+        CityManager.airportInfo.lacalRu = ko.observable('');
+        CityManager.airportInfo.lacalEn = ko.observable('');
+        CityManager.airportInfo.cityCode = ko.observable('');
+        CityManager.airportInfo.cityName = ko.observable('');
+        CityManager.airportInfo.position = ko.observable(0);
+        CityManager.airportInfo.latitude = ko.observable('');
+        CityManager.airportInfo.longitude = ko.observable('');
+        CityManager.airportInfo.site = ko.observable('');
+    }
+
+    $(document).ready(function(){
+        CityManager.init();
+        ko.applyBindings(CityManager);
+    });
 </script>
-<input type="text" id="originalRoomName" placeholder="Room name">
-<input type="text" id="roomNameCanonicalResult" placeholder="Room Name Canonical">
-<input type="submit" onclick="convertRoomNameToCanoical()" value="Преобразовать">
+<h1>Добавление городов и аэропортов</h1>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div data-bind=""></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
 
-<form method="post">
-<?php $this->widget('bootstrap.widgets.BootGridView',array(
-    'id'=>'event-grid',
-    'dataProvider'=>$dataProvider,
-    //'filter'=>$model,
-    'columns'=>array(
-        array(
-            'header'=>'id',
-            'value'=>'$data->id'
-        ),
-        array(
-            'header'=>'roomName',
-            'value'=>'$data->roomNameCanonical'
-        ),
-        array(
-            'header'=>'Размер',
-            'value'=>'$data->roomSize'
-        ),
-        array(
-            'header'=>'Тип',
-            'value'=>'$data->roomType'
-        ),
-        array(
-            'header'=>'RusId',
-            'value'=>'$data->roomNameRusId'
-        ),
-        array(
-            'header'=>'RusName',
-            'value'=>'$data->rusName'
-        ),
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                             <label class="checkbox"><input type="checkbox" checked="checked" class="stdInput" id="cityCheck" data-bind="checked: cityInfo.set">Добавить город</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="cityIata" placeholder="IATA code города" data-bind="value: cityInfo.code">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="cityNameRu" placeholder="Назвоние города" data-bind="value: cityInfo.localRu">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="cityNameEn" placeholder="Назвоние города на английском" data-bind="value: cityInfo.localEn">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="cityCountryCode" placeholder="Код страны" data-bind="value: cityInfo.countryCode">
+                            <input type="text" class="stdInput" id="cityCountry" placeholder="Назвоние страны" data-bind="value: cityInfo.countryName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Приоритет:<input type="text" class="stdInput" id="cityPosition" value="0" placeholder="Приоритет">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Количество аэропортов:<input type="text" class="stdInput" id="cityCountAirports" value="1">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Широта:<input type="text" class="stdInput" id="cityLatitude" value="">
 
-        array(
-            'class'=>'zii.widgets.grid.CCheckBoxColumn',
-            'checked'=>'false',
-            'selectableRows'=>2,
-            'id'=>'roomNameIds',
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Долгота:<input type="text" class="stdInput" id="cityLongitude" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>hotelbookId:<input type="text" class="stdInput" id="cityHotelbookId" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>metaphoneRu:<input type="text" class="stdInput" id="cityMetaphoneRu" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Город Им.падеж:<input type="text" class="stdInput" id="cityCaseNom" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Город Род.падеж(нет чего?):<input type="text" class="stdInput" id="cityCaseGen" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Город Дат.падеж(давать чему):<input type="text" class="stdInput" id="cityCaseDat" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Город Винит.падеж(винить что?):<input type="text" class="stdInput" id="cityCaseAcc" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Город Твор.падеж(доволен чем?):<input type="text" class="stdInput" id="cityCaseIns" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Город Предл.падеж(думать о чем?):<input type="text" class="stdInput" id="cityCasePre" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            mmm?<span data-bind="text: cityInfo.set"></span>
+                        </td>
+                    </tr>
+                </table>
 
+            </td>
+            <td valign="top">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="checkbox"><input type="checkbox" checked="checked" class="stdInput" id="airportCheck">Добавить аэропорт</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="airportIata" placeholder="airport IATA code">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="airportIcao" placeholder="airport ICAO code">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="airportLocalRu" placeholder="RU airport Name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="stdInput" id="airportLocalEn" placeholder="En airport Name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" id="airportCityId" value="0">
+                            <input type="text" class="stdInput" id="airportCityName" placeholder="City Name(default new city)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Широта:<input type="text" class="stdInput" id="airportLatitude" value="">
 
-        ),
-    ),
-)); ?>
-    <input type="text" name="rusNameId" id="rusNameId" value="" placeholder="id" style="width: 30px;">
-    <?php $this->widget('bootstrap.widgets.BootTypeahead', array(
-    'options'=>array(
-        'items'=>10,
-        'ajax' => array(
-            'url' => "/admin/hotels/roomNames/rusRoomNames",
-            'timeout' => 5,
-            'displayField' => "value",
-            'triggerLength' => 2,
-            'method' => "get",
-            'loadingClass' => "loading-circle",
-        ),
-        'onselect'=>'js:function(res){console.log(res);$("#rusNameId").val(res.id);document.idChange();}',
-        'matcher'=>'js:function(){return true}',
-    ),
-    'htmlOptions'=>array(
-        'value'=>'',
-        'id'=>'roomNameRusField'
-    )
-)); ?>
-    <input type="submit" name="smbset" value="Ok">
-    <input type="submit" name="smbunset" value="убрать привязку">
-</form>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Долгота:<input type="text" class="stdInput" id="airportLongitude" value="">
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Сайт аэропорта:<input type="text" class="stdInput" id="airportSite" value="">
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
