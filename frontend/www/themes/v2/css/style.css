@@ -3868,3 +3868,19 @@ a.whereData span {
     height: 700px;
     margin: 0 auto;
 }
+
+#trackCode {
+    background: none repeat scroll 0 0 #DEDEDE;
+    border: 1px solid #FFFFFF;
+    border-radius: 3px 3px 3px 3px;
+    height: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 0 13px;
+    position: absolute;
+    right: 5px;
+    text-align: center;
+    top: 4px;
+    z-index: 100;
+    visibility: hidden;
+}
