@@ -924,6 +924,9 @@ class TourTripResultSet
 
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
+        asp = new AviaSearchParams
+        asp.fromObject item.searchParams
+        window.redirectHash = asp.getHash()
         @tour = true
         @hasFlight = true
         @flightCounter(@flightCounter()+1)

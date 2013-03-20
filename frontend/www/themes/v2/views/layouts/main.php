@@ -53,6 +53,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
+    window.fromPartner = '<?php echo Yii::app()->user->getState('fromPartner', 0) ?>';
 </script>
 
 <?php echo $content; ?>

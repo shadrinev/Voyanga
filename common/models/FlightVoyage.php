@@ -53,6 +53,7 @@ class FlightVoyage extends CApplicationComponent
 
     public function getIsValid()
     {
+        Yii::import('common.modules.gds.models.*');
         $request = new GDSNemoAgency();
         return $request->checkFlight($this->flightKey);
     }

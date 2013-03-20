@@ -715,9 +715,9 @@ class GDSNemoAgency extends CComponent
 
             $response = self::request('AirAvail', $aParams);
 
-            if (isset($response->CancelBook->Result->Success))
+            if (isset($response->Response->AirAvail->IsAvail))
             {
-                return $response->CancelBook->Result->Success;
+                return $response->Response->AirAvail->IsAvail;
             }
             else
             {

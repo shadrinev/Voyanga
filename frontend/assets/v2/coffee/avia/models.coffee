@@ -903,7 +903,6 @@ class AviaSearchParams extends SearchParams
     if @rt()
       parts.push moment(@rtDate()).format('D.M.YYYY')
     hash = 'avia/search/' + parts.join('/') + '/'
-    window.voyanga_debug "Generated hash for avia search", hash
     return hash
 
 

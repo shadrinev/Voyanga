@@ -19,7 +19,7 @@ class BuyController extends FrontendController
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status', 'paymentStatus')),
+            array('allow', 'actions' => array('checkFlight', 'makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status', 'paymentStatus')),
             array('allow', 'actions' => array('order','pdf'), 'users' => array('@')),
             array('deny'),
         );
@@ -55,7 +55,31 @@ class BuyController extends FrontendController
             //todo: think what is default here
             Yii::app()->user->setState('currentModule', 'Tours');
         $marker = (isset($_GET['marker'])) ? '?marker='.$_GET['marker'] : '';
+        if (isset($_GET['pid'])) //если мы пришли от партнёра, то проверяем перелёт
+        {
+            Yii::app()->user->setState('fromPartner', 1);
+        }
+        else
+        {
+            Yii::app()->user->setState('fromPartner', 0);
+        }
         $this->redirect('buy/makeBooking'.$marker);
+    }
+
+    public function actionCheckFlight()
+    {
+        $result = true;
+        $tdp = new TripDataProvider();
+        $el = $tdp->getSortedCartItemsOnePerGroup();
+        if ($el[0] instanceof FlightTripElement)
+            $result = $el[0]->flightVoyage->getIsValid();
+        $result = false;
+        echo json_encode(array('result'=>$result));
+    }
+
+    private function redirectToSearchResults()
+    {
+        $this->redirect('/');
     }
 
     public function actionOrder($id)

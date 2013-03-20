@@ -7,8 +7,33 @@ $(function () {
     window.app.register('tours', tour, true);
     window.app.register('hotels', hotels);
     window.app.register('avia', avia);
-
     window.toursOverviewActive = true;
+
+    if (window.fromPartner){
+        window.VisualLoaderInstance.show();
+        window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета');
+        $.ajax({
+            url: '/buy/checkFlight',
+            type: 'get',
+            dataType: 'json'
+        })
+        .done(function(response){
+            window.VisualLoaderInstance.renew(100);
+            if (!response.result)
+            {
+                window.location.href = '/#' + window.redirectHash;
+            }
+            else
+            {
+                _.delay(function(){
+                    window.VisualLoaderInstance.hide();
+                }, 100);
+            }
+        })
+        .error(function(){
+            window.VisualLoaderInstance.hide();
+        })
+    }
     $('.genderField').each(function () {
         var $this = $(this),
             value = $this.val(),

@@ -1278,7 +1278,6 @@ AviaSearchParams = (function(_super) {
       parts.push(moment(this.rtDate()).format('D.M.YYYY'));
     }
     hash = 'avia/search/' + parts.join('/') + '/';
-    window.voyanga_debug("Generated hash for avia search", hash);
     return hash;
   };
 

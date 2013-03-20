@@ -1426,8 +1426,11 @@ TourTripResultSet = (function() {
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
     _.each(this.resultSet.items, function(item) {
-      var aviaResult, totalPeople;
+      var asp, aviaResult, totalPeople;
       if (item.isFlight) {
+        asp = new AviaSearchParams;
+        asp.fromObject(item.searchParams);
+        window.redirectHash = asp.getHash();
         _this.tour = true;
         _this.hasFlight = true;
         _this.flightCounter(_this.flightCounter() + 1);

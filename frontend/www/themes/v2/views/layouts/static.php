@@ -57,6 +57,7 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
     window.currentCityCodeReadable = '<?php echo Geoip::getCurrentCity()->localRu;?>';
+    window.fromPartner = '<?php echo Yii::app()->user->getState('fromPartner', 0) ?>';
 </script>
 
 <div class="wrapper">
