@@ -29,7 +29,7 @@
     <div class="tdPrice">
 
         <div class="verticalAlign">
-            <div class="people" data-bind="text: totalPeople">2 человека</div>
+            <div class="people" data-bind="text: totalPeopleGenAlmost">2 человека</div>
             <!-- ko if: ($parents[1].tour || $parents[0].tour) -->
                 <div class="price"><span data-bind="text: Utils.formatPrice(roomSets()[0].discountPrice)"></span><span class="rur">o</span></div>
                 <div class="priceSale">
