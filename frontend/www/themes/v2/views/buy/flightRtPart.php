@@ -67,5 +67,7 @@
         </div>
         <div class="moreDetails"><a href="#" data-bind="click: $data[0].showDetailsOverview">Подробнее</a></div>
     </div>
+        <span class="lb"></span>
+        <span class="rb"></span>
     </div>
 </script>

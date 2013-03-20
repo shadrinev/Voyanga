@@ -6,6 +6,10 @@
         <!-- ALL TICKETS DIV -->
         <div class="allTicketsDIV">
             <span data-bind="template: {name: 'items', data: itemsToBuy}"></span>
+            <span class="lv"></span>
+            <span class="rv"></span>
+            <span class="lt"></span>
+            <span class="rt"></span>
         </div>
         <!-- END ALL TICKETS DIV -->
         <div class="theSum">
