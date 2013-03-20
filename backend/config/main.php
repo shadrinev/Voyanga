@@ -112,6 +112,9 @@ return CMap::mergeArray(
             'themeManager' => array(
                 'baseUrl' => '/themes/'
             ),
+            'morphy' => array(
+                'class' => 'site.console.extensions.phpmorphy.PhpMorphyComponent'
+            ),
 
             'bootstrap' => array(
                 'class' => 'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
