@@ -590,6 +590,15 @@ class AviaResult
 
     return result
 
+  GAAdults: =>
+    if @parent.rawSP
+      # avia results
+      rawSP = @parent.rawSP
+    else
+      # tours
+      rawSP = @rawSP
+    return rawSP.adt
+
 #
 # Result container
 # Stacks them by price and company
@@ -685,7 +694,7 @@ class AviaResultSet
       result.searchId = selection.cacheId
       # FIXME FIXME FXIME
       result.searchKey = selection.flightKey()
-      GAPush ['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData(), selection.airline, true]
+      GAPush ['_trackEvent', 'Avia_press_button_buy', selection.GAKey(),  selection.GAData()]
 
       Utils.toBuySubmit [result]
       

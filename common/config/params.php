@@ -31,9 +31,9 @@ return CMap::mergeArray(array(
         'login' => 'webdev012',
         'password' => 'HHFJGYU3*^H',
         'userId' => 15,
+        'apiHost' => 'http://test.nemo-ibe.com',
         'agencyBookingWsdlUri' => 'http://test.nemo-ibe.com/nemoflights/wsdl.php?for=',
-        'agencyWsdlUri' => 'http://test.nemo-ibe.com/nemoflights/wsdl.php?for=',
-        //'agencyWsdlUri' => 'http://easytrip.nemo-ibe.com/nemoflights/wsdl.php?for=',
+        'agencyWsdlUri' => 'http://easytrip.nemo-ibe.com/nemoflights/wsdl.php?for=',
         'agencyId' => '120',
         'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
     ),

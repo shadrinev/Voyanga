@@ -637,7 +637,7 @@ class HotelResult
 
           result.cots += room.cots * 1
 
-        GAPush ['_trackEvent', 'Hotel_press_button_buy', @GAKey(),  @GAData(), roomSet.parent.hotelName, true]
+        GAPush ['_trackEvent', 'Hotel_press_button_buy', @GAKey(),  @GAData()]
         Utils.toBuySubmit [result]
 
       @parent.checkTicket room, ticketValidCheck
@@ -658,7 +658,10 @@ class HotelResult
     passangers = [0, 0, 0]
     for room in sp.rooms
       adt = room.adultCount || room.adt
-      chd = room.childCount || room.chd
+      if room.childCount?
+        chd = room.childCount
+      else
+        chd = room.chd
       passangers[0] += adt*1
       passangers[1] += chd*1
       passangers[2] += room.cots*1

@@ -1200,13 +1200,15 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.buy = function() {
-    var GAAviaData, GAAviaKeys, GAHotelData, GAHotelKeys, hasAvia, hasHotel, ticketValidCheck,
+    var GAAviaData, GAAviaExtra, GAAviaKeys, GAHotelData, GAHotelExtra, GAHotelKeys, hasAvia, hasHotel, ticketValidCheck,
       _this = this;
     ticketValidCheck = $.Deferred();
     GAAviaKeys = [];
     GAHotelKeys = [];
     GAAviaData = [];
     GAHotelData = [];
+    GAAviaExtra = [];
+    GAHotelExtra = [];
     hasAvia = false;
     hasHotel = false;
     ticketValidCheck.done(function(resultSet) {
@@ -1219,11 +1221,13 @@ ToursResultSet = (function() {
           if (x.isAvia()) {
             GAAviaKeys.push(x.GAKey());
             GAAviaData.push(x.GAData());
+            GAAviaExtra.push(x.airline);
             hasAvia = true;
           }
           if (x.isHotel()) {
             GAHotelKeys.push(x.GAKey());
             GAHotelData.push(x.GAData());
+            GAHotelExtra.push(x.hotelName);
             hasHotel = true;
           }
           toBuy.push({
@@ -1233,9 +1237,9 @@ ToursResultSet = (function() {
         }
       }
       if (hasHotel) {
-        GAPush(['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'), GAHotelData.join('//'), "", true]);
+        GAPush(['_trackEvent', 'Trip_press_button_buy', GAHotelKeys.join('//'), GAHotelData.join('//')]);
       } else if (hasAvia) {
-        GAPush(['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'), GAAviaData.join('//'), "", true]);
+        GAPush(['_trackEvent', 'Avia_press_button_buy', GAAviaKeys.join('//'), GAAviaData.join('//')]);
       }
       return Utils.toBuySubmit(toBuy);
     });
@@ -1345,6 +1349,12 @@ TourTripResultSet = (function() {
     var newCity,
       _this = this;
     this.resultSet = resultSet;
+    this.trackBuyDone = __bind(this.trackBuyDone, this);
+
+    this.trackBuyDoneHotel = __bind(this.trackBuyDoneHotel, this);
+
+    this.trackBuyDoneAvia = __bind(this.trackBuyDoneAvia, this);
+
     this.trackBuyClick = __bind(this.trackBuyClick, this);
 
     this.items = [];
@@ -1511,12 +1521,12 @@ TourTripResultSet = (function() {
     var GAAviaData, GAAviaExtra, GAAviaKeys, GAHotelData, GAHotelExtra, GAHotelKeys, aviaResult, hasAvia, hasHotel, hotelResult, x, _i, _len, _ref;
     if (this.hasFlight && this.items.length === 1) {
       aviaResult = this.items[0];
-      GAPush(['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData(), aviaResult.airline, true]);
+      GAPush(['_trackEvent', 'Avia_press_button_data', aviaResult.GAKey(), aviaResult.GAData()]);
       return;
     }
     if (this.hasHotel && this.items.length === 1) {
       hotelResult = this.items[0];
-      GAPush(['_trackEvent', 'Hotel_press_button_data', hotelResult.GAKey(), hotelResult.GAData(), hotelResult.hotelName, true]);
+      GAPush(['_trackEvent', 'Hotel_press_button_data', hotelResult.GAKey(), hotelResult.GAData()]);
       return;
     }
     GAAviaKeys = [];
@@ -1544,10 +1554,40 @@ TourTripResultSet = (function() {
       }
     }
     if (hasHotel) {
-      return GAPush(['_trackEvent', 'Trip_press_button_data', GAHotelKeys.join('//'), GAHotelData.join('//'), GAHotelExtra.join('//'), true]);
+      return GAPush(['_trackEvent', 'Trip_press_button_data', GAHotelKeys.join('//'), GAHotelData.join('//')]);
     } else if (hasAvia) {
-      return GAPush(['_trackEvent', 'Avia_press_button_data', GAAviaKeys.join('//'), GAAviaData.join('//'), GAAviaExtra.join('//'), true]);
+      return GAPush(['_trackEvent', 'Avia_press_button_data', GAAviaKeys.join('//'), GAAviaData.join('//')]);
     }
+  };
+
+  TourTripResultSet.prototype.trackBuyDoneAvia = function(aviaResult, orderId) {
+    return GAPush(['_addItem', orderId, aviaResult.GAKey(), aviaResult.GAData(), 'Avia', Math.round(aviaResult.price / aviaResult.GAAdults()), aviaResult.GAAdults()]);
+  };
+
+  TourTripResultSet.prototype.trackBuyDoneHotel = function(hotelResult, orderId) {
+    var ppn;
+    if (this.tour) {
+      ppn = Math.ceil(hotelResult.roomSets()[0].discountPrice / hotelResult.duration);
+    } else {
+      ppn = hotelResult.roomSets()[0].pricePerNight;
+    }
+    return GAPush(['_addItem', orderId, hotelResult.GAKey(), hotelResult.GAData(), 'Hotel', ppn, hotelResult.duration]);
+  };
+
+  TourTripResultSet.prototype.trackBuyDone = function(orderId) {
+    var item, _i, _len, _ref;
+    GAPush(['_addTrans', orderId, 'BankCard', this.totalCost, '', '', '', '', '']);
+    _ref = this.items;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      if (item.isFlight) {
+        this.trackBuyDoneAvia(item, orderId);
+      }
+      if (item.isHotel) {
+        this.trackBuyDoneHotel(item, orderId);
+      }
+    }
+    return GAPush(['_trackTrans']);
   };
 
   return TourTripResultSet;
