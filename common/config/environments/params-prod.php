@@ -17,6 +17,7 @@ return array(
     'app.api.hotelSearchUrl' => 'https://api.voyanga.com/v1/hotel/search',
 
     "baseUrl" => 'https://voyanga.com',
+    "domain" => '.voyanga.com',
 
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',

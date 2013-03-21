@@ -24,6 +24,9 @@ API = (function() {
     var _this = this;
     return $.ajax({
       url: "" + this.endpoint + url,
+      xhrFields: {
+        withCredentials: true
+      },
       dataType: 'json',
       timeout: 200000,
       success: function(data) {

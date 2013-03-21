@@ -17,8 +17,6 @@ else
 }
 
 date_default_timezone_set('Europe/Moscow');
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 chdir(dirname(__FILE__) . '/../..');
 
@@ -33,4 +31,8 @@ require_once('common/packages/packages.php');
 require_once('common/components/shortcuts.php');
 
 $app = Yii::createApplication('WebApplication', $config);
+header("Access-Control-Allow-Origin: ".Yii::app()->params['baseUrl']);
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Credentials: true");
+
 $app->run();

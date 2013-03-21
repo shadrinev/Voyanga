@@ -226,7 +226,7 @@ class Partner extends CActiveRecord
         {
             if ($partner = self::getPartnerByKey($_REQUEST['pid']))
             {
-                setcookie('partnerKey', $_REQUEST['pid'], time() + 3600 * 24 * $partner->cookieTime);
+                setcookie('partnerKey', $_REQUEST['pid'], time() + 3600 * 24 * $partner->cookieTime, '/', Yii::app()->params['domain']);
                 $_SESSION['partnerKey'] = $_REQUEST['pid'];
             }
         }
