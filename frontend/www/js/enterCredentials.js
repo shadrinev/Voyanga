@@ -9,7 +9,7 @@ $(function () {
     window.app.register('avia', avia);
     window.toursOverviewActive = true;
 
-    if (window.fromPartner){
+    if (window.fromPartner == 1) {
         window.VisualLoaderInstance.show();
         window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета');
         $.ajax({
