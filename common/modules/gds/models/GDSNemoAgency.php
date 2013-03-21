@@ -28,7 +28,8 @@ class GDSNemoAgency extends CComponent
         );
         $bookingMethods = array(
             'BookFlight'=>true,
-            'Ticketing'=>true
+            'Ticketing'=>true,
+            'AirAvail'=>true
         );
 
         if (!($wsdl = isset($methodMap[$methodName]) ? $methodMap[$methodName] : false))
