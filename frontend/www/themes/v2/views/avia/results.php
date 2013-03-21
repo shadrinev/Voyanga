@@ -79,7 +79,7 @@
     <!-- END FINISH -->
     <div class="clear"></div>
     <div class="airlinesLogo">
-        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+        <img data-bind="attr: {'src': '/img/airline_logos/' + airline() +'.png'}" >
         <br>
         <span data-bind="text:airlineName">Россия</span>
     </div>
