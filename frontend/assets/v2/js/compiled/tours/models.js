@@ -1600,7 +1600,16 @@ TourTripResultSet = (function() {
         this.trackBuyDoneHotel(item, orderId);
       }
     }
-    return GAPush(['_trackTrans']);
+    GAPush(['_trackTrans']);
+    if (this.hasFlight && this.hasHotel) {
+      GAPush(['_trackEvent', 'Trip_press_button_transfer', 'button_transfer', '' + this.totalCost]);
+    }
+    if (this.hasFlight && !this.hasHotel) {
+      GAPush(['_trackEvent', 'Avia_press_button_transfer', 'button_transfer', '' + this.totalCost]);
+    }
+    if (!this.hasFlight && this.hasHotel) {
+      return GAPush(['_trackEvent', 'Hotel_press_button_transfer', 'button_transfer', '' + this.totalCost]);
+    }
   };
 
   return TourTripResultSet;

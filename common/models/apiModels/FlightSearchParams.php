@@ -67,14 +67,6 @@ class FlightSearchParams extends CComponent
         {
             throw new CException(Yii::t('application', 'Required param departure_date not set'));
         }
-        if (($route->adultCount + $route->childCount) <= 0)
-        {
-            throw new CException(Yii::t('application', 'Passengers count must be more then zero'));
-        }
-        if (($route->adultCount + $route->childCount) < $route->infantCount)
-        {
-            throw new CException(Yii::t('application', 'Infants count must be equal or less then (adult + child) count'));
-        }
         $this->routes[] = $route;
     }
 

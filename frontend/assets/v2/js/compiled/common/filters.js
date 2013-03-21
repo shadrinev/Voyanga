@@ -619,7 +619,7 @@ AviaFiltersT = (function() {
     fields = this.rt ? ['arrivalAirport', 'rtDepartureAirport'] : ['arrivalAirport'];
     this.arrivalAirport = new ListFilter(fields, this.results.arrivalCity, 'Все аэропорты');
     this.airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании');
-    this.shortStopover = new MaxStopoverFilter(2.5);
+    this.shortStopover = new MaxStopoverFilter(2.5, 'maxStopoverLength');
     this.irrelevantlyLong = new MaxStopoverFilter(30, 'maxStopoverLength');
     this.irrelevantlyLong.selection(1);
     this.onlyDirect = new OnlyDirectFilter();

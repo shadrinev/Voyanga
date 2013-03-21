@@ -12,16 +12,6 @@ class SearchController extends ApiController
 
     private $logId;
 
-    private function log()
-    {
-        if (!$this->logId)
-            $this->logId = 'req'.rand(1, 10000);
-        $args = func_get_args();
-        $other = array_slice($args, 1);
-        $time = date('Y-m-d H:i:s', time());
-        Yii::log($time."\n".$args[0] ."\n".CVarDumper::dumpAsString($other), CLogger::LEVEL_INFO, 'application.api.'.$this->logId);
-    }
-
     /**
      * @param array $destinations
      *  [Х][departure] - departure city iata code,
@@ -34,34 +24,26 @@ class SearchController extends ApiController
      */
     public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
     {
-        $this->log('Search for business and econom', $destinations, $adt, $chd, $inf, $format);
         if (!$this->filter($destinations))
         {
-            $this->log('Current request doesn\'t pass filter and we close it');
             $variants = array();
         }
         else
         {
-            $this->log('Dividing request to two branches');
             $asyncExecutor = new AsyncCurl();
             $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
             $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
-            $this->log('Sending requests');
             $responses = $asyncExecutor->send();
             $errors = array();
             $variants = array();
-            $this->log('We got response');
             foreach ($responses as $i=>$response)
             {
-                $this->log("For $i response we got headers:", $response->headers);
                 if ($httpCode=$response->headers['http_code'] == 200)
                 {
                     $combined = json_decode($response->body);
-                    $this->log("Decoding response. Length of body response:", strlen($response->body));
                     if ((isset($combined->flights)) and (is_iterable($combined->flights)))
                     {
                         $flights = $combined->flights;
-                        $this->log("Ok. We got flights. Amount:", sizeof($flights));
                     }
                     else
                     {
@@ -70,13 +52,11 @@ class SearchController extends ApiController
                         $flights = array();
                     }
                     $searchParams = $combined->searchParams;
-                    $this->log("Adding specific params for b/e to response");
                     $variants = CMap::mergeArray($variants, FlightManager::injectForBe($flights, $searchParams));
                 }
                 else
                 {
                     $errors[] = 'Error '.$httpCode;
-                    $this->log("Response ended without 200 http response. Code:", $httpCode);
                 }
             }
             if (!empty($this->errors))
@@ -88,11 +68,8 @@ class SearchController extends ApiController
         $this->results = $variants;
         $result['flights']['flightVoyages'] = $this->results;
         $result['searchParams'] = $flightSearchParams->getJsonObject();
-        $this->log("We added search params");
         $siblingsEconom = FlightManager::createSiblingsData($flightSearchParams);
-        $this->log("We added siblings params");
         $result['siblings']['E'] = $siblingsEconom;
-        $this->log("We are sending to output with format", $format);
         $this->sendWithCorrectFormat($format, $result);
     }
 
@@ -109,7 +86,6 @@ class SearchController extends ApiController
 
     private function addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
-        $this->log('add Business Class Async Response');
         $businessUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
         $query = http_build_query(array(
             'destinations' => $destinations,
@@ -124,7 +100,6 @@ class SearchController extends ApiController
 
     private function addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
     {
-        $this->log('add Econom Class Async Response');
         $businessUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
         $query = http_build_query(array(
             'destinations' => $destinations,

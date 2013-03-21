@@ -315,7 +315,7 @@ class AviaResult
     # Generate proxy getters
     fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity',
               'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric',
-              'arrivalTimeNumeric','hash', 'similarityHash', 'stopsRatio', 'recommendStopoverIco', 'airline']
+              'arrivalTimeNumeric','hash', 'similarityHash', 'stopsRatio', 'recommendStopoverIco']
 
     for name in fields
       @[name] = ((name) =>
@@ -846,24 +846,9 @@ class AviaResultSet
       @best result
 
   getFilterLessBest: =>
-    for result in @data
-      # Choose fastest first
-      voyages = _.sortBy result.voyages, (el) -> el._duration
-      for voyage in voyages
-        if voyage.maxStopoverLength < 60*60*3
-          if result.roundTrip
-            # Choose fastest first
-            backVoyages = _.sortBy voyage._backVoyages, (el) -> el._duration
-            for backVoyage in backVoyages
-              if backVoyage.maxStopoverLength < 60*60*3
-                voyage.activeBackVoyage backVoyage
-                result.activeVoyage voyage
-                return result
-          else
-            result.activeVoyage voyage
-            return result
-    return @data[0]
-    
+#    data = _.filter @data, (el) -> el.visible()
+    data = _.sortBy @data, (el)-> el.rating()
+    return data[0]
 
   filtersRendered: ->
     ko.processAllDeferredBindingUpdates()
