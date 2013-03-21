@@ -26,7 +26,7 @@
                 </td>
                 <td class="tdAvia">
                     <div>
-                        <img data-bind="attr: {'src': '/img/airline_logos/' + $data.airline +'.png'}" >
+                        <img data-bind="attr: {'src': '/img/airlines/' + $data.airline() +'.png'}" >
                     </div>
                     <div class="class">Класс: <span class="classMine" data-bind='text: $data.serviceClassReadable'>Эконом</span></div>
                 </td>
