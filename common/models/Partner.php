@@ -193,7 +193,9 @@ class Partner extends CActiveRecord
 
     public static function getCurrentPartnerKey()
     {
-        return self::encodeId((self::getCurrentPartner()->id + 10100));
+        if (self::getCurrentPartner())
+            return self::encodeId((self::getCurrentPartner()->id + 10100));
+        return false;
     }
 
     public static function getPartnerByKey($key)
