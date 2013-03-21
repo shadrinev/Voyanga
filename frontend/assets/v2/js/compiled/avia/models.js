@@ -1204,7 +1204,7 @@ AviaResultSet = (function() {
 
   AviaResultSet.prototype.getFilterLessBest = function() {
     var data;
-    data = _.sortBy(data, function(el) {
+    data = _.sortBy(this.data, function(el) {
       return el.rating();
     });
     return data[0];

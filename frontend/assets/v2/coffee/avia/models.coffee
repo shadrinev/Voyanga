@@ -847,7 +847,7 @@ class AviaResultSet
 
   getFilterLessBest: =>
 #    data = _.filter @data, (el) -> el.visible()
-    data = _.sortBy data, (el)-> el.rating()
+    data = _.sortBy @data, (el)-> el.rating()
     return data[0]
 
   filtersRendered: ->
