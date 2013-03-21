@@ -1203,36 +1203,11 @@ AviaResultSet = (function() {
   };
 
   AviaResultSet.prototype.getFilterLessBest = function() {
-    var backVoyage, backVoyages, result, voyage, voyages, _i, _j, _k, _len, _len1, _len2, _ref;
-    _ref = this.data;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      result = _ref[_i];
-      voyages = _.sortBy(result.voyages, function(el) {
-        return el._duration;
-      });
-      for (_j = 0, _len1 = voyages.length; _j < _len1; _j++) {
-        voyage = voyages[_j];
-        if (voyage.maxStopoverLength < 60 * 60 * 3) {
-          if (result.roundTrip) {
-            backVoyages = _.sortBy(voyage._backVoyages, function(el) {
-              return el._duration;
-            });
-            for (_k = 0, _len2 = backVoyages.length; _k < _len2; _k++) {
-              backVoyage = backVoyages[_k];
-              if (backVoyage.maxStopoverLength < 60 * 60 * 3) {
-                voyage.activeBackVoyage(backVoyage);
-                result.activeVoyage(voyage);
-                return result;
-              }
-            }
-          } else {
-            result.activeVoyage(voyage);
-            return result;
-          }
-        }
-      }
-    }
-    return this.data[0];
+    var data;
+    data = _.sortBy(data, function(el) {
+      return el.rating();
+    });
+    return data[0];
   };
 
   AviaResultSet.prototype.filtersRendered = function() {

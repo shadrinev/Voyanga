@@ -353,7 +353,7 @@ class AviaFiltersT
     fields = if @rt then ['arrivalAirport','rtDepartureAirport'] else ['arrivalAirport']
     @arrivalAirport = new ListFilter(fields, @results.arrivalCity, 'Все аэропорты')
     @airline = new ListFilter(['airlineName'], 'Авиакомпании', 'Все авиакомпании')
-    @shortStopover = new MaxStopoverFilter(2.5)
+    @shortStopover = new MaxStopoverFilter(2.5, 'maxStopoverLength')
     @irrelevantlyLong = new MaxStopoverFilter(30, 'maxStopoverLength')
     @irrelevantlyLong.selection 1
     @onlyDirect = new OnlyDirectFilter()
