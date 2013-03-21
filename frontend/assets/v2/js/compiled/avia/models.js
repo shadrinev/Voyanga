@@ -396,6 +396,14 @@ AviaResult = (function() {
 
     this.rtServiceClass = __bind(this.rtServiceClass, this);
 
+    this.rtFirstAirlineName = __bind(this.rtFirstAirlineName, this);
+
+    this.rtFirstAirline = __bind(this.rtFirstAirline, this);
+
+    this.firstAirlineName = __bind(this.firstAirlineName, this);
+
+    this.firstAirline = __bind(this.firstAirline, this);
+
     this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
 
     this.isFlight = true;
@@ -483,6 +491,22 @@ AviaResult = (function() {
     } else {
       return "Рейс";
     }
+  };
+
+  AviaResult.prototype.firstAirline = function() {
+    return this.activeVoyage().parts[0].markAirline;
+  };
+
+  AviaResult.prototype.firstAirlineName = function() {
+    return this.activeVoyage().parts[0].markAirlineName;
+  };
+
+  AviaResult.prototype.rtFirstAirline = function() {
+    return this.activeVoyage().activeBackVoyage().parts[0].markAirline;
+  };
+
+  AviaResult.prototype.rtFirstAirlineName = function() {
+    return this.activeVoyage().activeBackVoyage().parts[0].markAirlineName;
   };
 
   AviaResult.prototype.rtServiceClass = function() {
