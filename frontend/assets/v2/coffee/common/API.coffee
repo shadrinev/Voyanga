@@ -50,7 +50,7 @@ class VisualLoader
   constructor: ->
     @percents = ko.observable(0)
     @separator = 90
-    @separatedTime = 30
+    @separatedTime = ko.observable(30)
     @timeoutHandler = null
     @glowState = false
     @glowHandler = null
@@ -110,14 +110,17 @@ class VisualLoader
     if 98 > percent >= 0
       rand = Math.random()
       if(percent < @separator)
-        rtime = Math.ceil(rand * (@separatedTime / 15))
+        rtime = Math.ceil(rand * (@separatedTime() / 15))
+        if( (rand * (@separatedTime() / 15) ) < 1 )
+          rand = 1 / (@separatedTime() / 15)
+
         newPerc = Math.ceil(rand * (@separator / 15) )
         if((percent + newPerc) > @separator)
           newPerc = @separator - percent
         if(newPerc > 3)
           newPerc = newPerc + Math.ceil( (newPerc / 20) * (Math.random() - 0.5) )
       else
-        rtime = Math.ceil(rand * (@separatedTime / 3))
+        rtime = Math.ceil(rand * (@separatedTime() / 3))
         newPerc = Math.ceil(Math.random() * 2 )
       @timeFromStart +=rtime
       @timeoutHandler = window.setTimeout(
@@ -139,8 +142,9 @@ class VisualLoader
       @timeoutHandler = null
 
 
-  start: (description)=>
+  start: (description, loadTime = 30)=>
 
+    @separatedTime(loadTime)
     @description description
     @timeFromStart = 0
     if !@glowHandler

@@ -136,7 +136,7 @@ VisualLoader = (function() {
     var _this = this;
     this.percents = ko.observable(0);
     this.separator = 90;
-    this.separatedTime = 30;
+    this.separatedTime = ko.observable(30);
     this.timeoutHandler = null;
     this.glowState = false;
     this.glowHandler = null;
@@ -206,7 +206,10 @@ VisualLoader = (function() {
     if ((98 > percent && percent >= 0)) {
       rand = Math.random();
       if (percent < this.separator) {
-        rtime = Math.ceil(rand * (this.separatedTime / 15));
+        rtime = Math.ceil(rand * (this.separatedTime() / 15));
+        if ((rand * (this.separatedTime() / 15)) < 1) {
+          rand = 1 / (this.separatedTime() / 15);
+        }
         newPerc = Math.ceil(rand * (this.separator / 15));
         if ((percent + newPerc) > this.separator) {
           newPerc = this.separator - percent;
@@ -215,7 +218,7 @@ VisualLoader = (function() {
           newPerc = newPerc + Math.ceil((newPerc / 20) * (Math.random() - 0.5));
         }
       } else {
-        rtime = Math.ceil(rand * (this.separatedTime / 3));
+        rtime = Math.ceil(rand * (this.separatedTime() / 3));
         newPerc = Math.ceil(Math.random() * 2);
       }
       this.timeFromStart += rtime;
@@ -239,8 +242,12 @@ VisualLoader = (function() {
     }
   };
 
-  VisualLoader.prototype.start = function(description) {
+  VisualLoader.prototype.start = function(description, loadTime) {
     var _this = this;
+    if (loadTime == null) {
+      loadTime = 30;
+    }
+    this.separatedTime(loadTime);
     this.description(description);
     this.timeFromStart = 0;
     if (!this.glowHandler) {
