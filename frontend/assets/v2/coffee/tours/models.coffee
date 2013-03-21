@@ -1063,6 +1063,9 @@ class TourTripResultSet
       ]
 
 
+  # Зовется со страницы ожидания ответа от платежки.
+  # Отправляет заказ в гугл ecommerce
+  # и ивент о совершенной покупке в аналитику. 
   trackBuyDone: (orderId) =>
     GAPush ['_addTrans',
       orderId,             # ID транзакции от Воянги (номер заказа)
@@ -1082,6 +1085,15 @@ class TourTripResultSet
       if item.isHotel
         @trackBuyDoneHotel item, orderId
     GAPush ['_trackTrans']
+
+    if @hasFlight && @hasHotel
+      GAPush ['_trackEvent', 'Trip_press_button_transfer', 'button_transfer', '' + @totalCost]
+    if @hasFlight && !@hasHotel
+      GAPush ['_trackEvent', 'Avia_press_button_transfer', 'button_transfer', '' + @totalCost]
+    if !@hasFlight && @hasHotel
+      GAPush ['_trackEvent', 'Hotel_press_button_transfer', 'button_transfer', '' + @totalCost]
+
+
 
 
 
