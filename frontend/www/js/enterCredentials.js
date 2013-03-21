@@ -11,7 +11,7 @@ $(function () {
 
     if (window.fromPartner == 1) {
         window.VisualLoaderInstance.show();
-        window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета');
+        window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета', 10);
         $.ajax({
             url: '/buy/checkFlight',
             type: 'get',
