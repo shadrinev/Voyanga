@@ -392,6 +392,8 @@ AviaResult = (function() {
 
     this.flightKey = __bind(this.flightKey, this);
 
+    this.rtAirlineName = __bind(this.rtAirlineName, this);
+
     this.rtServiceClass = __bind(this.rtServiceClass, this);
 
     this.rtFlightCodesText = __bind(this.rtFlightCodesText, this);
@@ -448,7 +450,7 @@ AviaResult = (function() {
     this.rtStackedMinimized = ko.observable(true);
     this.flightCodesText = _.size(this.activeVoyage().parts) > 1 ? "Рейсы" : "Рейс";
     this.totalPeople = 0;
-    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'similarityHash', 'stopsRatio', 'recommendStopoverIco'];
+    fields = ['departureCity', 'departureAirport', 'departureDayMo', 'departureDate', 'departurePopup', 'departureTime', 'arrivalCity', 'arrivalAirport', 'arrivalDayMo', 'arrivalDate', 'arrivalTime', 'duration', '_duration', 'direct', 'stopoverText', 'stopoverRelText', 'departureTimeNumeric', 'arrivalTimeNumeric', 'hash', 'similarityHash', 'stopsRatio', 'recommendStopoverIco', 'airline'];
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       name = fields[_i];
       this[name] = (function(name) {
@@ -485,6 +487,10 @@ AviaResult = (function() {
 
   AviaResult.prototype.rtServiceClass = function() {
     return this.activeVoyage().serviceClass;
+  };
+
+  AviaResult.prototype.rtAirlineName = function() {
+    return console.log(this.activeVoyage().activeBackVoyage());
   };
 
   AviaResult.prototype.flightKey = function() {
