@@ -70,10 +70,10 @@ class Partner extends CActiveRecord
         return array(
             array('name, password, passwordStrategy, requiresNewPassword', 'required'),
             array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly' => true),
-            array('name, password', 'length', 'max' => 45),
-            array('password', 'length', 'max' => 100),
-            array('salt', 'length', 'max' => 40),
+            array('name, password', 'length', 'max' => 255),
+            array('salt', 'length', 'max' => 100),
             array('passwordStrategy', 'length', 'max' => 40),
+            array('clientId, apiKey', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name, password, salt, passwordStrategy, requiresNewPassword, cookieTime', 'safe', 'on' => 'search'),
