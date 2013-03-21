@@ -9,10 +9,8 @@ class API
 
   call: (url, cb) =>
     $.ajax
-      url: "#{@endpoint}#{url}"
+      url: "#{@endpoint}#{url}&pid=" + window.pid
       dataType: 'json'
-      xhrFields:
-        withCredentials: true
       timeout: 200000
       success: (data)=>
         #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))

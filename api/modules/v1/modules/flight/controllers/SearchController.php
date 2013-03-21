@@ -93,7 +93,7 @@ class SearchController extends ApiController
             'chd' => $chd,
             'inf' => $inf,
             'serviceClass' => 'B',
-            'partner' => Partner::getCurrentPartnerKey()
+            'pid' => Partner::getCurrentPartnerKey()
         ));
         $businessUrl = $businessUrl . '?' . $query;
         $asyncExecutor->add($businessUrl);
@@ -108,7 +108,7 @@ class SearchController extends ApiController
             'chd' => $chd,
             'inf' => $inf,
             'serviceClass' => 'E',
-            'partner' => Partner::getCurrentPartnerKey()
+            'pid' => Partner::getCurrentPartnerKey()
         ));
         $businessUrl = $businessUrl . '?' . $query;
         //echo "send req:".$businessUrl;
@@ -133,9 +133,8 @@ class SearchController extends ApiController
         $this->sendWithCorrectFormat($format, $results);
     }
 
-    public function actionWithParams(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json', $partner='')
+    public function actionWithParams(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
     {
-        Partner::setPartnerByKey($partner);
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
         $results = array(
             'flights' => $this->doFlightSearch($flightSearchParams),

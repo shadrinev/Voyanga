@@ -200,6 +200,8 @@ class Partner extends CActiveRecord
 
     public static function getPartnerByKey($key)
     {
+        if (strlen(trim($key))==0)
+            return false;
         $id = self::decodeId($key);
         $id = $id - 10100;
         $partner = Partner::model()->findByPk($id);
