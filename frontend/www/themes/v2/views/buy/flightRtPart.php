@@ -26,7 +26,7 @@
             </td>
             <td class="tdAvia paddingBottom">
                 <div>
-                    <span class="tooltip" data-bind="attr: {'rel': $data[0].airlineName}"><img data-bind="attr: {'src': '/img/airlines/' + $data[0].airline() +'.png'}" ></span>
+                    <span class="tooltip" data-bind="attr: {'rel': $data[0].firstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data[0].firstAirline() +'.png'}" ></span>
                 </div>
                 <div class="class">Класс: <span class="classMine" data-bind='text: $data[0].serviceClassReadable'>Эконом</span></div>
             </td>
@@ -52,7 +52,7 @@
             </td>
             <td class="tdAvia">
                 <div>
-                    <span class="tooltip" data-bind="attr: {'rel': $data[0].airlineName}"><img data-bind="attr: {'src': '/img/airlines/' + $data[0].rtAirline() +'.png'}" ></span>
+                    <span class="tooltip" data-bind="attr: {'rel': $data[0].rtFirstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data[0].rtFirstAirline() +'.png'}" ></span>
                 </div>
                 <div class="class">Класс: <span class="classMine" data-bind='text: $data[0].serviceClassReadable'>Эконом</span></div>
             </td>
