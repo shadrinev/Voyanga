@@ -62,6 +62,8 @@ class SuccessAction extends CAction
 #            return;
         if($this->getStatus($booker)=='paymentInProgress')
             return;
+        if($this->getStatus($booker)=='done')
+            return;
         $this->logEntry->startProfile();
         $this->handle($bill, $booker, $channel, $orderId);
         $this->logEntry->finishProfile();

@@ -19,7 +19,7 @@ class TourEntry
     if @noresults
       return "Нет результатов"
     if @selection() == null
-      return "Не выбрано"
+      return "<span class='noChoise'>Не выбрано</span>"
     return Utils.formatPrice(@price()) + '<span class="rur">o</span>'
 
 

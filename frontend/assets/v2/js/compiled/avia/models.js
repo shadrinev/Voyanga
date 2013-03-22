@@ -427,7 +427,7 @@ AviaResult = (function() {
     this.searchService = data.service;
     this.airlineName = data.valCompanyNameEn;
     this.serviceClass = data.serviceClass;
-    this.serviceClassReadable = data.serviceClass === 'E' ? 'Эконом' : 'Бизнес';
+    this.serviceClassReadable = data.serviceClass === 'E' ? 'Эконом' : data.serviceClass === 'F' ? 'Первый' : 'Бизнес';
     this.refundable = data.refundable;
     this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
     this.freeWeight = data.freeWeight;
@@ -1245,7 +1245,12 @@ AviaSearchParams = (function(_super) {
 
   AviaSearchParams.prototype.url = function() {
     var params, result;
-    result = 'flight/search/BE?';
+    console.log("window.isLuxury", window.isLuxury === 1);
+    if (window.isLuxury === '1') {
+      result = 'flight/search/BEF?';
+    } else {
+      result = 'flight/search/BE?';
+    }
     params = [];
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());

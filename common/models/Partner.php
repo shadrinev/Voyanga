@@ -219,6 +219,16 @@ class Partner extends CActiveRecord
         }
     }
 
+    public static function setPartnerById($id)
+    {
+        $partner = Partner::model()->findByPk($id);
+        if ($partner)
+        {
+            $pid = self::encodeId(($partner->id + 10100));
+            self::setPartnerByKey($pid);
+        }
+    }
+
     public static function setPartnerByKey($forcePid = false)
     {
         $partner = false;

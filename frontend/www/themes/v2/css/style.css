@@ -2430,7 +2430,12 @@ input.hotel-input {
 }
 .oneBlock {
 	border-bottom: 1px solid #babbbe;
-
+}
+.oneBlock.buyTicket {
+    padding-top: 35px;
+    margin-top: -35px;
+    background: url(../images/bg-buyTicket.png) repeat-x center bottom #b6b8bd;
+    border-bottom: 1px solid #8E9195;
 }
 
 .paybuyContent h2 {
@@ -3890,4 +3895,7 @@ a.whereData span {
     top: 4px;
     z-index: 100;
     visibility: hidden;
+}
+.noChoise {
+    color:#d91a1a;
 }

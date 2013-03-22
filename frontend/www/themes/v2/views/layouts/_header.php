@@ -8,6 +8,7 @@
     }(document, 'script', 'facebook-jssdk'));</script>
 <script type="text/javascript">
     window.apiEndPoint = '<?php echo Yii::app()->params['api.endPoint'] ?>';
+    window.isLuxury = '<?php if (isset($_GET['lux'])) echo 1; else echo 0 ?>';
 </script>
 <noscript>
     <?php $this->renderPartial('//layouts/_noscript'); ?>
