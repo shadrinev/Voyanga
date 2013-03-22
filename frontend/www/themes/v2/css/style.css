@@ -3097,8 +3097,8 @@ input.hotel-input {
 }
 
 .headBlockOne .center-block, .headBlockTwo .center-block {
-    min-width: 960px !important;
-    width: 960px;
+    min-width: 1000px !important;
+    width: 1000px;
     color: #1d222b;
 }
 .headBlockOne h1 {
@@ -3203,7 +3203,7 @@ hr {
 .textBlockPrice {
     line-height: 18px;
     font-size: 12px;
-    width: 200px;
+    width: 220px;
 }
 .textBlockPrice a {
     color: #1c81bb;
