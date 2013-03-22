@@ -48,7 +48,7 @@ TourEntry = (function() {
       return "Нет результатов";
     }
     if (this.selection() === null) {
-      return "Не выбрано";
+      return "<span class='noChoise'>Не выбрано</span>";
     }
     return Utils.formatPrice(this.price()) + '<span class="rur">o</span>';
   };
