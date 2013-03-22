@@ -84,7 +84,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     ));
     ?>
     <?php if (!$fromCity): ?>
-    <div class="center-block">
+    <div class="center-block" data-bind="style: {overflow: landBP.showGrafik() ? '' : 'hidden'}">
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
 
         <h3>Стоимость на месяц вперед из
@@ -97,11 +97,11 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
         </h3>
     </div>
     <?php else: ?>
-    <div class="center-block">
+    <div class="center-block" data-bind="style: {overflow: landBP.showGrafik() ? '' : 'hidden'}">
         <h1>Авиабилеты из <?php echo $fromCity->caseGen;?> в <?php echo $city->caseAcc;?></h1>
     </div>
     <?php endif;?>
-    <div class="center-block">
+    <div class="center-block" data-bind="visible: landBP.showGrafik">
         <h3 class="label">Туда</h3>
         <div class="floatLeft">
             <ul class="grafik first-child" data-bind="foreach: landBP.datesArr">
@@ -135,8 +135,8 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
         </div>
         <div class="clear"></div>
     </div>
-    <hr>
-    <div class="center-block">
+    <hr data-bind="visible: landBP.showGrafik">
+    <div class="center-block" data-bind="visible: landBP.showGrafik">
         <h3 class="label">Обратно</h3>
         <div class="floatLeft">
             <ul class="grafik second-child" data-bind="foreach: landBP.active().results()">
@@ -159,7 +159,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
         </div>
         <div class="clear"></div>
     </div>
-    <div class="bgDate">
+    <div class="bgDate" data-bind="visible: landBP.showGrafik">
         <div class="center-block">
             <div class="floatLeft">
                 <ul class="date" data-bind="foreach: landBP.datesArr">
