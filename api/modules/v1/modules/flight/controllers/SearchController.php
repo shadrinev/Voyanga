@@ -22,7 +22,7 @@ class SearchController extends ApiController
      * @param int $chd amount of childs
      * @param int $inf amount of infanties
      */
-    public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
+    public function actionBE(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json', $withFirst=false)
     {
         if (!$this->filter($destinations))
         {
@@ -33,6 +33,8 @@ class SearchController extends ApiController
             $asyncExecutor = new AsyncCurl();
             $this->addBusinessClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
             $this->addEconomClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
+            if ($withFirst)
+                $this->addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor);
             $responses = $asyncExecutor->send();
             $errors = array();
             $variants = array();
@@ -73,6 +75,11 @@ class SearchController extends ApiController
         $this->sendWithCorrectFormat($format, $result);
     }
 
+    public function actionBEF(array $destinations, $adt = 1, $chd = 0, $inf = 0, $format='json')
+    {
+        $this->actionBE($destinations, $adt, $chd, $inf, $format, true);
+    }
+
     private function filter($destinations)
     {
         if (sizeof($destinations)==2)
@@ -111,8 +118,22 @@ class SearchController extends ApiController
             'pid' => Partner::getCurrentPartnerKey()
         ));
         $businessUrl = $businessUrl . '?' . $query;
-        //echo "send req:".$businessUrl;
         $asyncExecutor->add($businessUrl);
+    }
+
+    private function addFirstClassAsyncResponse($destinations, $adt, $chd, $inf, $asyncExecutor)
+    {
+        $firstUrl = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/withParams';
+        $query = http_build_query(array(
+            'destinations' => $destinations,
+            'adt' => $adt,
+            'chd' => $chd,
+            'inf' => $inf,
+            'serviceClass' => 'F',
+            'pid' => Partner::getCurrentPartnerKey()
+        ));
+        $firstUrl = $firstUrl . '?' . $query;
+        $asyncExecutor->add($firstUrl);
     }
 
     /**
