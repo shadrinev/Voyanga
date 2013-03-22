@@ -28,6 +28,58 @@
 
 </script>
 <div id="content" style="overflow: hidden;">
+    <div class="panelBuy">
+        <div class="center-block">
+            <table>
+                <tr>
+                    <td style="width: 150px">
+                        <a href="#" class="btn-allVariantion"><span class="ico-list"></span> Все варианты <span class="l"></span></a>
+                    </td>
+                    <td>
+                        <div class="oneString">
+                            Санкт-Петербург ↔ Москва, <span class="data">12 апреля, 2 взрослых</span>
+                        </div>
+                    </td>
+                    <td style="width: 150px">
+<!--                        <a href="#">Новый поиск</a>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="lineUp">
+        <a href="#" class="btn-close"></a>
+        <div class="center-block">
+            <table class="advantageTable">
+                <tr>
+                    <td class="first">
+                        <strong>Почему билеты<br>
+                        покупают у нас?</strong>
+                    </td>
+                    <td>
+                        <span class="ico-price"></span>
+                        Окончательная цена,<br>
+                        нет комиссий
+                    </td>
+                    <td>
+                        <span class="ico-secqury"></span>
+                        Безопасность платежей,<br>
+                        международные стандарты
+                    </td>
+                    <td>
+                        <span class="ico-time"></span>
+                        Быстрое оформление,<br>
+                        билет ваш через 2 минуты
+                    </td>
+                    <td>
+                        <span class="ico-helps"></span>
+                        Помощь в решении<br>
+                        любых проблем
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>

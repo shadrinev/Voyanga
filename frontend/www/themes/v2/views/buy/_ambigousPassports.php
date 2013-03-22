@@ -179,7 +179,7 @@
                 ); ?>
             </td>
             <td class="tdDocumentNumber">
-                <?php echo CHtml::activeTextField($model, "[$curEl][$i]seriesNumber"); ?>
+                <?php echo CHtml::activeTextField($model, "[$curEl][$i]seriesNumber", array("placeholder" => "40081234567")); ?>
             </td>
             <td class="tdDuration">
                 <div class="divInputBirthday">
