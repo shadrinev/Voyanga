@@ -150,6 +150,7 @@ class landBestPriceSet
 
     console.log('DATES:',@dates)
     cnt = 0
+
     tmpMom = moment()
     while(cnt < 18)
       cnt++
@@ -159,8 +160,10 @@ class landBestPriceSet
       tmpMom._d.setDate(tmpMom._d.getDate() + 1)
 
 
+    elemsCnt = 0
     for dataKey,empty of @dates
       if @_results[dataKey]
+        elemsCnt++
         @datesArr.push {date: dataKey, landBP: @_results[dataKey], monthName: '', monthChanged: false, dateText: '', today: false}
       else
         @datesArr.push {date: dataKey, landBP: new landBestPrice({date: dataKey}, @), monthName: '', monthChanged: false, dateText: '', today: false}
@@ -174,6 +177,7 @@ class landBestPriceSet
           return 1
         return 0
     )
+    @showGrafik = elemsCnt > 10
     firstElem = true
     today = moment().format("YYYY-MM-DD")
     for dataObj in @datesArr()
@@ -336,6 +340,11 @@ class landingCitySelector
       if @currentCityCode()
         if @landBestPriceSets[@currentCityCode()].directBestPriceData()
           return @landBestPriceSets[@currentCityCode()].directBestPriceData().price
+      return false
+    @showGrafik = ko.computed =>
+      if @currentCityCode()
+        if @landBestPriceSets[@currentCityCode()].showGrafik
+          return @landBestPriceSets[@currentCityCode()].showGrafik
       return false
     @selectedDates = ko.computed =>
       dates = ''

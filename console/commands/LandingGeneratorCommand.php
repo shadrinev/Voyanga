@@ -38,15 +38,20 @@ EOD;
         $citiesDirects = array();
         $allCityIds = array();
         foreach($directs as $direct){
+
             $fromId = intval($direct->_id['departureCityId']);
             $toId = intval($direct->_id['arrivalCityId']);
-            $allCityIds[$fromId] = $fromId;
-            $allCityIds[$toId] = $toId;
-            if(!isset($citiesDirects[$toId])){
-                $citiesDirects[$toId] = array();
+            if($direct->value > 2){
+                $allCityIds[$fromId] = $fromId;
+                $allCityIds[$toId] = $toId;
+                if(!isset($citiesDirects[$toId])){
+                    $citiesDirects[$toId] = array();
+                }
+                $citiesDirects[$toId][$fromId] = $direct->value;
             }
-            $citiesDirects[$toId][$fromId] = true;
         }
+        //print_r($citiesDirects);
+        //die();
 
 
 

@@ -187,7 +187,7 @@ landBestPriceSet = (function() {
 
     this.bestDateClick = __bind(this.bestDateClick, this);
 
-    var cnt, data, dataKey, dataObj, dateKey, datesObj, empty, firstElem, key, landBP, mom, monthChanged, monthName, prevMonth, tmpMom, today, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3,
+    var cnt, data, dataKey, dataObj, dateKey, datesObj, elemsCnt, empty, firstElem, key, landBP, mom, monthChanged, monthName, prevMonth, tmpMom, today, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3,
       _this = this;
     this._results = {};
     this.dates = {};
@@ -239,10 +239,12 @@ landBestPriceSet = (function() {
       }
       tmpMom._d.setDate(tmpMom._d.getDate() + 1);
     }
+    elemsCnt = 0;
     _ref1 = this.dates;
     for (dataKey in _ref1) {
       empty = _ref1[dataKey];
       if (this._results[dataKey]) {
+        elemsCnt++;
         this.datesArr.push({
           date: dataKey,
           landBP: this._results[dataKey],
@@ -275,6 +277,7 @@ landBestPriceSet = (function() {
       }
       return 0;
     });
+    this.showGrafik = elemsCnt > 10;
     firstElem = true;
     today = moment().format("YYYY-MM-DD");
     _ref2 = this.datesArr();
@@ -492,6 +495,14 @@ landingCitySelector = (function() {
       if (_this.currentCityCode()) {
         if (_this.landBestPriceSets[_this.currentCityCode()].directBestPriceData()) {
           return _this.landBestPriceSets[_this.currentCityCode()].directBestPriceData().price;
+        }
+      }
+      return false;
+    });
+    this.showGrafik = ko.computed(function() {
+      if (_this.currentCityCode()) {
+        if (_this.landBestPriceSets[_this.currentCityCode()].showGrafik) {
+          return _this.landBestPriceSets[_this.currentCityCode()].showGrafik;
         }
       }
       return false;
