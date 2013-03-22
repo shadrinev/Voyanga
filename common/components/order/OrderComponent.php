@@ -23,6 +23,9 @@ class OrderComponent extends CApplicationComponent
         $this->currentOrderId = $orderId;
         $dataProvider = new TripDataProvider($orderId);
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
+        $partner = $this->getOrderBooking()->partnerId;
+        if($partner)
+            Partner::setPartnerById($partner);
     }
 
     public function bookAndReturnTripElementWorkflowItems()
