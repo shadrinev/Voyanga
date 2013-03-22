@@ -412,3 +412,10 @@ function countLength(val)
 }
 
 $(window).load(InputActiveFinishDate);
+
+$(function(){
+    $('.btn-close').on('click', function(){
+        $('.lineUp').slideUp();
+        return false;
+    });
+})

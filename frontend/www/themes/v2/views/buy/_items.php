@@ -19,7 +19,7 @@
             </div>
         </div>
         <!-- END -->
-        <div class="andOthers">
+        <div class="andOthers" style="display: none">
                 <span class="priceSale"></span>
                 Возможно, вам будет интересно добавить отель в Москве с комплексной скидкой до 10%
                 <a href="#" class="btn-addItems"><span class="l"></span>Добавить отель</a>

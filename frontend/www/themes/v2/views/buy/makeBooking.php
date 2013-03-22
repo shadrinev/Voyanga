@@ -7,7 +7,6 @@
     })
 </script>
 <script id="tariff-rules-template" type="text/html">
-
     <div id="tariff-rules" style="display: block;" class="contentWrapBg">
         <div class="wrapDiv">
             <div class="wrapContent">
@@ -32,12 +31,12 @@
         <div class="center-block">
             <table>
                 <tr>
-                    <td style="width: 150px">
+                    <td style="width: 150px" class="allVariantsBlock">
                         <a href="#" class="btn-allVariantion"><span class="ico-list"></span> Все варианты <span class="l"></span></a>
                     </td>
                     <td>
                         <div class="oneString">
-                            Санкт-Петербург ↔ Москва, <span class="data">12 апреля, 2 взрослых</span>
+                            Санкт-Петербург ↔ Москва
                         </div>
                     </td>
                     <td style="width: 150px">
@@ -48,12 +47,12 @@
         </div>
     </div>
     <div class="lineUp">
-        <a href="#" class="btn-close"></a>
+        <a href="#" class="btn-close" style="display: none"></a>
         <div class="center-block">
             <table class="advantageTable">
                 <tr>
                     <td class="first">
-                        <strong>Почему билеты<br>
+                        <strong>Почему <span class="text-ticket1">билеты</span><br>
                         покупают у нас?</strong>
                     </td>
                     <td>
@@ -69,7 +68,7 @@
                     <td>
                         <span class="ico-time"></span>
                         Быстрое оформление,<br>
-                        билет ваш через 2 минуты
+                        <span class="text-ticket2">билет</span> ваш через 2 минуты
                     </td>
                     <td>
                         <span class="ico-helps"></span>
