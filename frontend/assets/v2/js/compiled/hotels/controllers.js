@@ -34,16 +34,38 @@ HotelsController = (function() {
   }
 
   HotelsController.prototype.searchAction = function() {
-    var args;
+    var args, backUrl, hotelObj, urls;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     window.voyanga_debug("HOTELS: Invoking searchAction", args);
     this.searchParams.fromList(args);
-    window.VisualLoaderInstance.start(this.api.loaderDescription);
-    return this.api.search(this.searchParams.url(), this.handleSearch);
+    if (this.searchParams.urlChanged()) {
+      window.VisualLoaderInstance.start(this.api.loaderDescription);
+      return this.api.search(this.searchParams.url(), this.handleSearch);
+    } else {
+      if (this.searchParams.hotelChanged()) {
+        if (this.searchParams.hotelId()) {
+          hotelObj = this.results()._results[this.searchParams.hotelId()];
+          if (hotelObj) {
+            this.results().select(hotelObj, null);
+            return this.searchParams.lastHotel = hotelObj;
+          } else {
+            backUrl = window.location.hash;
+            urls = backUrl.split('hotelId');
+            this.searchParams.hotelId(false);
+            return window.app.navigate(urls[0]);
+          }
+        } else {
+          return this.searchParams.lastHotel.back();
+        }
+      } else {
+        window.VisualLoaderInstance.start(this.api.loaderDescription);
+        return this.api.search(this.searchParams.url(), this.handleSearch);
+      }
+    }
   };
 
   HotelsController.prototype.handleSearch = function(data) {
-    var stacked;
+    var backUrl, hotelObj, stacked, urls;
     try {
       stacked = this.handleResults(data);
     } catch (err) {
@@ -56,9 +78,21 @@ HotelsController = (function() {
     }
     this.results(stacked);
     GAPush(['_trackEvent', 'Hotel_show_search_results', this.searchParams.GAKey(), this.searchParams.GAData(), stacked.data().length]);
-    return this.render('results', {
+    this.render('results', {
       'results': this.results
     });
+    if (this.searchParams.hotelId()) {
+      hotelObj = this.results()._results[this.searchParams.hotelId()];
+      if (hotelObj) {
+        this.results().select(hotelObj, null);
+        return this.searchParams.lastHotel = hotelObj;
+      } else {
+        backUrl = window.location.hash;
+        urls = backUrl.split('hotelId');
+        this.searchParams.hotelId(false);
+        return window.app.navigate(urls[0]);
+      }
+    }
   };
 
   HotelsController.prototype.handleResults = function(data) {

@@ -39,15 +39,46 @@ ToursController = (function() {
   };
 
   ToursController.prototype.searchAction = function() {
-    var args, sp;
+    var args, backUrl, sp, urls,
+      _this = this;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     args[0] = exTrim(args[0], '/');
     args = args[0].split('/');
     this.searchParams.fromList(args);
+    voyanga_debug('routing urlChanged:', this.searchParams.urlChanged(), this.searchParams.hotelChanged(), this.searchParams.hotelId());
     sp = this.searchParams;
     GAPush(['_trackEvent', 'Trip_press_button_search', sp.GAKey(), sp.GAData()]);
-    window.VisualLoaderInstance.start(this.api.loaderDescription);
-    return this.doSearch();
+    voyanga_debug('next state');
+    if (this.searchParams.urlChanged()) {
+      window.VisualLoaderInstance.start(this.api.loaderDescription);
+      this.doSearch();
+      if (this.searchParams.hotelId()) {
+        backUrl = window.location.hash;
+        urls = backUrl.split('hotelId');
+        this.searchParams.hotelId(false);
+        voyanga_debug('i want set new url ', urls[0], urls);
+        return window.setTimeout(function() {
+          return window.app.navigate(urls[0]);
+        }, 200);
+      }
+    } else {
+      if (this.searchParams.hotelChanged()) {
+        if (this.searchParams.hotelId()) {
+          backUrl = window.location.hash;
+          urls = backUrl.split('hotelId');
+          this.searchParams.hotelId(false);
+          voyanga_debug('i want set new url ', urls[0], urls);
+          return window.setTimeout(function() {
+            return window.app.navigate(urls[0]);
+          }, 200);
+        } else {
+          return this.searchParams.lastHotel.back();
+        }
+      } else {
+        window.VisualLoaderInstance.start(this.api.loaderDescription);
+        return this.doSearch();
+      }
+    }
   };
 
   ToursController.prototype.doSearch = function() {

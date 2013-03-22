@@ -21,12 +21,43 @@ class ToursController
     args[0] = exTrim args[0], '/'
     args = args[0].split('/')
     @searchParams.fromList(args)
+    voyanga_debug('routing urlChanged:',@searchParams.urlChanged(),@searchParams.hotelChanged(),@searchParams.hotelId())
     # Searcheng
     sp = @searchParams
     GAPush ['_trackEvent','Trip_press_button_search', sp.GAKey(), sp.GAData()]
-
-    window.VisualLoaderInstance.start(@api.loaderDescription)
-    @doSearch()
+    voyanga_debug('next state')
+    if @searchParams.urlChanged()
+      window.VisualLoaderInstance.start(@api.loaderDescription)
+      @doSearch()
+      if @searchParams.hotelId()
+        backUrl = window.location.hash
+        urls = backUrl.split('hotelId')
+        @searchParams.hotelId(false)
+        voyanga_debug('i want set new url ',urls[0],urls)
+        window.setTimeout(
+          =>
+            window.app.navigate (urls[0])
+          ,200
+        )
+    else
+      if @searchParams.hotelChanged()
+        if @searchParams.hotelId()
+          #вырезать из урла /hotelId/123/
+          backUrl = window.location.hash
+          urls = backUrl.split('hotelId')
+          @searchParams.hotelId(false)
+          voyanga_debug('i want set new url ',urls[0],urls)
+          window.setTimeout(
+            =>
+              window.app.navigate (urls[0])
+            ,200
+          )
+          #window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId)
+        else
+          @searchParams.lastHotel.back()
+      else
+        window.VisualLoaderInstance.start(@api.loaderDescription)
+        @doSearch()
 
   doSearch: =>
     @api.search @searchParams.url(), (data) =>
