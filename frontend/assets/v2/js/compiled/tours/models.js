@@ -1457,7 +1457,9 @@ TourTripResultSet = (function() {
         if (!_this.firstDate) {
           _this.firstDate = dateUtils.formatDayShortMonth(asp.date());
         }
-        _this.lastDate = dateUtils.formatDayShortMonth(asp.rtDate());
+        if (asp.rtDate()) {
+          _this.lastDate = dateUtils.formatDayShortMonth(asp.rtDate());
+        }
         _this.tour = true;
         _this.hasFlight = true;
         _this.flightCounter(_this.flightCounter() + 1);
@@ -1598,10 +1600,12 @@ TourTripResultSet = (function() {
         }
       }
       window.label += ', <span class="data">' + this.firstDate;
-      if (this.lastDate) {
+      if (this.lastDate.length) {
         window.label += ' - ' + this.lastDate;
       }
       window.label += ', ' + this.people + '</span>';
+      $('.text-ticket1').text('туры');
+      $('.text-ticket2').text('тур');
     } else {
       if (this.hasHotel) {
         $('.text-ticket1').text('отели');

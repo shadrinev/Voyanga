@@ -951,7 +951,8 @@ class TourTripResultSet
         window.redirectHash = asp.getHash()
         if (!@firstDate)
           @firstDate = dateUtils.formatDayShortMonth(asp.date())
-        @lastDate = dateUtils.formatDayShortMonth(asp.rtDate())
+        if asp.rtDate()
+          @lastDate = dateUtils.formatDayShortMonth(asp.rtDate())
         @tour = true
         @hasFlight = true
         @flightCounter(@flightCounter()+1)
@@ -1054,10 +1055,11 @@ class TourTripResultSet
           else
             window.label = @labels.join ' → '
         window.label += ', <span class="data">' + @firstDate
-        if @lastDate
+        if @lastDate.length
           window.label += ' - ' + @lastDate
         window.label += ', ' + @people + '</span>'
-
+        $('.text-ticket1').text('туры')
+        $('.text-ticket2').text('тур')
     else
         if @hasHotel
           $('.text-ticket1').text('отели')
