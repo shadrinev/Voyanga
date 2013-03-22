@@ -79,6 +79,9 @@ class HotelsSearchParams
     @checkIn = ko.observable(false)
     @checkOut = ko.observable(false)
     @rooms = ko.observableArray [new SpRoom(@)]
+    @hotelId = ko.observable(false)
+    @urlChanged = ko.observable(false)
+    @hotelChanged = ko.observable(false)
     @overall = ko.computed =>
       result = 0
       for room in @rooms()
@@ -96,16 +99,35 @@ class HotelsSearchParams
 
   fromList: (data)=>
     # FIXME looks too ugly to hit production, yet does not support RT
+    beforeUrl = @url()
+    hotelIdBefore = @hotelId()
     @city data[0]
     @checkIn moment(data[1], 'D.M.YYYY').toDate()
     @checkOut moment(data[2], 'D.M.YYYY').toDate()
     @rooms.splice(0)
+    @hotelId(false)
     rest = data[3].split('/')
     for item in rest
-      if item
-        r = new SpRoom(@)
-        r.fromList(item)
-        @rooms.push r
+      if item == 'hotelId'
+        @hotelId(0)
+      else
+        if @hotelId() == 0
+          @hotelId(item)
+          break
+        else
+          if item
+            r = new SpRoom(@)
+            r.fromList(item)
+            @rooms.push r
+    if beforeUrl == @url()
+      @urlChanged(false)
+      if hotelIdBefore == @hotelId()
+        @hotelChanged(false)
+      else
+        @hotelChanged(true)
+    else
+      @urlChanged(true)
+      @hotelChanged(false)
 
   fromObject: (data)=>
     @city data.city

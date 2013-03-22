@@ -28,7 +28,8 @@ class GDSNemoAgency extends CComponent
         );
         $bookingMethods = array(
             'BookFlight'=>true,
-            'Ticketing'=>true
+            'Ticketing'=>true,
+            'AirAvail'=>true
         );
 
         if (!($wsdl = isset($methodMap[$methodName]) ? $methodMap[$methodName] : false))
@@ -93,7 +94,6 @@ class GDSNemoAgency extends CComponent
         {
             throw new CException(Yii::t('application', 'Parameter oFlightSearchParams not type of FlightSearchParams'));
         }
-        //VarDumper::dump($flightSearchParams);
         //prepare request  structure
         $flightClass = 'all';
         switch ($flightSearchParams->flight_class)
@@ -143,8 +143,8 @@ class GDSNemoAgency extends CComponent
                 )
             ),
             'Source' => array(
-                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
-                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'ClientId' => ConfigManager::getNemoApiAgencyId(),
+                'APIKey' => ConfigManager::getNemoApiKey(),
                 'Language' => 'RU',
                 'Currency' => 'RUB'
             )
@@ -537,8 +537,8 @@ class GDSNemoAgency extends CComponent
                 )
             ),
             'Source' => array(
-                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
-                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'ClientId' => ConfigManager::getNemoApiAgencyId(),
+                'APIKey' => ConfigManager::getNemoApiKey(),
                 'Language' => 'RU',
                 'Currency' => 'RUB'
             )
@@ -653,8 +653,8 @@ class GDSNemoAgency extends CComponent
                 ),
             ),
             'Source' => array(
-                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
-                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'ClientId' => ConfigManager::getNemoApiAgencyId(),
+                'APIKey' => ConfigManager::getNemoApiKey(),
                 'Language' => 'RU',
                 'Currency' => 'RUB'
             )
@@ -706,8 +706,8 @@ class GDSNemoAgency extends CComponent
 
                 ),
                 'Source' => array(
-                    'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
-                    'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                    'ClientId' => ConfigManager::getNemoApiAgencyId(),
+                    'APIKey' => ConfigManager::getNemoApiKey(),
                     'Language' => 'RU',
                     'Currency' => 'RUB'
                 )
@@ -741,8 +741,8 @@ class GDSNemoAgency extends CComponent
                 )
             ),
             'Source' => array(
-                'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
-                'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                'ClientId' => ConfigManager::getNemoApiAgencyId(),
+                'APIKey' => ConfigManager::getNemoApiKey(),
                 'Language' => 'RU',
                 'Currency' => 'RUB'
             )
@@ -885,8 +885,8 @@ class GDSNemoAgency extends CComponent
 
                 ),
                 'Source' => array(
-                    'ClientId' => Yii::app()->params['GDSNemo']['agencyId'],
-                    'APIKey' => Yii::app()->params['GDSNemo']['agencyApiKey'],
+                    'ClientId' => ConfigManager::getNemoApiAgencyId(),
+                    'APIKey' => ConfigManager::getNemoApiKey(),
                     'Language' => 'RU',
                     'Currency' => 'RUB'
                 )

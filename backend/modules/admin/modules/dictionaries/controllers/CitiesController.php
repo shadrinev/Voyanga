@@ -350,7 +350,7 @@ class CitiesController extends ABaseAdminController
                     $ret['saveReturn'] .= print_r($airport->errors,true);
                 }
             }catch (Exception $e){
-                $ret['saveReturn'] .= 'Cant save airport besause city with code '.$data['airport']['cityCode'].' not found';
+                $ret['saveReturn'] .= 'Cant save airport '.$e->getMessage();
             }
         }
         echo json_encode($ret);

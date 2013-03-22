@@ -70,10 +70,10 @@ class Partner extends CActiveRecord
         return array(
             array('name, password, passwordStrategy, requiresNewPassword', 'required'),
             array('requiresNewPassword, cookieTime', 'numerical', 'integerOnly' => true),
-            array('name, password', 'length', 'max' => 45),
-            array('password', 'length', 'max' => 100),
-            array('salt', 'length', 'max' => 40),
+            array('name, password', 'length', 'max' => 255),
+            array('salt', 'length', 'max' => 100),
             array('passwordStrategy', 'length', 'max' => 40),
+            array('clientId, apiKey', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name, password, salt, passwordStrategy, requiresNewPassword, cookieTime', 'safe', 'on' => 'search'),
@@ -193,11 +193,15 @@ class Partner extends CActiveRecord
 
     public static function getCurrentPartnerKey()
     {
-        return self::encodeId((self::getCurrentPartner()->id + 10100));
+        if (self::getCurrentPartner())
+            return self::encodeId((self::getCurrentPartner()->id + 10100));
+        return false;
     }
 
     public static function getPartnerByKey($key)
     {
+        if (strlen(trim($key))==0)
+            return false;
         $id = self::decodeId($key);
         $id = $id - 10100;
         $partner = Partner::model()->findByPk($id);
@@ -224,7 +228,7 @@ class Partner extends CActiveRecord
         {
             if ($partner = self::getPartnerByKey($_REQUEST['pid']))
             {
-                setcookie('partnerKey', $_REQUEST['pid'], time() + 3600 * 24 * $partner->cookieTime);
+                setcookie('partnerKey', $_REQUEST['pid'], time() + 3600 * 24 * $partner->cookieTime, '/', Yii::app()->params['domain']);
                 $_SESSION['partnerKey'] = $_REQUEST['pid'];
             }
         }

@@ -46,9 +46,11 @@ Yii::app()->clientScript->registerScriptFile('/js/completed.js');
                 dataType: 'script'
             });
         });
+        window.pid = '<?php echo Partner::getCurrentPartnerKey() ?>';
     </script>
 </head>
 <body>
+
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <div class="wrapper">
     <?php echo $this->renderPartial('//layouts/_header'); ?>

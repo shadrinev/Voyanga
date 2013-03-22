@@ -18,6 +18,7 @@ return array(
     'app.api.hotelSearchUrl' => 'http://api.oleg.voyanga/v1/hotel/search',
 
     "baseUrl" => 'http://frontend.oleg.voyanga',
+    "domain" => '.oleg.voyanga',
 
     'db.name' => 'search',
     'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',

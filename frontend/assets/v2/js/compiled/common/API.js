@@ -23,7 +23,7 @@ API = (function() {
   API.prototype.call = function(url, cb) {
     var _this = this;
     return $.ajax({
-      url: "" + this.endpoint + url,
+      url: ("" + this.endpoint + url + "&pid=") + window.pid,
       dataType: 'json',
       timeout: 200000,
       success: function(data) {

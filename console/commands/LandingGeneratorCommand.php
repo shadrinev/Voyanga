@@ -68,7 +68,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
 
         $command=$connection->createCommand($sql);
         $dataReader=$command->query();
-        fwrite($fp,"id;codeFrom;codeTo;from;to;ctrCodeTo;url;desc;price\r\n");
+        fwrite($fp,"codeFrom*;codeTo*;from;to;ctrCodeTo;url;desc;price\r\n");
 
         $citiesInfo = array();
         $ruCityIds = array();
@@ -111,7 +111,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
                         $j++;
                         $minPrice = '';
                         $url = 'https://voyanga.com/land/'.$cityToInfo['countryCode'].'/'.$cityFromInfo['cityCode'].'/'.$cityToInfo['cityCode'].'/';
-                        if(isset($ruCityIds[$cityToKey]) && !isset($ruCityIds[$cityFromKey])){
+                        if(isset($ruCityIds[$cityToKey])){
                             $url.='trip/OW';
                             if(isset($bestPricesOw[$cityToKey],$bestPricesOw[$cityToKey][$cityFromKey])){
                                 $minPrice = $bestPricesOw[$cityToKey][$cityFromKey];
@@ -122,7 +122,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
                             }
                         }
                         $desc = "из {$cityFromInfo['caseGen']} в {$cityToInfo['caseAcc']}";
-                        $str = "$j;{$cityFromInfo['cityCode']};{$cityToInfo['cityCode']};{$cityFromInfo['caseNom']};{$cityToInfo['caseNom']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+                        $str = "{$cityFromInfo['cityCode']};{$cityToInfo['cityCode']};{$cityFromInfo['caseNom']};{$cityToInfo['caseNom']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
                         fwrite($fp,$str);
                     //}
                 }
@@ -146,7 +146,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
             echo 'Cant open file '.$outFilename;
             return '';
         }
-        fwrite($fp,"id;codeTo;ctrCodeTo;url;desc;price\r\n");
+        fwrite($fp,"codeTo*;ctrCodeTo;url;desc;price\r\n");
 
         $j = 0;
         foreach($citiesInfo as $cityToKey=>$cityToInfo){
@@ -169,7 +169,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
             }
             $desc = "в {$cityToInfo['caseAcc']}";
             //$sxe['url'] = $url;
-            $str = "$j;{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+            $str = "{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
             fwrite($fp,$str);
         }
 
@@ -228,7 +228,7 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
             echo 'Cant open file '.$outFilename;
             return '';
         }
-        fwrite($fp,"id;city;ctrCode;url;desc;price\r\n");
+        fwrite($fp,"city*;ctrCode;url;desc;price\r\n");
 
         $j=0;
         foreach($citiesInfo as $cityToKey=>$cityToInfo){
@@ -240,7 +240,7 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
             }
             $desc = "Отели в {$cityToInfo['casePre']}";
             //$sxe['url'] = $url;
-            $str = "$j;{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+            $str = "{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
             fwrite($fp,$str);
         }
 
@@ -279,7 +279,7 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
             echo 'Cant open file '.$outFilename;
             return '';
         }
-        fwrite($fp,"id;ctrCode;url;desc;price\r\n");
+        fwrite($fp,"ctrCode*;url;desc;price\r\n");
 
         $j=0;
         foreach($countriesInfo as $countryId=>$countryInfo){
@@ -291,7 +291,7 @@ WHERE  `countAirports` >0 AND city.hotelbookId >0';
             }
             $desc = "Отели в {$countryInfo['casePre']}";
             //$sxe['url'] = $url;
-            $str = "$j;{$countryInfo['code']};{$url};{$desc};{$minPrice}\r\n";
+            $str = "{$countryInfo['code']};{$url};{$desc};{$minPrice}\r\n";
             fwrite($fp,$str);
         }
 

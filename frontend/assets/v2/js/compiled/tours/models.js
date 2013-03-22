@@ -513,11 +513,19 @@ ToursHotelsResultSet = (function(_super) {
     result.tours(true);
     result.postInit();
     result.select = function(hotel) {
+      var backUrl;
       hotel.parent = result;
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
+      backUrl = window.location.hash;
+      backUrl = backUrl.split('hotelId')[0];
+      window.app.navigate(backUrl + 'hotelId/' + hotel.hotelId + '/');
+      window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId);
+      window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel;
       hotel.off('back');
       hotel.on('back', function() {
         return _this.trigger('setActive', _this, false, false, hotel.oldPageTop, function() {
+          window.app.navigate(backUrl);
+          window.app.activeModuleInstance().controller.searchParams.hotelId(false);
           if (!hotel.parent.showFullMap()) {
             return Utils.scrollTo('#hotelResult' + hotel.hotelId);
           } else {
@@ -528,6 +536,8 @@ ToursHotelsResultSet = (function(_super) {
       hotel.getFullInfo();
       hotel.off('select');
       hotel.on('select', function(roomData) {
+        window.app.navigate(backUrl);
+        window.app.activeModuleInstance().controller.searchParams.hotelId(false);
         _this.select(roomData);
         return _this.trigger('next');
       });
@@ -538,12 +548,20 @@ ToursHotelsResultSet = (function(_super) {
       });
     };
     result.selectFromPopup = function(hotel) {
+      var backUrl;
       hotel.parent = result;
       hotel.activePopup.close();
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
+      backUrl = window.location.hash;
+      backUrl = backUrl.split('hotelId')[0];
+      window.app.navigate(backUrl + 'hotelId/' + hotel.hotelId + '/');
+      window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId);
+      window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel;
       hotel.off('back');
       hotel.on('back', function() {
         return _this.trigger('setActive', _this, false, false, hotel.oldPageTop, function() {
+          window.app.navigate(backUrl);
+          window.app.activeModuleInstance().controller.searchParams.hotelId(false);
           if (!hotel.parent.showFullMap()) {
             return Utils.scrollTo('#hotelResult' + hotel.hotelId);
           }
@@ -551,6 +569,8 @@ ToursHotelsResultSet = (function(_super) {
       });
       hotel.off('select');
       hotel.on('select', function(roomData) {
+        window.app.navigate(backUrl);
+        window.app.activeModuleInstance().controller.searchParams.hotelId(false);
         _this.select(roomData);
         return _this.trigger('next');
       });

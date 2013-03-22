@@ -20,9 +20,30 @@ class HotelsController
     # update search params with values in route
 
     @searchParams.fromList(args)
-    window.VisualLoaderInstance.start(@api.loaderDescription)
 
-    @api.search  @searchParams.url(), @handleSearch
+    if @searchParams.urlChanged()
+      window.VisualLoaderInstance.start(@api.loaderDescription)
+      @api.search  @searchParams.url(), @handleSearch
+
+    else
+      if @searchParams.hotelChanged()
+        #action
+
+        if @searchParams.hotelId()
+          hotelObj = @results()._results[@searchParams.hotelId()]
+          if hotelObj
+            @results().select(hotelObj,null)
+            @searchParams.lastHotel = hotelObj
+          else
+            backUrl = window.location.hash
+            urls = backUrl.split('hotelId')
+            @searchParams.hotelId(false)
+            window.app.navigate (urls[0])
+        else
+          @searchParams.lastHotel.back()
+      else
+        window.VisualLoaderInstance.start(@api.loaderDescription)
+        @api.search  @searchParams.url(), @handleSearch
 
   handleSearch: (data)=>
     try
@@ -38,6 +59,16 @@ class HotelsController
     GAPush ['_trackEvent', 'Hotel_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data().length]
 
     @render 'results', {'results' : @results}
+    if @searchParams.hotelId()
+      hotelObj = @results()._results[@searchParams.hotelId()]
+      if hotelObj
+        @results().select(hotelObj,null)
+        @searchParams.lastHotel = hotelObj
+      else
+        backUrl = window.location.hash
+        urls = backUrl.split('hotelId')
+        @searchParams.hotelId(false)
+        window.app.navigate (urls[0])
 
 
   handleResults: (data) =>

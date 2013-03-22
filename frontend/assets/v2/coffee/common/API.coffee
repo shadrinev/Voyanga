@@ -9,7 +9,7 @@ class API
 
   call: (url, cb) =>
     $.ajax
-      url: "#{@endpoint}#{url}"
+      url: "#{@endpoint}#{url}&pid=" + window.pid
       dataType: 'json'
       timeout: 200000
       success: (data)=>

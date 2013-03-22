@@ -19,6 +19,8 @@
     <?php echo CHtml::label('Сгенерировать пароль','genPass'); ?>
     <?php echo CHtml::checkBox('genPass',false,array()); ?>
     <?php echo $form->textFieldRow($model, 'cookieTime', array('size' => 50, 'maxlength' => 4)); ?>
+    <?php echo $form->textFieldRow($model, 'clientId', array('size' => 50)); ?>
+    <?php echo $form->textFieldRow($model, 'apiKey', array('size' => 70)); ?>
 
 
     <div class="form-actions">

@@ -34,6 +34,14 @@ $this->menu=array(
             'value'=>'$data->partnerKey'
         ),
         array(
+            'header'=>'API CliendId',
+            'value'=>'$data->clientId'
+        ),
+        array(
+            'header'=>'API Key',
+            'value'=>'$data->apiKey'
+        ),
+        array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
             'template'=>'{update} {delete}',
             'updateButtonUrl'=>'"/admin/partners/partnerManage/edit/id/".$data->primaryKey',

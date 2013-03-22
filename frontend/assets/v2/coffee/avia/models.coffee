@@ -280,7 +280,7 @@ class AviaResult
     @searchService = data.service
     @airlineName = data.valCompanyNameEn
     @serviceClass = data.serviceClass
-    @serviceClassReadable = if data.serviceClass == 'E' then 'Эконом' else 'Бизнес'
+    @serviceClassReadable = if data.serviceClass == 'E' then 'Эконом' else if data.serviceClass=='F' then 'Первый' else 'Бизнес'
     @refundable = data.refundable
     @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
     @freeWeight = data.freeWeight
@@ -872,7 +872,11 @@ class AviaSearchParams extends SearchParams
     @infants = @passengers.infants
 
   url: ->
-    result = 'flight/search/BE?'
+    console.log "window.isLuxury", window.isLuxury == 1
+    if (window.isLuxury == '1')
+      result = 'flight/search/BEF?'
+    else
+      result = 'flight/search/BE?'
     params = []
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()

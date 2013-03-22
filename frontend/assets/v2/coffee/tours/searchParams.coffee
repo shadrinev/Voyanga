@@ -17,6 +17,7 @@ class RoomsSearchParams
 class TourSearchParams extends SearchParams
   constructor: ->
     super()
+    voyanga_debug('CREATING TOURS SEARCH PARAMS!!!!!!!!!!')
     if(window.currentCityCode)
       @startCity = ko.observable window.currentCityCode
     else
@@ -25,6 +26,9 @@ class TourSearchParams extends SearchParams
     @destinations = ko.observableArray []
     # FIXME copy paste from hotel search params
     @rooms = ko.observableArray [new SpRoom(@)]
+    @hotelId = ko.observable(false)
+    @urlChanged = ko.observable(false)
+    @hotelChanged = ko.observable(false)
     @overall = ko.computed =>
       result = 0
       for room in @rooms()
@@ -51,9 +55,17 @@ class TourSearchParams extends SearchParams
     params.push 'start=' + @startCity()
     params.push 'return=' + @returnBack()
     _.each @destinations(), (destination, ind) =>
+      if moment(destination.dateFrom())
+        dateFrom = moment(destination.dateFrom()).format('D.M.YYYY')
+      else
+        dateFrom = '1.1.1970'
+      if moment(destination.dateTo())
+        dateTo = moment(destination.dateTo()).format('D.M.YYYY')
+      else
+        dateTo = '1.1.1970'
       params.push 'destinations[' + ind + '][city]=' + destination.city()
-      params.push 'destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY')
-      params.push 'destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY')
+      params.push 'destinations[' + ind + '][dateFrom]=' + dateFrom
+      params.push 'destinations[' + ind + '][dateTo]=' + dateTo
 
     _.each @rooms(), (room, ind) =>
       params.push room.getUrl(ind)
@@ -89,6 +101,8 @@ class TourSearchParams extends SearchParams
     return hash
 
   fromList: (data)->
+    beforeUrl = @url()
+    hotelIdBefore = @hotelId()
     @startCity data[0]
     @returnBack data[1]
     # FIXME REWRITE ME
@@ -111,6 +125,8 @@ class TourSearchParams extends SearchParams
         toSaveIn = data[i]
         oldSelection = true
         break
+      if ((data[i] == 'hotelId'))
+        break
       room = new SpRoom(@)
       room.fromList(data[i])
       @rooms.push room
@@ -118,6 +134,25 @@ class TourSearchParams extends SearchParams
     if oldSelection
       i++;
       @[toSaveIn] = data[i]
+    @hotelId(false)
+    i = 0
+    while i < data.length
+      if ((data[i] == 'hotelId'))
+        @hotelId(0)
+      else
+        if @hotelId() == 0
+          @hotelId(data[i])
+          break
+      i++
+    if beforeUrl == @url()
+      @urlChanged(false)
+      if hotelIdBefore == @hotelId()
+        @hotelChanged(false)
+      else
+        @hotelChanged(true)
+    else
+      @urlChanged(true)
+      @hotelChanged(false)
 
   fromObject: (data)->
     window.voyanga_debug "Restoring TourSearchParams from object"
