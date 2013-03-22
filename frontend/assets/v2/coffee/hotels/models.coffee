@@ -392,8 +392,15 @@ class HotelResult
 
   selectFromPopup: (hotel, event) =>
     @activePopup.close()
+    backUrl = window.location.hash
+    backUrl = backUrl.split('hotelId')[0]
+    window.app.navigate (backUrl+'hotelId/'+hotel.hotelId+'/')
+    window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId)
+    window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel
     hotel.off 'back'
     hotel.on 'back', =>
+      window.app.navigate backUrl
+      window.app.activeModuleInstance().controller.searchParams.hotelId(false)
       window.app.render({results: ko.observable(hotel.parent)}, 'results')
       window.setTimeout(
         ->
@@ -884,8 +891,15 @@ class HotelsResultSet
   select: (hotel, event) =>
     window.voyanga_debug ' i wonna get hotel for you', hotel
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
+    backUrl = window.location.hash
+    backUrl = backUrl.split('hotelId')[0]
+    window.app.navigate (backUrl+'hotelId/'+hotel.hotelId+'/')
+    window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId)
+    window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel
     hotel.off 'back'
     hotel.on 'back', =>
+      window.app.navigate backUrl
+      window.app.activeModuleInstance().controller.searchParams.hotelId(false)
       window.app.render({results: ko.observable(@)}, 'results')
       window.setTimeout(
         =>
@@ -1076,8 +1090,15 @@ class HotelsResultSet
 
   selectFromPopup: (hotel, event) =>
     hotel.activePopup.close()
+    backUrl = window.location.hash
+    backUrl = backUrl.split('hotelId')[0]
+    window.app.navigate (backUrl+'hotelId/'+hotel.hotelId+'/')
+    window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId)
+    window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel
     hotel.off 'back'
     hotel.on 'back', =>
+      window.app.navigate backUrl
+      window.app.activeModuleInstance().controller.searchParams.hotelId(false)
       window.app.render({results: ko.observable(hotel.parent)}, 'results')
       window.setTimeout(
         ->

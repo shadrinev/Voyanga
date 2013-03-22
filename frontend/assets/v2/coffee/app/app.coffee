@@ -224,6 +224,6 @@ class Application extends Backbone.Router
     @activeView() == 'tours-index'
 
 window.voyanga_debug = (args...)->
-  return
+  #return
   # crashes in bad browsers sometimes
   console.log.apply(console, args)

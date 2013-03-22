@@ -167,6 +167,9 @@ HotelsSearchParams = (function() {
     this.checkIn = ko.observable(false);
     this.checkOut = ko.observable(false);
     this.rooms = ko.observableArray([new SpRoom(this)]);
+    this.hotelId = ko.observable(false);
+    this.urlChanged = ko.observable(false);
+    this.hotelChanged = ko.observable(false);
     this.overall = ko.computed(function() {
       var result, room, _i, _len, _ref;
       result = 0;
@@ -194,24 +197,43 @@ HotelsSearchParams = (function() {
   };
 
   HotelsSearchParams.prototype.fromList = function(data) {
-    var item, r, rest, _i, _len, _results;
+    var beforeUrl, hotelIdBefore, item, r, rest, _i, _len;
+    beforeUrl = this.url();
+    hotelIdBefore = this.hotelId();
     this.city(data[0]);
     this.checkIn(moment(data[1], 'D.M.YYYY').toDate());
     this.checkOut(moment(data[2], 'D.M.YYYY').toDate());
     this.rooms.splice(0);
+    this.hotelId(false);
     rest = data[3].split('/');
-    _results = [];
     for (_i = 0, _len = rest.length; _i < _len; _i++) {
       item = rest[_i];
-      if (item) {
-        r = new SpRoom(this);
-        r.fromList(item);
-        _results.push(this.rooms.push(r));
+      if (item === 'hotelId') {
+        this.hotelId(0);
       } else {
-        _results.push(void 0);
+        if (this.hotelId() === 0) {
+          this.hotelId(item);
+          break;
+        } else {
+          if (item) {
+            r = new SpRoom(this);
+            r.fromList(item);
+            this.rooms.push(r);
+          }
+        }
       }
     }
-    return _results;
+    if (beforeUrl === this.url()) {
+      this.urlChanged(false);
+      if (hotelIdBefore === this.hotelId()) {
+        return this.hotelChanged(false);
+      } else {
+        return this.hotelChanged(true);
+      }
+    } else {
+      this.urlChanged(true);
+      return this.hotelChanged(false);
+    }
   };
 
   HotelsSearchParams.prototype.fromObject = function(data) {

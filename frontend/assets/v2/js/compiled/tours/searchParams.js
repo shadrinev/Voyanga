@@ -44,6 +44,7 @@ TourSearchParams = (function(_super) {
 
     var _this = this;
     TourSearchParams.__super__.constructor.call(this);
+    voyanga_debug('CREATING TOURS SEARCH PARAMS!!!!!!!!!!');
     if (window.currentCityCode) {
       this.startCity = ko.observable(window.currentCityCode);
     } else {
@@ -52,6 +53,9 @@ TourSearchParams = (function(_super) {
     this.returnBack = ko.observable(1);
     this.destinations = ko.observableArray([]);
     this.rooms = ko.observableArray([new SpRoom(this)]);
+    this.hotelId = ko.observable(false);
+    this.urlChanged = ko.observable(false);
+    this.hotelChanged = ko.observable(false);
     this.overall = ko.computed(function() {
       var result, room, _i, _len, _ref;
       result = 0;
@@ -97,9 +101,20 @@ TourSearchParams = (function(_super) {
     params.push('start=' + this.startCity());
     params.push('return=' + this.returnBack());
     _.each(this.destinations(), function(destination, ind) {
+      var dateFrom, dateTo;
+      if (moment(destination.dateFrom())) {
+        dateFrom = moment(destination.dateFrom()).format('D.M.YYYY');
+      } else {
+        dateFrom = '1.1.1970';
+      }
+      if (moment(destination.dateTo())) {
+        dateTo = moment(destination.dateTo()).format('D.M.YYYY');
+      } else {
+        dateTo = '1.1.1970';
+      }
       params.push('destinations[' + ind + '][city]=' + destination.city());
-      params.push('destinations[' + ind + '][dateFrom]=' + moment(destination.dateFrom()).format('D.M.YYYY'));
-      return params.push('destinations[' + ind + '][dateTo]=' + moment(destination.dateTo()).format('D.M.YYYY'));
+      params.push('destinations[' + ind + '][dateFrom]=' + dateFrom);
+      return params.push('destinations[' + ind + '][dateTo]=' + dateTo);
     });
     _.each(this.rooms(), function(room, ind) {
       return params.push(room.getUrl(ind));
@@ -145,7 +160,9 @@ TourSearchParams = (function(_super) {
   };
 
   TourSearchParams.prototype.fromList = function(data) {
-    var destination, doingrooms, i, oldSelection, room, toSaveIn, _i, _ref;
+    var beforeUrl, destination, doingrooms, hotelIdBefore, i, oldSelection, room, toSaveIn, _i, _ref;
+    beforeUrl = this.url();
+    hotelIdBefore = this.hotelId();
     this.startCity(data[0]);
     this.returnBack(data[1]);
     doingrooms = false;
@@ -169,6 +186,9 @@ TourSearchParams = (function(_super) {
         oldSelection = true;
         break;
       }
+      if (data[i] === 'hotelId') {
+        break;
+      }
       room = new SpRoom(this);
       room.fromList(data[i]);
       this.rooms.push(room);
@@ -176,7 +196,31 @@ TourSearchParams = (function(_super) {
     }
     if (oldSelection) {
       i++;
-      return this[toSaveIn] = data[i];
+      this[toSaveIn] = data[i];
+    }
+    this.hotelId(false);
+    i = 0;
+    while (i < data.length) {
+      if (data[i] === 'hotelId') {
+        this.hotelId(0);
+      } else {
+        if (this.hotelId() === 0) {
+          this.hotelId(data[i]);
+          break;
+        }
+      }
+      i++;
+    }
+    if (beforeUrl === this.url()) {
+      this.urlChanged(false);
+      if (hotelIdBefore === this.hotelId()) {
+        return this.hotelChanged(false);
+      } else {
+        return this.hotelChanged(true);
+      }
+    } else {
+      this.urlChanged(true);
+      return this.hotelChanged(false);
     }
   };
 

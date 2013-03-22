@@ -293,9 +293,16 @@ class ToursHotelsResultSet extends TourEntry
     result.select = (hotel) =>
       hotel.parent = result
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
+      backUrl = window.location.hash
+      backUrl = backUrl.split('hotelId')[0]
+      window.app.navigate (backUrl+'hotelId/'+hotel.hotelId+'/')
+      window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId)
+      window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel
       hotel.off 'back'
       hotel.on 'back', =>
         @trigger 'setActive', @, false, false,hotel.oldPageTop, =>
+          window.app.navigate backUrl
+          window.app.activeModuleInstance().controller.searchParams.hotelId(false)
           if !hotel.parent.showFullMap()
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
           else
@@ -303,6 +310,8 @@ class ToursHotelsResultSet extends TourEntry
       hotel.getFullInfo()
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
+        window.app.navigate backUrl
+        window.app.activeModuleInstance().controller.searchParams.hotelId(false)
         @select roomData
         @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
@@ -310,14 +319,23 @@ class ToursHotelsResultSet extends TourEntry
       hotel.parent = result
       hotel.activePopup.close()
       hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
+      backUrl = window.location.hash
+      backUrl = backUrl.split('hotelId')[0]
+      window.app.navigate (backUrl+'hotelId/'+hotel.hotelId+'/')
+      window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId)
+      window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel
       hotel.off 'back'
       hotel.on 'back', =>
 
         @trigger 'setActive', @, false, false, hotel.oldPageTop,=>
+          window.app.navigate backUrl
+          window.app.activeModuleInstance().controller.searchParams.hotelId(false)
           if !hotel.parent.showFullMap()
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
       hotel.off 'select'
       hotel.on 'select', (roomData) =>
+        window.app.navigate backUrl
+        window.app.activeModuleInstance().controller.searchParams.hotelId(false)
         @select roomData
         @trigger 'next'
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}

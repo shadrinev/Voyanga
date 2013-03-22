@@ -564,10 +564,18 @@ HotelResult = (function() {
   };
 
   HotelResult.prototype.selectFromPopup = function(hotel, event) {
-    var _this = this;
+    var backUrl,
+      _this = this;
     this.activePopup.close();
+    backUrl = window.location.hash;
+    backUrl = backUrl.split('hotelId')[0];
+    window.app.navigate(backUrl + 'hotelId/' + hotel.hotelId + '/');
+    window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId);
+    window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel;
     hotel.off('back');
     hotel.on('back', function() {
+      window.app.navigate(backUrl);
+      window.app.activeModuleInstance().controller.searchParams.hotelId(false);
       window.app.render({
         results: ko.observable(hotel.parent)
       }, 'results');
@@ -1156,11 +1164,19 @@ HotelsResultSet = (function() {
   }
 
   HotelsResultSet.prototype.select = function(hotel, event) {
-    var _this = this;
+    var backUrl,
+      _this = this;
     window.voyanga_debug(' i wonna get hotel for you', hotel);
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
+    backUrl = window.location.hash;
+    backUrl = backUrl.split('hotelId')[0];
+    window.app.navigate(backUrl + 'hotelId/' + hotel.hotelId + '/');
+    window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId);
+    window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel;
     hotel.off('back');
     hotel.on('back', function() {
+      window.app.navigate(backUrl);
+      window.app.activeModuleInstance().controller.searchParams.hotelId(false);
       window.app.render({
         results: ko.observable(_this)
       }, 'results');
@@ -1398,10 +1414,18 @@ HotelsResultSet = (function() {
   };
 
   HotelsResultSet.prototype.selectFromPopup = function(hotel, event) {
-    var _this = this;
+    var backUrl,
+      _this = this;
     hotel.activePopup.close();
+    backUrl = window.location.hash;
+    backUrl = backUrl.split('hotelId')[0];
+    window.app.navigate(backUrl + 'hotelId/' + hotel.hotelId + '/');
+    window.app.activeModuleInstance().controller.searchParams.hotelId(hotel.hotelId);
+    window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel;
     hotel.off('back');
     hotel.on('back', function() {
+      window.app.navigate(backUrl);
+      window.app.activeModuleInstance().controller.searchParams.hotelId(false);
       window.app.render({
         results: ko.observable(hotel.parent)
       }, 'results');
