@@ -1,5 +1,5 @@
 <!--=== ===-->
-<div class="oneBlock">
+<div class="oneBlock buyTicket">
     <!--=== ===-->
     <div class="paybuyContent">
         <h1>Оформление заказа &#8470;<?php echo $orderId; ?></h1>

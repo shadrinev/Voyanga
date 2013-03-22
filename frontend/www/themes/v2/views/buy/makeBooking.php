@@ -27,7 +27,7 @@
     </div>
 
 </script>
-<div id="content">
+<div id="content" style="overflow: hidden;">
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
