@@ -35,7 +35,7 @@
             'index.js',
             'slide-mode.js',
             'google.info.js',
-            'jquery.maskedinput-1.3.js'
+            'jquery.maskedinput-1.3.js',
         ),
         'depends' => array('jquery')
     ),
@@ -59,6 +59,7 @@
             'markerclusterer_compiled.js',
             'chosen/chosen.jquery.min.js',
             'mdetect.js',
+            'jquery.cookie.js'
         ),
         'depends' => array('jquery')
     ),

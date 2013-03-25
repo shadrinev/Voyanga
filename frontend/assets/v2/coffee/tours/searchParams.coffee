@@ -97,7 +97,7 @@ class TourSearchParams extends SearchParams
       parts.push room.getHash()
 
     hash = 'tours/search/' + parts.join('/') + '/'
-    window.voyanga_debug "Generated hash for tour search", hash
+    $.cookie 'currentTourHash', hash
     return hash
 
   fromList: (data)->

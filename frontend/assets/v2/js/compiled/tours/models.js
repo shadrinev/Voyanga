@@ -1590,8 +1590,15 @@ TourTripResultSet = (function() {
         return _this.labels.push(city.cityName);
       });
       if (this.hasHotel) {
-        $('.allVariantsBlock').css('visibility', 'hidden');
+        if ($.cookie('currentTourHash')) {
+          window.redirectHash = $.cookie('currentTourHash');
+          $('.allVariantsBlock').css('visibility', 'visible');
+        } else {
+          $('.allVariantsBlock').css('visibility', 'hidden');
+        }
         window.label = this.labels.join(' → ');
+        $('.text-ticket1').text('туры');
+        $('.text-ticket2').text('тур');
       } else {
         if (this.labels.length === 3) {
           window.label = this.labels[0] + ' ↔ ' + this.labels[1];
@@ -1604,8 +1611,6 @@ TourTripResultSet = (function() {
         window.label += ' - ' + this.lastDate;
       }
       window.label += ', ' + this.people + '</span>';
-      $('.text-ticket1').text('туры');
-      $('.text-ticket2').text('тур');
     } else {
       if (this.hasHotel) {
         $('.text-ticket1').text('отели');

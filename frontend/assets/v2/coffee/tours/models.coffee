@@ -1047,8 +1047,14 @@ class TourTripResultSet
         _.each @cities, (city, i) =>
           @labels.push city.cityName
         if @hasHotel
-          $('.allVariantsBlock').css('visibility', 'hidden')
+          if $.cookie 'currentTourHash'
+            window.redirectHash = $.cookie 'currentTourHash'
+            $('.allVariantsBlock').css('visibility', 'visible')
+          else
+            $('.allVariantsBlock').css('visibility', 'hidden')
           window.label = @labels.join ' → '
+          $('.text-ticket1').text('туры')
+          $('.text-ticket2').text('тур')
         else
           if @labels.length == 3
             window.label = @labels[0] + ' ↔ ' + @labels[1]
@@ -1058,8 +1064,6 @@ class TourTripResultSet
         if @lastDate.length
           window.label += ' - ' + @lastDate
         window.label += ', ' + @people + '</span>'
-        $('.text-ticket1').text('туры')
-        $('.text-ticket2').text('тур')
     else
         if @hasHotel
           $('.text-ticket1').text('отели')

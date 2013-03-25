@@ -46,8 +46,8 @@
             </table>
         </div>
     </div>
-    <div class="lineUp">
-        <a href="#" class="btn-close" style="display: none"></a>
+    <div class="lineUp" <?php if (isset($_COOKIE['credentials-cross'])) echo 'style="display: none"' ?>>
+        <a href="#" class="btn-close"></a>
         <div class="center-block">
             <table class="advantageTable">
                 <tr>
