@@ -247,6 +247,7 @@ class FlightBooker extends SWLogActiveRecord
         return $description;
     }
 
+    //! FIXME UNUSED
     public function getSKU()
     {
         $fw = $this->getFlightVoyage();
@@ -273,5 +274,18 @@ class FlightBooker extends SWLogActiveRecord
     public function setFlightBookerComponent(FlightBookerComponent &$flightBookerComponent)
     {
         $this->flightBookerComponent = &$flightBookerComponent;
+    }
+
+    public function getBillHistory() {
+        $bills = Yii::app()->db->createCommand("SELECT billId from bill_flight_booking_history WHERE flightBookingId  = " . $this->id)->queryAll();
+        if(!count($bills))
+            return $bills;
+        $ids = array();
+        foreach($bills as $billRow){
+            $ids[] = $billRow['billId'];
+        }
+        $ids = implode(",", $ids);
+        $bills = Bill::model()->findAllBySql("SELECT * FROM bill WHERE id IN (" . $ids .  ")");
+        return $bills;
     }
 }

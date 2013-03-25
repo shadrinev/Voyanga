@@ -12,7 +12,7 @@ class StartPaymentAction extends CAction
     {
         try
         {
-            $params = Yii::app()->order->getPaymentFormParams();
+            $params = Yii::app()->order->getPaymentFormParams(true);
         } catch(Exception $e) {
             header("Content-type: application/json");
             $params = Array();

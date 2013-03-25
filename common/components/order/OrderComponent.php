@@ -154,7 +154,7 @@ class OrderComponent extends CApplicationComponent
         throw new Exception($errorMsg);
     }
 
-    public function getPaymentFormParams()
+    public function getPaymentFormParams($newBill=false)
     {
         $bookers = $this->getBookers();
         if(count($bookers)===0)
@@ -169,7 +169,7 @@ class OrderComponent extends CApplicationComponent
             }
         }
         $payments = Yii::app()->payments;
-        $bookers = $payments->preProcessBookers($bookers);
+        $bookers = $payments->preProcessBookers($bookers, $newBill);
 
         return $payments->getFormParamsForBooker($bookers[0]);
     }

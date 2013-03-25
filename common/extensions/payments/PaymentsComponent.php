@@ -39,7 +39,7 @@ class PaymentsComponent extends CApplicationComponent
      *
      * @return Bill bill for given booker
      */
-    public function getBillForBooker($booker)
+    public function getBillForBooker($booker, $newBill=false)
     {
         $channel = 'ecommerce';
         if($booker instanceof FlightBookerComponent)
@@ -59,12 +59,26 @@ class PaymentsComponent extends CApplicationComponent
                 $channel = $booker->flightVoyage->valAirline->payableViaGalileo?'gds_galileo':'ltr';
 #                $channel = 'ltr';
             }
+        }
 
-        }
-        if($booker->billId)
+       if($booker->billId)
         {
-            return Bill::model()->findByPk($booker->billId);
+            $billId = $booker->billId;
+
+            if($newBill) {
+                //! store reverse relation
+                $connection = Yii::app()->db;
+                $queries = array();
+                $queries[] = "INSERT INTO bill_hotel_booking_history SELECT id, $billId FROM hotel_booking WHERE billId = $billId";
+                $queries[] = "INSERT INTO bill_flight_booking_history SELECT id, $billId FROM flight_booking WHERE billId = $billId";
+                foreach ($queries as $q) {
+                    $connection->createCommand($q)->execute();
+                }
+            } else {
+                return Bill::model()->findByPk($booker->billId);
+            }
         }
+
         $bill = new Bill();
         $bill->setChannel($channel);
         $bill->status = Bill::STATUS_NEW;
@@ -99,17 +113,18 @@ class PaymentsComponent extends CApplicationComponent
                 $result[] = $entry;
             }
         }
-//        $bill = $this->getBillForBooker($booker);
-//        $channel = $bill->getChannel();
         return $result;
     }
 
 
     /*
-       prepare bookers for payments component,
-       ATM only wraps hotels into Payments_MetaBooker
+      Группирует набор букеров для платежки.
+      
+      @param array $bookers оригинальный набор букеров привязанных к текущему заказу
+      @param bool $newBill создавать ли новые счета взамен существующих
+      @return array Возвращает массив сгруппированных для платежки букеров.
      */
-    public function preProcessBookers($bookers)
+    public function preProcessBookers($bookers, $newBill=false)
     {
         $rest = array();
         $hotels = array();
@@ -127,24 +142,26 @@ class PaymentsComponent extends CApplicationComponent
         $hasHotels = count($hotels);
         $hasFlights = count($rest);
         if($hasHotels && !$hasFlights)
-            return $this->onlyHotelsCase($hotels);
-        if(!$hasHotels && ($hasFlights == 1))
+            return $this->onlyHotelsCase($hotels, $newBill);
+        if(!$hasHotels && ($hasFlights == 1)) {
+            $this->getBillForBooker($rest[0], $newBill);
             return $rest;
+        }
         if($hasFlights)
-            return $this->tourCase($rest, $hotels);
+            return $this->tourCase($rest, $hotels, $newBill);
     }
 
-    private function onlyHotelsCase($hotels) {
+    private function onlyHotelsCase($hotels, $newBill) {
         # FIXME: check if this call is needed
-        $bill = $this->getBillForBooker($hotels[0]->getCurrent());
+        $bill = $this->getBillForBooker($hotels[0]->getCurrent(), $newBill);
         $billId = $bill->id;
         $metaBooker = new Payments_MetaBooker($hotels, $billId);
         return array($metaBooker);
     }
 
-    private function tourCase($flights, $hotels) {
+    private function tourCase($flights, $hotels, $newBill) {
         # FIXME: check if this call is needed
-        $bill = $this->getBillForBooker($flights[0]);
+        $bill = $this->getBillForBooker($flights[0], $newBill);
         $bill->setChannel('ltr');
         $bill->save();
         $billId = $bill->id;

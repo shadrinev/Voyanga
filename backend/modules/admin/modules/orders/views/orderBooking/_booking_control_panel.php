@@ -11,6 +11,17 @@
   <?php else: ?>
   Нет связанных счетов для элемента заказа.
   <?php endif; ?>
+  <?php 
+  $historyBills = $booking->getBillHistory();
+  if(count($historyBills)):
+  ?>
+  <h4>Другие счета</h4>
+  <ul>
+    <?php foreach($historyBills as $bill): ?>
+      <li># <?= $bill->id;?> <?= $bill->channelVerbose ?> (<?= $bill->status?>). <?= $bill->amount ?> руб.</li>
+    <?php endforeach; ?>
+  </ul>
+  <?php endif; ?>
 </td>
 <td colspan="<?= $span[1]?>">
   <?php if($booking instanceof FlightBooker): ?>

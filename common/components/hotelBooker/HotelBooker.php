@@ -259,8 +259,23 @@ class HotelBooker extends SWLogActiveRecord
         $this->hotelBookerComponent = &$hotelBookerComponent;
     }
 
+    //! FIXME unused
     public function getSKU()
     {
         return preg_replace('~\s+~', '-',$this->getHotel()->hotelName);
+    }
+
+    public function getBillHistory() {
+        //! FIXME more or less pasted from FlightBooker
+        $bills = Yii::app()->db->createCommand("SELECT billId from bill_hotel_booking_history WHERE hotelBookingId  = " . $this->id)->queryAll();
+        if(!count($bills))
+            return $bills;
+        $ids = array();
+        foreach($bills as $billRow){
+            $ids[] = $billRow['billId'];
+        }
+        $ids = implode(",", $ids);
+        $bills = Bill::model()->findAllBySql("SELECT * FROM bill WHERE id IN (" . $ids .  ")");
+        return $bills;
     }
 }
