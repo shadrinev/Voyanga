@@ -151,7 +151,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
             echo 'Cant open file '.$outFilename;
             return '';
         }
-        fwrite($fp,"codeTo*;ctrCodeTo;url;desc;price\r\n");
+        fwrite($fp,"codeTo*;ctrCodeTo;to;url;desc;price\r\n");
 
         $j = 0;
         foreach($citiesInfo as $cityToKey=>$cityToInfo){
@@ -174,7 +174,7 @@ WHERE  `city`.`id` IN ('.implode(',',$allCityIds).')';
             }
             $desc = "в {$cityToInfo['caseAcc']}";
             //$sxe['url'] = $url;
-            $str = "{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$url};{$desc};{$minPrice}\r\n";
+            $str = "{$cityToInfo['cityCode']};{$cityToInfo['countryCode']};{$cityToInfo['caseNom']};{$url};{$desc};{$minPrice}\r\n";
             fwrite($fp,$str);
         }
 
