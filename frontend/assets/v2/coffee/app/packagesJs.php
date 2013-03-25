@@ -58,8 +58,8 @@
             'scroll/jquery.jscrollpane.min.js',
             'markerclusterer_compiled.js',
             'chosen/chosen.jquery.min.js',
+            'jquery.cookie.js',
             'mdetect.js',
-            'jquery.cookie.js'
         ),
         'depends' => array('jquery')
     ),
