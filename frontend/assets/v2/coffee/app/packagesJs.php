@@ -58,8 +58,8 @@
             'scroll/jquery.jscrollpane.min.js',
             'markerclusterer_compiled.js',
             'chosen/chosen.jquery.min.js',
+            'jquery.cookie.js',
             'mdetect.js',
-            'jquery.cookie.js'
         ),
         'depends' => array('jquery')
     ),
@@ -84,6 +84,7 @@
             'ko.bindings.swapPanel.js',
             'ko.bindings.gmap.js',
 
+
             'GAWrapper.js',
             'travellers.js',
             'searchParams.js',
@@ -92,6 +93,7 @@
             'searchPanel.js',
             'autocomplete.js',
             'API.js',
+            'helpLayer.js',
         )
     ),
     'avia' => array(

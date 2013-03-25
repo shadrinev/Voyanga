@@ -58,22 +58,22 @@
                     <td>
                         <span class="ico-price"></span>
                         Окончательная цена,<br>
-                        нет комиссий
+                        никаких комиссий
                     </td>
                     <td>
                         <span class="ico-secqury"></span>
                         Безопасность платежей,<br>
-                        международные стандарты
+                        оплата Visa или Mastercard
                     </td>
                     <td>
                         <span class="ico-time"></span>
-                        Быстрое оформление,<br>
+                        Моментальное оформление,<br>
                         <span class="text-ticket2">билет</span> ваш через 2 минуты
                     </td>
                     <td>
                         <span class="ico-helps"></span>
                         Помощь в решении<br>
-                        любых проблем
+                        любых вопросов
                     </td>
                 </tr>
             </table>
