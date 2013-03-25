@@ -10,6 +10,23 @@
     width: 100%;
     z-index: 999;
 }
+#helpLayer{
+    background: none repeat scroll 0 0 #26292E;
+    height: 100%;
+    left: 0;
+    opacity: 0.01;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+#helpLayer .hint-input{
+    width: 325px;
+    height: 97px;
+    position: absolute;
+    background-image: url('/images/hint-input.png');
+}
 .body-popup {
     height: 100%;
     left: 0;
