@@ -2411,6 +2411,7 @@ input.hotel-input {
 	margin-top: 17px;
 	font-size: 17px;
 	color: #1d222b;
+    margin-bottom: 30px;
 }
 .paybuyContent .theSum .left {
     float: left;
@@ -2433,7 +2434,6 @@ input.hotel-input {
 }
 .oneBlock.buyTicket {
     padding-top: 35px;
-    margin-top: -35px;
     background: url(../images/bg-buyTicket.png) repeat-x center bottom #b6b8bd;
     border-bottom: 1px solid #8E9195;
 }
@@ -3900,12 +3900,12 @@ a.whereData span {
     color:#d91a1a;
 }
 .lineUp {
-
     padding-bottom: 30px;
     height: 62px;
     background: url(../images/bg-lineUp.png) repeat-x;
     position: relative;
     z-index: 1;
+    margin-bottom: -30px;
 }
 .lineUp .advantageTable {
     width: 100%;
@@ -3935,7 +3935,7 @@ a.whereData span {
     height: 30px;
     line-height: 28px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-    margin-top: 30px;
+
     margin-bottom: 15px;
 }
 .andOthers .priceSale {
@@ -3956,6 +3956,9 @@ a.whereData span {
     height: 64px;
     margin-top: -35px;
     color: #FFF;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 1px 1px rgba(1,0,1,0.7);
 }
 .panelBuy table {
     width: 100%;
