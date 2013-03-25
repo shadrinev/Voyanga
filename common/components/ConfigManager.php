@@ -22,5 +22,4 @@ class ConfigManager
         }
         return Yii::app()->params['GDSNemo']['agencyApiKey'];
     }
-
 }

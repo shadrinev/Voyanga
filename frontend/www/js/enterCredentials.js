@@ -412,3 +412,11 @@ function countLength(val)
 }
 
 $(window).load(InputActiveFinishDate);
+
+$(function(){
+    $('.btn-close').on('click', function(){
+        $.cookie('credentials-cross', 'hide', {expires: 30});
+        $('.lineUp').slideUp();
+        return false;
+    });
+})

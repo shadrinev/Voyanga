@@ -1391,6 +1391,9 @@ TourTripResultSet = (function() {
     this.tour = false;
     this.additional = false;
     this.flightIds = ko.observableArray([]);
+    this.firstDate = false;
+    this.lastDate = false;
+    this.people = false;
     this.flightIdsString = ko.computed(function() {
       var resArr;
       resArr = _this.flightIds();
@@ -1446,11 +1449,17 @@ TourTripResultSet = (function() {
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
     _.each(this.resultSet.items, function(item) {
-      var asp, aviaResult, totalPeople;
+      var adults, asp, aviaResult, child, infant, totalPeople;
       if (item.isFlight) {
         asp = new AviaSearchParams;
         asp.fromObject(item.searchParams);
         window.redirectHash = asp.getHash();
+        if (!_this.firstDate) {
+          _this.firstDate = dateUtils.formatDayShortMonth(asp.date());
+        }
+        if (asp.rtDate()) {
+          _this.lastDate = dateUtils.formatDayShortMonth(asp.rtDate());
+        }
         _this.tour = true;
         _this.hasFlight = true;
         _this.flightCounter(_this.flightCounter() + 1);
@@ -1459,6 +1468,15 @@ TourTripResultSet = (function() {
         _this.flightIds.push(aviaResult._data.flightKey);
         aviaResult.sort();
         aviaResult.totalPeople = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек');
+        if (!_this.people) {
+          _this.people = Utils.wordAfterNum(item.searchParams.adt, 'взрослый', 'взрослых', 'взрослых');
+          if (item.searchParams.chd > 0) {
+            _this.people += ', ' + Utils.wordAfterNum(item.searchParams.chd, 'ребёнок', 'детей', 'детей');
+          }
+          if (item.searchParams.inf > 0) {
+            _this.people += ', ' + Utils.wordAfterNum(item.searchParams.inf, 'младенец', 'младенцев', 'младенцев');
+          }
+        }
         aviaResult.totalPeopleGen = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек');
         if (aviaResult.totalPeople !== '1 человек') {
           aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen;
@@ -1493,16 +1511,38 @@ TourTripResultSet = (function() {
         _this.totalCostWithDiscount += aviaResult.price;
         return _this.totalCostWithoutDiscount = _this.totalCostWithDiscount;
       } else if (item.isHotel) {
+        asp = new HotelsSearchParams;
+        asp.fromObject(item.searchParams);
+        window.redirectHash = asp.getHash();
         _this.hasHotel = true;
+        if (!_this.firstDate) {
+          _this.firstDate = dateUtils.formatDayShortMonth(moment(item.checkIn)._d);
+        }
+        _this.lastDate = dateUtils.formatDayShortMonth(moment(item.checkOut)._d);
         _this.hotelCounter(_this.hotelCounter() + 1);
         _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
         _this.cities.push({
           cityName: _this.lastHotel.activeHotel.city
         });
         totalPeople = 0;
+        adults = 0;
+        child = 0;
+        infant = 0;
         _.each(item.searchParams.rooms, function(room) {
-          return totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
+          totalPeople += room.adultCount / 1 + room.childCount / 1 + room.cots / 1;
+          adults += room.adultCount / 1;
+          child += room.childCount / 1;
+          return infant += room.cots / 1;
         });
+        if (!_this.people) {
+          _this.people = Utils.wordAfterNum(adults, 'взрослый', 'взрослых', 'взрослых');
+          if (child > 0) {
+            _this.people += ', ' + Utils.wordAfterNum(child, 'ребёнок', 'детей', 'детей');
+          }
+          if (infant > 0) {
+            _this.people += ', ' + Utils.wordAfterNum(infant, 'младенец', 'младенцев', 'младенцев');
+          }
+        }
         _this.lastHotel.rawSP = item.searchParams;
         _this.lastHotel.totalPeople = Utils.wordAfterNum(totalPeople, 'человек', 'человека', 'человек');
         _this.lastHotel.totalPeopleGen = Utils.wordAfterNum(totalPeople, 'человека', 'человек', 'человек');
@@ -1545,9 +1585,50 @@ TourTripResultSet = (function() {
     });
     if (this.tour) {
       this.totalCost = this.totalCostWithDiscount;
+      this.labels = [];
+      _.each(this.cities, function(city, i) {
+        return _this.labels.push(city.cityName);
+      });
+      if (this.hasHotel) {
+        if ($.cookie('currentTourHash')) {
+          window.redirectHash = $.cookie('currentTourHash');
+          $('.allVariantsBlock').css('visibility', 'visible');
+        } else {
+          $('.allVariantsBlock').css('visibility', 'hidden');
+        }
+        window.label = this.labels.join(' → ');
+        $('.text-ticket1').text('туры');
+        $('.text-ticket2').text('тур');
+      } else {
+        if (this.labels.length === 3) {
+          window.label = this.labels[0] + ' ↔ ' + this.labels[1];
+        } else {
+          window.label = this.labels.join(' → ');
+        }
+      }
+      window.label += ', <span class="data">' + this.firstDate;
+      if (this.lastDate.length) {
+        window.label += ' - ' + this.lastDate;
+      }
+      window.label += ', ' + this.people + '</span>';
     } else {
+      if (this.hasHotel) {
+        $('.text-ticket1').text('отели');
+        $('.text-ticket2').text('отель');
+      }
       this.totalCost = this.totalCostWithoutDiscount;
+      this.labels = [];
+      _.each(this.cities, function(city, i) {
+        return _this.labels.push(city.cityName);
+      });
+      window.label = this.labels.join(', ');
+      window.label += ', <span class="data">' + this.firstDate + ' - ' + this.lastDate + ', ' + this.people + '</span>';
     }
+    $('.oneString').html(window.label);
+    $('.btn-allVariantion').on('click', function() {
+      window.location.href = '/#' + window.redirectHash;
+      return false;
+    });
   }
 
   TourTripResultSet.prototype.trackBuyClick = function() {

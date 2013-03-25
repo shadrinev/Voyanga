@@ -121,3 +121,44 @@
 .icoService.dop {
 	background-position: 0px -231px;
 }
+.ico-price {
+    background: url(../images/slice.png) no-repeat 0px -27px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    float: left;
+    margin-right: 9px;
+}
+.ico-secqury {
+    background: url(../images/slice.png) no-repeat -32px -27px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    float: left;
+    margin-right: 9px;
+}
+.ico-time {
+    background: url(../images/slice.png) no-repeat -64px -23px;
+    width: 36px;
+    height: 36px;
+    margin-top: -4px;
+    vertical-align: middle;
+    float: left;
+    margin-right: 9px;
+}
+.ico-helps {
+    background: url(../images/slice.png) no-repeat -100px -27px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    float: left;
+    margin-right: 9px;
+}
+.ico-list {
+    width: 11px;
+    height: 14px;
+    background: url(../images/ico.png) no-repeat -0px -281px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}

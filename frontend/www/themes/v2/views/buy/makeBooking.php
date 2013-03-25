@@ -7,7 +7,6 @@
     })
 </script>
 <script id="tariff-rules-template" type="text/html">
-
     <div id="tariff-rules" style="display: block;" class="contentWrapBg">
         <div class="wrapDiv">
             <div class="wrapContent">
@@ -28,6 +27,58 @@
 
 </script>
 <div id="content" style="overflow: hidden;">
+    <div class="panelBuy">
+        <div class="center-block">
+            <table>
+                <tr>
+                    <td style="width: 150px" class="allVariantsBlock">
+                        <a href="#" class="btn-allVariantion"><span class="ico-list"></span> Все варианты <span class="l"></span></a>
+                    </td>
+                    <td>
+                        <div class="oneString">
+                            Санкт-Петербург ↔ Москва
+                        </div>
+                    </td>
+                    <td style="width: 150px">
+<!--                        <a href="#">Новый поиск</a>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="lineUp" <?php if (isset($_COOKIE['credentials-cross'])) echo 'style="display: none"' ?>>
+        <a href="#" class="btn-close"></a>
+        <div class="center-block">
+            <table class="advantageTable">
+                <tr>
+                    <td class="first">
+                        <strong>Почему <span class="text-ticket1">билеты</span><br>
+                        покупают у нас?</strong>
+                    </td>
+                    <td>
+                        <span class="ico-price"></span>
+                        Окончательная цена,<br>
+                        нет комиссий
+                    </td>
+                    <td>
+                        <span class="ico-secqury"></span>
+                        Безопасность платежей,<br>
+                        международные стандарты
+                    </td>
+                    <td>
+                        <span class="ico-time"></span>
+                        Быстрое оформление,<br>
+                        <span class="text-ticket2">билет</span> ваш через 2 минуты
+                    </td>
+                    <td>
+                        <span class="ico-helps"></span>
+                        Помощь в решении<br>
+                        любых проблем
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>

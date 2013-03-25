@@ -153,9 +153,9 @@
         </td>
         <td class="tdDocumentNumber">
             <?php if (!$roomCounters): ?>
-                <?php echo CHtml::activeTextField($model, "[$i]seriesNumber"); ?>
+                <?php echo CHtml::activeTextField($model, "[$i]seriesNumber", array("placeholder" => "40081234567")); ?>
             <?php else: ?>
-                <?php echo CHtml::activeHiddenField($model, "[$i]seriesNumber", array('value'=>'123')); ?>
+                <?php echo CHtml::activeHiddenField($model, "[$i]seriesNumber", array('placeholder' => '40081234567', 'value'=>'123')); ?>
             <?php endif ?>
         </td>
         <td class="tdDuration">

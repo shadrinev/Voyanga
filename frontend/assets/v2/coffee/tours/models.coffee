@@ -905,6 +905,10 @@ class TourTripResultSet
     @tour = false
     @additional = false
     @flightIds = ko.observableArray([])
+    @firstDate = false
+    @lastDate = false
+    @people = false
+
     @flightIdsString = ko.computed =>
       resArr = @flightIds()
       return resArr.join(':')
@@ -945,6 +949,10 @@ class TourTripResultSet
         asp = new AviaSearchParams
         asp.fromObject item.searchParams
         window.redirectHash = asp.getHash()
+        if (!@firstDate)
+          @firstDate = dateUtils.formatDayShortMonth(asp.date())
+        if asp.rtDate()
+          @lastDate = dateUtils.formatDayShortMonth(asp.rtDate())
         @tour = true
         @hasFlight = true
         @flightCounter(@flightCounter()+1)
@@ -953,6 +961,12 @@ class TourTripResultSet
         @flightIds.push aviaResult._data.flightKey
         aviaResult.sort()
         aviaResult.totalPeople = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человек', 'человека', 'человек'
+        if (!@people)
+          @people = Utils.wordAfterNum item.searchParams.adt, 'взрослый', 'взрослых', 'взрослых'
+          if (item.searchParams.chd > 0)
+            @people += ', ' + Utils.wordAfterNum item.searchParams.chd, 'ребёнок', 'детей', 'детей'
+          if (item.searchParams.inf > 0)
+            @people += ', ' + Utils.wordAfterNum item.searchParams.inf, 'младенец', 'младенцев', 'младенцев'
         aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'
         if (aviaResult.totalPeople != '1 человек')
           aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen
@@ -970,13 +984,32 @@ class TourTripResultSet
         @totalCostWithDiscount += aviaResult.price
         @totalCostWithoutDiscount = @totalCostWithDiscount
       else if (item.isHotel)
+        asp = new HotelsSearchParams
+        asp.fromObject item.searchParams
+        window.redirectHash = asp.getHash()
         @hasHotel = true
+        if (!@firstDate)
+          @firstDate = dateUtils.formatDayShortMonth(moment(item.checkIn)._d)
+        @lastDate = dateUtils.formatDayShortMonth(moment(item.checkOut)._d)
         @hotelCounter(@hotelCounter()+1)
         @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
         @cities.push {cityName: @lastHotel.activeHotel.city}
         totalPeople = 0
+        adults = 0
+        child = 0
+        infant = 0
         # no side effects here ?!
-        _.each item.searchParams.rooms, (room) -> totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
+        _.each item.searchParams.rooms, (room) ->
+          totalPeople += room.adultCount/1 + room.childCount/1 + room.cots/1
+          adults += room.adultCount/1
+          child += room.childCount/1
+          infant += room.cots/1
+        if !@people
+          @people = Utils.wordAfterNum adults, 'взрослый', 'взрослых', 'взрослых'
+          if (child > 0)
+            @people += ', ' + Utils.wordAfterNum child, 'ребёнок', 'детей', 'детей'
+          if (infant > 0)
+            @people += ', ' + Utils.wordAfterNum infant, 'младенец', 'младенцев', 'младенцев'
         @lastHotel.rawSP = item.searchParams
         @lastHotel.totalPeople = Utils.wordAfterNum totalPeople, 'человек', 'человека', 'человек'
         @lastHotel.totalPeopleGen = Utils.wordAfterNum totalPeople, 'человека', 'человек', 'человек'
@@ -1010,8 +1043,41 @@ class TourTripResultSet
           city.left = city.left + '%'
     if @tour
         @totalCost = @totalCostWithDiscount
+        @labels = []
+        _.each @cities, (city, i) =>
+          @labels.push city.cityName
+        if @hasHotel
+          if $.cookie 'currentTourHash'
+            window.redirectHash = $.cookie 'currentTourHash'
+            $('.allVariantsBlock').css('visibility', 'visible')
+          else
+            $('.allVariantsBlock').css('visibility', 'hidden')
+          window.label = @labels.join ' → '
+          $('.text-ticket1').text('туры')
+          $('.text-ticket2').text('тур')
+        else
+          if @labels.length == 3
+            window.label = @labels[0] + ' ↔ ' + @labels[1]
+          else
+            window.label = @labels.join ' → '
+        window.label += ', <span class="data">' + @firstDate
+        if @lastDate.length
+          window.label += ' - ' + @lastDate
+        window.label += ', ' + @people + '</span>'
     else
+        if @hasHotel
+          $('.text-ticket1').text('отели')
+          $('.text-ticket2').text('отель')
         @totalCost = @totalCostWithoutDiscount
+        @labels = []
+        _.each @cities, (city, i) =>
+          @labels.push city.cityName
+        window.label = @labels.join ', '
+        window.label += ', <span class="data">' + @firstDate + ' - ' + @lastDate + ', ' + @people + '</span>'
+    $('.oneString').html(window.label)
+    $('.btn-allVariantion').on 'click', () ->
+      window.location.href = '/#' + window.redirectHash;
+      return false
 
   trackBuyClick: =>
     # Отпавляем в гугол инфу о нажатии на кнопку перейти к оплате

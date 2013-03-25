@@ -2411,6 +2411,7 @@ input.hotel-input {
 	margin-top: 17px;
 	font-size: 17px;
 	color: #1d222b;
+    margin-bottom: 15px;
 }
 .paybuyContent .theSum .left {
     float: left;
@@ -2421,7 +2422,7 @@ input.hotel-input {
     line-height: 23px;
 }
 .paybuyContent .theSum .right .price {
-	width: 155px;
+	width: 165px;
 	display: inline-block;
 	font-size: 22px;
 }
@@ -2433,7 +2434,6 @@ input.hotel-input {
 }
 .oneBlock.buyTicket {
     padding-top: 35px;
-    margin-top: -35px;
     background: url(../images/bg-buyTicket.png) repeat-x center bottom #b6b8bd;
     border-bottom: 1px solid #8E9195;
 }
@@ -3898,4 +3898,81 @@ a.whereData span {
 }
 .noChoise {
     color:#d91a1a;
+}
+.lineUp {
+    padding-bottom: 30px;
+    height: 62px;
+    background: url(../images/bg-lineUp.png) repeat-x;
+    position: relative;
+    z-index: 1;
+    margin-bottom: -30px;
+}
+.lineUp .advantageTable {
+    width: 100%;
+    font-size: 13px;
+    color: #1d222b;
+}
+.lineUp .advantageTable .first {
+    font-size: 14px;
+    color: #323842;
+    padding-left: 10px;
+}
+.lineUp .advantageTable td {
+    height: 62px;
+    vertical-align: middle;
+}
+.lineUp .btn-close {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: url(../images/slice.png) no-repeat -133px -27px;
+    right: 14px;
+    top: 7px;
+}
+.andOthers {
+    color: #292D35;
+    font-size: 15px;
+    height: 30px;
+    line-height: 28px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+    margin-bottom: 15px;
+}
+.andOthers .priceSale {
+    width: 142px;
+    height: 20px;
+    background: url("../images/slice.png") no-repeat 0px 0px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 17px;
+}
+.andOthers .btn-addItems {
+    float: right;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.panelBuy {
+    background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;
+    height: 64px;
+    margin-top: -35px;
+    color: #FFF;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0px 1px 1px rgba(1,0,1,0.7);
+}
+.panelBuy table {
+    width: 100%;
+}
+.panelBuy table td {
+    height: 64px;
+    vertical-align: middle;
+}
+.panelBuy table td .oneString {
+    font-size: 24px;
+    max-width: 690px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.panelBuy table td .oneString .data {
+    font-size: 17px;
 }
