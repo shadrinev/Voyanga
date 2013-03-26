@@ -35,7 +35,7 @@ AviaController = (function() {
     var args;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
     this.searchParams.fromList(args);
-    window.VisualLoaderInstance.start(this.api.loaderDescription);
+    window.VisualLoaderInstance.start(this.api.loaderDescription, 18);
     return this.api.search(this.searchParams.url(), this.handleSearch);
   };
 
