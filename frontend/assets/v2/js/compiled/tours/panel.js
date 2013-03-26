@@ -351,8 +351,10 @@ TourPanel = (function(_super) {
       if (this.startParams === url) {
         if (this.selectedParams.eventId) {
           url += 'eventId/' + this.selectedParams.eventId;
+          $.cookie('currentTourHash', url);
         } else if (this.selectedParams.orderId) {
           url += 'orderId/' + this.selectedParams.orderId;
+          $.cookie('currentTourHash', url);
         }
       }
       return window.location.href = url;
