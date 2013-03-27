@@ -7,7 +7,7 @@ return array(
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'waitingForPayment',        'transition'=>'paymentInProgress, paymentError,bookingTimeLimitError'),
         array('id'=>'paymentInProgress',        'transition'=>'paid,paymentCanceledError,paymentError,startPayment,bookingTimeLimitError'),
-        array('id'=>'paymentError',             'transition'=>'error'),
+        array('id'=>'paymentError',             'transition'=>'error,waitingForPayment'),
         //! payment canceled due to other segment failure
         array('id'=>'paymentCanceledError',      'transition'=>'error'),
         array('id'=>'paid',                     'transition'=>'ticketing,refundedError'),

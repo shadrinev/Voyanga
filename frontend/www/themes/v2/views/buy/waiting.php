@@ -25,7 +25,8 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
       <div class="text">
                 Платеж отклонен. Возможно, данные банковской карты были введены некорректно, либо банк отклонил платеж по причине недостаточного количества средств на карте. Если с вашей карты были списаны деньги, то они автоматически вернутся в течении часа.<br>
                 Если это не так, пожалуйста, свяжитесь с нашим отделом обслуживания клиентов по телефону +7&nbsp;(499)&nbsp;553-09-33.<br><br>
-                Перейти <a href="#" onclick="top.window.location.href='/';">на главную</a>
+                Перейти <a href="#" onclick="top.window.location.href='/';">на главную</a> или <a href="#" onclick="window.top.startPayment();">повторить</a>.
+
       </div>  
     </div>
 
@@ -36,7 +37,8 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
 
     $(function(){
       "use strict";
-      window.top.app.itemsToBuy.trackBuyDone('<?= $order->getOrderBooking()->id ?>')
+      if(window.top)
+        window.top.app.itemsToBuy.trackBuyDone('<?= $order->getOrderBooking()->id ?>')
       var item, done=false;
       var blocks = ['waiting', 'show', 'fail'];
       var show = function(id) {
