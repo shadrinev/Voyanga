@@ -30,6 +30,12 @@ return array(
         'site.common.models.order.*',
     ),
 
+    'behaviors' => array(
+        'onBeginRequest' => array(
+            'class' => 'common.extensions.yii-newrelic.behaviors.YiiNewRelicWebAppBehavior',
+        ),
+    ),
+
     'components'=>array(
 
         'assetManager' => array(
@@ -66,6 +72,10 @@ return array(
 
         'flightBooker' => array(
             'class'=>'site.common.components.flightBooker.FlightBookerComponent',
+        ),
+
+        'newRelic' => array(
+            'class' => 'common.extensions.yii-newrelic.YiiNewRelic',
         ),
 
         'hotelBooker' => array(

@@ -5,7 +5,10 @@
  * Date: 23.01.13
  * Time: 14:44
  */
-class VClientScript extends CClientScript
+
+Yii::import('common.extensions.yii-newrelic.YiiNewRelicClientScript');
+
+class VClientScript extends YiiNewRelicClientScript
 {
     public $buildingMode = false;
     public $excludeFiles = array('runApp.js');
