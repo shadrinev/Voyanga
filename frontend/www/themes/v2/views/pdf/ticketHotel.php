@@ -177,7 +177,7 @@ $dayFormat = "d|n|w";
                 </td>
                 <td class="tdPrice">
                     <div class="finishPriceHotel">
-                        Итоговая стоимость&nbsp; <span class="price"><?php echo UtilsHelper::formatPrice($ticket->getPrice());?></span> RUB<br>
+                        Итоговая стоимость&nbsp; <span class="price"><?php echo UtilsHelper::formatPrice(($isTour ? $ticket->getDiscountPrice() : $ticket->getPrice()));?></span> RUB<br>
                         <span class="done">Оплачено полностью</span>
                     </div>
                 </td>

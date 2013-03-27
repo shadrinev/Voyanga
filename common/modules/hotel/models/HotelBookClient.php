@@ -81,17 +81,18 @@ class HotelBookClient
                 curl_setopt($rCh, CURLOPT_POST, (true));
             }
             curl_setopt($rCh, CURLOPT_HEADER, true);
+            curl_setopt($rCh, CURLOPT_ENCODING, true);
             curl_setopt($rCh, CURLOPT_RETURNTRANSFER, true);
             if ($postData) {
                 curl_setopt($rCh, CURLOPT_POSTFIELDS, $postData);
             }
             curl_setopt($rCh, CURLOPT_TIMEOUT, 150);
-            //$aHeadersToSend = array();
+            $aHeadersToSend = array();
             //$aHeadersToSend[] = "Content-Length: " . strlen($sRequest);
-            //$aHeadersToSend[] = "Content-Type: text/xml; charset=utf-8";
+            $aHeadersToSend[] = "Accept-Encoding: gzip,deflate";
             //$aHeadersToSend[] = "SOAPAction: \"$sAction\"";
 
-            //curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
+            curl_setopt($rCh, CURLOPT_HTTPHEADER, $aHeadersToSend);
 
             //evaluate get parametrs
             if ($getData) {
@@ -148,6 +149,7 @@ class HotelBookClient
 
                     $hotelRequest->executionTime = ($endTime - $startTime);
                     $hotelRequest->responseXml = UtilsHelper::formatXML($sData);
+                    $hotelRequest->errorDescription = $this->lastHeaders;
                     if (appParams('enableHotelLogging'))
                         $hotelRequest->save();
 

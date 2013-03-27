@@ -21,7 +21,7 @@ return array(
     "domain" => '.voyanga.lcl',
 
     'db.name' => 'search',
-    'db.connectionString'=>'mysql:host=109.236.87.227;dbname=test_search;port=3307',
+    'db.connectionString'=>'mysql:host=109.236.87.227;dbname=search;port=3307',
     'db.username'=>'voyanga',
     'db.password'=>'srazunadogovoritblya',
 
@@ -47,9 +47,9 @@ return array(
     'enableMemcached' => true,
 
     'HotelBook' => array(
-        'uri' => 'http://test.hotelbook.vsespo.ru/xml/',
-        'login' => 'voyanga',
-        'password' => 'vLP1xe',
+        'uri' => 'http://hotelbook.ru/xml/',
+        'login' => 'voyangaXML',
+        'password' => 'BZEFODZoA1!5',
         'room' => array(
             'DBL' => 10,
             'TWIN' => 20,
@@ -57,5 +57,6 @@ return array(
         ),
         'distanceFromCityCenter' => 5000,
     ),
+
     'sentry.dsn' => 'http://cc514c559d7c452cbcce18ea6fad927d:7901456e89b3417498605c034c81665a@109.236.87.123:9000/3'
 );

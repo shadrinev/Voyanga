@@ -11,6 +11,7 @@ class FlightBookingResponse extends ResponseStatus
     public $pnr;
     public $expiration;
     public $nemoBookId;
+    public $updateInfo;
     /** @var integer 1 - ok, 2 error */
     public $status;
 

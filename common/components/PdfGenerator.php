@@ -17,7 +17,7 @@ class PdfGenerator extends CApplicationComponent
         $this->controller = new Controller('pdf');
     }
 
-    public function forHotelItem($item)
+    public function forHotelItem($item, $isTour = false)
     {
         $hotelBooker = HotelBooker::model()->findByPk($item->hotelBookerId);
         $hotelPassports = HotelBookingPassport::model()->findAllByAttributes(array('hotelBookingId'=>$item->hotelBookerId));
@@ -62,13 +62,14 @@ class PdfGenerator extends CApplicationComponent
                 'bookingId'=>$this->orderBooking->readableId,
                 'pnr'=>$pnr,
                 'hotelPassports'=>$hotelPassports,
-                'hotelInfo'=>$hotelInfo
+                'hotelInfo'=>$hotelInfo,
+                'isTour'=>$isTour
             ));
             return array('realName'=>$pdfFileName,'visibleName'=>"hotel_{$hotelBooker->hotel->city->code}_".date('Ymd',strtotime($hotelBooker->hotel->checkIn)).".pdf");
         }
     }
 
-    public function forFlightItem($item)
+    public function forFlightItem($item, $isTour = false)
     {
         $flightBooker = FlightBooker::model()->findByPk($item->flightBookerId);
         $flightPassports = FlightBookingPassport::model()->findAllByAttributes(array('flightBookingId'=>$item->flightBookerId));
@@ -93,6 +94,7 @@ class PdfGenerator extends CApplicationComponent
                 'bookingId'=>$this->orderBooking->readableId,
                 'pnr'=>$flightBooker->pnr,
                 'flightPassports'=>$flightPassports,
+                'isTour'=>$isTour
             ));
             return array('realName'=>$pdfFileName,'visibleName'=>"avia_{$flightBooker->flightVoyage->departureCity->code}_{$flightBooker->flightVoyage->arrivalCity->code}_".date('Ymd',strtotime($flightBooker->flightVoyage->departureDate)).".pdf");
         }

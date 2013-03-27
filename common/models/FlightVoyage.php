@@ -239,6 +239,34 @@ class FlightVoyage extends CApplicationComponent
         }
     }
 
+    public function updateInfo($params)
+    {
+        if($params['aPassengers'])
+        {
+            foreach($params['aPassengers'] as $passengerType=>$passengerInfo){
+                $paramName = '';
+                switch ($passengerType)
+                {
+                    case 'ADT':
+                        $paramName = 'adultPassengerInfo';
+                        break;
+                    case 'CNN':
+                        $paramName = 'childPassengerInfo';
+                        break;
+                    case 'INF':
+                        $paramName = 'infantPassengerInfo';
+                        break;
+                }
+                $this->{$paramName}->count = $passengerInfo['count'];
+                $this->{$paramName}->baseFare = $passengerInfo['base_fare'];
+                $this->{$paramName}->priceDetail = $passengerInfo['total_fare'];
+            }
+        }
+        $this->price = $params['totalPrice'];
+        $this->charges = $params['charges'];
+        $this->_commission = $this->charges;
+    }
+
     private function initFromJsonObject($params)
     {
         if(isset($params['price']))

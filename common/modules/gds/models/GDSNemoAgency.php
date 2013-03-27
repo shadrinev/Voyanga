@@ -489,6 +489,7 @@ class GDSNemoAgency extends CComponent
             throw new CException(Yii::t('application', 'Parameter oFlightBookingParams not type of FlightBookingParams'));
         }
 
+
         $aParams = array(
             'Request' => array(
                 'BookFlight' => array(
@@ -621,16 +622,47 @@ class GDSNemoAgency extends CComponent
 
             $flightBookingResponse->pnr = $response->Response->BookFlight->Code;
             $flightBookingResponse->expiration = false;
+            //Info fro updating price
+            $full_sum = 0;
+            $aPassengers = array();
+            $aTariffs = array();
+
+
             UtilsHelper::soapObjectsArray($response->Response->BookFlight->Flight->PricingInfo->PassengerFare);
             foreach ($response->Response->BookFlight->Flight->PricingInfo->PassengerFare as $oFare)
             {
+                $sType = $oFare->Type;
+                $aPassengers[$sType]['base_fare'] = $oFare->BaseFare->Amount;
+                $aPassengers[$sType]['count'] = $oFare->Quantity;
+                if($oFare->BaseFare->Currency != 'RUB'){
+                    $aPassengers[$sType]['base_fare'] = $oFare->EquiveFare->Amount;
+                }
+                $aPassengers[$sType]['total_fare'] = $oFare->TotalFare->Amount;
+                $full_sum += ($oFare->TotalFare->Amount * $oFare->Quantity);
                 if(!$flightBookingResponse->expiration){
                     $flightBookingResponse->expiration = strtotime($oFare->LastTicketDateTime->_);
                 }
                 if($flightBookingResponse->expiration < strtotime($oFare->LastTicketDateTime->_)){
                     $flightBookingResponse->expiration = strtotime($oFare->LastTicketDateTime->_);
                 }
+                $aPassengers[$sType]['aTaxes'] = array();
+                if (isset($oFare->Taxes->Tax))
+                {
+                    UtilsHelper::soapObjectsArray($oFare->Taxes->Tax);
+                    foreach ($oFare->Taxes->Tax as $oTax)
+                    {
+                        if (isset($oTax->CurCode) == 'RUB')
+                        {
+                            $aPassengers[$sType]['aTaxes'][$oTax->TaxCode] = $oTax->Amount;
+                        }
+                    }
+                }
+
             }
+            $totalPrice = UtilsHelper::soapElementValue($response->Response->BookFlight->Flight->TotalPrice);
+            $commission = UtilsHelper::soapElementValue($response->Response->BookFlight->Flight->Commission);
+            $charges = UtilsHelper::soapElementValue($response->Response->BookFlight->Flight->Charges);
+            $flightBookingResponse->updateInfo = array('aPassengers'=>$aPassengers,'full_sum'=>$full_sum,'totalPrice'=>$totalPrice,'charges'=>$charges,'commission'=>$commission);
             $flightBookingResponse->nemoBookId = $response->Response->BookFlight->ID;
             $flightBookingResponse->status = 1;
         }
