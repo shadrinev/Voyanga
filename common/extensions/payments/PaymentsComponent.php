@@ -20,10 +20,17 @@ class PaymentsComponent extends CApplicationComponent
      * @var array
      */
     private $_credentials;
+    public  $testMode;
+
     public $nemoCallbackSecret;
 
     public function setCredentials($value)
     {
+        foreach ($value as $key=>$val) {
+            if($val === false)
+                unset($value[$key]);
+        }
+
         $this->_credentials = $value;
     }
 
