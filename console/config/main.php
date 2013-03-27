@@ -27,6 +27,14 @@ return CMap::mergeArray (
         'host'=>'voyanga.com',
         'themePath'=>'/home/voyanga/app/frontend/www/themes/',
 
+        'behaviors' => array(
+            'onBeginRequest' => array(
+                'class' => 'common.extensions.yii-newrelic.behaviors.YiiNewRelicConsoleAppBehavior',
+            ),
+            'onEndRequest' => array(
+                'class' => 'common.extensions.yii-newrelic.behaviors.YiiNewRelicConsoleAppBehavior',
+            ),
+        ),
 
         'import'=>array(
                 'site.common.extensions.*',

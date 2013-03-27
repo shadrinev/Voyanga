@@ -4,7 +4,8 @@
  * Description of WebApplication
  * The customized version of the CWebApplication class
  */
-class WebApplication extends CWebApplication 
+require_once('NewRelicApplication.php');
+class WebApplication extends NewRelicApplication
 {
 
 }
