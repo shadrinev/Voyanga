@@ -3928,6 +3928,7 @@ a.whereData span {
     background: url(../images/slice.png) no-repeat -133px -27px;
     right: 14px;
     top: 7px;
+    z-index: 3;
 }
 .andOthers {
     color: #292D35;
