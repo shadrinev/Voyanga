@@ -11,11 +11,33 @@ class OrderComponent extends CApplicationComponent
     private $bookedItems = array();
     private $finalWorkflowStatuses = array();
     private $currentOrderId = 0;
+    private $isTour = false;
+    private $haveFlights = false;
+    private $haveHotels = false;
 
     public function init()
     {
         $dataProvider = new TripDataProvider();
+
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
+        foreach ($this->itemsOnePerGroup as $item)
+        {
+            if ($item instanceof HotelTripElement)
+            {
+                if ($item->hotelBookerId)
+                {
+                    $this->haveHotels = true;
+                }
+            }
+            elseif ($item instanceof FlightTripElement)
+            {
+                if ($item->flightBookerId)
+                {
+                    $this->haveFlights = true;
+                }
+            }
+        }
+        $this->isTour = $this->haveFlights && $this->haveHotels;
     }
 
     public function initByOrderBookingId($orderId)
@@ -427,7 +449,7 @@ class OrderComponent extends CApplicationComponent
                 {
                     if ($item->hotelBookerId)
                     {
-                        if ($pdfFileInfo =  $pdf->forHotelItem($item))
+                        if ($pdfFileInfo =  $pdf->forHotelItem($item, $this->isTour))
                             $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
                         else
                             return false;
@@ -437,7 +459,7 @@ class OrderComponent extends CApplicationComponent
                 {
                     if ($item->flightBookerId)
                     {
-                        if ($pdfFileInfo =  $pdf->forFlightItem($item))
+                        if ($pdfFileInfo =  $pdf->forFlightItem($item, $this->isTour))
                             $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
                     }
                 }
