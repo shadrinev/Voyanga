@@ -35,6 +35,8 @@ class FlightVoyage extends CApplicationComponent
     public $refundable;
     public $searchKey;
 
+    private $_hash;
+
     /**
      * @return mixed id
      */
@@ -55,7 +57,9 @@ class FlightVoyage extends CApplicationComponent
     {
         Yii::import('common.modules.gds.models.*');
         $request = new GDSNemoAgency();
-        return $request->checkFlight($this->flightKey);
+        $res = $request->checkFlight($this->flightKey);
+        FlightManager::excludeFlight($this);
+        return $res;
     }
 
     public function getIsPayable()
@@ -65,20 +69,24 @@ class FlightVoyage extends CApplicationComponent
 
     public function getTaxes()
     {
-        if($this->_taxes === false){
+        if ($this->_taxes === false)
+        {
             $totalFare = 0;
             $baseFare = 0;
-            if($this->adultPassengerInfo){
-                $totalFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->priceDetail;
-                $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+            if ($this->adultPassengerInfo)
+            {
+                $totalFare += $this->adultPassengerInfo->count * $this->adultPassengerInfo->priceDetail;
+                $baseFare += $this->adultPassengerInfo->count * $this->adultPassengerInfo->baseFare;
             }
-            if($this->childPassengerInfo){
-                $totalFare += $this->childPassengerInfo->count*$this->childPassengerInfo->priceDetail;
-                $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
+            if ($this->childPassengerInfo)
+            {
+                $totalFare += $this->childPassengerInfo->count * $this->childPassengerInfo->priceDetail;
+                $baseFare += $this->childPassengerInfo->count * $this->childPassengerInfo->baseFare;
             }
-            if($this->infantPassengerInfo){
-                $totalFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->priceDetail;
-                $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+            if ($this->infantPassengerInfo)
+            {
+                $totalFare += $this->infantPassengerInfo->count * $this->infantPassengerInfo->priceDetail;
+                $baseFare += $this->infantPassengerInfo->count * $this->infantPassengerInfo->baseFare;
             }
             $this->_taxes = ($totalFare - $baseFare);
         }
@@ -88,21 +96,24 @@ class FlightVoyage extends CApplicationComponent
     public function getBaseFare()
     {
         $baseFare = 0;
-        if($this->adultPassengerInfo){
-            $baseFare += $this->adultPassengerInfo->count*$this->adultPassengerInfo->baseFare;
+        if ($this->adultPassengerInfo)
+        {
+            $baseFare += $this->adultPassengerInfo->count * $this->adultPassengerInfo->baseFare;
         }
-        if($this->childPassengerInfo){
-            $baseFare += $this->childPassengerInfo->count*$this->childPassengerInfo->baseFare;
+        if ($this->childPassengerInfo)
+        {
+            $baseFare += $this->childPassengerInfo->count * $this->childPassengerInfo->baseFare;
         }
-        if($this->infantPassengerInfo){
-            $baseFare += $this->infantPassengerInfo->count*$this->infantPassengerInfo->baseFare;
+        if ($this->infantPassengerInfo)
+        {
+            $baseFare += $this->infantPassengerInfo->count * $this->infantPassengerInfo->baseFare;
         }
         return $baseFare;
     }
 
     public function getCommission()
     {
-        if($this->_commission === false)
+        if ($this->_commission === false)
         {
             $this->_commission = $this->charges;
         }
@@ -113,7 +124,7 @@ class FlightVoyage extends CApplicationComponent
     {
         $key = $this->getId();
         $order = OrderFlightVoyage::model()->findByAttributes(array('key' => $key));
-        if (($order) && (sizeof($this->flights)==1))
+        if (($order) && (sizeof($this->flights) == 1))
         {
             //we try to save same flight
             $order->reference->delete();
@@ -154,7 +165,7 @@ class FlightVoyage extends CApplicationComponent
         $orderHasFlightVoyage->orderId = $order->id;
         $orderHasFlightVoyage->orderFlightVoyage = $this->internalId;
         if (!$orderHasFlightVoyage->save())
-            throw new CException(VarDumper::dumpAsString($this->attributes).VarDumper::dumpAsString($orderHasFlightVoyage->errors));
+            throw new CException(VarDumper::dumpAsString($this->attributes) . VarDumper::dumpAsString($orderHasFlightVoyage->errors));
     }
 
     /**
@@ -178,10 +189,12 @@ class FlightVoyage extends CApplicationComponent
 
     public function __construct($oParams)
     {
-        if(isset($oParams->full_sum))
+        if (isset($oParams->full_sum))
         {
             $this->price = $oParams->full_sum;
-        }else{
+        }
+        else
+        {
             $this->initFromJsonObject($oParams);
             return true;
         }
@@ -241,9 +254,10 @@ class FlightVoyage extends CApplicationComponent
 
     public function updateInfo($params)
     {
-        if($params['aPassengers'])
+        if ($params['aPassengers'])
         {
-            foreach($params['aPassengers'] as $passengerType=>$passengerInfo){
+            foreach ($params['aPassengers'] as $passengerType => $passengerInfo)
+            {
                 $paramName = '';
                 switch ($passengerType)
                 {
@@ -269,7 +283,7 @@ class FlightVoyage extends CApplicationComponent
 
     private function initFromJsonObject($params)
     {
-        if(isset($params['price']))
+        if (isset($params['price']))
         {
             $this->price = $params['price'];
         }
@@ -345,12 +359,12 @@ class FlightVoyage extends CApplicationComponent
     /**
      * @return City
      */
-    public function getDepartureCity($ind=0)
+    public function getDepartureCity($ind = 0)
     {
         return $this->flights[$ind]->getDepartureCity();
     }
 
-    public function getDepartureDate($ind=0)
+    public function getDepartureDate($ind = 0)
     {
         return $this->flights[$ind]->departureDate;
     }
@@ -358,12 +372,12 @@ class FlightVoyage extends CApplicationComponent
     /**
      * @return City
      */
-    public function getArrivalCity($ind=0)
+    public function getArrivalCity($ind = 0)
     {
         return $this->flights[$ind]->getArrivalCity();
     }
 
-    public function getArrivalDate($ind=0)
+    public function getArrivalDate($ind = 0)
     {
         return $this->flights[$ind]->arrivalDate;
     }
@@ -444,7 +458,7 @@ class FlightVoyage extends CApplicationComponent
         {
             foreach ($this->flights as $flight)
             {
-                foreach($flight->flightParts as $flightPart)
+                foreach ($flight->flightParts as $flightPart)
                 {
                     if ($flightPart->departureCityId == $departureCity)
                         return strtotime(date('Y-m-d', $flightPart->timestampBegin));
@@ -470,19 +484,41 @@ class FlightVoyage extends CApplicationComponent
         return 1;
     }
 
-    public function updateFlightParts($aParts){
+    public function updateFlightParts($aParts)
+    {
         if ($aParts)
         {
             reset($aParts);
             foreach ($this->flights as $flightKey => $flight)
             {
-                foreach($flight->flightParts as $partKey=>$part){
+                foreach ($flight->flightParts as $partKey => $part)
+                {
                     $each = each($aParts);
-                    if(isset($each['value']->departure_terminal_code)){
+                    if (isset($each['value']->departure_terminal_code))
+                    {
                         $this->flights[$flightKey]->flightParts[$partKey]->departureTerminalCode = $each['value']->departure_terminal_code;
                     }
                 }
             }
         }
+    }
+
+    //уникальный хэш перелёта. используется для выкидывания рейсов, которые не подтверждены.
+    public function getHash()
+    {
+        if ($this->_hash === null)
+        {
+            $res = '';
+            foreach ($this->flights as $flight)
+            {
+                foreach ($flight->flightParts as $flightPart)
+                {
+                    $res .= implode('',$flightPart->bookingCodes);
+                    $res .= $this->webService . $flightPart->timestampBegin . $flightPart->departureAirportId . $flightPart->transportAirlineCode . $flightPart->timestampBegin . $flightPart->arrivalAirportId;
+                }
+            }
+            $this->_hash = $res;
+        }
+        return $this->_hash;
     }
 }

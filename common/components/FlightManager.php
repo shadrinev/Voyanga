@@ -147,4 +147,26 @@ class FlightManager
         }
         return $result;
     }
+
+    static public function excludeFlight(FlightVoyage $flight)
+    {
+        $cacheId = self::getCacheIdForExcludedFlight($flight);
+        $expirationTime = Yii::app()->params['flight_search_cache_time'];
+        Yii::app()->pCache->set($cacheId, 1, $expirationTime);
+    }
+
+    static public function isIncluded(FlightVoyage $flight)
+    {
+        $cacheId = self::getCacheIdForExcludedFlight($flight);
+        $res = Yii::app()->pCache->get($cacheId);
+        if ($res)
+            return false;
+        return true;
+    }
+
+    static private function getCacheIdForExcludedFlight($flight)
+    {
+        $flightId = md5($flight->getHash());
+        return 'exclFl-'.$flightId;
+    }
 }
