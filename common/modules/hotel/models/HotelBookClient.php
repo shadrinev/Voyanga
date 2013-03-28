@@ -26,6 +26,7 @@ class HotelBookClient
     public static $saveCache;
     public static $downloadExternal;
     public static $cacheFilePath;
+    public static $cachePath = false;
     public static $totalMicrotime = 0;
     public static $maxMicrotime = 0;
     public static $countSql = 0;
@@ -39,27 +40,32 @@ class HotelBookClient
         if ($cacheFileName) {
             self::$saveCache = strpos($url, 'vsespo') === false;
 
-            $cachePath = Yii::getPathOfAlias('cacheStorage');
+            if(!self::$cachePath){
+                self::$cachePath = Yii::getPathOfAlias('cacheStorage');
+            }
             $cacheSubDir = md5($cacheFileName);
             $cacheSubDir = substr($cacheSubDir, -3);
-            if (!is_dir($cachePath)) {
-                mkdir($cachePath);
+            if (!is_dir(self::$cachePath)) {
+                mkdir(self::$cachePath);
             }
-            if (!file_exists($cachePath . '/' . $cacheSubDir)) {
-                mkdir($cachePath . '/' . $cacheSubDir);
+            if (!file_exists(self::$cachePath . '/' . $cacheSubDir)) {
+                mkdir(self::$cachePath . '/' . $cacheSubDir);
             }
 
             //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
-            if (file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')) {
-                rename($cachePath . '/' . $cacheFileName . '.xml', $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
-            }
+            //if (file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')) {
+            //    rename($cachePath . '/' . $cacheFileName . '.xml', $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
+            //}
 
-            $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
+            $cacheFilePath = self::$cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';
             self::$cacheFilePath = $cacheFilePath;
             self::$downloadExternal = $asyncParams ? false : true;
             if (file_exists($cacheFilePath) && (!self::$updateProcess || (self::$updateProcess && (filectime($cacheFilePath) + 3600 * 24 * 14) > time()))) {
                 //echo "file don't old:".date('Y-m-d H:i:s',(filectime($cacheFilePath) + 3600*24*14)).(self::$updateProcess ? ' true' : ' false')." {$cacheFilePath}\n";
                 $cacheResult = file_get_contents($cacheFilePath);
+                //$fpoint = fopen($cacheFilePath,'rb');
+                //$cacheResult = fread($fpoint);
+
                 self::$saveCache = false;
             } else {
                 if (self::$downCountCacheFill > 0) {
@@ -1441,6 +1447,7 @@ class HotelBookClient
             //die();
             //VarDumper::xmlDump($hotelsXml);
             //die();
+
             return $this->processHotelDetail($hotelDetailXml);
         }
     }
