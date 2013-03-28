@@ -161,9 +161,6 @@ class FlightPart
 
     public function getAircraftName()
     {
-        $aircraft = Aircraft::model()->findByAttributes(array('nIataCode'=>strtolower($this->aircraftCode)));
-        if ($aircraft)
-            return $aircraft->fullTitle;
-        return '';
+        return Aircraft::getFullTitleByNiataCode($this->aircraftCode);
     }
 }
