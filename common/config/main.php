@@ -65,6 +65,21 @@ return array(
             'connectionID' => 'db'
         ),
 
+        //быстрый кэш доступный во всех приложениях по одному ключу
+        'sharedCache' => array(
+            'class' => 'CMemCache',
+            'keyPrefix' => 'v',
+            'hashKey' => false,
+            'useMemcached' => $params['enableMemcached'],
+            'servers' => array(
+                array(
+                    'host' => 'localhost',
+                    'port' => 11211,
+                    'weight' => 60
+                )
+            )
+        ),
+
         'RSentryException'=> array(
             'dsn'=> $params['sentry.dsn'],
             'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
@@ -248,24 +263,8 @@ return array(
         'payments' => array(
             'class' => 'common.extensions.payments.PaymentsComponent',
             'nemoCallbackSecret' => 'onetwotripnegovno',
-            'credentials' => array(
-                'ltr'=> array(
-                    'id' => 9377,
-                    'key' => 'a51dfb8d-6c57-4ad4-a018-27593cfabddb'
-                ),
-                'gds_sabre' => array(
-                    'id' => 9378,
-                    'key' => '117869db-6a67-4f89-9753-a2fb7ee9bfc3'
-                ),
-                'gds_galileo' => array(
-                    'id' => 9739,
-                    'key' => 'dbaf1d76-3540-40aa-af13-4e05c4a776d2'
-                ),
-                'ecommerce' => array(
-                    'id' => 9387,
-                    'key' => '71eedb90-01d6-4ba9-b058-d965d98ecc64'
-                )
-            )
+            'credentials' => $params['payonline.credentials'],
+            'testMode' => $params['payonline.testMode']
         ),
 
         'gdsAdapter' => array(

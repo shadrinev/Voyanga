@@ -20,10 +20,17 @@ class PaymentsComponent extends CApplicationComponent
      * @var array
      */
     private $_credentials;
+    public  $testMode;
+
     public $nemoCallbackSecret;
 
     public function setCredentials($value)
     {
+        foreach ($value as $key=>$val) {
+            if($val === false)
+                unset($value[$key]);
+        }
+
         $this->_credentials = $value;
     }
 
@@ -61,6 +68,9 @@ class PaymentsComponent extends CApplicationComponent
             }
         }
 
+        if($this->testMode)
+            $channel = 'ecommerce';
+
        if($booker->billId)
         {
             $billId = $booker->billId;
@@ -69,8 +79,8 @@ class PaymentsComponent extends CApplicationComponent
                 //! store reverse relation
                 $connection = Yii::app()->db;
                 $queries = array();
-                $queries[] = "INSERT INTO bill_hotel_booking_history SELECT id, $billId FROM hotel_booking WHERE billId = $billId";
-                $queries[] = "INSERT INTO bill_flight_booking_history SELECT id, $billId FROM flight_booking WHERE billId = $billId";
+                $queries[] = "INSERT INTO bill_hotel_booking_history (hotelBookingId, billId) SELECT id, $billId FROM hotel_booking WHERE billId = $billId ON DUPLICATE KEY UPDATE hotelBookingId=VALUES(hotelBookingId), billId=$billId";
+                $queries[] = "INSERT INTO bill_flight_booking_history (flightBookingId, billId) SELECT id, $billId FROM flight_booking WHERE billId = $billId  ON DUPLICATE KEY UPDATE flightBookingId=VALUES(flightBookingId), billId=$billId";
                 foreach ($queries as $q) {
                     $connection->createCommand($q)->execute();
                 }
@@ -84,6 +94,10 @@ class PaymentsComponent extends CApplicationComponent
         $bill->status = Bill::STATUS_NEW;
 
         $bill->amount = $booker->price;
+
+        if($this->testMode)
+            $bill->amount = 201;
+
         $bill->save();
         $booker->billId = $bill->id;
         $booker->save();
@@ -162,12 +176,17 @@ class PaymentsComponent extends CApplicationComponent
     private function tourCase($flights, $hotels, $newBill) {
         # FIXME: check if this call is needed
         $bill = $this->getBillForBooker($flights[0], $newBill);
-        $bill->setChannel('ltr');
+        if(!$this->testMode)
+            $bill->setChannel('ltr');
         $bill->save();
         $billId = $bill->id;
         $metaBooker = new Payments_MetaBookerTour(array_merge($flights, $hotels), $flights[0], $billId);
         //! FIXME FIXME
         $bill->amount = $metaBooker->getPrice();
+
+        if($this->testMode)
+            $bill->amount = 201;
+
         $bill->save();
         return array($metaBooker);
     }

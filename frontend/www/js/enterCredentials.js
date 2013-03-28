@@ -309,23 +309,10 @@ function enableAllFieldsAndShowButton() {
     $('.agreeConditions').show();
 }
 
-function checkStatuses(statuses, ids) {
-    var errors = '',
-        errorText = '',
-        completed = true;
-    _.each(statuses, function (el, i) {
-        if (el == 0)
-            completed = false;
-        if (_.isString(el))
-            errors += 'Ошибка бронирования сегмента номер ' + (i + 1) + '.<br>';
-    });
-    if (!completed)
-        return;
-    $.get('/buy/done', {ids: ids.join(',')})
-        .done(function () {
-	    if (errors.length > 0)
-		return;
-	    
+var _rollbar = _rollbar || [];
+
+function startPayment() {
+
             $.get('/buy/startPayment', function (data) {
                 if (data.error) {
 		    _rollbar.push({level: 'error', msg: "startPayment Error", response: data});
@@ -346,6 +333,25 @@ function checkStatuses(statuses, ids) {
                     Utils.submitPayment(data.payonline);
                 }
             });
+}
+
+function checkStatuses(statuses, ids) {
+    var errors = '',
+        errorText = '',
+        completed = true;
+    _.each(statuses, function (el, i) {
+        if (el == 0)
+            completed = false;
+        if (_.isString(el))
+            errors += 'Ошибка бронирования сегмента номер ' + (i + 1) + '.<br>';
+    });
+    if (!completed)
+        return;
+    $.get('/buy/done', {ids: ids.join(',')})
+        .done(function () {
+	    if (errors.length > 0)
+		return;
+	    startPayment();
         })
         .error(function () {
 	    _rollbar.push({level: 'error', msg: "ERROR WHILE /buy/done", bookingIds: ids});

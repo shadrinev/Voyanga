@@ -627,7 +627,6 @@ class GDSNemoAgency extends CComponent
             $aPassengers = array();
             $aTariffs = array();
 
-
             UtilsHelper::soapObjectsArray($response->Response->BookFlight->Flight->PricingInfo->PassengerFare);
             foreach ($response->Response->BookFlight->Flight->PricingInfo->PassengerFare as $oFare)
             {
@@ -668,6 +667,7 @@ class GDSNemoAgency extends CComponent
         }
         else
         {
+            FlightManager::excludeFlight($oFlightBookingParams->flightId); //букинг не удался - выкидываем рейс из выдачи
             $flightBookingResponse->status = 2;
             $flightBookingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
             $flightBookingResponse->addError('error', 'Status is:' . $status);
@@ -749,15 +749,16 @@ class GDSNemoAgency extends CComponent
 
             if (isset($response->Response->AirAvail->IsAvail))
             {
-                return $response->Response->AirAvail->IsAvail;
+                $res = $response->Response->AirAvail->IsAvail;
+                return $res;
             }
             else
             {
-                return null;
+                return false;
             }
 
         }
-        else return null;
+        else return false;
     }
 
     public function FlightTicketing(FlightTicketingParams $flightTicketingRequest)
