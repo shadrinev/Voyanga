@@ -35,6 +35,7 @@ class HotelManager
             $nStack = new HotelStack();
             $nStack->_hotels = $stack->getHotels(1);
 
+            header('TotalTimeBefore: '.HotelBookClient::$totalMicrotime);
             $resultsHotels = $stack->getJsonObject();
             foreach ($resultsHotels['hotels'] as $i => $info)
             {
@@ -43,6 +44,7 @@ class HotelManager
                     $hotelsDetails[$info['hotelId'] . 'd'] = self::prepare($hotelInfo);
                 }
             }
+            header('TotalTimeAfter: '.HotelBookClient::$totalMicrotime);
             $results['hotelsDetails'] = $hotelsDetails;
 
             return $results;

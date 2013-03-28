@@ -1313,6 +1313,7 @@ class HotelBookClient
             }
         }
         $hotelId = (string)$hotelSXE['id'];
+        $startTime = microtime(true);
         if (isset($hotelSXE->Images->Image)) {
             $hotelParams['images'] = array();
             UtilsHelper::soapObjectsArray($hotelSXE->Images->Image);
@@ -1360,6 +1361,8 @@ class HotelBookClient
                 }
             }
         }
+        $endTime = microtime(true);
+        self::$totalMicrotime += ($endTime - $startTime);
         if (isset($hotelSXE->HotelFacility->Facility)) {
             $hotelParams['facilities'] = array();
             UtilsHelper::soapObjectsArray($hotelSXE->HotelFacility->Facility);
