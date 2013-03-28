@@ -79,8 +79,8 @@ class PaymentsComponent extends CApplicationComponent
                 //! store reverse relation
                 $connection = Yii::app()->db;
                 $queries = array();
-                $queries[] = "INSERT INTO bill_hotel_booking_history SELECT id, $billId FROM hotel_booking WHERE billId = $billId";
-                $queries[] = "INSERT INTO bill_flight_booking_history SELECT id, $billId FROM flight_booking WHERE billId = $billId";
+                $queries[] = "INSERT INTO bill_hotel_booking_history (hotelBookingId, billId) SELECT id, $billId FROM hotel_booking WHERE billId = $billId ON DUPLICATE KEY UPDATE hotelBookingId=VALUES(hotelBookingId), billId=$billId";
+                $queries[] = "INSERT INTO bill_flight_booking_history (flightBookingId, billId) SELECT id, $billId FROM flight_booking WHERE billId = $billId  ON DUPLICATE KEY UPDATE flightBookingId=VALUES(flightBookingId), billId=$billId";
                 foreach ($queries as $q) {
                     $connection->createCommand($q)->execute();
                 }
