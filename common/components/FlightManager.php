@@ -152,13 +152,13 @@ class FlightManager
     {
         $cacheId = self::getCacheIdForExcludedFlight($flight);
         $expirationTime = Yii::app()->params['flight_search_cache_time'];
-        Yii::app()->cache->set($cacheId, 1, $expirationTime);
+        Yii::app()->pCache->set($cacheId, 1, $expirationTime);
     }
 
     static public function isIncluded(FlightVoyage $flight)
     {
         $cacheId = self::getCacheIdForExcludedFlight($flight);
-        $res = Yii::app()->cache->get($cacheId);
+        $res = Yii::app()->pCache->get($cacheId);
         if ($res)
             return false;
         return true;
