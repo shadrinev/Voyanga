@@ -224,7 +224,11 @@ class FlightVoyageStack
         $ret = array('searchId' => $this->fsKey, 'flightVoyages' => array());
         foreach ($this->flightVoyages as $flightVoyage)
         {
-            $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
+            $res = $flightVoyage->getJsonObject();
+            if (FlightManager::isIncluded($flightVoyage))
+            {
+                $ret['flightVoyages'][] = $res;
+            }
         }
         $ret = CMap::mergeArray($ret, $inject);
         return json_encode($ret);
@@ -235,7 +239,11 @@ class FlightVoyageStack
         $ret = array('searchId' => $this->fsKey, 'flightVoyages' => array());
         foreach ($this->flightVoyages as $flightVoyage)
         {
-            $ret['flightVoyages'][] = $flightVoyage->getJsonObject();
+            $res = $flightVoyage->getJsonObject();
+            if (FlightManager::isIncluded($flightVoyage))
+            {
+                $ret['flightVoyages'][] = $res;
+            }
         }
         return $ret;
     }
