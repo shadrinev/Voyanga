@@ -10,7 +10,7 @@
 class Aircraft extends CActiveRecord
 {
 
-    private $aircrafts;
+    private static $aircrafts;
 
     public static function model( $className = __CLASS__ )
     {
