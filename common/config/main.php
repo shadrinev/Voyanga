@@ -65,6 +65,21 @@ return array(
             'connectionID' => 'db'
         ),
 
+        //быстрый кэш доступный во всех приложениях по одному ключу
+        'sharedCache' => array(
+            'class' => 'CMemCache',
+            'keyPrefix' => 'v',
+            'hashKey' => false,
+            'useMemcached' => $params['enableMemcached'],
+            'servers' => array(
+                array(
+                    'host' => 'localhost',
+                    'port' => 11211,
+                    'weight' => 60
+                )
+            )
+        ),
+
         'RSentryException'=> array(
             'dsn'=> $params['sentry.dsn'],
             'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
