@@ -1214,6 +1214,7 @@ class HotelBookClient
 
     public function processHotelDetail($hotelDetailXml)
     {
+        $startTime = microtime(true);
         $hotelObject = @simplexml_load_string($hotelDetailXml);
 
         //VarDumper::dump($hotelsObject);
@@ -1313,7 +1314,7 @@ class HotelBookClient
             }
         }
         $hotelId = (string)$hotelSXE['id'];
-        $startTime = microtime(true);
+
         if (isset($hotelSXE->Images->Image)) {
             $hotelParams['images'] = array();
             UtilsHelper::soapObjectsArray($hotelSXE->Images->Image);
@@ -1361,8 +1362,8 @@ class HotelBookClient
                 }
             }
         }
-        $endTime = microtime(true);
-        self::$totalMicrotime += ($endTime - $startTime);
+
+
         if (isset($hotelSXE->HotelFacility->Facility)) {
             $hotelParams['facilities'] = array();
             UtilsHelper::soapObjectsArray($hotelSXE->HotelFacility->Facility);
@@ -1421,7 +1422,10 @@ class HotelBookClient
         }
         //VarDumper::dump($hotelSXE);
         //VarDumper::dump($hotelParams);
-        return new HotelInfo($hotelParams);
+        $hotelInfo = new HotelInfo($hotelParams);
+        $endTime = microtime(true);
+        self::$totalMicrotime += ($endTime - $startTime);
+        return $hotelInfo;
     }
 
     public function hotelDetail($hotelId, $async = false, $cache = true)
