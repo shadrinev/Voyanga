@@ -20,10 +20,17 @@ class PaymentsComponent extends CApplicationComponent
      * @var array
      */
     private $_credentials;
+    public  $testMode;
+
     public $nemoCallbackSecret;
 
     public function setCredentials($value)
     {
+        foreach ($value as $key=>$val) {
+            if($val === false)
+                unset($value[$key]);
+        }
+
         $this->_credentials = $value;
     }
 
@@ -61,6 +68,9 @@ class PaymentsComponent extends CApplicationComponent
             }
         }
 
+        if($this->testMode)
+            $channel = 'ecommerce';
+
        if($booker->billId)
         {
             $billId = $booker->billId;
@@ -84,6 +94,10 @@ class PaymentsComponent extends CApplicationComponent
         $bill->status = Bill::STATUS_NEW;
 
         $bill->amount = $booker->price;
+
+        if($this->testMode)
+            $bill->amount = 201;
+
         $bill->save();
         $booker->billId = $bill->id;
         $booker->save();
@@ -162,12 +176,17 @@ class PaymentsComponent extends CApplicationComponent
     private function tourCase($flights, $hotels, $newBill) {
         # FIXME: check if this call is needed
         $bill = $this->getBillForBooker($flights[0], $newBill);
-        $bill->setChannel('ltr');
+        if(!$this->testMode)
+            $bill->setChannel('ltr');
         $bill->save();
         $billId = $bill->id;
         $metaBooker = new Payments_MetaBookerTour(array_merge($flights, $hotels), $flights[0], $billId);
         //! FIXME FIXME
         $bill->amount = $metaBooker->getPrice();
+
+        if($this->testMode)
+            $bill->amount = 200;
+
         $bill->save();
         return array($metaBooker);
     }

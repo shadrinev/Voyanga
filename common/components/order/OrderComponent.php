@@ -185,8 +185,13 @@ class OrderComponent extends CApplicationComponent
         }
         foreach($bookers as $booker)
         {
-            if(!$this->isWaitingForPaymentState($booker->getStatus()))
+            $status = $booker->getStatus();
+            if(!$this->isWaitingForPaymentState($status))
             {
+                if($status == 'swFlightBooker/paymentError' || $status == 'swHotelBooker/paymentError') {
+                    $booker->status('waitingForPayment');
+                    continue;
+                }
                 throw new Exception("Wrong segment status " . $booker->getStatus());
             }
         }

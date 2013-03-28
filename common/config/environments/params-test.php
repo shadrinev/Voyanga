@@ -57,5 +57,17 @@ return array(
         'distanceFromCityCenter' => 5000,
     ),
 
-    'sentry.dsn' => 'http://cc514c559d7c452cbcce18ea6fad927d:7901456e89b3417498605c034c81665a@109.236.87.123:9000/3'
+    'sentry.dsn' => 'http://cc514c559d7c452cbcce18ea6fad927d:7901456e89b3417498605c034c81665a@109.236.87.123:9000/3',
+
+
+    'payonline.credentials' => array(
+        'ltr'=>false,
+        'gds_galileo'=>false,
+        'gds_sabre' => false,
+        'ecommerce' => array(
+            'id' => 30248,
+            'key' => '9a1ab0c1-0f9b-432a-8a64-b8648c851391',
+        )
+    ),
+    'payonline.testMode' => true,
 );

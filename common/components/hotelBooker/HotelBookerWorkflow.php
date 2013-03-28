@@ -7,7 +7,7 @@ return array(
         array('id'=>'waitingForPayment',        'transition'=>'bookingTimeLimitError,paymentInProgress,paymentError'),
         array('id'=>'paymentInProgress',        'transition'=>'paid,paymentCanceledError,paymentError,bookingTimeLimitError'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'error'),
-        array('id'=>'paymentError',             'transition'=>'error'),
+        array('id'=>'paymentError',             'transition'=>'error,waitingForPayment'),
         array('id'=>'paid',                     'transition'=>'ticketing'),
         array('id'=>'ticketing',                'transition'=>'ticketReady,ticketingRepeat,ticketingError'),
         array('id'=>'ticketReady',              'transition'=>'moneyTransfer,done'),
