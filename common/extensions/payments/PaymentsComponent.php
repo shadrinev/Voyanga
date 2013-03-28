@@ -185,7 +185,7 @@ class PaymentsComponent extends CApplicationComponent
         $bill->amount = $metaBooker->getPrice();
 
         if($this->testMode)
-            $bill->amount = 200;
+            $bill->amount = 201;
 
         $bill->save();
         return array($metaBooker);
