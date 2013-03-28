@@ -1459,6 +1459,161 @@ class HotelBookClient
         }
     }
 
+
+    private function hotelDetailPrepare($additional)
+    {
+        if (is_object($additional) && $additional instanceof HotelInfo)
+        {
+            //$objectVars = get_object_vars($additional);
+            $objectVars = array('address', 'description', 'distances', 'earliestCheckInTime', 'email', 'facilities', 'fax', 'hotelGroupServices', 'hotelServices', 'images', 'latitude', 'longitude', 'phone', 'roomAmenities', 'site', 'locations', 'builtIn', 'numberFloors', 'metroList');
+            $return = new stdClass();
+            foreach ($objectVars as $objVar)
+            {
+                if (is_object($additional->$objVar))
+                {
+                    $return->$objVar = $this->hotelDetailPrepare($additional->$objVar);
+                }
+                elseif (is_array($additional->$objVar))
+                {
+                    $return->$objVar = $this->hotelDetailPrepare($additional->$objVar);
+                }
+                elseif (is_string($additional->$objVar))
+                {
+                    $return->$objVar = strip_tags($additional->$objVar);
+                }
+                if ($objVar == 'description')
+                {
+                    $pattern = '/\s?[^.]*?:\s?/';
+                    $replace = "<br>\n";
+                    $return->$objVar = preg_replace($pattern, $replace, $return->$objVar);
+                    if (strpos($return->$objVar, '<br>') === 0)
+                    {
+                        $return->$objVar = substr($return->$objVar, 4);
+                    }
+                }
+            }
+            return $return;
+        }
+        elseif (is_object($additional))
+        {
+            $objectVars = get_object_vars($additional);
+
+            foreach ($objectVars as $objVar => $val)
+            {
+                if (is_object($additional->$objVar))
+                {
+                    $additional->$objVar = $this->hotelDetailPrepare($additional->$objVar);
+                }
+                elseif (is_array($additional->$objVar))
+                {
+                    $additional->$objVar = $this->hotelDetailPrepare($additional->$objVar);
+                }
+                elseif (is_string($additional->$objVar))
+                {
+                    $additional->$objVar = strip_tags($additional->$objVar);
+                }
+            }
+        }
+        return $additional;
+    }
+
+    public function makeHotelDetails($cityId)
+    {
+        if(!self::$cachePath){
+            self::$cachePath = Yii::getPathOfAlias('cacheStorage');
+        }
+        $cacheSubDir = 'hotelsCities';
+        if (!is_dir(self::$cachePath)) {
+            mkdir(self::$cachePath);
+        }
+        if (!file_exists(self::$cachePath . '/' . $cacheSubDir)) {
+            mkdir(self::$cachePath . '/' . $cacheSubDir);
+        }
+        $cacheFilePath = self::$cachePath . '/' . $cacheSubDir . '/hotelsCity' . $cityId . '.bin';
+        $newFileP = fopen($cacheFilePath,'wb');
+        $cityHotels = $this->getHotels($cityId, false);
+        $hotelIds = array();
+        foreach ($cityHotels as $hotel) {
+            $id = intval($hotel['id']);
+            $hotelIds[$id] = array('s'=>10485759,'l'=>10485759);
+        }
+        $indexes = igbinary_serialize($hotelIds);
+        $indLength = strlen($indexes);
+        echo $indLength."\n";
+        $binLength = sprintf('%08x',$indLength);
+        fwrite($newFileP,$binLength);
+        fwrite($newFileP,$indexes);
+        foreach ($hotelIds as $id=>$hotelPos) {
+            $hotelDetail = $this->hotelDetail($id);
+            if ($hotelDetail ) {
+
+                $sdata = igbinary_serialize($this->hotelDetailPrepare($hotelDetail));
+                $hotelIds[$id]['s'] = ftell($newFileP);
+                $hotelIds[$id]['l'] = strlen($sdata);
+                fwrite($newFileP,$sdata);
+            }else{
+                $hotelIds[$id]['s'] = 0;
+                $hotelIds[$id]['l'] = 0;
+            }
+        }
+        fseek($newFileP,0);
+        $indexes = igbinary_serialize($hotelIds);
+
+        $indLength = strlen($indexes);
+        $binLength = sprintf('%08x',$indLength);
+        fwrite($newFileP,$binLength);
+        echo $indLength."\n";
+        fwrite($newFileP,$indexes);
+        fclose($newFileP);
+
+    }
+
+    public function getHotelDetails($hotelIds,$cityId)
+    {
+        if(!self::$cachePath){
+            self::$cachePath = Yii::getPathOfAlias('cacheStorage');
+        }
+        $cacheSubDir = 'hotelsCities';
+        if (!is_dir(self::$cachePath)) {
+            mkdir(self::$cachePath);
+        }
+        if (!file_exists(self::$cachePath . '/' . $cacheSubDir)) {
+            mkdir(self::$cachePath . '/' . $cacheSubDir);
+        }
+        $cacheFilePath = self::$cachePath . '/' . $cacheSubDir . '/hotelsCity' . $cityId . '.bin';
+        if(!file_exists($cacheFilePath)){
+            $this->makeHotelDetails($cityId);
+        }
+        $hotelsDetails = array();
+        $notFoundIds = array();
+        if($hotelIds){
+            sort($hotelIds);
+            if(file_exists($cacheFilePath)){
+                $hotelsCityFile = fopen($cacheFilePath,'rb');
+                $binLength = fread($hotelsCityFile, 8);
+                $indLength = hexdec($binLength);
+                $indexes = fread($hotelsCityFile, $indLength);
+                $hotelInd = igbinary_unserialize($indexes);
+                foreach($hotelIds as $id){
+                    if(isset($hotelInd[$id])){
+                        if($hotelInd[$id]['s']){
+                            fseek($hotelsCityFile,$hotelInd[$id]['s']);
+                            $hotelDetailStr = fread($hotelsCityFile, $hotelInd[$id]['l']);
+                            $hotelsDetails[$id.'d'] = igbinary_unserialize($hotelDetailStr);
+                        }
+                    }else{
+                        $notFoundIds[$id] = $id;
+                    }
+                }
+            }
+        }
+        if($notFoundIds){
+            $city = City::getCityByHotelbookId($cityId);
+            Yii::app()->RSentryException->logException(new CException('In city '.$city->code.' HotelList found hotels ids ('.implode(',',$notFoundIds).')'));
+        }
+        return $hotelsDetails;
+    }
+
     public function checkHotel($hotel)
     {
         $hotelBookClient = $this;

@@ -37,13 +37,17 @@ class HotelManager
 
             header('TotalTimeBefore: '.HotelBookClient::$totalMicrotime);
             $resultsHotels = $stack->getJsonObject();
+            $hotelIds = array();
             foreach ($resultsHotels['hotels'] as $i => $info)
             {
-                $hotelInfo = $hotelClient->hotelDetail($info['hotelId']);
-                if($hotelInfo){
-                    $hotelsDetails[$info['hotelId'] . 'd'] = self::prepare($hotelInfo);
-                }
+                $id = intval($info['hotelId']);
+                $hotelIds[$id] = $id;
+                //$hotelInfo = $hotelClient->hotelDetail($info['hotelId']);
+                //if($hotelInfo){
+                //    $hotelsDetails[$info['hotelId'] . 'd'] = self::prepare($hotelInfo);
+                //}
             }
+            $hotelsDetails = $hotelClient->getHotelDetails($hotelIds,$hotelSearchParams->city->hotelbookId);
             header('TotalTimeAfter: '.HotelBookClient::$totalMicrotime);
             $results['hotelsDetails'] = $hotelsDetails;
 
