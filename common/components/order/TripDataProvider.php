@@ -160,7 +160,6 @@ class TripDataProvider
         foreach ($items as $item)
         {
             $prepared = $item->getJsonObject();
-            //print_r($prepared);die();
             $prepared['isLinked'] = $item->isLinked();
             $prepared['searchParams'] = $item->getJsonObjectForSearchParams();
             TripDataProvider::injectAdditionalInfo($prepared);

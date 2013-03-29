@@ -12,6 +12,20 @@ class HotelTripElementWorkflow extends TripElementWorkflow
         $this->item->hotelBookerId = $this->workflow->getHotelBookerId();
     }
 
+    public function restoreWorkflowAndLinkItWithItem()
+    {
+        $this->workflow = $this->restoreFlightBookerWorkflow();
+    }
+
+    private function restoreFlightBookerWorkflow()
+    {
+        $hotelBookerComponent = new HotelBookerComponent();
+        $hotelBookerComponent->setHotelBookerFromId($this->item->hotelBookerId);
+        $currentHotelBookerComponent = $hotelBookerComponent->getCurrent();
+        $currentHotelBookerComponent->orderBookingId = self::$bookingContactInfo->id;
+        return $hotelBookerComponent;
+    }
+
     public function runWorkflowAndSetFinalStatus()
     {
         $this->workflow->status('waitingForPayment');

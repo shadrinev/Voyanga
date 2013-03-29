@@ -208,7 +208,7 @@ class OrderBookingController extends Controller
         }
         foreach ($data['hotelBookings'] as $booker) {
             $bookerComponent = new HotelBookerComponent();
-            $bookerComponent->setFlightBookerFromId($booker->id);
+            $bookerComponent->setHotelBookerFromId($booker->id);
             $bookerComponent->status('canceled');
             $booker->status('canceled');
             $billIds[$booker->bill->transactionId]=1;

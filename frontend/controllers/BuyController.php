@@ -63,7 +63,9 @@ class BuyController extends FrontendController
         {
             Yii::app()->user->setState('fromPartner', 0);
         }
-        $this->redirect('buy/makeBooking'.$marker);
+        $orderBooking = $this->createNewOrderBooking();
+        $this->createBookers();
+        $this->redirect('buy/makeBooking/secretKey/'.$orderBooking->secretKey.$marker);
     }
 
     public function actionCheckFlight()
@@ -324,5 +326,34 @@ class BuyController extends FrontendController
         $bookingForm->contactEmail = $model->email;
         $bookingForm->contactPhone = $model->phone;
         return $bookingForm;
+    }
+
+    private function createNewOrderBooking()
+    {
+        if (is_numeric(Yii::app()->user->getState('todayOrderId')))
+            return OrderBooking::model()->findByAttributes(array('readableId'=>Yii::app()->user->getState('todayOrderId')));
+        $orderBooking = new OrderBooking();
+        $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
+        $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
+        $orderBooking->save();
+        $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
+        $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
+        $orderBooking->saveAttributes(array('readableId'=>$readableNumber));
+        Yii::app()->user->setState('orderBookingId', $orderBooking->id);
+        Yii::app()->user->setState('todayOrderId', $readableNumber);
+        Yii::app()->user->setState('secretKey', $orderBooking->secretKey);
+        return $orderBooking;
+    }
+
+    private function createBookers()
+    {
+        $dataProvider = new TripDataProvider();
+        $itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
+        foreach ($itemsOnePerGroup as $item)
+        {
+            $tripElementWorkflow = $item->createTripElementWorkflow();
+            $tripElementWorkflow->createRecordsForItem();
+            $tripElementWorkflow->updateBookingId();
+        }
     }
 }

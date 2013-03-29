@@ -7,6 +7,7 @@
 interface ITripElementWorkflow
 {
     public function createWorkflowAndLinkItWithItem();
+    public function restoreWorkflowAndLinkItWithItem();
     public function saveCredentialsForItem();
     public function updateBookingInfoForItem();
     public function runWorkflowAndSetFinalStatus();

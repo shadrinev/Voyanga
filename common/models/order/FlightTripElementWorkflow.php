@@ -12,9 +12,22 @@ class FlightTripElementWorkflow extends TripElementWorkflow
         $this->item->flightBookerId = $this->workflow->getFlightBookerId();
     }
 
+    public function restoreWorkflowAndLinkItWithItem()
+    {
+        $this->workflow = $this->restoreFlightBookerWorkflow();
+    }
+
+    private function restoreFlightBookerWorkflow()
+    {
+        $flightBookerComponent = new FlightBookerComponent();
+        $flightBookerComponent->setFlightBookerFromId($this->item->flightBookerId);
+        $currentFlightBookerComponent = $flightBookerComponent->getCurrent();
+        $currentFlightBookerComponent->orderBookingId = self::$bookingContactInfo->id;
+        return $flightBookerComponent;
+    }
+
     private function createFlightBookerWorkflow()
     {
-        Yii::trace("Create FlightBooker", "FlightTripElementWorkflow.createFlightBookerWorkflow");
         $flightBookerComponent = new FlightBookerComponent();
         $flightBookerComponent->setFlightBookerFromFlightVoyage($this->item->flightVoyage, $this->item->searchParams);
         $currentFlightBookerComponent = $flightBookerComponent->getCurrent();

@@ -2,6 +2,7 @@
     <?php $tripRaw = 'window.tripRaw = ' . $trip; ?>
     <?php echo $tripRaw ?>;
     window.currentModule = '<?php echo Yii::app()->user->getState('currentModule'); ?>';
+    window.secretKey = '<?php echo $secretKey ?>';
     $(function () {
         initCredentialsPage();
     })

@@ -108,7 +108,7 @@ $(function () {
             $('#loadPayFly').find('.loadJet').show();
             $.ajax({
                 type: 'POST',
-                url: '/buy/makeBooking',
+                url: '/buy/makeBooking/secretKey/'+window.secretKey,
                 data: formData,
                 dataType: 'json'
             })
@@ -126,7 +126,7 @@ $(function () {
                     _.each(window.tripRaw.items, function (item, i) {
                         $.ajax({
                             type: 'POST',
-                            url: '/buy/makeBookingForItem?index=' + i,
+                            url: '/buy/makeBookingForItem/secretKey/'+window.secretKey+'?index=' + i,
                             data: formData,
                             dataType: 'json'
                         })

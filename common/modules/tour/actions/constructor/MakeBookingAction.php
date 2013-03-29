@@ -12,13 +12,18 @@ class MakeBookingAction extends CAction
     private $valid = true;
     private $bookingForm;
     private $validationErrors = array();
+    private $orderBooking;
 
-    public function run()
+    public function run($secretKey)
     {
+        if (!$this->orderBooking)
+            $this->orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+
         $this->controller->assignTitle('enterCredentials');
         $this->getController()->layout = 'static';
 
         $dataProvider = new TripDataProvider();
+        $dataProvider->restoreOrderBookingFromDb($this->orderBooking->id);
         $this->tripItems = $dataProvider->getSortedCartItems();
 
         if ($this->areNotAllItemsLinked())
@@ -26,7 +31,7 @@ class MakeBookingAction extends CAction
 
         $passportManager = new PassportManager();
         $passportManager->tripItems = $this->tripItems;
-        $orderBookingId = $this->createNewOrderBooking();
+        $orderBookingId = $this->getOrderBooking($secretKey);
         $ambigousPassports = $passportManager->generatePassportForms();
         $this->passportForms = $passportManager->passportForms;
         if ($this->weGotPassportsAndBooking())
@@ -62,7 +67,8 @@ class MakeBookingAction extends CAction
             'icon' => $icon,
             'header' => $header,
             'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
-            'roomCounters' => (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false
+            'roomCounters' => (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false,
+            'secretKey' => $secretKey
         );
         $this->controller->render('makeBooking', $viewData);
     }
@@ -336,20 +342,10 @@ class MakeBookingAction extends CAction
         });
     }
 
-    private function createNewOrderBooking()
+    private function getOrderBooking($secretKey)
     {
-        if (is_numeric(Yii::app()->user->getState('todayOrderId')))
-            return Yii::app()->user->getState('todayOrderId');
-        $orderBooking = new OrderBooking();
-        $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
-        $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
-        $orderBooking->save();
-        $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
-        $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
-        $orderBooking->saveAttributes(array('readableId'=>$readableNumber));
-        Yii::app()->user->setState('orderBookingId', $orderBooking->id);
-        Yii::app()->user->setState('todayOrderId', $readableNumber);
-        Yii::app()->user->setState('secretKey', $orderBooking->secretKey);
-        return $readableNumber;
+        if (!$this->orderBooking)
+            throw new CHttpException(404, 'Page not found');
+        return $this->orderBooking->readableId;
     }
 }

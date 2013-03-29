@@ -18,7 +18,6 @@ class OrderComponent extends CApplicationComponent
     public function init()
     {
         $dataProvider = new TripDataProvider();
-
         $this->itemsOnePerGroup = $dataProvider->getSortedCartItemsOnePerGroup();
         foreach ($this->itemsOnePerGroup as $item)
         {

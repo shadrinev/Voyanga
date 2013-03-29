@@ -39,10 +39,16 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
         $this->workflow = $val;
     }
 
-    public function bookItem()
+    public function createRecordsForItem()
     {
         $this->updateBookingInfoForItem();
         $this->createWorkflowAndLinkItWithItem();
+    }
+
+    public function bookItem()
+    {
+        $this->updateBookingInfoForItem();
+        $this->restoreWorkflowAndLinkItWithItem();
         $this->saveCredentialsForItem();
     }
 
@@ -81,6 +87,9 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
     private function getBookingContactFormData()
     {
         $bookingForm = Yii::app()->user->getState('bookingForm');
-        return array('email'=>$bookingForm->contactEmail, 'phone'=>$bookingForm->contactPhone);
+        if (is_object($bookingForm))
+            return array('email'=>$bookingForm->contactEmail, 'phone'=>$bookingForm->contactPhone);
+        else
+            return array('email'=>'', 'phone'=>'');
     }
 }
