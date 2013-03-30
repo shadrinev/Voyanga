@@ -34,8 +34,14 @@ return CMap::mergeArray(array(
         'apiHost' => 'http://test.nemo-ibe.com',
         'agencyBookingWsdlUri' => 'http://test.nemo-ibe.com/nemoflights/wsdl.php?for=',
         'agencyWsdlUri' => 'http://easytrip.nemo-ibe.com/nemoflights/wsdl.php?for=',
+
+        //прямые запросы с сайта
         'agencyId' => '120',
-        'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD'
+        'agencyApiKey' => '85C46C441F08204652F2DFADC3DE05CD',
+
+        //запрос, когда пользователь на сайте, но у него стоит кука партнёра (Галилео добавляются в выдачу)
+        'partnerAndGalileoAgencyId' => '131',
+        'partnerAndGalileoAgencyApiKey' => '2B3CF2EE9685F2092C245B56BAD28BFB'
     ),
     'hotel_search_cache_time' => 60 * 60, //seconds before show notification message for hotel page + cache expiration time
     'hotel_payment_time' => 600,
