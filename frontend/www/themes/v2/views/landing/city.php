@@ -291,8 +291,14 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 <?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
-        <h2>Что такое Voyanga</h2>
-        <p>Это инфотрмация о том что из <?php echo ($fromCity ? $fromCity->caseGen : $currentCity->caseGen); ?> в <?php echo $city->caseAcc; ?> можно добраться за <?php echo $bestPrice['price'];?> <span class="rur">o</span></p>
+        <?php if ($fromCity): ?>
+            <h2>Что такое Voyanga</h2>
+            <p>Это инфотрмация о том что из <?php echo $fromCity->caseGen; ?> в <?php echo $city->caseAcc; ?> можно добраться за <?php echo $bestPrice['price'];?> <span class="rur">o</span></p>
+        <?php else: ?>
+            <h2>Что такое Voyanga</h2>
+            <p>Это инфотрмация о том что в <?php echo $city->caseAcc; ?> из вашей точки(<?php echo $currentCity->caseGen;?>) можно добраться за <?php echo $bestPrice['price'];?> <span class="rur">o</span></p>
+        <?php endif; ?>
+
         <p>Voyanga.com — это самый простой, удобный и современный способ поиска и покупки авиабилетов. Мы постоянно
             работаем над развитием и улучшением сервиса. Наш сайт подключен сразу к нескольким системам бронирования,
             что позволяет сравнивать тарифы и подбирать наиболее выгодные и удобные тарифы и рейсы.</p>
