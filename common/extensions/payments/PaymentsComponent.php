@@ -168,8 +168,7 @@ class PaymentsComponent extends CApplicationComponent
     private function onlyHotelsCase($hotels, $newBill) {
         # FIXME: check if this call is needed
         $bill = $this->getBillForBooker($hotels[0]->getCurrent(), $newBill);
-        $billId = $bill->id;
-        $metaBooker = new Payments_MetaBooker($hotels, $billId);
+        $metaBooker = new Payments_MetaBooker($hotels, $bill);
         return array($metaBooker);
     }
 
@@ -179,8 +178,7 @@ class PaymentsComponent extends CApplicationComponent
         if(!$this->testMode)
             $bill->setChannel('ltr');
         $bill->save();
-        $billId = $bill->id;
-        $metaBooker = new Payments_MetaBookerTour(array_merge($flights, $hotels), $flights[0], $billId);
+        $metaBooker = new Payments_MetaBookerTour(array_merge($flights, $hotels), $flights[0], $bill);
         //! FIXME FIXME
         $bill->amount = $metaBooker->getPrice();
 

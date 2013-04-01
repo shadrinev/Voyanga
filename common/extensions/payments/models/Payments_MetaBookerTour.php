@@ -9,7 +9,7 @@ class Payments_MetaBookerTour extends CComponent{
     private $bookers;
     private $_billId;
     private $base;
-    public function __construct($bookers, $base, $billId)
+    public function __construct($bookers, $base, $bill)
     {
         $this->bookers = array();
         if($base instanceof FlightBooker) {
@@ -32,21 +32,20 @@ class Payments_MetaBookerTour extends CComponent{
                 $this->bookers[] = $booker;
             }
         }
-        $this->_billId = $billId;
-        if($billId)
-            $this->setBillId($billId);
+        $this->_billId = $bill->id;
+        if($bill)
+            $this->setBill($bill);
     }
 
     public function getBillId() {
         return $this->_billId;
     }
 
-    public function setBillId($billId) {
-        $this->_billId = $billId;
+    public function setBill($bill) {
         foreach($this->bookers as $booker) {
-            $book = $booker->getCurrent();
-            $book->billId = $billId;
-            $book->save();
+            $booker->getCurrent()->bill = $bill;
+            $booker->getCurrent()->billId = $bill->id;
+            $booker->getCurrent()->save();
         }
     }
 

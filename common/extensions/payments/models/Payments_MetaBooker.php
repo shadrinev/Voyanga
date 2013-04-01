@@ -8,7 +8,7 @@ class Payments_MetaBooker extends CComponent{
     private $bookers;
     private $_billId;
     public $orderBookingId;
-    public function __construct($bookers, $billId)
+    public function __construct($bookers, $bill)
     {
         $this->bookers = array();
         foreach ($bookers as $booker) {
@@ -25,20 +25,22 @@ class Payments_MetaBooker extends CComponent{
             }
         }
         $this->orderBookingId = $this->bookers[0]->getCurrent()->orderBookingId;
-        $this->_billId = $billId;
-        if($billId)
-            $this->setBillId($billId);
+        $this->_billId = $bill->id;
+        if($bill)
+            $this->setBill($bill);
     }
 
     public function getBillId() {
         return $this->_billId;
     }
 
-    public function setBillId($billId) {
+    public function setBill($bill) {
         foreach($this->bookers as $booker){
-            if(($booker->getCurrent()->billId != $billId) && $billId)
-                throw new Exception("Hotel set for payment is broken");
-            $booker->getCurrent()->billId = $billId;
+//            if(($booker->getCurrent()->billId != $billId) && $billId)
+//                throw new Exception("Hotel set for payment is broken");
+            $booker->getCurrent()->bill = $bill;
+            $booker->getCurrent()->billId = $bill->id;
+            $booker->getCurrent()->save();
         }
     }
 
