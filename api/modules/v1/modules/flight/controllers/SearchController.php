@@ -259,6 +259,7 @@ class SearchController extends ApiController
 
     public function actionPartner($from, $to, $date1, $adults, $children, $infants, $cabin, $partner, $password, $date2='')
     {
+        Yii::app()->user->setState('requestFromPartner', true);
         $this->checkCredentials($partner, $password);
         $destinations = array();
         $from = $this->normalizeIataCodeToCityCode($from);
