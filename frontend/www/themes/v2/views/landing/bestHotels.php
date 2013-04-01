@@ -200,6 +200,7 @@
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
+        <br>
         <h1>Бронирование отелей онлайн</h1>
 
         <p>Voyanga.com — система онлайн бронирования отелей. Мы предоставляем сервис по бронированию гостиниц по 
