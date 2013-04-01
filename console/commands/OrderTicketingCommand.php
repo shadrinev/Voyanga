@@ -34,6 +34,8 @@ EOD;
             if($this->isDone($orderId)) {
                 $this->sendNotifications($orderId);
                 $this->confirmPayment($orderId);
+            } else {
+                $this->sendFailed($orderId);
             }
         }
         else
@@ -52,7 +54,14 @@ EOD;
     }
 
 
-
+    /**
+       Уведомляем супорт о фейле заказа
+    */
+    private function sendFailed($orderId) {
+        $order = Yii::app()->order;
+        $order->initByOrderBookingId($orderId);
+        $order->sendFailed();
+    }
 
 
 
