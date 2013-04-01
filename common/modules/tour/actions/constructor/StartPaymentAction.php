@@ -8,10 +8,11 @@
  */
 class StartPaymentAction extends CAction
 {
-    public function run()
+    public function run($secretKey)
     {
         try
         {
+            Yii::app()->order->initByOrderBookingId(OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey))->id);
             $params = Yii::app()->order->getPaymentFormParams(true);
         } catch(Exception $e) {
             header("Content-type: application/json");

@@ -482,6 +482,15 @@ class OrderComponent extends CApplicationComponent
         }
     }
 
+    public function sendFailed()
+    {
+        $orderBooking = $this->getOrderBooking();
+
+        EmailManager::sendOrderFailed(array(
+            'orderBookingId'=>$orderBooking->id,
+                                            ));
+    }
+
     public function sendCanceled()
     {
         $orderBooking = $this->getOrderBooking();
@@ -489,8 +498,7 @@ class OrderComponent extends CApplicationComponent
         EmailManager::sendOrderCanceled(array(
             'orderBookingId'=>$orderBooking->readableId,
             'email'=>$orderBooking->email
-                                            ));
- 
+                                            )); 
     }
 
     public function getOrderBooking()
