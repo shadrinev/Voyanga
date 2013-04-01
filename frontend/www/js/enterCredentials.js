@@ -336,7 +336,6 @@ function checkStatuses(statuses, ids) {
     var errors = '',
         errorText = '',
         completed = true;
-    new ErrorPopup('passportBookingError', [errorText], function() {window.location.href = '/#' + window.redirectHash});
     _.each(statuses, function (el, i) {
         if (el == 0)
             completed = false;
