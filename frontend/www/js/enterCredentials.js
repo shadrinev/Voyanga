@@ -312,27 +312,25 @@ function enableAllFieldsAndShowButton() {
 var _rollbar = _rollbar || [];
 
 function startPayment() {
-
-            $.get('/buy/startPayment', function (data) {
-                if (data.error) {
-		    _rollbar.push({level: 'error', msg: "startPayment Error", response: data});
-                    new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
-                } else {
-                    //if everything is ok then go to payment
-                    $('iframe').load(function () {
-                        $('#loadPayFly').removeClass('paybuyEnd').find('.armoring').hide();
-                        $('#loadPayFly').find('.loadJet').hide();
-                        $('.payCardPal').show();
-                        $('.paybuyEnd').show();
-                        ResizeAvia();
-                        Utils.scrollTo('#paybuyContent', true);
-                        $('iframe').unbind('load');
-
-                    });
-                    window.app.breakdown(data.breakdown);
-                    Utils.submitPayment(data.payonline);
-                }
+    $.get('/buy/startPayment/secretKey/'+window.secretKey, function (data) {
+        if (data.error) {
+	    _rollbar.push({level: 'error', msg: "startPayment Error", response: data});
+            new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
+        } else {
+            //if everything is ok then go to payment
+            $('iframe').load(function () {
+                $('#loadPayFly').removeClass('paybuyEnd').find('.armoring').hide();
+                $('#loadPayFly').find('.loadJet').hide();
+                $('.payCardPal').show();
+                $('.paybuyEnd').show();
+                ResizeAvia();
+                Utils.scrollTo('#paybuyContent', true);
+                $('iframe').unbind('load');
             });
+            window.app.breakdown(data.breakdown);
+            Utils.submitPayment(data.payonline);
+        }
+    });
 }
 
 function checkStatuses(statuses, ids) {
