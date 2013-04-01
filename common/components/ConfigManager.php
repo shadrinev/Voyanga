@@ -10,7 +10,7 @@ class ConfigManager
             $requestFromPartner = Yii::app()->user->getState('requestFromPartner');
             if ($requestFromPartner)
             {
-                if (strlen(trim($partner->clientId))>0)
+                if (strlen(trim($partner->clientId)) > 0)
                     return trim($partner->clientId);
             }
             else
@@ -23,12 +23,13 @@ class ConfigManager
 
     static public function getNemoApiKey()
     {
-        $requestFromPartner = Yii::app()->user->getState('requestFromPartner');
-        if ($requestFromPartner)
+        if ($partner = Partner::getCurrentPartner())
         {
-            if ($partner = Partner::getCurrentPartner())
+            $requestFromPartner = Yii::app()->user->getState('requestFromPartner');
+            if ($requestFromPartner)
             {
-                if (strlen(trim($partner->apiKey))>0)
+
+                if (strlen(trim($partner->apiKey)) > 0)
                     return trim($partner->apiKey);
             }
             else
@@ -36,6 +37,7 @@ class ConfigManager
                 return Yii::app()->params['GDSNemo']['partnerAndGalileoAgencyApiKey'];
             }
         }
+
         return Yii::app()->params['GDSNemo']['agencyApiKey'];
     }
 }

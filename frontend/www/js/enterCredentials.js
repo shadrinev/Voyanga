@@ -17,22 +17,20 @@ $(function () {
             type: 'get',
             dataType: 'json'
         })
-        .done(function(response){
-            window.VisualLoaderInstance.renew(100);
-            if (!response.result)
-            {
-                window.location.href = '/#' + window.redirectHash;
-            }
-            else
-            {
-                _.delay(function(){
-                    window.VisualLoaderInstance.hide();
-                }, 100);
-            }
-        })
-        .error(function(){
-            window.VisualLoaderInstance.hide();
-        })
+            .done(function (response) {
+                window.VisualLoaderInstance.renew(100);
+                if (!response.result) {
+                    window.location.href = '/#' + window.redirectHash;
+                }
+                else {
+                    _.delay(function () {
+                        window.VisualLoaderInstance.hide();
+                    }, 100);
+                }
+            })
+            .error(function () {
+                window.VisualLoaderInstance.hide();
+            })
     }
     $('.genderField').each(function () {
         var $this = $(this),
@@ -89,7 +87,7 @@ $(function () {
         }
     });
     $(function () {
-        $('.agreeConditions').on('click', function () {
+        $('.agreeConditions').on('click',function () {
             var checked = ($('#agreeCheck').is(':checked'));
             if (!checked)
                 $('#submit-passport').removeClass('inactive');
@@ -108,7 +106,7 @@ $(function () {
             $('#loadPayFly').find('.loadJet').show();
             $.ajax({
                 type: 'POST',
-                url: '/buy/makeBooking/secretKey/'+window.secretKey,
+                url: '/buy/makeBooking/secretKey/' + window.secretKey,
                 data: formData,
                 dataType: 'json'
             })
@@ -119,32 +117,33 @@ $(function () {
                         $('#loadPayFly').find('.loadJet').hide();
                         return false;
                     }
-		    window.app.itemsToBuy.trackBuyClick();
+                    window.app.itemsToBuy.trackBuyClick();
                     _.each(window.tripRaw.items, function (item, i) {
                         statuses[i] = 0;
                     });
                     _.each(window.tripRaw.items, function (item, i) {
                         $.ajax({
                             type: 'POST',
-                            url: '/buy/makeBookingForItem/secretKey/'+window.secretKey+'?index=' + i,
+                            url: '/buy/makeBookingForItem/secretKey/' + window.secretKey + '?index=' + i,
                             data: formData,
                             dataType: 'json'
                         })
                             .success(function (response) {
+                                console.log ('success');
                                 statuses[i] = 1;
                                 ids[i] = response.bookerId;
                                 checkStatuses(statuses, ids);
                             })
                             .error(function (xhr, ajaxOptions, thrownError) {
+                                console.log ('error');
                                 statuses[i] = xhr.responseText;
                                 checkStatuses(statuses, ids);
                             });
                     });
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-		    _rollbar.push({level: 'error', msg: "passport500", data: formData});
-
-                    new ErrorPopup('passport500'); //ошибка, когда мы не смогли сохранить паспортные данные
+                    _rollbar.push({level: 'error', msg: "passport500", data: formData});
+                    new ErrorPopup('passport500', false, function() {window.location.href = '/#' + window.redirectHash}); //ошибка, когда мы не смогли сохранить паспортные данные
                 });
         });
     });
@@ -167,79 +166,77 @@ function analyzeValidationResult(response) {
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
 
-                    name = 'FlightChildPassportForm[' + i + '][' + key + ']';
-                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                name = 'FlightChildPassportForm[' + i + '][' + key + ']';
+                inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
 
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
 
-                    name = 'FlightInfantPassportForm[' + i + '][' + key + ']';
-                    inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
+                name = 'FlightInfantPassportForm[' + i + '][' + key + ']';
+                inputEl = $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
 
                 if (key == 'genderId')
                     inputEl.closest('label').addClass('error tooltip').attr('rel', fName);
 
-                if (key == 'birthday')
-                {
+                if (key == 'birthday') {
                     var namePrefix = 'FlightAdultPassportForm[' + i + '][',
                         inputNames = [
                             namePrefix + 'birthdayDay]',
                             namePrefix + 'birthdayMonth]',
                             namePrefix + 'birthdayYear]'
                         ];
-                    _.each(inputNames, function(name, i){
+                    _.each(inputNames, function (name, i) {
                         $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                     });
 
                     namePrefix = 'FlightChildPassportForm[' + i + '][';
                     inputNames = [
-                            namePrefix + 'birthdayDay]',
-                            namePrefix + 'birthdayMonth]',
-                            namePrefix + 'birthdayYear]'
-                        ];
-                    _.each(inputNames, function(name, i){
+                        namePrefix + 'birthdayDay]',
+                        namePrefix + 'birthdayMonth]',
+                        namePrefix + 'birthdayYear]'
+                    ];
+                    _.each(inputNames, function (name, i) {
                         $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                     });
 
                     namePrefix = 'FlightInfantPassportForm[' + i + '][';
                     inputNames = [
-                            namePrefix + 'birthdayDay]',
-                            namePrefix + 'birthdayMonth]',
-                            namePrefix + 'birthdayYear]'
-                        ];
-                    _.each(inputNames, function(name, i){
+                        namePrefix + 'birthdayDay]',
+                        namePrefix + 'birthdayMonth]',
+                        namePrefix + 'birthdayYear]'
+                    ];
+                    _.each(inputNames, function (name, i) {
                         $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                     });
                 }
-                if (key == 'expirationDate')
-                {
+                if (key == 'expirationDate') {
                     var namePrefix = 'FlightAdultPassportForm[' + i + '][',
                         inputNames = [
                             namePrefix + 'expirationDay]',
                             namePrefix + 'expirationMonth]',
                             namePrefix + 'expirationYear]'
                         ];
-                    _.each(inputNames, function(name, i){
+                    _.each(inputNames, function (name, i) {
                         $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                     });
 
                     namePrefix = 'FlightChildPassportForm[' + i + '][';
                     inputNames = [
-                            namePrefix + 'expirationDay]',
-                            namePrefix + 'expirationMonth]',
-                            namePrefix + 'expirationYear]'
-                        ];
-                    _.each(inputNames, function(name, i){
+                        namePrefix + 'expirationDay]',
+                        namePrefix + 'expirationMonth]',
+                        namePrefix + 'expirationYear]'
+                    ];
+                    _.each(inputNames, function (name, i) {
                         $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                     });
 
                     namePrefix = 'FlightInfantPassportForm[' + i + '][';
                     inputNames = [
-                            namePrefix + 'expirationDay]',
-                            namePrefix + 'expirationMonth]',
-                            namePrefix + 'expirationYear]'
-                        ];
-                    _.each(inputNames, function(name, i){
+                        namePrefix + 'expirationDay]',
+                        namePrefix + 'expirationMonth]',
+                        namePrefix + 'expirationYear]'
+                    ];
+                    _.each(inputNames, function (name, i) {
                         $('input[name="' + name + '"]').addClass('error tooltip').attr('rel', fName);
                     });
                 }
@@ -313,32 +310,33 @@ var _rollbar = _rollbar || [];
 
 function startPayment() {
 
-            $.get('/buy/startPayment', function (data) {
-                if (data.error) {
-		    _rollbar.push({level: 'error', msg: "startPayment Error", response: data});
-                    new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
-                } else {
-                    //if everything is ok then go to payment
-                    $('iframe').load(function () {
-                        $('#loadPayFly').removeClass('paybuyEnd').find('.armoring').hide();
-                        $('#loadPayFly').find('.loadJet').hide();
-                        $('.payCardPal').show();
-                        $('.paybuyEnd').show();
-                        ResizeAvia();
-                        Utils.scrollTo('#paybuyContent', true);
-                        $('iframe').unbind('load');
+    $.get('/buy/startPayment', function (data) {
+        if (data.error) {
+            _rollbar.push({level: 'error', msg: "startPayment Error", response: data});
+            new ErrorPopup('e500withText', 'Ошибка платёжной системы'); //ошибка бронирования
+        } else {
+            //if everything is ok then go to payment
+            $('iframe').load(function () {
+                $('#loadPayFly').removeClass('paybuyEnd').find('.armoring').hide();
+                $('#loadPayFly').find('.loadJet').hide();
+                $('.payCardPal').show();
+                $('.paybuyEnd').show();
+                ResizeAvia();
+                Utils.scrollTo('#paybuyContent', true);
+                $('iframe').unbind('load');
 
-                    });
-                    window.app.breakdown(data.breakdown);
-                    Utils.submitPayment(data.payonline);
-                }
             });
+            window.app.breakdown(data.breakdown);
+            Utils.submitPayment(data.payonline);
+        }
+    });
 }
 
 function checkStatuses(statuses, ids) {
     var errors = '',
         errorText = '',
         completed = true;
+    new ErrorPopup('passportBookingError', [errorText], function() {window.location.href = '/#' + window.redirectHash});
     _.each(statuses, function (el, i) {
         if (el == 0)
             completed = false;
@@ -349,19 +347,19 @@ function checkStatuses(statuses, ids) {
         return;
     $.get('/buy/done', {ids: ids.join(',')})
         .done(function () {
-	    if (errors.length > 0)
-		return;
-	    startPayment();
+            if (errors.length > 0)
+                return;
+            startPayment();
         })
         .error(function () {
-	    _rollbar.push({level: 'error', msg: "ERROR WHILE /buy/done", bookingIds: ids});
+            _rollbar.push({level: 'error', msg: "ERROR WHILE /buy/done", bookingIds: ids});
         });
     if (errors.length > 0) {
         errorText = errors;
-	_rollbar.push({level: 'error', msg: "Booking failed", bookingIds: ids, errorText: errors});
-        new ErrorPopup('passportBookingError', [errorText]);
+        _rollbar.push({level: 'error', msg: "Booking failed", bookingIds: ids, errorText: errors});
+        new ErrorPopup('passportBookingError', [errorText], function() {window.location.href = window.redirectHash});
         return;
-    }   
+    }
 }
 
 initCredentialsPage = function () {
@@ -412,15 +410,14 @@ function InputActiveFinishDate() {
     });
 }
 
-function countLength(val)
-{
-    return val.replace(/\D/g,'').length;
+function countLength(val) {
+    return val.replace(/\D/g, '').length;
 }
 
 $(window).load(InputActiveFinishDate);
 
-$(function(){
-    $('.btn-close').on('click', function(){
+$(function () {
+    $('.btn-close').on('click', function () {
         $.cookie('credentials-cross', 'hide', {expires: 30});
         $('.lineUp').slideUp();
         return false;
