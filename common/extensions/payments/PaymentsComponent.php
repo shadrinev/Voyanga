@@ -99,7 +99,7 @@ class PaymentsComponent extends CApplicationComponent
             $bill->amount = 201;
 
         $bill->save();
-        $booker->billId = $bill->id;
+        $booker->bill = $bill;
         $booker->save();
         return $bill;
     }

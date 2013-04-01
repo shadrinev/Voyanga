@@ -911,7 +911,13 @@ function jsPaneScrollHeight() {
 		_GoOnScroll = true;
 	}
 	//console.log("==== * * * * ====");
-	
+
+        if (($('.left-content').height() + 140) > $('.wrapper').height()) {
+            $('#content').css('height', $('.left-content').height()+'px');
+        }
+        else {
+            return;
+        }
 	}
 }
 

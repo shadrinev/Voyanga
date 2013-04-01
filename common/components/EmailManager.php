@@ -77,6 +77,17 @@ class EmailManager
         Yii::app()->mail->send($msg);
     }
 
+    static public function sendOrderFailed($params)
+    {
+        $msg = new YiiMailMessage();
+        $msg->view = 'orderFailed';
+        $msg
+            ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
+            ->setTo("orders@voyanga.com")
+            ->setSubject('Ошибка выписки заказа номер '.$params['orderBookingId']);
+        $msg->setBody($params, 'text/html');
+        Yii::app()->mail->send($msg);
+    }
 
 
 }
