@@ -105,10 +105,18 @@ class ToursController
           success: (data)=>
             #sessionStorage.setItem("#{@endpoint}#{url}", JSON.stringify(data))
             cb(data)
+    setAct = false
     if @searchParams.flightHash
       for resultSet in stacked.data()
         if resultSet.isAvia()
-          resultSet.findAndSelectHash(@searchParams.flightHash)
+          res = resultSet.findAndSelectHash(@searchParams.flightHash)
+          if res
+            setAct = true
+            continue
+        if setAct
+          stacked.setActive(resultSet)
+
+
 
 
     stacked.checkTicket = @checkTicketAction

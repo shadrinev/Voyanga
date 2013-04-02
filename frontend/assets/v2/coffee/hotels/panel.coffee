@@ -77,7 +77,7 @@ class HotelsPanel extends SearchPanel
       from: @checkIn()
       to: @checkOut()
       activeSearchPanel: @
-      valuesDescriptions: [('Заезд в отель<div class="breakWord">в ' + @cityReadablePre() + '</div>'), ('Выезд из отеля<div class="breakWord">в ' + @cityReadablePre() + '</div>')]
+      valuesDescriptions: [('Заезд в отель' + (if @cityReadablePre() then '<div class="breakWord">в ' + @cityReadablePre() + '</div>' else '')), ('Выезд из отеля' + (if @cityReadablePre() then '<div class="breakWord">в ' + @cityReadablePre() + '</div>' else ''))]
       intervalDescription: '0'
       selectionIndex: @selectionIndex
 

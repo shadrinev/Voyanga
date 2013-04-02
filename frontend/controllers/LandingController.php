@@ -13,6 +13,7 @@ class LandingController extends FrontendController
 
     public function actionBestHotels()
     {
+
         $currentCity = Geoip::getCurrentCity();
         $this->breadLinks['Страны'] = '/land/';
         $this->breadLinks['Отели'] = '/land/hotels/';
@@ -59,11 +60,18 @@ class LandingController extends FrontendController
         while (($row = $dataReader->read()) !== false) {
             $flightCacheFromCurrent[] = (object)$row;
         }
+        $events = Event::getRandomEvents();
+        $eventsJsonObject = array();
+        foreach ($events as $event)
+            $eventsJsonObject[] = $event->getJsonObject();
+        $eventsJsonObject[0]['active'] = true;
+
 
         $this->layout = 'static';
         $this->assignTitle('landHotels');
         $this->render('bestHotels', array('hotelsCaches' => $hotelsCaches, 'currentCity' => $currentCity,
-            'flightCacheFromCurrent' => $flightCacheFromCurrent
+            'flightCacheFromCurrent' => $flightCacheFromCurrent,
+            'events' => $eventsJsonObject
         ));
     }
 
