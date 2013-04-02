@@ -7,7 +7,7 @@ class ConfigManager
     {
         if ($partner = Partner::getCurrentPartner())
         {
-            $requestFromPartner = Yii::app()->user->getState('requestFromPartner');
+            $requestFromPartner = Yii::app()->user->getState('directRequest') == false;
             if ($requestFromPartner)
             {
                 if (strlen(trim($partner->clientId)) > 0)
@@ -25,7 +25,7 @@ class ConfigManager
     {
         if ($partner = Partner::getCurrentPartner())
         {
-            $requestFromPartner = Yii::app()->user->getState('requestFromPartner');
+            $requestFromPartner = Yii::app()->user->getState('directRequest') == false;
             if ($requestFromPartner)
             {
 

@@ -45,6 +45,14 @@
 
         ko.applyBindings(app);
         ko.processAllDeferredBindingUpdates();
+        $(".mapsBigAll").show();
+        $(".mapsBigAll").animate({opacity: 1}, 700);
+        var value = {lat: 52, lng: 10};
+        waitElement(".mapsBigAll",function (element){
+                gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)});
+        });
+
+
     };
 
     $(document).ready(function () {
@@ -55,7 +63,7 @@
 </script>
 <div class="wrapper" style="height: 700px">
 <div class="maps">
-    <div class="innerBlockMain">
+    <div class="innerBlockMain" style="margin: 0px auto 0;">
         <div class="mapsBigAll" style="display: none"></div>
     </div>
 </div>

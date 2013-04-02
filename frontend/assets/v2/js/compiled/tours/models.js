@@ -127,6 +127,8 @@ ToursAviaResultSet = (function(_super) {
 
     this.select = __bind(this.select, this);
 
+    this.findAndSelectHash = __bind(this.findAndSelectHash, this);
+
     this.findAndSelect = __bind(this.findAndSelect, this);
 
     this.GAData = __bind(this.GAData, this);
@@ -212,6 +214,19 @@ ToursAviaResultSet = (function(_super) {
       return;
     }
     result = this.results().findAndSelect(result);
+    if (!result) {
+      return false;
+    }
+    this._selectResult(result);
+    return result;
+  };
+
+  ToursAviaResultSet.prototype.findAndSelectHash = function(hash) {
+    var result;
+    if (this.noresults) {
+      return;
+    }
+    result = this.results().findAndSelectHash(hash);
     if (!result) {
       return false;
     }
@@ -1401,6 +1416,8 @@ TourTripResultSet = (function() {
 
     this.trackBuyClick = __bind(this.trackBuyClick, this);
 
+    this.crossUrl = __bind(this.crossUrl, this);
+
     this.items = [];
     this.cities = [];
     this.hasFlight = false;
@@ -1472,8 +1489,11 @@ TourTripResultSet = (function() {
       }
       return Utils.wordAfterNum(_this.hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц');
     });
+    this.crossUrlHref = ko.observable('');
+    this.simHashes = [];
+    this.roomsHash = '';
     _.each(this.resultSet.items, function(item) {
-      var adults, asp, aviaResult, child, infant, totalPeople;
+      var adults, asp, aviaResult, child, infant, rtDate, totalPeople;
       if (item.isFlight) {
         asp = new AviaSearchParams;
         asp.fromObject(item.searchParams);
@@ -1501,6 +1521,20 @@ TourTripResultSet = (function() {
             _this.people += ', ' + Utils.wordAfterNum(item.searchParams.inf, 'младенец', 'младенцев', 'младенцев');
           }
         }
+        if (!_this.crossUrlHref()) {
+          _this.crossUrlHref('/#tours/search/' + asp.dep() + '/' + (asp.rt() ? '1' : '0') + '/');
+        }
+        _this.roomsHash = item.searchParams.adt + ':' + item.searchParams.chd + ':' + item.searchParams.inf;
+        rtDate = moment(moment(asp.date()));
+        rtDate.add('days', 7);
+        if (asp.rt()) {
+          rtDate = moment(asp.rtDate());
+          _this.simHashes.push(aviaResult.similarityHash() + '.' + aviaResult.rtSimilarityHash());
+          voyanga_debug('ASP:', asp, asp.rt(), asp.date(), asp.rtDate());
+        } else {
+          _this.simHashes.push(aviaResult.similarityHash());
+        }
+        _this.crossUrlHref(_this.crossUrlHref() + asp.arr() + '/' + moment(asp.date()).format('D.M.YYYY') + '/' + rtDate.format('D.M.YYYY') + '/');
         aviaResult.totalPeopleGen = Utils.wordAfterNum(item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек');
         if (aviaResult.totalPeople !== '1 человек') {
           aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen;
@@ -1580,6 +1614,9 @@ TourTripResultSet = (function() {
         return _this.totalCostWithoutDiscount += _this.lastHotel.roomSets()[0].price;
       }
     });
+    if (this.crossUrlHref()) {
+      this.crossUrlHref(this.crossUrlHref() + 'rooms/' + this.roomsHash + '/flightHash/' + this.simHashes.join('/') + '/');
+    }
     if (this.additional) {
       this.cities.push(this.additional);
     }
@@ -1654,6 +1691,8 @@ TourTripResultSet = (function() {
       return false;
     });
   }
+
+  TourTripResultSet.prototype.crossUrl = function() {};
 
   TourTripResultSet.prototype.trackBuyClick = function() {
     var GAAviaData, GAAviaExtra, GAAviaKeys, GAHotelData, GAHotelExtra, GAHotelKeys, aviaResult, hasAvia, hasHotel, hotelResult, x, _i, _len, _ref;

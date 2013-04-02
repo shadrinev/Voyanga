@@ -120,8 +120,9 @@ class EventSet
   closeEventsMaps: =>
     $(".toursBigAll").css "opacity", "0"
     $(".mapsBigAll").animate
-      opacity: 0
-      , 700, ->
+      opacity: 0,
+      700,
+      ->
         $(this).css "display", "none"
 
     $(".toursBigAll").show()

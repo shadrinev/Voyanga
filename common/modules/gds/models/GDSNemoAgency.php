@@ -656,7 +656,6 @@ class GDSNemoAgency extends CComponent
                         }
                     }
                 }
-
             }
             $totalPrice = UtilsHelper::soapElementValue($response->Response->BookFlight->Flight->TotalPrice);
             $commission = UtilsHelper::soapElementValue($response->Response->BookFlight->Flight->Commission);
@@ -673,7 +672,6 @@ class GDSNemoAgency extends CComponent
             $flightBookingResponse->addError('error', 'Status is:' . $status);
         }
         return $flightBookingResponse;
-
     }
 
     public function FlightTariffRules($flightId)
