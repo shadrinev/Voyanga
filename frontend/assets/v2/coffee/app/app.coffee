@@ -83,14 +83,18 @@ class Application extends Backbone.Router
 
   reRenderCalendar:(elements) =>
     VoyangaCalendarStandart.panel = false
-    ;
     VoyangaCalendarStandart.init @fakoPanel, elements[1]
     @fakoPanel.subscribe( (newPanel)=>
       if newPanel.panels
         @activeSearchPanel(_.last(newPanel.panels()))
+      else
+        @activeSearchPanel(newPanel)
     )
+
     if @fakoPanel().panels
       @activeSearchPanel(_.last(@fakoPanel().panels()))
+    else
+      @activeSearchPanel(@fakoPanel())
 
   reRenderCalendarStatic:(elements) =>
     $('.calenderWindow').css('position','static').find('.calendarSlide').css('position','static')
@@ -171,6 +175,12 @@ class Application extends Backbone.Router
     $(window).unbind 'resize'
     $(window).resize ResizeAvia
     $(window).resize()
+
+  toMainPage: =>
+    window.location.href = '/'
+
+  toAviaPage: =>
+    window.location.href = '/#avia'
 
   bindEvents: =>
     ev = []

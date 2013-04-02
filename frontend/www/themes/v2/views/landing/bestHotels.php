@@ -2,6 +2,7 @@
     //window.flightBestPrice = <?php //echo json_encode($flightCache); ?>;
     window.defaultCity = '<?php echo $currentCity->code; ?>';
     //window.apiEndPoint = 'http://api.oleg.voyanga';
+    window.window.eventsRaw = <?php echo json_encode($events); ?>;
 
     function setDepartureDate(strDate) {
         var checkIn = moment(strDate);
@@ -30,27 +31,32 @@
         app.activeModule('hotels');
         var panelSet = new HotelsPanel();
         //panelSet.departureCity(window.defaultCity);
-        panelSet.calendarActive(false);
+        //panelSet.calendarActive(false);
+        //panelSet.minimizedCalendar(false);
 
         //panelSet.rt(false);
         //panelSet.sp.calendarActivated(false);
         app.fakoPanel(panelSet);
+        app.bindEvents();
+
 
         setDepartureDate(moment(new Date()).add('days', 1).format('YYYY-MM-DD'));
         window.setTimeout(function () {
-            panelSet.calendarActive(true);
+            //panelSet.calendarActive(true);
 
         }, 1000);
 
 
         ko.applyBindings(app);
         ko.processAllDeferredBindingUpdates();
-        $(".mapsBigAll").show();
+        app.events.closeEventsPhoto();
+
+        /*$(".mapsBigAll").show();
         $(".mapsBigAll").animate({opacity: 1}, 700);
         var value = {lat: 52, lng: 10};
         waitElement(".mapsBigAll",function (element){
                 gMap = new google.maps.Map(element[0], {'mapTypeControl': false, 'panControl': false, 'zoomControlOptions':{position: google.maps.ControlPosition.LEFT_TOP, style: google.maps.ZoomControlStyle.SMALL}, 'streetViewControl': false, 'zoom': 3, 'mapTypeId': google.maps.MapTypeId.TERRAIN, 'center': new google.maps.LatLng(value.lat, value.lng)});
-        });
+        });*/
 
 
     };
@@ -63,17 +69,29 @@
 </script>
 <div class="wrapper" style="height: 700px">
 <div class="maps">
-    <div class="innerBlockMain" style="margin: 0px auto 0;">
+    <div class="innerBlockMain" style="margin: 0px auto 0;" data-bind="with: events">
         <div class="mapsBigAll" style="display: none"></div>
+        <div class="toursBigAll" data-bind="with: currentEvent()" style="opacity: 1;">
+            <div class="centerTours" style="width: 1390px;">
+                <div class="close" data-bind="click: $parent.closeEventsPhoto"></div>
+
+                <a href="/eventInfo/info/eventId/25" class="textTours" data-bind="attr:{href: eventPageUrl}">
+                    <span class="txt" data-bind="text: title()">Встречайте весну в Нью-Йорке, 9-15 апреля</span><br>
+					<span class="priceSelect">
+						<span class="price" data-bind="text: Utils.formatPrice( minimalPrice()() )">63 196</span> <span class="rur">o</span>
+					</span>
+                </a>
+                <div class="IMGmain" style="opacity: 1;"><img src="/resources/Event/25/pictureBig/big_new_york.jpg" style="top: -268px; left: 0px;"></div></div>
+        </div>
     </div>
 </div>
 <div class="panel-index" style="bottom: -30px;">
 
     <div class="board" data-bind="style: {height: fakoPanel().height}">
         <div class="newTitleHead">
-            <div class="leftPoint" data-bind="swapPanel: {to: fakoPanel().prevPanel}"><i data-bind='text: fakoPanel().prevPanelLabel'>Только отели</i><span></span></div>
+            <div class="leftPoint" data-bind="click: toAviaPage"><i data-bind='text: fakoPanel().prevPanelLabel'>Только отели</i><span></span></div>
             <h1 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h1>
-            <div class="rightPoint" data-bind="swapPanel: {to: fakoPanel().nextPanel}"><span></span><i data-bind='text: fakoPanel().nextPanelLabel'>Только авиабилеты</i></div>
+            <div class="rightPoint" data-bind="click: toMainPage"><span></span><i data-bind='text: fakoPanel().nextPanelLabel'>Только авиабилеты</i></div>
         </div>
 
     <div class="sub-head event" style="height: auto;width: auto;"
@@ -190,10 +208,30 @@
          style="top: -302px; overflow: hidden; height: 341px;">
     </div>
     <!-- END CALENDAR -->
+
+    <div class="slideTours small" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}">
+        <div class="center" data-bind="foreach: events" style="width: 1390px;">
+            <div class="toursTicketsMain active" data-bind="css: {active: active}, attr: {rel: image}" rel="/resources/Event/25/pictureBig/big_new_york.jpg" style="width: 171px;">
+                <div class="triangle" style="top: -16px;"><img src="/themes/v2/images/triangle.png"></div>
+                <div class="innerTours">
+                    <div class="imgTours" data-bind="click: $parent.setActive">
+                        <img data-bind="attr: {src: thumb}" src="/resources/Event/25/pictureSmall/small_new_york.jpg" style="margin-top: -8.5px;">
+                    </div>
+                    <div class="textTours">
+                        <a data-bind="attr:{href: eventPageUrl}" href="/eventInfo/info/eventId/25"><span data-bind="text: title">Встречайте весну в Нью-Йорке, 9-15 апреля</span></a>
+                        <div class="priceEvent"><a data-bind="attr:{href: eventPageUrl}" href="/eventInfo/info/eventId/25">от <span class="price" data-bind="text: Utils.formatPrice( minimalPrice()() )">63 196</span> <span class="rur">o</span></a></div>
+                    </div>
+                </div>
+                <div class="l"></div>
+                <div class="r"><a href="/eventInfo/info/eventId/25" class="lookEyes" data-bind="attr:{href: eventPageUrl}"></a></div>
+            </div>
+        </div>
+    </div>
+
     </div>
 </div>
 <?php foreach ($hotelsCaches as $cityId => $hotelsInfo): ?>
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => City::getCityByPk($cityId), 'hotelsInfo' => $hotelsInfo)); ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => City::getCityByPk($cityId), 'hotelsInfo' => $hotelsInfo,'hotelsUrl'=>true)); ?>
 <?php endforeach; ?>
 
 <!--<div class="sub-head event" style="height: auto;width: auto;" data-bind="css: {calSelectedPanelActive: !fakoPanel().calendarHidden()}">
