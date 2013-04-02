@@ -231,6 +231,7 @@ class Partner extends CActiveRecord
 
     public static function setPartnerByKey($forcePid = false)
     {
+        Yii::app()->user->setState('fromPartner', 0);
         $partner = false;
         if ($forcePid)
             $_REQUEST['pid'] = $forcePid;
