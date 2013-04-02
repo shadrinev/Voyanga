@@ -354,7 +354,7 @@ function checkStatuses(statuses, ids) {
     if (errors.length > 0) {
         errorText = errors;
         _rollbar.push({level: 'error', msg: "Booking failed", bookingIds: ids, errorText: errors});
-        new ErrorPopup('passportBookingError', [errorText], function() {window.location.href = window.redirectHash});
+        new ErrorPopup('passportBookingError', [errorText], function() {window.location.href = '/#' + window.redirectHash});
         return;
     }
 }
