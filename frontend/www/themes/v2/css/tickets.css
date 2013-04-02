@@ -1065,6 +1065,7 @@
     padding-right: 25px;
     margin-bottom: 0px;
     letter-spacing: normal;
+    cursor: pointer;
 }
 .description > .title > .stars {
 	margin-left: -6px;
