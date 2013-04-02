@@ -1079,7 +1079,8 @@ ToursResultSet = (function() {
     var idx;
     event.stopPropagation();
     idx = this.data.indexOf(item);
-    return this.data()[idx].selection(null);
+    this.data()[idx].selection(null);
+    return deletePopUpHide();
   };
 
   ToursResultSet.prototype.showOverview = function() {

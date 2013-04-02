@@ -690,7 +690,8 @@ class ToursResultSet
     event.stopPropagation()
     idx = @data.indexOf(item)
     @data()[idx].selection null
-
+    # FIXME
+    do deletePopUpHide
 
   showOverview: =>
     dummyPanel =
