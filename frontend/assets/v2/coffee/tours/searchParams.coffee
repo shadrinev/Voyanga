@@ -121,7 +121,7 @@ class TourSearchParams extends SearchParams
     i = i + 1
     oldSelection = false
     while i < data.length
-      if ((data[i] == 'eventId') || (data[i] == 'orderId'))
+      if ((data[i] == 'eventId') || (data[i] == 'orderId') || (data[i] == 'flightHash'))
         toSaveIn = data[i]
         oldSelection = true
         break

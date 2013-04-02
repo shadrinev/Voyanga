@@ -737,6 +737,23 @@ class AviaResultSet
               voyage.activeBackVoyage backVoyage
               return result
     return false
+
+  findAndSelectHash: (hash)=>
+    if @roundTrip
+      arr = hash.split('.')
+      hash = arr[0]
+      backHash = arr[1]
+    for result in @data
+      for voyage in result.voyages
+        if voyage.similarityHash()==hash
+          result.activeVoyage voyage
+          if !@roundTrip
+            return result
+          for backVoyage in voyage._backVoyages
+            if backVoyage.similarityHash() == backHash
+              voyage.activeBackVoyage backVoyage
+              return result
+    return false
           
 
   postInit: =>

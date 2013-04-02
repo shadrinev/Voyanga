@@ -44,13 +44,17 @@ class ToursAviaResultSet extends TourEntry
     super
     @api = new AviaAPI
     @template = 'avia-results'
-    @overviewTemplate = 'tours-overview-avia-no-selection'
+    @selection = ko.observable null
+    @overviewTemplate = ko.computed =>
+      if @selection() == null
+        'tours-overview-avia-no-selection'
+      else
+        'tours-overview-avia-ticket'
     @panel = new AviaPanel()
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
     @panel.original_template = @panel.template
     @results = ko.observable()
-    @selection = ko.observable null
     @observableSP = ko.observable null
     @newResults raw, sp
     @data = {results: @results}
@@ -101,6 +105,15 @@ class ToursAviaResultSet extends TourEntry
     @_selectResult(result)
     return result
 
+  findAndSelectHash: (hash)=>
+    if @noresults
+      return
+    result = @results().findAndSelectHash(hash)
+    if !result
+      return false
+    @_selectResult(result)
+    return result
+
   select: (res)=>
     if !res?
       return
@@ -114,7 +127,6 @@ class ToursAviaResultSet extends TourEntry
     @results().selected_key res.key
     res.parent.filtersConfig = res.parent.filters.getConfig()
     @results().selected_best res.best | false
-    @overviewTemplate = 'tours-overview-avia-ticket'
     @selection(res)
 
     
@@ -270,11 +282,15 @@ class ToursHotelsResultSet extends TourEntry
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
     @panel.original_template = @panel.template
-    @overviewTemplate = 'tours-overview-hotels-no-selection'
+    @selection = ko.observable null
+    @overviewTemplate = ko.computed =>
+      if @selection() == null
+        'tours-overview-hotels-no-selection'
+      else
+        'tours-overview-hotels-ticket'
     @template = 'hotels-results'
 
     @activeHotel = ko.observable 0
-    @selection = ko.observable null
     @results = ko.observable()
     @data = {results: @results}
     @observableSP = ko.observable()
@@ -389,7 +405,6 @@ class ToursHotelsResultSet extends TourEntry
     hotel = roomSet.parent
     hotel.parent = @results()
     @activeHotel  hotel.hotelId
-    @overviewTemplate = 'tours-overview-hotels-ticket'
     @selection {roomSet: roomSet, hotel: hotel}
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
     #Код для того чтобы выбранный результат попал в отображение -->
@@ -680,6 +695,12 @@ class ToursResultSet
     if item == @selection()
       @setActive @data()[0]
 
+  deselectItem: (item, event)=>
+    event.stopPropagation()
+    idx = @data.indexOf(item)
+    @data()[idx].selection null
+
+
   showOverview: =>
     dummyPanel =
       onlyTimeline: true
@@ -943,6 +964,9 @@ class TourTripResultSet
       if @hotelCounter()==0
         return
       Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+    @crossUrlHref = ko.observable('')
+    @simHashes = []
+    @roomsHash = ''
 
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
@@ -967,6 +991,18 @@ class TourTripResultSet
             @people += ', ' + Utils.wordAfterNum item.searchParams.chd, 'ребёнок', 'детей', 'детей'
           if (item.searchParams.inf > 0)
             @people += ', ' + Utils.wordAfterNum item.searchParams.inf, 'младенец', 'младенцев', 'младенцев'
+        if !@crossUrlHref()
+          @crossUrlHref('/#tours/search/'+ asp.dep()+'/'+(if asp.rt() then '1' else '0') + '/')
+        @roomsHash = item.searchParams.adt + ':' + item.searchParams.chd + ':' + item.searchParams.inf
+        rtDate = moment(moment(asp.date()))
+        rtDate.add('days', 7)
+        if asp.rt()
+          rtDate = moment(asp.rtDate())
+          @simHashes.push(aviaResult.similarityHash()+'.'+aviaResult.rtSimilarityHash())
+          voyanga_debug('ASP:',asp,asp.rt(),asp.date(),asp.rtDate())
+        else
+          @simHashes.push(aviaResult.similarityHash())
+        @crossUrlHref(@crossUrlHref()+asp.arr()+'/'+moment(asp.date()).format('D.M.YYYY')+'/'+rtDate.format('D.M.YYYY')+'/')
         aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'
         if (aviaResult.totalPeople != '1 человек')
           aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen
@@ -1020,7 +1056,8 @@ class TourTripResultSet
         @items.push(@lastHotel)
         @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
-
+    if @crossUrlHref()
+      @crossUrlHref(@crossUrlHref() + 'rooms/' + @roomsHash + '/flightHash/' + @simHashes.join('/') + '/' )
     if (@additional)
       @cities.push @additional
 
@@ -1078,6 +1115,8 @@ class TourTripResultSet
     $('.btn-allVariantion').on 'click', () ->
       window.location.href = '/#' + window.redirectHash;
       return false
+
+  crossUrl: =>
 
   trackBuyClick: =>
     # Отпавляем в гугол инфу о нажатии на кнопку перейти к оплате
@@ -1248,7 +1287,6 @@ class TourResultSet
           aviaResult.sort()
           aviaResult.priceHtml = ko.observable(Utils.formatPrice(aviaResult.price) + '<span class="rur">o</span>')
           aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity())
-          aviaResult.overviewTemplate = 'tours-event-avia-ticket'
           aviaResult.dateClass = ko.observable(if @roundTrip then 'blue-two' else 'blue-one')
           aviaResult.isAvia = ko.observable(item.isFlight)
           aviaResult.isHotel = ko.observable(item.isHotel)
@@ -1264,7 +1302,6 @@ class TourResultSet
           @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
           @lastHotel.priceHtml = ko.observable(Utils.formatPrice(@lastHotel.roomSets()[0].price) + '<span class="rur">o</span>')
           @lastHotel.dateClass = ko.observable('orange-two')
-          @lastHotel.overviewTemplate = 'tours-event-hotels-ticket'
           @lastHotel.isAvia = ko.observable(item.isFlight)
           @lastHotel.isHotel = ko.observable(item.isHotel)
           @lastHotel.startDate = @lastHotel.checkIn

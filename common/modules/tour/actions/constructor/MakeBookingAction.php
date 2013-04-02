@@ -25,6 +25,40 @@ class MakeBookingAction extends CAction
         $dataProvider = new TripDataProvider();
         $dataProvider->restoreOrderBookingFromDb($this->orderBooking->id);
         $this->tripItems = $dataProvider->getSortedCartItems();
+        $haveHotels = false;
+        $haveFlights = false;
+        $flightParams = array();
+        foreach($this->tripItems as $tripItem){
+            if ($tripItem instanceof HotelTripElement)
+            {
+
+                $haveHotels = true;
+
+            }
+            elseif ($tripItem instanceof FlightTripElement)
+            {
+                $haveFlights = true;
+                $flightParams['cityFrom'] = $tripItem->flightVoyage->getDepartureCity(0)->code;
+                $flightParams['cityTo'] = $tripItem->flightVoyage->getArrivalCity(0)->code;
+                $dateTime = new DateTime($tripItem->flightVoyage->getDepartureDate(0));
+                $dateTime->setTime (0,0,0);
+                $flightParams['checkIn'] = $dateTime->format('d.m.Y');
+                $flightParams['duration'] = 7;
+                $flightParams['rt'] = 0;
+                if($tripItem->flightVoyage->isRoundTrip()){
+                    $flightParams['rt'] = 1;
+
+                    $dateTimeBack = new DateTime($tripItem->flightVoyage->getDepartureDate(1));
+                    $dateTimeBack->setTime (0,0,0);
+                    $interval = $dateTime->diff($dateTimeBack);
+                    $flightParams['duration'] = $interval->format('%d');
+                }
+                $dateTime->modify("+{$flightParams['duration']} day");
+                $flightParams['checkOut'] = $dateTime->format('d.m.Y');
+            }
+        }
+        //print_r(array($flightParams,$haveHotels,$haveFlights,$dateTime));die();
+
 
         if ($this->areNotAllItemsLinked())
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
@@ -66,6 +100,8 @@ class MakeBookingAction extends CAction
             'orderId' => $orderBookingId,
             'icon' => $icon,
             'header' => $header,
+            'flightCross' => $haveFlights && !$haveHotels,
+            'flightParams' => $flightParams,
             'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
             'roomCounters' => (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false,
             'secretKey' => $secretKey

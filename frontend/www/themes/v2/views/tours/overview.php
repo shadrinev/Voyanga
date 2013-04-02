@@ -179,7 +179,7 @@ $theme = Yii::app()->theme->baseUrl;
                         <span class="costs" data-bind="html:priceHtml()"></span>
                     </td>
                     <td class="removeTD">
-                        <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].removeItem"
+                        <a href="#" class="btnDeleteTrip" data-bind="click: $parents[1].deselectItem"
                            onmouseover="deletePopUp(this)" onmouseout="deletePopUpHide()"></a>
                     </td>
                 </tr>

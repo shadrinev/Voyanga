@@ -14,7 +14,7 @@ return array(
         //! refunded duo to error in process not a user request
         array('id'=>'refundedError',            'transition'=>'error'),
         array('id'=>'bookingTimeLimitError',    'transition'=>'bookingTimeLimitError,error'),
-        array('id'=>'ticketing',                'transition'=>'done,ticketingRepeat'),
+        array('id'=>'ticketing',                'transition'=>'done,ticketingRepeat,paid'),
         array('id'=>'ticketingRepeat',          'transition'=>'ticketingRepeat,ticketingError,done'),
         array('id'=>'ticketingError',           'transition'=>'error,manualSuccess,ticketing'),
         array('id'=>'manualSuccess',            'transition'=>'done'),
