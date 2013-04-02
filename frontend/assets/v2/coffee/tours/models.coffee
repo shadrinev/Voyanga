@@ -1064,6 +1064,7 @@ class TourTripResultSet
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
     if @crossUrlHref()
       @crossUrlHref(@crossUrlHref() + 'rooms/' + @roomsHash + '/flightHash/' + @simHashes.join('/') + '/' )
+      $.cookie 'currentTourHash', @crossUrlHref()
     if (@additional)
       @cities.push @additional
 
