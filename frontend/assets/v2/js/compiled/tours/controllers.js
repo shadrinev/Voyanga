@@ -100,7 +100,7 @@ ToursController = (function() {
   };
 
   ToursController.prototype.handleResults = function(data) {
-    var hotel, item, items, postData, resultSet, stacked, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
+    var hotel, item, items, postData, res, resultSet, setAct, stacked, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
       _this = this;
     stacked = new ToursResultSet(data, this.searchParams);
     if (data.items) {
@@ -143,12 +143,20 @@ ToursController = (function() {
         });
       }
     }
+    setAct = false;
     if (this.searchParams.flightHash) {
       _ref2 = stacked.data();
       for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
         resultSet = _ref2[_k];
         if (resultSet.isAvia()) {
-          resultSet.findAndSelectHash(this.searchParams.flightHash);
+          res = resultSet.findAndSelectHash(this.searchParams.flightHash);
+          if (res) {
+            setAct = true;
+            continue;
+          }
+        }
+        if (setAct) {
+          stacked.setActive(resultSet);
         }
       }
     }
