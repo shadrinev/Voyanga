@@ -95,6 +95,11 @@ HotelsPanel = (function(_super) {
         return _this.showCalendar();
       }
     });
+    this.city.subscribe(function(newValue) {
+      if (_this.calendarActive()) {
+        return _this.showCalendar();
+      }
+    });
     this.calendarValue = ko.computed(function() {
       return {
         twoSelect: true,

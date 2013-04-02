@@ -36,6 +36,7 @@
 
         //panelSet.rt(false);
         //panelSet.sp.calendarActivated(false);
+        panelSet.sp.rooms()[0].adults(2)
         app.fakoPanel(panelSet);
         app.bindEvents();
 
