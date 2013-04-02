@@ -1095,6 +1095,12 @@ ToursResultSet = (function() {
     event.stopPropagation();
     idx = this.data.indexOf(item);
     this.data()[idx].selection(null);
+    if (this.data()[idx].results().selected_key) {
+      this.data()[idx].results().selected_key('nope');
+    }
+    if (this.data()[idx].activeHotel) {
+      this.data()[idx].activeHotel('nope');
+    }
     return deletePopUpHide();
   };
 
