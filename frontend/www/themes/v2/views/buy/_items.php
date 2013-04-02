@@ -19,11 +19,13 @@
             </div>
         </div>
         <!-- END -->
-        <div class="andOthers" style="display: none">
-                <span class="priceSale"></span>
-                Возможно, вам будет интересно добавить отель в Москве с комплексной скидкой до 10%
-                <a href="#" class="btn-addItems"><span class="l"></span>Добавить отель</a>
+        <?php if($flightCross): ?>
+        <div class="andOthers" style="display: block;">
+            <span class="priceSale"></span>
+            Возможно, вам будет интересно добавить отель в Москве с комплексной скидкой до 10%
+            <a href="#" class="btn-addItems" data-bind="attr:{href: itemsToBuy.crossUrlHref()}"><span class="l"></span>Добавить отель</a>
         </div>
+        <?php endif; ?>
     </div>
     <!--=== ===-->
 </div>

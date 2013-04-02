@@ -101,6 +101,15 @@ class ToursAviaResultSet extends TourEntry
     @_selectResult(result)
     return result
 
+  findAndSelectHash: (hash)=>
+    if @noresults
+      return
+    result = @results().findAndSelectHash(hash)
+    if !result
+      return false
+    @_selectResult(result)
+    return result
+
   select: (res)=>
     if !res?
       return
@@ -943,6 +952,9 @@ class TourTripResultSet
       if @hotelCounter()==0
         return
       Utils.wordAfterNum  @hotelCounter(), 'гостиница', 'гостиницы', 'гостиниц'
+    @crossUrlHref = ko.observable('')
+    @simHashes = []
+    @roomsHash = ''
 
     _.each @resultSet.items, (item) =>
       if (item.isFlight)
@@ -967,6 +979,18 @@ class TourTripResultSet
             @people += ', ' + Utils.wordAfterNum item.searchParams.chd, 'ребёнок', 'детей', 'детей'
           if (item.searchParams.inf > 0)
             @people += ', ' + Utils.wordAfterNum item.searchParams.inf, 'младенец', 'младенцев', 'младенцев'
+        if !@crossUrlHref()
+          @crossUrlHref('/#tours/search/'+ asp.dep()+'/'+(if asp.rt() then '1' else '0') + '/')
+        @roomsHash = item.searchParams.adt + ':' + item.searchParams.chd + ':' + item.searchParams.inf
+        rtDate = moment(moment(asp.date()))
+        rtDate.add('days', 7)
+        if asp.rt()
+          rtDate = moment(asp.rtDate())
+          @simHashes.push(aviaResult.similarityHash()+'.'+aviaResult.rtSimilarityHash())
+          voyanga_debug('ASP:',asp,asp.rt(),asp.date(),asp.rtDate())
+        else
+          @simHashes.push(aviaResult.similarityHash())
+        @crossUrlHref(@crossUrlHref()+asp.arr()+'/'+moment(asp.date()).format('D.M.YYYY')+'/'+rtDate.format('D.M.YYYY')+'/')
         aviaResult.totalPeopleGen = Utils.wordAfterNum item.searchParams.adt + item.searchParams.chd + item.searchParams.inf, 'человека', 'человек', 'человек'
         if (aviaResult.totalPeople != '1 человек')
           aviaResult.totalPeopleGenAlmost = 'за ' + aviaResult.totalPeopleGen
@@ -1020,7 +1044,8 @@ class TourTripResultSet
         @items.push(@lastHotel)
         @totalCostWithDiscount += @lastHotel.roomSets()[0].discountPrice
         @totalCostWithoutDiscount += @lastHotel.roomSets()[0].price
-
+    if @crossUrlHref()
+      @crossUrlHref(@crossUrlHref() + 'rooms/' + @roomsHash + '/flightHash/' + @simHashes.join('/') + '/' )
     if (@additional)
       @cities.push @additional
 
@@ -1078,6 +1103,8 @@ class TourTripResultSet
     $('.btn-allVariantion').on 'click', () ->
       window.location.href = '/#' + window.redirectHash;
       return false
+
+  crossUrl: =>
 
   trackBuyClick: =>
     # Отпавляем в гугол инфу о нажатии на кнопку перейти к оплате

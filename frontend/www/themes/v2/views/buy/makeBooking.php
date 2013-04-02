@@ -80,7 +80,7 @@
             </table>
         </div>
     </div>
-    <?php $this->renderPartial('_items', array('orderId'=>$orderId)); ?>
+    <?php $this->renderPartial('_items', array('orderId'=>$orderId,'flightCross'=>$flightCross,'flightParams'=>$flightParams)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
             <?php $this->renderPartial('_ambigousPassports', array(
@@ -101,6 +101,7 @@
         <?php endif;?>
         <?php $this->renderPartial('_buyer', array('model' => $bookingForm, 'hide'=>false)); ?>
     </form>
+
     <div class="paybuyEnd" id="loadPayFly">
         <div class="loadJet" style="display: none">
             <div class="pathBlock">

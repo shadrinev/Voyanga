@@ -192,4 +192,69 @@ EOD;
         }
 
     }
+
+    public function actionJoinHotels()
+    {
+        Yii::import('site.common.modules.hotel.models.*');
+        $HotelClient = new HotelBookClient();
+        $HotelClient->synchronize(true);
+
+        $city = City::getCityByCode('PAR');
+        $newFileName = 'allHotels'.$city->code.'.xmlb';
+        $newFileP = fopen($newFileName,'wb');
+        $cityHotels = $HotelClient->getHotels($city->hotelbookId);
+        $hotelIds = array();
+        foreach ($cityHotels as $hotel) {
+            $id = intval($hotel['id']);
+            $hotelIds[$id] = array('s'=>10485759,'l'=>10485759);
+        }
+        ksort($hotelIds);
+        $indexes = igbinary_serialize($hotelIds);
+        $indLength = strlen($indexes);
+        echo $indLength."\n";
+        $binLength = sprintf('%08x',$indLength);
+        fwrite($newFileP,$binLength);
+        fwrite($newFileP,$indexes);
+        foreach ($hotelIds as $id=>$hotelPos) {
+            $hotelDetail = $HotelClient->hotelDetail($id);
+            //$id = intval($hotel['id']);
+            /*$cacheFileName = 'HotelDetail' . $hotel['id'];
+            $cachePath = false;
+            if(!$cachePath){
+                $cachePath = Yii::getPathOfAlias('cacheStorage');
+            }
+            $cacheSubDir = md5($cacheFileName);
+            $cacheSubDir = substr($cacheSubDir, -3);
+            if (!is_dir($cachePath)) {
+                mkdir($cachePath);
+            }
+            if (!file_exists($cachePath . '/' . $cacheSubDir)) {
+                mkdir($cachePath . '/' . $cacheSubDir);
+            }
+
+            //$cacheFilePath = $cachePath . '/' . $cacheFileName . '.xml';
+            //if (file_exists($cachePath . '/' . $cacheFileName . '.xml') && !file_exists($cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml')) {
+            //    rename($cachePath . '/' . $cacheFileName . '.xml', $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml');
+            //}
+
+            $cacheFilePath = $cachePath . '/' . $cacheSubDir . '/' . $cacheFileName . '.xml';*/
+            if ($hotelDetail ) {
+                //echo "file don't old:".date('Y-m-d H:i:s',(filectime($cacheFilePath) + 3600*24*14)).(self::$updateProcess ? ' true' : ' false')." {$cacheFilePath}\n";
+                $sdata = igbinary_serialize($hotelDetail);
+                $hotelIds[$id]['s'] = ftell($newFileP);
+                $hotelIds[$id]['l'] = strlen($sdata);
+                //$cacheResult = file_get_contents($sdata);
+                fwrite($newFileP,$sdata);
+            }else{
+                $hotelIds[$id]['s'] = 0;
+                $hotelIds[$id]['l'] = 0;
+            }
+        }
+        fseek($newFileP,strlen($binLength));
+        $indexes = igbinary_serialize($hotelIds);
+        $indLength = strlen($indexes);
+        echo $indLength."\n";
+        fwrite($newFileP,$indexes);
+        fclose($newFileP);
+    }
 }

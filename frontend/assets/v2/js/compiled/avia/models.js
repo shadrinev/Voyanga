@@ -900,6 +900,8 @@ AviaResultSet = (function() {
 
     this.postInit = __bind(this.postInit, this);
 
+    this.findAndSelectHash = __bind(this.findAndSelectHash, this);
+
     this.findAndSelect = __bind(this.findAndSelect, this);
 
     this.onAfterSelect = __bind(this.onAfterSelect, this);
@@ -1032,6 +1034,38 @@ AviaResultSet = (function() {
             return result;
           }
           backHash = voyage.activeBackVoyage().similarityHash();
+          _ref2 = voyage._backVoyages;
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            backVoyage = _ref2[_k];
+            if (backVoyage.similarityHash() === backHash) {
+              voyage.activeBackVoyage(backVoyage);
+              return result;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  AviaResultSet.prototype.findAndSelectHash = function(hash) {
+    var arr, backHash, backVoyage, result, voyage, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    if (this.roundTrip) {
+      arr = hash.split('.');
+      hash = arr[0];
+      backHash = arr[1];
+    }
+    _ref = this.data;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      result = _ref[_i];
+      _ref1 = result.voyages;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        voyage = _ref1[_j];
+        if (voyage.similarityHash() === hash) {
+          result.activeVoyage(voyage);
+          if (!this.roundTrip) {
+            return result;
+          }
           _ref2 = voyage._backVoyages;
           for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
             backVoyage = _ref2[_k];
