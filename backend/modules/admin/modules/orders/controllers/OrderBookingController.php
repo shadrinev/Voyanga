@@ -35,7 +35,7 @@ class OrderBookingController extends Controller
         if(!$all) {
             $criteria['with'] = array('hotelBookers', 'flightBookers');
             $criteria['together'] = true;
-            $criteria['condition'] = "hotelBookers.status!='enterCredentials' and hotelBookers.status!='swHotelBooker/enterCredentials' and flightBookers.status!='enterCredentials' and flightBookers.status!='swFlightBooker/enterCredentials'";
+            $criteria['condition'] = "hotelBookers.status!='enterCredentials' or  flightBookers.status!='enterCredentials'";
             $navText = 'Показать все';
             $navLink = $this->createUrl('index', array('all'=>true));
         }
