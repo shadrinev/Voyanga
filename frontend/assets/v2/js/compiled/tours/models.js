@@ -134,16 +134,24 @@ ToursAviaResultSet = (function(_super) {
     this.GAKey = __bind(this.GAKey, this);
 
     this.newResults = __bind(this.newResults, this);
+
+    var _this = this;
     ToursAviaResultSet.__super__.constructor.apply(this, arguments);
     this.api = new AviaAPI;
     this.template = 'avia-results';
-    this.overviewTemplate = 'tours-overview-avia-no-selection';
+    this.selection = ko.observable(null);
+    this.overviewTemplate = ko.computed(function() {
+      if (_this.selection() === null) {
+        return 'tours-overview-avia-no-selection';
+      } else {
+        return 'tours-overview-avia-ticket';
+      }
+    });
     this.panel = new AviaPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
     this.panel.sp.fromObject(sp);
     this.panel.original_template = this.panel.template;
     this.results = ko.observable();
-    this.selection = ko.observable(null);
     this.observableSP = ko.observable(null);
     this.newResults(raw, sp);
     this.data = {
@@ -225,7 +233,6 @@ ToursAviaResultSet = (function(_super) {
     this.results().selected_key(res.key);
     res.parent.filtersConfig = res.parent.filters.getConfig();
     this.results().selected_best(res.best | false);
-    this.overviewTemplate = 'tours-overview-avia-ticket';
     return this.selection(res);
   };
 
@@ -485,16 +492,24 @@ ToursHotelsResultSet = (function(_super) {
     this.GAKey = __bind(this.GAKey, this);
 
     this.newResults = __bind(this.newResults, this);
+
+    var _this = this;
     ToursHotelsResultSet.__super__.constructor.apply(this, arguments);
     this.api = new HotelsAPI;
     this.panel = new HotelsPanel();
     this.panel.handlePanelSubmit = this.doNewSearch;
     this.panel.sp.fromObject(sp);
     this.panel.original_template = this.panel.template;
-    this.overviewTemplate = 'tours-overview-hotels-no-selection';
+    this.selection = ko.observable(null);
+    this.overviewTemplate = ko.computed(function() {
+      if (_this.selection() === null) {
+        return 'tours-overview-hotels-no-selection';
+      } else {
+        return 'tours-overview-hotels-ticket';
+      }
+    });
     this.template = 'hotels-results';
     this.activeHotel = ko.observable(0);
-    this.selection = ko.observable(null);
     this.results = ko.observable();
     this.data = {
       results: this.results
@@ -648,7 +663,6 @@ ToursHotelsResultSet = (function(_super) {
     hotel = roomSet.parent;
     hotel.parent = this.results();
     this.activeHotel(hotel.hotelId);
-    this.overviewTemplate = 'tours-overview-hotels-ticket';
     this.selection({
       roomSet: roomSet,
       hotel: hotel
@@ -850,6 +864,8 @@ ToursResultSet = (function() {
     this.createTourData = __bind(this.createTourData, this);
 
     this.showOverview = __bind(this.showOverview, this);
+
+    this.deselectItem = __bind(this.deselectItem, this);
 
     this.removeItem = __bind(this.removeItem, this);
 
@@ -1057,6 +1073,13 @@ ToursResultSet = (function() {
     if (item === this.selection()) {
       return this.setActive(this.data()[0]);
     }
+  };
+
+  ToursResultSet.prototype.deselectItem = function(item, event) {
+    var idx;
+    event.stopPropagation();
+    idx = this.data.indexOf(item);
+    return this.data()[idx].selection(null);
   };
 
   ToursResultSet.prototype.showOverview = function() {
@@ -1809,7 +1832,6 @@ TourResultSet = (function() {
           aviaResult.sort();
           aviaResult.priceHtml = ko.observable(Utils.formatPrice(aviaResult.price) + '<span class="rur">o</span>');
           aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity());
-          aviaResult.overviewTemplate = 'tours-event-avia-ticket';
           aviaResult.dateClass = ko.observable(_this.roundTrip ? 'blue-two' : 'blue-one');
           aviaResult.isAvia = ko.observable(item.isFlight);
           aviaResult.isHotel = ko.observable(item.isHotel);
@@ -1825,7 +1847,6 @@ TourResultSet = (function() {
           _this.lastHotel = new HotelResult(item, _this, item.duration, item, item.hotelDetails);
           _this.lastHotel.priceHtml = ko.observable(Utils.formatPrice(_this.lastHotel.roomSets()[0].price) + '<span class="rur">o</span>');
           _this.lastHotel.dateClass = ko.observable('orange-two');
-          _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
           _this.lastHotel.isAvia = ko.observable(item.isFlight);
           _this.lastHotel.isHotel = ko.observable(item.isHotel);
           _this.lastHotel.startDate = _this.lastHotel.checkIn;

@@ -44,13 +44,17 @@ class ToursAviaResultSet extends TourEntry
     super
     @api = new AviaAPI
     @template = 'avia-results'
-    @overviewTemplate = 'tours-overview-avia-no-selection'
+    @selection = ko.observable null
+    @overviewTemplate = ko.computed =>
+      if @selection() == null
+        'tours-overview-avia-no-selection'
+      else
+        'tours-overview-avia-ticket'
     @panel = new AviaPanel()
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
     @panel.original_template = @panel.template
     @results = ko.observable()
-    @selection = ko.observable null
     @observableSP = ko.observable null
     @newResults raw, sp
     @data = {results: @results}
@@ -114,7 +118,6 @@ class ToursAviaResultSet extends TourEntry
     @results().selected_key res.key
     res.parent.filtersConfig = res.parent.filters.getConfig()
     @results().selected_best res.best | false
-    @overviewTemplate = 'tours-overview-avia-ticket'
     @selection(res)
 
     
@@ -270,11 +273,15 @@ class ToursHotelsResultSet extends TourEntry
     @panel.handlePanelSubmit = @doNewSearch
     @panel.sp.fromObject sp
     @panel.original_template = @panel.template
-    @overviewTemplate = 'tours-overview-hotels-no-selection'
+    @selection = ko.observable null
+    @overviewTemplate = ko.computed =>
+      if @selection() == null
+        'tours-overview-hotels-no-selection'
+      else
+        'tours-overview-hotels-ticket'
     @template = 'hotels-results'
 
     @activeHotel = ko.observable 0
-    @selection = ko.observable null
     @results = ko.observable()
     @data = {results: @results}
     @observableSP = ko.observable()
@@ -389,7 +396,6 @@ class ToursHotelsResultSet extends TourEntry
     hotel = roomSet.parent
     hotel.parent = @results()
     @activeHotel  hotel.hotelId
-    @overviewTemplate = 'tours-overview-hotels-ticket'
     @selection {roomSet: roomSet, hotel: hotel}
     hotel.parent.filtersConfig = hotel.parent.filters.getConfig()
     #Код для того чтобы выбранный результат попал в отображение -->
@@ -679,6 +685,12 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
+
+  deselectItem: (item, event)=>
+    event.stopPropagation()
+    idx = @data.indexOf(item)
+    @data()[idx].selection null
+
 
   showOverview: =>
     dummyPanel =
@@ -1248,7 +1260,6 @@ class TourResultSet
           aviaResult.sort()
           aviaResult.priceHtml = ko.observable(Utils.formatPrice(aviaResult.price) + '<span class="rur">o</span>')
           aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity())
-          aviaResult.overviewTemplate = 'tours-event-avia-ticket'
           aviaResult.dateClass = ko.observable(if @roundTrip then 'blue-two' else 'blue-one')
           aviaResult.isAvia = ko.observable(item.isFlight)
           aviaResult.isHotel = ko.observable(item.isHotel)
@@ -1264,7 +1275,6 @@ class TourResultSet
           @lastHotel = new HotelResult item, @, item.duration, item, item.hotelDetails
           @lastHotel.priceHtml = ko.observable(Utils.formatPrice(@lastHotel.roomSets()[0].price) + '<span class="rur">o</span>')
           @lastHotel.dateClass = ko.observable('orange-two')
-          @lastHotel.overviewTemplate = 'tours-event-hotels-ticket'
           @lastHotel.isAvia = ko.observable(item.isFlight)
           @lastHotel.isHotel = ko.observable(item.isHotel)
           @lastHotel.startDate = @lastHotel.checkIn
