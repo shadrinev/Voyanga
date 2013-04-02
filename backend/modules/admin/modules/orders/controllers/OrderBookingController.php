@@ -248,6 +248,8 @@ class OrderBookingController extends Controller
             case 'swFlightBooker/paid':
                  return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));
             case 'swFlightBooker/ticketingError':
+            case 'swFlightBooker/ticketing':
+            case 'ticketing':
                  return array("Автовыписка(без письма)" => $this->createUrl('ticketFlight', array('bookingId'=>$booker->id)));
             default:
                 return array();
@@ -294,6 +296,7 @@ class OrderBookingController extends Controller
         $booking->setFlightBookerFromId($bookingId);
         $payments = Yii::app()->payments;
         $payments->notifyNemo($booking);
+        $booking->status('paid');
         $booking->status('ticketing');
         $this->redirect(Array('view', 'id'=>$booking->getCurrent()->orderBookingId));
     }
