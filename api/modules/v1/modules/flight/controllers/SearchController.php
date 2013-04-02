@@ -149,6 +149,7 @@ class SearchController extends ApiController
      */
     public function actionDefault(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
     {
+        Yii::app()->user->setState('directRequest', true);
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
         $results['flightVoyages'] = $this->doFlightSearch($flightSearchParams);
         $this->sendWithCorrectFormat($format, $results);
@@ -156,6 +157,7 @@ class SearchController extends ApiController
 
     public function actionWithParams(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
     {
+        Yii::app()->user->setState('directRequest', true);
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
         $results = array(
             'flights' => $this->doFlightSearch($flightSearchParams),
@@ -259,7 +261,6 @@ class SearchController extends ApiController
 
     public function actionPartner($from, $to, $date1, $adults, $children, $infants, $cabin, $partner, $password, $date2='')
     {
-        Yii::app()->user->setState('requestFromPartner', true);
         $this->checkCredentials($partner, $password);
         $destinations = array();
         $from = $this->normalizeIataCodeToCityCode($from);
