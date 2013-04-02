@@ -1539,7 +1539,6 @@ class HotelBookClient
         }
         $indexes = igbinary_serialize($hotelIds);
         $indLength = strlen($indexes);
-        echo $indLength."\n";
         $binLength = sprintf('%08x',$indLength);
         fwrite($newFileP,$binLength);
         fwrite($newFileP,$indexes);
@@ -1562,7 +1561,6 @@ class HotelBookClient
         $indLength = strlen($indexes);
         $binLength = sprintf('%08x',$indLength);
         fwrite($newFileP,$binLength);
-        echo $indLength."\n";
         fwrite($newFileP,$indexes);
         fclose($newFileP);
 
