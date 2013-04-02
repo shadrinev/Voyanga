@@ -70,6 +70,7 @@ class BuyController extends FrontendController
 
     public function actionCheckFlight()
     {
+        Yii::app()->user->getState('directRequest', false);
         $result = true;
         $tdp = new TripDataProvider();
         $el = $tdp->getSortedCartItemsOnePerGroup();

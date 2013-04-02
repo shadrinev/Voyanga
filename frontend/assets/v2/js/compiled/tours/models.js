@@ -1094,7 +1094,14 @@ ToursResultSet = (function() {
     var idx;
     event.stopPropagation();
     idx = this.data.indexOf(item);
-    return this.data()[idx].selection(null);
+    this.data()[idx].selection(null);
+    if (this.data()[idx].results().selected_key) {
+      this.data()[idx].results().selected_key('nope');
+    }
+    if (this.data()[idx].activeHotel) {
+      this.data()[idx].activeHotel('nope');
+    }
+    return deletePopUpHide();
   };
 
   ToursResultSet.prototype.showOverview = function() {
