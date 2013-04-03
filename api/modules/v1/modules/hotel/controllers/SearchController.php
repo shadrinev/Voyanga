@@ -24,19 +24,8 @@ class SearchController extends ApiController
     {
         $hotelSearchParams = new HotelSearchParams();
         $hotelSearchParams->checkIn = date('Y-m-d', strtotime($checkIn));
-        $possibleCities = CityManager::getCitiesWithHotels($city);
-        if (!empty($possibleCities))
-        {
-            $hotelSearchParams->city = City::getCityByPk($possibleCities[0]['id']);
-        }
-        else
-        {
-            $city = CityManager::getCities($city);
-            if (!empty($city))
-            {
-                $hotelSearchParams->city = City::getCityByPk($city[0]['id']);
-            }
-        }
+        $hotelSearchParams->city = City::getCityByCode($city);
+
         $hotelSearchParams->duration = $duration;
         foreach ($rooms as $i => $room)
         {
@@ -52,7 +41,7 @@ class SearchController extends ApiController
         }
         $cacheId = md5(serialize($hotelSearchParams).microtime().rand(1000,9999));
 
-        if (empty($possibleCities))
+        if (!$hotelSearchParams->city->hotelbookId)
         {
             $this->results = array('hotels'=>array(), 'hotelsDetails'=>array());
         }
