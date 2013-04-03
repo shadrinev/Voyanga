@@ -482,7 +482,7 @@ class GDSNemoAgency extends CComponent
      * @return FlightBookingResponse
      * @throws CException
      */
-    public function FlightBooking(FlightBookingParams $oFlightBookingParams)
+    public function FlightBooking(FlightBookingParams $oFlightBookingParams, FlightVoyage $flightVoyage)
     {
         if (!($oFlightBookingParams instanceof FlightBookingParams))
         {
@@ -666,7 +666,7 @@ class GDSNemoAgency extends CComponent
         }
         else
         {
-            FlightManager::excludeFlight($oFlightBookingParams->flightId); //букинг не удался - выкидываем рейс из выдачи
+            FlightManager::excludeFlight($flightVoyage); //букинг не удался - выкидываем рейс из выдачи
             $flightBookingResponse->status = 2;
             $flightBookingResponse->responseStatus = ResponseStatus::ERROR_CODE_EXTERNAL;
             $flightBookingResponse->addError('error', 'Status is:' . $status);

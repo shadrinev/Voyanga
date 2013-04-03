@@ -127,41 +127,4 @@ class SiteController extends FrontendController
         $this->render('agreement');
         Yii::app()->end();
     }
-
-    public function actionMemcache()
-    {
-        $memcache = new Memcache;
-        $memcache->connect('localhost', 11211) or die ("Could not connect to memcached server");
-        $list = array();
-        $allSlabs = $memcache->getExtendedStats('slabs');
-        $items = $memcache->getExtendedStats('items');
-        CVarDumper::dump($allSlabs);
-        CVarDumper::dump($items);
-        die();
-        foreach ($allSlabs as $server => $slabs)
-        {
-            foreach ($slabs AS $slabId => $slabMeta)
-            {
-                $cdump = $memcache->getExtendedStats('cachedump', (int)$slabId);
-                foreach ($cdump AS $keys => $arrVal)
-                {
-                    if ($arrVal)
-                    {
-                        foreach ($arrVal AS $k => $v)
-                        {
-                            $list[$k] = array(
-                                'key' => $k,
-                                //ключ
-                                'server' => $server,
-                                'slabId' => $slabId,
-                                'detail' => $v,
-                                'age' => $items[$server]['items'][$slabId]['age']
-                            );
-                        }
-                    }
-                }
-            }
-        }
-        CVarDumper::dump($list);
-    }
 }

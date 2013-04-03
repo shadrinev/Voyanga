@@ -117,7 +117,7 @@ class FlightBookerComponent extends CApplicationComponent
             $flightBookingParams->addPassenger($passenger);
         }
 
-        $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams);
+        $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams, $this->flightBooker->flightVoyage);
 
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
         GDSNemoAgency::$requestIds = array();
