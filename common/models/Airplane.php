@@ -49,7 +49,7 @@ class Airplane extends CActiveRecord
         $criteria->select = 'fullTitle, nIataCode';
         $criteria->index = 'nIataCode';
 
-        $tmp = AirCraft::model()->findAll($criteria);
+        $tmp = self::model()->findAll($criteria);
 
         foreach ($tmp as $ind => $info)
         {
