@@ -11,7 +11,7 @@ SpRoom = (function() {
 
     this.getHash = __bind(this.getHash, this);
 
-    this.adults = ko.observable(1).extend({
+    this.adults = ko.observable(2).extend({
       integerOnly: {
         min: 1,
         max: 4
