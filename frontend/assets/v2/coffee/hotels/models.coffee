@@ -487,10 +487,10 @@ class HotelResult
     $('.place-buy .tmblr li').removeClass('active')
     el.addClass('active')
     $('.tab').hide()
-    ;
     $('#hotels-popup-description').show()
     #$(".description .text").dotdotdot({watch: 'window'})
     $('#boxContent').css 'height', 'auto'
+    $('.photo-slide-hotel ul').photoSlider('reinit')
     SizeBox 'hotels-popup-body'
 
   initFullInfo: =>

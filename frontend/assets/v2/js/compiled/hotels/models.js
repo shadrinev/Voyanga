@@ -676,6 +676,7 @@ HotelResult = (function() {
     $('.tab').hide();
     $('#hotels-popup-description').show();
     $('#boxContent').css('height', 'auto');
+    $('.photo-slide-hotel ul').photoSlider('reinit');
     return SizeBox('hotels-popup-body');
   };
 
