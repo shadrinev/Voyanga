@@ -161,6 +161,6 @@ class FlightPart
 
     public function getAircraftName()
     {
-        return AirCraft::getFullTitleByNiataCode($this->aircraftCode);
+        return Airplane::getFullTitleByNiataCode($this->aircraftCode);
     }
 }
