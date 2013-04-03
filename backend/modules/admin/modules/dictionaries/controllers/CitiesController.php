@@ -56,6 +56,7 @@ class CitiesController extends ABaseAdminController
     {
         $this->morphy = Yii::app()->morphy;
         $data = array();
+        $code = false;
         if(isset($_REQUEST['code'])){
             $code = $_REQUEST['code'];
         }
@@ -63,23 +64,31 @@ class CitiesController extends ABaseAdminController
             $country = Country::getCountryByCode($_REQUEST['countryCode']);
         }
         $data['city'] = $_REQUEST['city'];
-        if($data['city']['code']){
+        if($code && ($data['city']['set'] != 'false')){
             try{
-                $city = City::getCityByCode($data['city']['code']);
+                $city = City::getCityByCode($code);
             }catch (Exception $e){
                 $city = false;
             }
         }
-        $ruNameChange = true;
+        $ruNameChange = false;
         $data['airport'] = $_REQUEST['airport'];
-        if($data['airport']['code']){
+        if($code && ($data['airport']['set'] != 'false')){
             try{
-                $airport = Airport::getAirportByCode($data['airport']['code']);
+                $airport = Airport::getAirportByCode($code);
             }catch (Exception $e){
                 $airport = false;
             }
             if($airport){
                 $data['airport']['id'] = $airport->id;
+                $data['airport']['code'] = $airport->code;
+                $data['airport']['icaoCode'] = $airport->icaoCode;
+                $data['airport']['latitude'] = $airport->latitude;
+                $data['airport']['longitude'] = $airport->longitude;
+                $data['airport']['localRu'] = $airport->localRu;
+                $data['airport']['localEn'] = $airport->localEn;
+                $data['airport']['cityCode'] = City::getCityByPk($airport->cityId)->code;
+                $data['airport']['site'] = $airport->site;
             }
         }
         if($code){
@@ -157,6 +166,7 @@ class CitiesController extends ABaseAdminController
                 $data['city']['latitude'] = $city->latitude;
                 $data['city']['longitude'] = $city->longitude;
                 $data['city']['countAirports'] = $city->countAirports;
+                $data['city']['stateCode'] = $city->stateCode;
                 $country = $city->country;
             }
             if($country){
