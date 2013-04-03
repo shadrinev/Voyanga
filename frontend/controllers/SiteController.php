@@ -137,6 +137,7 @@ class SiteController extends FrontendController
         $items = $memcache->getExtendedStats('items');
         CVarDumper::dump($allSlabs);
         CVarDumper::dump($items);
+        die();
         foreach ($allSlabs as $server => $slabs)
         {
             foreach ($slabs AS $slabId => $slabMeta)
