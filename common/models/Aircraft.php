@@ -12,21 +12,20 @@ class AirCraft extends CActiveRecord
 
     private static $aircrafts;
 
-    public static function model( $className = __CLASS__ )
+    public static function model($className = __CLASS__)
     {
-        return parent::model( $className );
+        return parent::model($className);
     }
 
-    
-	/**
+
+    /**
      * @return array relational rules.
      */
     public function relations()
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-        );
+        return array();
     }
 
     public function tableName()
@@ -37,12 +36,12 @@ class AirCraft extends CActiveRecord
     static public function getFullTitleByNiataCode($nIataCode)
     {
         if (self::$aircrafts == null)
-           self::loadAircrafts();
+            self::loadAircrafts();
         $code = strtolower($nIataCode);
         if (isset(self::$aircrafts[$code]))
-           return self::$aircrafts[$code];
+            return self::$aircrafts[$code];
         return '';
-}
+    }
 
     static private function loadAircrafts()
     {
@@ -55,6 +54,6 @@ class AirCraft extends CActiveRecord
         foreach ($tmp as $ind => $info)
         {
             self::$aircrafts[$ind] = $info->fullTitle;
-}
+        }
     }
 }
