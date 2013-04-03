@@ -63,7 +63,7 @@ return array(
             'serializer' => array('igbinary_serialize', 'igbinary_unserialize'),
             'cacheTableName' => 'tbl_cache',
             'connectionID' => 'db',
-            'GCProbability' => 1
+            'GCProbability' => 50
         ),
 
         //быстрый кэш доступный во всех приложениях по одному ключу
