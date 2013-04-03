@@ -16,7 +16,7 @@
 	        <span class="text" data-bind="html: ratingName">рейтинг<br>отеля</span>
 	    </div>
 	    <div class="descrRating">
-	    	<strong>4.5 из 5 баллов</strong>
+	    	<strong><span data-bind="text: rating">4.5</span> из 5 баллов</strong>
 	    	Рейтинг построен на основе анализа данных о качестве отеля и отзывах его посетителей.
 	    </div>
 	</div>
@@ -46,7 +46,7 @@
   <div class="descr" id="descr">
     <div class="left">
       <div class="right">
-        <div class="map-hotel">
+        <div class="map-hotel" data-bind="click: showMapInfo">
           <img src="" data-bind="attr:{src: smallMapUrl()}">
         </div>
         Отель расположен в <span data-bind="text: distanceToCenter">10</span> км от центра
@@ -124,7 +124,7 @@
                         	<span class="grey em">Цена за <span data-bind="text: parent.parent.wordNights"></span></span>
                         </div>
                         <div class="right">
-                        	<a class="pressButton" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="price" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
+                        	<a class="pressButton" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="price" data-bind="text: Utils.formatPrice(price)">14 200</span><span class="rur f21">o</span></a>
                         </div>
                     </td>
                 </tr>
@@ -174,7 +174,7 @@
                         	<span class="grey em">Цена за <span data-bind="text: parent.parent.wordNights"></span></span>
                         </div>
                         <div class="right">
-                        	<a class="pressButton" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="price" data-bind="text: price">14 200</span><span class="rur f21">o</span></a>
+                        	<a class="pressButton" href="#" data-bind="click:$parent.select, css: {selected: resultId == $parent.activeResultId()}"><span class="l"></span><span class="price" data-bind="text: Utils.formatPrice(price)">14 200</span><span class="rur f21">o</span></a>
                         </div>
                     </td>
                 </tr>
@@ -226,7 +226,7 @@
                       </div>
                       <!-- /ko -->
                   </td>
-                  <td class="button"><a class="pressButton" href="#" data-bind="click: combinationClick"><span class="l"></span><span class="text" data-bind="text: combinedButtonLabel()">Не выбраны номера</span><span class="price" data-bind="text: combinedPrice(),visible: combinedPrice()"></span><span class="rur f21" data-bind="visible: combinedPrice()">o</span></a></td>
+                  <td class="button"><a class="pressButton" href="#" data-bind="click: combinationClick"><span class="l"></span><span class="text" data-bind="text: combinedButtonLabel()">Не выбраны номера</span><span class="price" data-bind="text: Utils.formatPrice(combinedPrice()),visible: combinedPrice()"></span><span class="rur f21" data-bind="visible: combinedPrice()">o</span></a></td>
               </tr>
               </tbody>
           </table>
