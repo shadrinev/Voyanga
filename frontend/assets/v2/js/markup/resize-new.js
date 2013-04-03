@@ -729,6 +729,7 @@ function ResizeAviaClb() {
     startIE();
     ifIpadLoad();
     slideToursPanel();
+    resizeLandsHotels();
 }
 
 function ResizeFun() {
@@ -1778,5 +1779,32 @@ function slideToursPanel() {
                //CenterIMGResize();
             }
         });
+    }
+}
+
+
+
+function resizeLandsHotels() {
+    if ($('.wrapper.lands').length > 0 && $('.wrapper.lands').is(':visible')) {
+        var _blocksWrap = $('.wrapper.lands');
+        var _blocksWrapHeight, _blocksWrapHeightMaps;
+        console.log($(window).height() +' !!! HELP !!!');
+        if ($(window).height() < 667) {
+            _blocksWrapHeight = 500;
+            _blocksWrapHeightMaps = 500;
+        }
+        else if ($(window).height() > 666 && $(window).height() < 800 ) {
+            _blocksWrapHeight = $(window).height() - 196;
+            _blocksWrapHeightMaps = $(window).height() - 196;
+
+        }
+        else {
+            _blocksWrapHeight = $(window).height() - 249;
+            _blocksWrapHeightMaps = $(window).height() - 249;
+        }
+
+        _blocksWrap.css('height',  _blocksWrapHeight +'px');
+        _blocksWrap.find('.maps').find('.innerBlockMain').css('height', _blocksWrapHeightMaps +'px');
+        _blocksWrap.find('.panel-index').css('bottom', '-159px');
     }
 }
