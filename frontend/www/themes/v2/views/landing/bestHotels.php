@@ -68,7 +68,7 @@
     })
 
 </script>
-<div class="wrapper" style="height: 700px">
+<div class="wrapper lands" style="height: 700px">
 <div class="maps">
     <div class="innerBlockMain" style="margin: 0px auto 0;" data-bind="with: events">
         <div class="mapsBigAll" style="display: none"></div>
@@ -91,7 +91,7 @@
     <div class="board" data-bind="style: {height: fakoPanel().height}">
         <div class="newTitleHead">
             <div class="leftPoint" data-bind="click: toAviaPage"><i data-bind='text: fakoPanel().prevPanelLabel'>Только отели</i><span></span></div>
-            <h1 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h1>
+            <h2 class="title"><span data-bind="html: fakoPanel().mainLabel"></span></h2>
             <div class="rightPoint" data-bind="click: toMainPage"><span></span><i data-bind='text: fakoPanel().nextPanelLabel'>Только авиабилеты</i></div>
         </div>
 
@@ -201,6 +201,8 @@
         <!-- BTN MINIMIZE -->
 
     </div>
+        <div data-bind="click: toAviaPage" class="leftPageBtn"></div>
+        <div class="rightPageBtn" data-bind="click: toMainPage"></div>
     <!-- END PANEL -->
     </div>
     <!-- CALENDAR -->
@@ -209,25 +211,6 @@
          style="top: -302px; overflow: hidden; height: 341px;">
     </div>
     <!-- END CALENDAR -->
-
-    <div class="slideTours small" data-bind="template: {name: 'event-index', data: events, afterRender: mapRendered}">
-        <div class="center" data-bind="foreach: events" style="width: 1390px;">
-            <div class="toursTicketsMain active" data-bind="css: {active: active}, attr: {rel: image}" rel="/resources/Event/25/pictureBig/big_new_york.jpg" style="width: 171px;">
-                <div class="triangle" style="top: -16px;"><img src="/themes/v2/images/triangle.png"></div>
-                <div class="innerTours">
-                    <div class="imgTours" data-bind="click: $parent.setActive">
-                        <img data-bind="attr: {src: thumb}" src="/resources/Event/25/pictureSmall/small_new_york.jpg" style="margin-top: -8.5px;">
-                    </div>
-                    <div class="textTours">
-                        <a data-bind="attr:{href: eventPageUrl}" href="/eventInfo/info/eventId/25"><span data-bind="text: title">Встречайте весну в Нью-Йорке, 9-15 апреля</span></a>
-                        <div class="priceEvent"><a data-bind="attr:{href: eventPageUrl}" href="/eventInfo/info/eventId/25">от <span class="price" data-bind="text: Utils.formatPrice( minimalPrice()() )">63 196</span> <span class="rur">o</span></a></div>
-                    </div>
-                </div>
-                <div class="l"></div>
-                <div class="r"><a href="/eventInfo/info/eventId/25" class="lookEyes" data-bind="attr:{href: eventPageUrl}"></a></div>
-            </div>
-        </div>
-    </div>
 
     </div>
 </div>

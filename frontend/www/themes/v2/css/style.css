@@ -15,6 +15,15 @@
         /*width: 111%;*/
     /*}*/
 /*}*/
+.wrapper.lands {
+    box-shadow: 0 2px 5px rgba(13, 13, 14, 0.9);
+}
+.headBlockTwo .center-block h2 a {
+    text-decoration: underline;
+}
+.headBlockTwo .center-block h2 a:hover {
+    text-decoration: underline;
+}
 input:-moz-placeholder {
     color: #CCCCCC !important;
 }
@@ -1581,6 +1590,7 @@ input.hotel-input {
     margin-top: 15px;
     position: relative;
     width: 15%;
+    overflow: hidden;
 }
 .slideTours.small .toursTicketsMain {
 	height: 122px;
@@ -3112,6 +3122,7 @@ input.hotel-input {
     color: #1d222b;
     font-size: 24px;
     line-height: 22px;
+    margin-bottom: 2px;
 }
 .headBlockOne .center-block h2, .headBlockTwo .center-block h2 {
     font-size: 18px;

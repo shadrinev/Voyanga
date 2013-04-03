@@ -10,8 +10,6 @@
 class Aircraft extends CActiveRecord
 {
 
-    private static $aircrafts;
-
     public static function model( $className = __CLASS__ )
     {
         return parent::model( $className );
@@ -32,29 +30,5 @@ class Aircraft extends CActiveRecord
     public function tableName()
     {
         return 'aircraft';
-    }
-
-    static public function getFullTitleByNiataCode($nIataCode)
-    {
-        if (self::$aircrafts == null)
-           self::loadAircrafts();
-        $code = strtolower($nIataCode);
-        if (isset(self::$aircrafts[$code]))
-           return self::$aircrafts[$code];
-        return '';
-    }
-
-    static private function loadAircrafts()
-    {
-        $criteria = new CDbCriteria();
-        $criteria->select = 'fullTitle, nIataCode';
-        $criteria->index = 'nIataCode';
-
-        $tmp = Aircraft::model()->findAll($criteria);
-
-        foreach ($tmp as $ind => $info)
-        {
-            self::$aircrafts[$ind] = $info->fullTitle;
-        }
     }
 }
