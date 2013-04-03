@@ -57,6 +57,7 @@ $this->menu=array(
         CityManager.cityInfo.caseIns = ko.observable('');
         CityManager.cityInfo.casePre = ko.observable('');
         CityManager.cityInfo.code.subscribe(function (newValue){CityManager.subscribeFunc(CityManager.subscribeTypes.cityCode);});
+        CityManager.cityInfo.localRu.subscribe(function (newValue){CityManager.subscribeFunc(CityManager.subscribeTypes.cityNameRu);});
         CityManager.hotelbookIds = ko.observableArray();
         CityManager.airportInfo.set = ko.observable(true);
         CityManager.airportInfo.id = ko.observable('');
@@ -94,7 +95,7 @@ $this->menu=array(
         CityManager.saveReturn = ko.observable('');
     };
 
-    CityManager.subscribeTypes = {'cityCode':1,'airportCode':2};
+    CityManager.subscribeTypes = {'cityCode':1,'airportCode':2,'cityNameRu':3};
     CityManager.lastEventType = 0;
     CityManager.subscribeFunc = function(eventType){
         if(!CityManager.ajaxSending){
@@ -120,6 +121,10 @@ $this->menu=array(
                     return false;
                 }
                 CityManager.lastEventType = CityManager.subscribeTypes.airportCode;
+            }
+            if(eventType == CityManager.subscribeTypes.cityNameRu){
+                data.ruNameChange = '1';
+                CityManager.lastEventType = CityManager.subscribeTypes.cityNameRu;
             }
 
             CityManager.ajaxSending = true;

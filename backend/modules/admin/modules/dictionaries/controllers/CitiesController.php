@@ -64,18 +64,25 @@ class CitiesController extends ABaseAdminController
             $country = Country::getCountryByCode($_REQUEST['countryCode']);
         }
         $data['city'] = $_REQUEST['city'];
-        if($code && ($data['city']['set'] != 'false')){
+        $cd = $data['city']['code'] ? $data['city']['code'] : $code;
+        if($cd && ($data['city']['set'] != 'false')){
             try{
-                $city = City::getCityByCode($code);
+                $city = City::getCityByCode($cd);
             }catch (Exception $e){
                 $city = false;
             }
         }
         $ruNameChange = false;
+        if(isset($_REQUEST['ruNameChange']) && $_REQUEST['ruNameChange']){
+            $ruNameChange = true;
+        }
+
+
         $data['airport'] = $_REQUEST['airport'];
-        if($code && ($data['airport']['set'] != 'false')){
+        $cd = $data['airport']['code'] ? $data['airport']['code'] : $code;
+        if($cd && ($data['airport']['set'] != 'false')){
             try{
-                $airport = Airport::getAirportByCode($code);
+                $airport = Airport::getAirportByCode($cd);
             }catch (Exception $e){
                 $airport = false;
             }
@@ -147,73 +154,74 @@ class CitiesController extends ABaseAdminController
                     $data['airport']['longitude'] = $logitude;
                 }
             }
-            if($city){
-                if(!$ruNameChange){
-                    $data['city']['localRu'] = $city->localRu;
-                    $data['city']['caseNom'] = $city->caseNom;
-                    $data['city']['caseGen'] = $city->caseGen;
-                    $data['city']['caseDat'] = $city->caseDat;
-                    $data['city']['caseAcc'] = $city->caseAcc;
-                    $data['city']['caseIns'] = $city->caseIns;
-                    $data['city']['casePre'] = $city->casePre;
-                    $data['city']['metaphoneRu'] = $city->metaphoneRu;
-                }
-                $data['city']['id'] = $city->id;
-                $data['city']['localEn'] = $city->localEn;
-                $data['city']['countryCode'] = $city->country->code;
-                $data['city']['countryName'] = $city->country->localRu;
-                $data['city']['hotelbookId'] = $city->hotelbookId;
-                $data['city']['latitude'] = $city->latitude;
-                $data['city']['longitude'] = $city->longitude;
-                $data['city']['countAirports'] = $city->countAirports;
-                $data['city']['stateCode'] = $city->stateCode;
-                $country = $city->country;
+
+        }
+        if($city){
+            if(!$ruNameChange){
+                $data['city']['localRu'] = $city->localRu;
+                $data['city']['caseNom'] = $city->caseNom;
+                $data['city']['caseGen'] = $city->caseGen;
+                $data['city']['caseDat'] = $city->caseDat;
+                $data['city']['caseAcc'] = $city->caseAcc;
+                $data['city']['caseIns'] = $city->caseIns;
+                $data['city']['casePre'] = $city->casePre;
+                $data['city']['metaphoneRu'] = $city->metaphoneRu;
             }
-            if($country){
-                $data['city']['countryCode'] = $country->code;
-                $data['city']['countryName'] = $country->localRu;
-                if($data['city']['localRu']){
-                    Yii::import('site.common.modules.hotel.models.*');
-                    $hotelClient = new HotelBookClient();
-                    $hotelbookCities = $hotelClient->getCities($country->hotelbookId);
+            $data['city']['id'] = $city->id;
+            $data['city']['localEn'] = $city->localEn;
+            $data['city']['countryCode'] = $city->country->code;
+            $data['city']['countryName'] = $city->country->localRu;
+            $data['city']['hotelbookId'] = $city->hotelbookId;
+            $data['city']['latitude'] = $city->latitude;
+            $data['city']['longitude'] = $city->longitude;
+            $data['city']['countAirports'] = $city->countAirports;
+            $data['city']['stateCode'] = $city->stateCode;
+            $country = $city->country;
+        }
+        if($country){
+            $data['city']['countryCode'] = $country->code;
+            $data['city']['countryName'] = $country->localRu;
+            if($data['city']['localRu']){
+                Yii::import('site.common.modules.hotel.models.*');
+                $hotelClient = new HotelBookClient();
+                $hotelbookCities = $hotelClient->getCities($country->hotelbookId);
 
-                    $data['hotelbookIds'] = array();
-                    $localRu = $data['city']['localRu'];
-                    if(mb_strlen($localRu) > 3){
-                        $localRu = mb_substr($localRu,0,-2);
-                    }
-                    $localEn = $data['city']['localEn'];
-                    if(mb_strlen($localEn) > 3){
-                        $localEn = mb_substr($localEn,0,-2);
-                    }
-
-                    foreach($hotelbookCities as $cityInfo){
-                        $add = false;
-                        if( mb_stripos($cityInfo['nameRu'],$localRu,0, "UTF-8") !== false ){
-                            $data['hotelbookIds'][] = array('id'=>$cityInfo['id'],'name'=>$cityInfo['nameRu']."({$cityInfo['nameEn']})");
-                            $add = true;
-                        }
-                        if(!$add && (mb_stripos($cityInfo['nameEn'],$localEn,0, "UTF-8") !== false)){
-                            $data['hotelbookIds'][] = array('id'=>$cityInfo['id'],'name'=>$cityInfo['nameRu']."({$cityInfo['nameEn']})");
-                            $add = true;
-                        }
-                        if(!$add){
-                            //$data['hotelbookIds'][] = array('id'=>$cityInfo['id'],'name'=>$cityInfo['nameRu']."({$cityInfo['nameEn']})!".mb_stripos($cityInfo['nameRu'],$localRu,0, "UTF-8"));
-                        }
-                    }
+                $data['hotelbookIds'] = array();
+                $localRu = $data['city']['localRu'];
+                if(mb_strlen($localRu) > 3){
+                    $localRu = mb_substr($localRu,0,-2);
+                }
+                $localEn = $data['city']['localEn'];
+                if(mb_strlen($localEn) > 3){
+                    $localEn = mb_substr($localEn,0,-2);
                 }
 
+                foreach($hotelbookCities as $cityInfo){
+                    $add = false;
+                    if( mb_stripos($cityInfo['nameRu'],$localRu,0, "UTF-8") !== false ){
+                        $data['hotelbookIds'][] = array('id'=>$cityInfo['id'],'name'=>$cityInfo['nameRu']."({$cityInfo['nameEn']})");
+                        $add = true;
+                    }
+                    if(!$add && (mb_stripos($cityInfo['nameEn'],$localEn,0, "UTF-8") !== false)){
+                        $data['hotelbookIds'][] = array('id'=>$cityInfo['id'],'name'=>$cityInfo['nameRu']."({$cityInfo['nameEn']})");
+                        $add = true;
+                    }
+                    if(!$add){
+                        //$data['hotelbookIds'][] = array('id'=>$cityInfo['id'],'name'=>$cityInfo['nameRu']."({$cityInfo['nameEn']})!".mb_stripos($cityInfo['nameRu'],$localRu,0, "UTF-8"));
+                    }
+                }
             }
-            if($ruNameChange){
-                if($data['city']['localRu']){
-                    $data['city']['caseNom'] = $data['city']['localRu'];
-                    $data['city']['caseGen'] = $this->getCase($data['city']['localRu'],'РД');//$this->getCase($data['city']['localRu'],'РД');
-                    $data['city']['caseDat'] = $this->getCase($data['city']['localRu'],'ДТ');
-                    $data['city']['caseAcc'] = $this->getCase($data['city']['localRu'],'ВН');
-                    $data['city']['caseIns'] = $this->getCase($data['city']['localRu'],'ТВ');
-                    $data['city']['casePre'] = $this->getCase($data['city']['localRu'],'ПР');
-                    $data['city']['metaphoneRu'] = UtilsHelper::ruMetaphone($data['city']['localRu']);
-                }
+
+        }
+        if($ruNameChange){
+            if($data['city']['localRu']){
+                $data['city']['caseNom'] = $data['city']['localRu'];
+                $data['city']['caseGen'] = $this->getCase($data['city']['localRu'],'РД');//$this->getCase($data['city']['localRu'],'РД');
+                $data['city']['caseDat'] = $this->getCase($data['city']['localRu'],'ДТ');
+                $data['city']['caseAcc'] = $this->getCase($data['city']['localRu'],'ВН');
+                $data['city']['caseIns'] = $this->getCase($data['city']['localRu'],'ТВ');
+                $data['city']['casePre'] = $this->getCase($data['city']['localRu'],'ПР');
+                $data['city']['metaphoneRu'] = UtilsHelper::ruMetaphone($data['city']['localRu']);
             }
         }
 
