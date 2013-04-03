@@ -13,6 +13,7 @@ class LandingController extends FrontendController
 
     public function actionBestHotels()
     {
+
         $currentCity = Geoip::getCurrentCity();
         $this->breadLinks['Страны'] = '/land/';
         $this->breadLinks['Отели'] = '/land/hotels/';
@@ -59,11 +60,18 @@ class LandingController extends FrontendController
         while (($row = $dataReader->read()) !== false) {
             $flightCacheFromCurrent[] = (object)$row;
         }
+        $events = Event::getRandomEvents();
+        $eventsJsonObject = array();
+        foreach ($events as $event)
+            $eventsJsonObject[] = $event->getJsonObject();
+        $eventsJsonObject[0]['active'] = true;
+
 
         $this->layout = 'static';
         $this->assignTitle('landHotels');
         $this->render('bestHotels', array('hotelsCaches' => $hotelsCaches, 'currentCity' => $currentCity,
-            'flightCacheFromCurrent' => $flightCacheFromCurrent
+            'flightCacheFromCurrent' => $flightCacheFromCurrent,
+            'events' => $eventsJsonObject
         ));
     }
 
@@ -210,9 +218,10 @@ class LandingController extends FrontendController
 
 
         $hc = HotelDb::model()->find($criteria);
-        HotelBookClient::$updateProcess = true;
-        HotelBookClient::$downCountCacheFill = 2;
+
         if ($update === 'yes') {
+            HotelBookClient::$updateProcess = true;
+            HotelBookClient::$downCountCacheFill = 2;
             $cachePath = Yii::getPathOfAlias('cacheStorage');
             $cacheSubDir = md5('HotelDetail' . $hotelId);
             $cacheSubDir = substr($cacheSubDir, -3);
@@ -247,7 +256,7 @@ class LandingController extends FrontendController
             }
             $country = $city->country;
             $this->breadLinks[$country->localRu] = '/land/hotels/'.$country->code.'/';
-            $this->breadLinks[$city->caseNom] = '/land/hotels/'.$country->code.'/'.$city->casePre;
+            $this->breadLinks[$city->caseNom] = '/land/hotels/'.$country->code.'/'.$city->code;
         }
         $serviceGroupIcons = array('Сервис' => 'service', 'Спорт и отдых' => 'sport', 'Туристам' => 'turist', 'Интернет' => 'internet', 'Развлечения и досуг' => 'dosug', 'Парковка' => 'parkovka', 'Дополнительно' => 'dop', 'В отеле' => 'in-hotel');
         $serviceList = array();

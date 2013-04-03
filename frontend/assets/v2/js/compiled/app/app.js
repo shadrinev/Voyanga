@@ -28,6 +28,10 @@ Application = (function(_super) {
 
     this.bindEvents = __bind(this.bindEvents, this);
 
+    this.toAviaPage = __bind(this.toAviaPage, this);
+
+    this.toMainPage = __bind(this.toMainPage, this);
+
     this.runWithModule = __bind(this.runWithModule, this);
 
     this.render = __bind(this.render, this);
@@ -139,10 +143,14 @@ Application = (function(_super) {
     this.fakoPanel.subscribe(function(newPanel) {
       if (newPanel.panels) {
         return _this.activeSearchPanel(_.last(newPanel.panels()));
+      } else {
+        return _this.activeSearchPanel(newPanel);
       }
     });
     if (this.fakoPanel().panels) {
       return this.activeSearchPanel(_.last(this.fakoPanel().panels()));
+    } else {
+      return this.activeSearchPanel(this.fakoPanel());
     }
   };
 
@@ -243,6 +251,14 @@ Application = (function(_super) {
     $(window).unbind('resize');
     $(window).resize(ResizeAvia);
     return $(window).resize();
+  };
+
+  Application.prototype.toMainPage = function() {
+    return window.location.href = '/';
+  };
+
+  Application.prototype.toAviaPage = function() {
+    return window.location.href = '/#avia';
   };
 
   Application.prototype.bindEvents = function() {

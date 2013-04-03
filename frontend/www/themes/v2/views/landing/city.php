@@ -288,7 +288,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 <!-- END CALENDAR -->
 
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo,'hotelsUrl'=>true)); ?>
 <div class="headBlockTwo" style="margin-bottom: 60px">
     <div class="center-block textSeo">
         <?php if ($fromCity): ?>

@@ -95,6 +95,11 @@ HotelsPanel = (function(_super) {
         return _this.showCalendar();
       }
     });
+    this.city.subscribe(function(newValue) {
+      if (_this.calendarActive()) {
+        return _this.showCalendar();
+      }
+    });
     this.calendarValue = ko.computed(function() {
       return {
         twoSelect: true,
@@ -102,7 +107,7 @@ HotelsPanel = (function(_super) {
         from: _this.checkIn(),
         to: _this.checkOut(),
         activeSearchPanel: _this,
-        valuesDescriptions: ['Заезд в отель<div class="breakWord">в ' + _this.cityReadablePre() + '</div>', 'Выезд из отеля<div class="breakWord">в ' + _this.cityReadablePre() + '</div>'],
+        valuesDescriptions: ['Заезд в отель' + (_this.cityReadablePre() ? '<div class="breakWord">в ' + _this.cityReadablePre() + '</div>' : ''), 'Выезд из отеля' + (_this.cityReadablePre() ? '<div class="breakWord">в ' + _this.cityReadablePre() + '</div>' : '')],
         intervalDescription: '0',
         selectionIndex: _this.selectionIndex
       };

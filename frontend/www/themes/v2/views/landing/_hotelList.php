@@ -31,7 +31,7 @@
                     </div>
                     <div class="how-cost">
                         от <span class="cost"><a
-                        href="<?php echo '/land/hotel/' . $hotInfo->hotelId;?>"><?php echo $hotInfo->price;?></a></span>
+                        href="<?php echo '/land/hotel/' . $hotInfo->hotelId;?>"><?php echo UtilsHelper::formatPrice($hotInfo->price);?></a></span>
                         <span class="rur">o</span> / ночь
                     </div>
                 </div>

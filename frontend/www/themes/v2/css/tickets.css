@@ -3,7 +3,7 @@
 	background: none repeat scroll 0 0 #F4F7F9;
     color: #1D222B;
     position: relative;
-    padding: 0; margin-bottom: 21px;
+    padding: 0; margin-bottom: 14px;
 
     padding-bottom: 2px;
 }
@@ -1065,6 +1065,7 @@
     padding-right: 25px;
     margin-bottom: 0px;
     letter-spacing: normal;
+    cursor: pointer;
 }
 .description > .title > .stars {
 	margin-left: -6px;

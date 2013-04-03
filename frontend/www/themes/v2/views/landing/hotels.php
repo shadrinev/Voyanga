@@ -185,7 +185,7 @@
 
 
 <!-- END CENTER BLOCK -->
-<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo)); ?>
+<?php echo $this->renderPartial('//landing/_hotelList', array('city' => $city, 'hotelsInfo' => $hotelsInfo,'hotelsUrl'=>(!$citySet))); ?>
 <?php echo $this->renderPartial('//landing/_bestFlights', array('currentCity' => $currentCity, 'flightCacheFromCurrent' => $flightCacheFromCurrent)); ?>
 <?php echo $this->renderPartial('//landing/_citiesList', array('cities' => $countryCities,'isHotels'=>true,'title'=>'Города в '.$countryMorph['caseGen'])); ?>
 <?php if ($citySet && ($city->countAirports > 0)): ?>
