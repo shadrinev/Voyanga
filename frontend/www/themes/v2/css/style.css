@@ -1256,7 +1256,7 @@ input.hotel-input {
 }
 .allTrip .block .headTitle {
     color: #252628;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     width: 100%;
 }
 .allTrip .block .headTitle td.icoTD {
@@ -2979,7 +2979,7 @@ input.hotel-input {
     -moz-border-radius   : 0px 0px 8px 8px;
     border-radius: 0px 0px 8px 8px;
 }
-.projectPopUp h3, .projectPopUp h1 {
+.projectPopUp h2, .projectPopUp h1 {
 	font-size: 24px;
 	line-height: 27px;
     text-shadow: none;
@@ -3095,7 +3095,8 @@ input.hotel-input {
     min-width: 1000px;
     margin: 0 auto;
     position: relative;
-    top: 10px;
+    top: 20px;
+    z-index: 5;
 }
 .center-block .breadcrumbs a{
     color: #1c81bb;

@@ -1294,6 +1294,7 @@ class TourResultSet
           aviaResult.sort()
           aviaResult.priceHtml = ko.observable(Utils.formatPrice(aviaResult.price) + '<span class="rur">o</span>')
           aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity())
+          aviaResult.overviewTemplate = 'tours-event-avia-ticket' 
           aviaResult.dateClass = ko.observable(if @roundTrip then 'blue-two' else 'blue-one')
           aviaResult.isAvia = ko.observable(item.isFlight)
           aviaResult.isHotel = ko.observable(item.isHotel)
@@ -1314,6 +1315,7 @@ class TourResultSet
           @lastHotel.startDate = @lastHotel.checkIn
           @lastHotel.serachParams = item.searchParams
           @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
+          @lastHotel.overviewTemplate = 'tours-event-hotels-ticket' 
           @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut) + '</div>')
           @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()
           @items.push(@lastHotel)

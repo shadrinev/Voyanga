@@ -1879,6 +1879,7 @@ TourResultSet = (function() {
           aviaResult.sort();
           aviaResult.priceHtml = ko.observable(Utils.formatPrice(aviaResult.price) + '<span class="rur">o</span>');
           aviaResult.overviewText = ko.observable("Перелет " + aviaResult.departureCity() + ' &rarr; ' + aviaResult.arrivalCity());
+          aviaResult.overviewTemplate = 'tours-event-avia-ticket';
           aviaResult.dateClass = ko.observable(_this.roundTrip ? 'blue-two' : 'blue-one');
           aviaResult.isAvia = ko.observable(item.isFlight);
           aviaResult.isHotel = ko.observable(item.isHotel);
@@ -1899,6 +1900,7 @@ TourResultSet = (function() {
           _this.lastHotel.startDate = _this.lastHotel.checkIn;
           _this.lastHotel.serachParams = item.searchParams;
           _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
+          _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
           _this.lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkOut) + '</div>');
           _this.activePanel().selectedParams.ticketParams.push(_this.lastHotel.getParams());
           _this.items.push(_this.lastHotel);
