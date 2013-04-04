@@ -18,9 +18,8 @@ class ToursController
     ResizeAvia()
 
   searchAction: (args...)=>
-    args[0] = exTrim args[0], '/'
-    args = args[0].split('/')
-    @searchParams.fromList(args)
+#    args[0] = exTrim args[0], '/'
+    @searchParams.fromString args[0]
     voyanga_debug('routing urlChanged:',@searchParams.urlChanged(),@searchParams.hotelChanged(),@searchParams.hotelId())
     # Searcheng
     sp = @searchParams

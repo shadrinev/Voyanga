@@ -31,15 +31,14 @@ class SpRoom
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
 
-  fromList: (item) ->
-    parts = item.split(':')
-    @adults parts[0]
-    @children parts[1]
-    @infants parts[2]
+  fromPEGObject: (item) ->
+    @adults item.adults
+    @children item.children
+    @infants item.infants
     # FIXME: FIXME FIXME
     if @children() > 0
       for i in [0..(@children()-1)]
-        @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:{min: 0, max: 12}}}
+        @ages.push {age: ko.observable(item.ages[i]).extend {integerOnly:{min: 0, max: 12}}}
 
   fromObject: (item) ->
     @adults item.adt

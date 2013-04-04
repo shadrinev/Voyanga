@@ -100,50 +100,35 @@ class TourSearchParams extends SearchParams
     $.cookie 'currentTourHash', hash
     return hash
 
-  fromList: (data)->
+  fromString: (data)->
+    data = PEGHashParser.parse(data,'tour')
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
-    @startCity data[0]
-    @returnBack data[1]
-    # FIXME REWRITE ME
-    doingrooms = false
-    @destinations([])
-    @rooms([])
-    for i in [2..data.length] by 3
-      if data[i] == 'rooms'
-        break
+    @startCity data.start.from
+    @returnBack data.start.return
+    @destinations []
+    @rooms []
+    for dest in data.destinations
       destination = new DestinationSearchParams()
-      destination.city(data[i])
-      destination.dateFrom(moment(data[i+1], 'D.M.YYYY').toDate())
-      destination.dateTo(moment(data[i+2], 'D.M.YYYY').toDate())
+      destination.city(dest.to)
+      # Should we clone it
+      destination.dateFrom(dest.dateFrom)
+      destination.dateTo(dest.dateTo)
       @destinations.push destination
 
-    i = i + 1
-    oldSelection = false
-    while i < data.length
-      if ((data[i] == 'eventId') || (data[i] == 'orderId') || (data[i] == 'flightHash'))
-        toSaveIn = data[i]
-        oldSelection = true
-        break
-      if ((data[i] == 'hotelId'))
-        break
+    for room in data.rooms
       room = new SpRoom(@)
-      room.fromList(data[i])
+      room.fromPEGObject(room)
       @rooms.push room
-      i++
-    if oldSelection
-      i++;
-      @[toSaveIn] = data[i]
+
+    wantedKeys = {eventId:1, orderId:1, flightHash:1}
     @hotelId(false)
-    i = 0
-    while i < data.length
-      if ((data[i] == 'hotelId'))
-        @hotelId(0)
-      else
-        if @hotelId() == 0
-          @hotelId(data[i])
-          break
-      i++
+    for pair in data.extra
+      if wantedKeys[pair.key]
+        @[pair.key] = pair.value
+      if pair.key == 'hotelId'
+        @hotelId pair.value
+
     if beforeUrl == @url()
       @urlChanged(false)
       if hotelIdBefore == @hotelId()

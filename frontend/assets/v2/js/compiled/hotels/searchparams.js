@@ -68,17 +68,16 @@ SpRoom = (function() {
     });
   }
 
-  SpRoom.prototype.fromList = function(item) {
-    var i, parts, _i, _ref, _results;
-    parts = item.split(':');
-    this.adults(parts[0]);
-    this.children(parts[1]);
-    this.infants(parts[2]);
+  SpRoom.prototype.fromPEGObject = function(item) {
+    var i, _i, _ref, _results;
+    this.adults(item.adults);
+    this.children(item.children);
+    this.infants(item.infants);
     if (this.children() > 0) {
       _results = [];
       for (i = _i = 0, _ref = this.children() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         _results.push(this.ages.push({
-          age: ko.observable(parts[3 + i]).extend({
+          age: ko.observable(item.ages[i]).extend({
             integerOnly: {
               min: 0,
               max: 12

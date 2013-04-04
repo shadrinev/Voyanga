@@ -60,6 +60,7 @@
             'chosen/chosen.jquery.min.js',
             'jquery.cookie.js',
             'mdetect.js',
+            'peg-0.7.0.min.js'
         ),
         'depends' => array('jquery')
     ),
@@ -85,6 +86,7 @@
             'ko.bindings.gmap.js',
 
 
+            'hashparser.js',
             'GAWrapper.js',
             'travellers.js',
             'searchParams.js',
