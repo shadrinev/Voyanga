@@ -146,7 +146,7 @@
 
             <div class="textBlock telefon">
                 <div class="floatLeft">Служба поддержки<br>10:00 - 21:00</div>
-                <div class="floatRight">+7 (499) 553-09-33</div>
+                <div class="floatRight">8 800 333-45-06</div>
             </div>
             <div class="textBlock hEmail">
                 <div class="floatLeft">
