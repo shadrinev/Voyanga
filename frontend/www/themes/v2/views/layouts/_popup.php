@@ -145,7 +145,7 @@
             <h2>Контактная информация</h2>
 
             <div class="textBlock telefon">
-                <div class="floatLeft">Служба поддержки<br>10:00 - 21:00</div>
+                <div class="floatLeft">Служба поддержки<br>10:00 - 22:00</div>
                 <div class="floatRight">8 800 333-45-06</div>
             </div>
             <div class="textBlock hEmail">
