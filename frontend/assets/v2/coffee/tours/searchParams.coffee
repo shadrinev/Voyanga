@@ -26,6 +26,7 @@ class TourSearchParams extends SearchParams
     @destinations = ko.observableArray []
     # FIXME copy paste from hotel search params
     @rooms = ko.observableArray [new SpRoom(@)]
+    @rooms()[0].adults(1)
     @hotelId = ko.observable(false)
     @urlChanged = ko.observable(false)
     @hotelChanged = ko.observable(false)

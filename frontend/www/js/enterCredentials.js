@@ -9,29 +9,6 @@ $(function () {
     window.app.register('avia', avia);
     window.toursOverviewActive = true;
 
-    if (window.fromPartner == 1) {
-        window.VisualLoaderInstance.show();
-        window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета', 10);
-        $.ajax({
-            url: '/buy/checkFlight',
-            type: 'get',
-            dataType: 'json'
-        })
-            .done(function (response) {
-                window.VisualLoaderInstance.renew(100);
-                if (!response.result) {
-                    window.location.href = '/#' + window.redirectHash;
-                }
-                else {
-                    _.delay(function () {
-                        window.VisualLoaderInstance.hide();
-                    }, 100);
-                }
-            })
-            .error(function () {
-                window.VisualLoaderInstance.hide();
-            })
-    }
     $('.genderField').each(function () {
         var $this = $(this),
             value = $this.val(),
@@ -148,6 +125,33 @@ $(function () {
         });
     });
 });
+
+function checkFlight()
+{
+    if (window.fromPartner == 1) {
+        window.VisualLoaderInstance.show();
+        window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета', 10);
+        $.ajax({
+            url: '/buy/checkFlight',
+            type: 'get',
+            dataType: 'json'
+        })
+            .done(function (response) {
+                window.VisualLoaderInstance.renew(100);
+                if (!response.result) {
+                    window.location.href = '/#' + window.redirectHash;
+                }
+                else {
+                    _.delay(function () {
+                        window.VisualLoaderInstance.hide();
+                    }, 100);
+                }
+            })
+            .error(function () {
+                window.VisualLoaderInstance.hide();
+            })
+    }
+}
 
 function analyzeValidationResult(response) {
     if (response.status == 'success')
@@ -372,6 +376,7 @@ initCredentialsPage = function () {
             currentModule = 'hotels';
             break;
     }
+    checkFlight();
     window.app.bindItemsToBuy();
     ko.applyBindings(window.app);
     ko.processAllDeferredBindingUpdates();

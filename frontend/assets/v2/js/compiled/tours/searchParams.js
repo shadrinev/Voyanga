@@ -53,6 +53,7 @@ TourSearchParams = (function(_super) {
     this.returnBack = ko.observable(1);
     this.destinations = ko.observableArray([]);
     this.rooms = ko.observableArray([new SpRoom(this)]);
+    this.rooms()[0].adults(1);
     this.hotelId = ko.observable(false);
     this.urlChanged = ko.observable(false);
     this.hotelChanged = ko.observable(false);

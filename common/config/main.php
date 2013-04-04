@@ -56,14 +56,10 @@ return array(
         ),
 
         'pCache' => array(
-            'autoCreateCacheTable' => false,
-            'class' => 'CDbCache',
+            'class' => 'common.extensions.redis.CRedisCache',
             'keyPrefix' => 'voyanga-',
             'hashKey' => false,
             'serializer' => array('igbinary_serialize', 'igbinary_unserialize'),
-            'cacheTableName' => 'tbl_cache',
-            'connectionID' => 'db',
-            'GCProbability' => 1
         ),
 
         //быстрый кэш доступный во всех приложениях по одному ключу

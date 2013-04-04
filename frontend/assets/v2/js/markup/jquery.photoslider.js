@@ -22,12 +22,13 @@
             self.rightNavi.hide();
             self.obj.after(self.rightNavi);
             self.obj.after(self.leftNavi);
-            self.leftNavi.click(function(){self.leftClick();})
-            self.rightNavi.click(function(){self.rightClick();})
+            self.leftNavi.click(function(){self.leftClick();});
+            self.rightNavi.click(function(){self.rightClick();});
+            self.needSetOnresize = true;
 
             console.log('initing photoslider!!!!');
-            console.log(_this);
-            console.log(self);
+            //console.log(_this);
+            //console.log(self);
             _this.find('img').each(function(ind,el){
                 //console.log(el,ind);
                 self.unloadedImages++;
@@ -72,7 +73,10 @@
             self.transitionProcess = false;
             self.visibleWidth = self.obj.parent().width();
             self.testLimits();
-            $(window).resize(function(){self.onresize()});
+            if(self.needSetOnresize){
+                $(window).resize(function(){self.onresize()});
+                self.needSetOnresize = false;
+            }
 
             console.log(self);
         },
@@ -91,6 +95,9 @@
         },
         rightClick: function(){
             var self = this;
+            if(!self.fullWidth){
+                self.allImagesLoaded();
+            }
 
             if( !self.transitionProcess && ((self.fullWidth - self.leftPosition) > self.visibleWidth) && (self.indexPosition < self.totalImages) ){
                 self.transitionProcess = true;
@@ -121,7 +128,9 @@
     }
     $.fn.photoSlider = function (action,options) {
         if(typeof action == 'string'){
-
+            if(action == 'reinit'){
+                $.photoSlider.allImagesLoaded();
+            }
         }else{
             options = action;
             var defaultOptions = {kg:'am'};
