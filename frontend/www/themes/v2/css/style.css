@@ -2245,6 +2245,10 @@ input.hotel-input {
 .allTicketsDIV .aviaTickets .city {
     color: #1D222B;
     font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 215px;
 }
 .allTicketsDIV .aviaTickets .city .airport {
     color: #879094;
@@ -2455,7 +2459,7 @@ input.hotel-input {
     letter-spacing: -0.05em;
     line-height: 26px;
     margin-bottom: 15px;
-    margin-top: 15px;
+    margin-top: 25px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 .paybuyContent h2 .ico-fly {
@@ -3118,11 +3122,14 @@ input.hotel-input {
     width: 1000px;
     color: #1d222b;
 }
+.headBlockOne .center-block {
+    margin-top: -5px;
+}
 .headBlockOne h1 {
     color: #1d222b;
     font-size: 24px;
-    line-height: 22px;
-    margin-bottom: 2px;
+    line-height: 20px;
+    margin-bottom: 12px;
 }
 .headBlockOne .center-block h2, .headBlockTwo .center-block h2 {
     font-size: 18px;
@@ -3946,10 +3953,12 @@ a.whereData span {
 .andOthers {
     color: #292D35;
     font-size: 15px;
-    height: 30px;
     line-height: 28px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
     margin-bottom: 15px;
+    padding-right: 136px;
+    padding-left: 159px;
+    position: relative;
 }
 .andOthers .priceSale {
     width: 142px;
@@ -3958,11 +3967,16 @@ a.whereData span {
     vertical-align: middle;
     display: inline-block;
     margin-right: 17px;
+    position: absolute;
+    left: 0px;
+    top: 4px;
 }
 .andOthers .btn-addItems {
-    float: right;
     margin-left: 10px;
     margin-right: 5px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }
 .panelBuy {
     background: url("../images/bgBoardSmall.png") repeat scroll 0 0 transparent;

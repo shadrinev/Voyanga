@@ -114,7 +114,8 @@
                     Пол
                 </td>
                 <td class="tdBirthday">
-                    Дата рождения
+                    <span class="tooltipClose"
+                          rel="Введите дату рождения пассажира в формате ДД/ММ/ГГГГ, например 05/02/1985">Дата рождения</span>
                 </td>
                 <td class="tdNationality">
                     Гражданство
