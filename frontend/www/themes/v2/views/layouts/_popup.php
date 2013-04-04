@@ -181,6 +181,7 @@
                 <div class="floatRight lh28">
                     <img src="<?= $theme ?>/images/ico-fb-small.png" alt="facebook.com/voyanga"> <a
                         href="http://facebook.com/voyanga" target="_blank">facebook.com/voyanga</a>
+                    </br>
                     <img src="<?= $theme ?>/images/ico-vk-small.png" alt="vk.com/voyanga"> <a
                         href="http://vk.com/voyanga" target="_blank">vk.com/voyanga</a><br>
                 </div>
