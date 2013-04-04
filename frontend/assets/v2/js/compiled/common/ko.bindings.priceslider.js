@@ -2,7 +2,8 @@
 
 ko.bindingHandlers.priceSlider = {
   init: function(element, valueAccessor) {
-    var limits, value;
+    var b, i, k, limits, value, x1, x2, y1, y2, _i, _ref,
+      _this = this;
     value = ko.utils.unwrapObservable(valueAccessor().selection);
     limits = ko.utils.unwrapObservable(valueAccessor().limits);
     if (limits.from < 0) {
@@ -15,6 +16,37 @@ ko.bindingHandlers.priceSlider = {
     if (!Utils.inRange(value.to, limits)) {
       value.to = limits.to;
     }
+    this.limits = limits;
+    this.ampl = this.limits.to - this.limits.from;
+    if (this.ampl > 80000) {
+      this.xPoints = [0, 0.25, 0.4, 0.5, 0.75, 1];
+      this.yPoints = [0, 0.002, 0.04, 0.05, 0.4, 1];
+      this.xK = [];
+      this.xB = [];
+      for (i = _i = 1, _ref = this.xPoints.length; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+        x1 = this.xPoints[i - 1];
+        x2 = this.xPoints[i];
+        y1 = 0 + this.ampl * this.yPoints[i - 1];
+        y2 = 0 + this.ampl * this.yPoints[i];
+        k = (y2 - y1) / (x2 - x1);
+        b = (x2 * y1 - x1 * y2) / (x2 - x1);
+        this.xK.push(k);
+        this.xB.push(b);
+      }
+      this.getY = function(value) {
+        var x, _j, _ref1;
+        x = (value - _this.limits.from) / _this.ampl;
+        for (i = _j = 0, _ref1 = _this.xPoints.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
+          if ((_this.xPoints[i] <= x && x <= _this.xPoints[i + 1])) {
+            return _this.limits.from + x * _this.xK[i] + _this.xB[i];
+          }
+        }
+      };
+    } else {
+      this.getY = function(value) {
+        return value;
+      };
+    }
     $(element).val(value.from + ';' + value.to);
     $(element).jslider({
       from: limits.from,
@@ -25,15 +57,21 @@ ko.bindingHandlers.priceSlider = {
       limits: false,
       minInterval: 60,
       calculate: function(value) {
-        var strVal;
-        strVal = value.toString();
+        var strVal, y;
+        y = Math.ceil(_this.getY(value));
+        strVal = y.toString();
         if (strVal.length > 3) {
           strVal = strVal.substr(0, strVal.length - 3) + '&nbsp;' + strVal.substr(-3);
         }
         return strVal;
       },
       callback: function(newValue) {
-        return valueAccessor().selection(newValue);
+        var parts, vals;
+        parts = newValue.split(';');
+        vals = [];
+        vals.push(Math.ceil(_this.getY(parts[0])));
+        vals.push(Math.ceil(_this.getY(parts[1])));
+        return valueAccessor().selection(vals.join(';'));
       }
     });
     return valueAccessor().element = $(element);

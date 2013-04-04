@@ -105,7 +105,7 @@ class CitiesController extends ABaseAdminController
         if($code){
             $matches = $this->getUrlParse('http://avia-exams.com/airports/'.($code).'.html','|<div class="main">\s+<h2>(.*?)</h2>.*?<table class="table_litaku">\s+<tr><td width="250">.*?</td>\s+<td width="200"><b>(.*?)</b></td>\s+</tr><tr><td>.*?</td><td><b>(.*?)</b></td>\s+</tr><tr><td>.*?</td><td><b><b>(.*?)</b> \((.*?)\) / <b>(.*?)</b> \((.*?)\)</b></td>\s*</tr><tr>.*?</tr><tr><td>.*?</td><td>(.*?)</td>|ims');
 
-            if($matches[2] && $matches[2][0] && trim($matches[2][0])){
+            if(isset($matches[2]) && $matches[2] && $matches[2][0] && trim($matches[2][0])){
                 if(!$data['airport']['localRu']){
                     list($airportName,$other) = explode($code,$matches[1][0]);
                     $airportName = trim($airportName);
