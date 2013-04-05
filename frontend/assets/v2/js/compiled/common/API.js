@@ -131,6 +131,8 @@ VisualLoader = (function() {
 
     this.hide = __bind(this.hide, this);
 
+    this.removeElements = __bind(this.removeElements, this);
+
     this.show = __bind(this.show, this);
 
     var _this = this;
@@ -158,7 +160,7 @@ VisualLoader = (function() {
     return $('#loadWrapBg').show();
   };
 
-  VisualLoader.prototype.hide = function() {
+  VisualLoader.prototype.removeElements = function() {
     $('#loadWrapBg').hide();
     if (this.glowHandler) {
       window.clearInterval(this.glowHandler);
@@ -167,6 +169,21 @@ VisualLoader = (function() {
     if (this.tooltipHandler) {
       window.clearInterval(this.tooltipHandler);
       return this.tooltipHandler = null;
+    }
+  };
+
+  VisualLoader.prototype.hide = function(text, delay) {
+    if (text == null) {
+      text = false;
+    }
+    if (delay == null) {
+      delay = 1000;
+    }
+    if (text.length > 0) {
+      $('#loadWrapBg').find('#loadContentWin .text').html(text);
+      return _.delay(this.removeElements, delay);
+    } else {
+      return this.removeElements();
     }
   };
 

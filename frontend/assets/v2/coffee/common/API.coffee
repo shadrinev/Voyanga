@@ -70,7 +70,7 @@ class VisualLoader
   show: =>
     $('#loadWrapBg').show()
 
-  hide: =>
+  removeElements: =>
     $('#loadWrapBg').hide()
     if(@glowHandler)
       window.clearInterval(@glowHandler)
@@ -79,6 +79,13 @@ class VisualLoader
     if(@tooltipHandler)
       window.clearInterval(@tooltipHandler)
       @tooltipHandler = null
+
+  hide: (text = false, delay = 1000) =>
+    if (text.length > 0)
+      $('#loadWrapBg').find('#loadContentWin .text').html(text)
+      _.delay @removeElements, delay
+    else
+      @removeElements()
 
   setPerc: (perc)=>
     h = Math.ceil( (156 - (perc / 100) * 156 ) )

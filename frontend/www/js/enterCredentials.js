@@ -143,12 +143,14 @@ function checkFlight()
                 }
                 else {
                     _.delay(function () {
-                        window.VisualLoaderInstance.hide();
+                        message = 'Всё в порядке. Билет готов.';
+                        window.VisualLoaderInstance.hide(message, 2000);
                     }, 100);
                 }
             })
             .error(function () {
-                window.VisualLoaderInstance.hide();
+                message = 'Данный билет более недоступен. Переходим к поиску альтернативных вариантов.';
+                window.VisualLoaderInstance.hide(message, 1000);
             })
     }
 }
