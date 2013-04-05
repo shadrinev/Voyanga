@@ -1966,7 +1966,7 @@ input.hotel-input {
     height: 65px;
     margin: 0 auto 22px;
     max-width: 950px;
-    padding-top: 22px;
+    padding-top: 17px;
     position: relative;
     text-align: right;
 }
@@ -2464,7 +2464,7 @@ input.hotel-input {
     letter-spacing: -0.05em;
     line-height: 26px;
     margin-bottom: 11px;
-    margin-top: 21px;
+    margin-top: 17px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 .paybuyContent h2 .ico-fly {
