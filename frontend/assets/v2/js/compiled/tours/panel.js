@@ -350,10 +350,10 @@ TourPanel = (function(_super) {
       url = '/#' + this.sp.getHash();
       if (this.startParams === url) {
         if (this.selectedParams.eventId) {
-          url += 'eventId/' + this.selectedParams.eventId;
+          url += 'eventId/' + this.selectedParams.eventId + '/';
           $.cookie('currentTourHash', url);
         } else if (this.selectedParams.orderId) {
-          url += 'orderId/' + this.selectedParams.orderId;
+          url += 'orderId/' + this.selectedParams.orderId + '/';
           $.cookie('currentTourHash', url);
         }
       }
