@@ -259,4 +259,9 @@ class FlightTripElement extends TripElement
     {
         $this->flightBookerId = $id;
     }
+
+    public function getTotalPeople()
+    {
+        return $this->adultCount + $this->childCount + $this->infantCount;
+    }
 }

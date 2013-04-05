@@ -13,10 +13,10 @@
             </td>
             <td class="tdPath">
                 <div class="timeAndPath" rel="сколько занимает пересадка <br> может и быть в две строчки">
-                        <div class="ico-path">
+                        <div class="ico-path" data-bind="click: $data.showDetailsOverview">
                             <span data-bind="html: $data.activeVoyage().stopoverHtml()"></span>
                         </div>
-                    <div class="text">Всего <span data-bind="text: $data.duration()"></span></div>
+                    <div class="text" data-bind="click: $data.showDetailsOverview">Всего <span data-bind="text: $data.duration()"></span></div>
                 </div>
             </td>
             <td class="tdTo paddingBottom">
@@ -26,7 +26,7 @@
             </td>
             <td class="tdAvia paddingBottom">
                 <div>
-                    <span class="tooltip" data-bind="attr: {'rel': $data.firstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data.firstAirline() +'.png'}" ></span>
+                    <span class="tooltip" data-bind="click: $data.showDetailsOverview, attr: {'rel': $data.firstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data.firstAirline() +'.png'}" ></span>
                 </div>
                 <div class="class">Класс: <span class="classMine" data-bind='text: $data.serviceClassReadable'>Эконом</span></div>
             </td>
@@ -39,10 +39,10 @@
             </td>
             <td class="tdPath">
                 <div class="timeAndPath" rel="сколько занимает пересадка <br> может и быть в две строчки">
-                    <div class="ico-path">
+                    <div class="ico-path" data-bind="click: $data.showDetailsOverview">
                         <span data-bind="html: $data.activeVoyage().activeBackVoyage().stopoverHtml()"></span>
                     </div>
-                    <div class="text">Всего <span data-bind="text: $data.rtDuration()"></span></div>
+                    <div class="text" data-bind="click: $data.showDetailsOverview">Всего <span data-bind="text: $data.rtDuration()"></span></div>
                 </div>
             </td>
             <td class="tdTo">
@@ -52,7 +52,7 @@
             </td>
             <td class="tdAvia">
                 <div>
-                    <span class="tooltip" data-bind="attr: {'rel': $data.rtFirstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data.rtFirstAirline() +'.png'}" ></span>
+                    <span class="tooltip" data-bind="click: $data.showDetailsOverview, attr: {'rel': $data.rtFirstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data.rtFirstAirline() +'.png'}" ></span>
                 </div>
                 <div class="class">Класс: <span class="classMine" data-bind='text: $data.serviceClassReadable'>Эконом</span></div>
             </td>

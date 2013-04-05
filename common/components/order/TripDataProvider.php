@@ -140,6 +140,27 @@ class TripDataProvider
         return $this->getItemsSortedByTimeAndWeights($items, $times, $weights);
     }
 
+    public function getTextForOrder()
+    {
+        $flights = 0;
+        $hotels = 0;
+        $items = $this->getSortedCartItemsOnePerGroup();
+        foreach ($items as $item)
+        {
+            if ($item instanceof FlightTripElement)
+                $flights++;
+            if ($item instanceof HotelTripElement)
+                $hotels++;
+        }
+        $flightsString = UtilsHelper::WordAfterNum(array('билета', 'билетов', 'билетов'), $flights);
+        $hotelsString = UtilsHelper::WordAfterNum(array('отеля', 'отелей', 'отлей'), $hotels);
+        if (($flights>0) && ($hotels==0))
+            return 'Покупка '.$flightsString;
+        if (($hotels>0) && ($flights==0))
+            return 'Бронирование '.$hotelsString;
+        return 'Оформление '.$flightsString.' и '.$hotelsString;
+    }
+
     private function getJsonWithAdditionalInfo($items)
     {
         $out = array();
@@ -263,27 +284,33 @@ class TripDataProvider
         $items = $this->getDbItems();
         $onlyFlights = true;
         $onlyHotels = true;
+        $totalPeople = 0;
         foreach ($items as $item)
         {
             if ($item instanceof FlightTripElement)
+            {
                 $onlyHotels = false;
+            }
             if ($item instanceof HotelTripElement)
+            {
                 $onlyFlights = false;
+            }
+            $totalPeople += $item->getTotalPeople();
         }
         if ($onlyFlights)
         {
             $icon = 'ico-fly';
-            $message = 'Данные пассажиров';
+            $message = 'Данные '.UtilsHelper::WordAfterNum(array('пассажира','пассажиров','пассажиров'), $totalPeople);
         }
         elseif ($onlyHotels)
         {
             $icon = 'ico-hotel';
-            $message = 'Гости отеля';
+            $message = UtilsHelper::WordAfterNum(array('Гость','Гости','Гости'), $totalPeople).' отеля';
         }
         else
         {
             $icon = 'ico-fly';
-            $message = 'Данные пассажиров';
+            $message = 'Данные '.UtilsHelper::WordAfterNum(array('пассажира','пассажиров','пассажиров'), $totalPeople);
         }
         return array($icon, $message);
     }

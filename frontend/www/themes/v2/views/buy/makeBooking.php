@@ -80,7 +80,7 @@
             </table>
         </div>
     </div>
-    <?php $this->renderPartial('_items', array('orderId'=>$orderId,'flightCross'=>$flightCross,'flightParams'=>$flightParams)); ?>
+    <?php $this->renderPartial('_items', array('orderId'=>$orderId,'header'=>$textForOrder,'flightCross'=>$flightCross,'flightParams'=>$flightParams)); ?>
     <form method="post" id="passport_form">
         <?php if ($ambigousPassports): ?>
             <?php $this->renderPartial('_ambigousPassports', array(
