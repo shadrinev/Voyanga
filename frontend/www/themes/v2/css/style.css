@@ -1954,7 +1954,7 @@ input.hotel-input {
     color: #1D222B;
     margin: 0 auto;
     max-width: 950px;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
 }
 .paybuyContent h1 {
     font-size: 24px;
@@ -2427,11 +2427,11 @@ input.hotel-input {
     background: inherit !important;
 }
 .paybuyContent .theSum {
-	overflow: hidden;
-	margin-top: 24px;
-	font-size: 17px;
-	color: #1d222b;
-    margin-bottom: 19px;
+    overflow: hidden;
+    margin-top: 16px;
+    font-size: 17px;
+    color: #1d222b;
+    margin-bottom: 27px;
 }
 .paybuyContent .theSum .left {
     float: left;
