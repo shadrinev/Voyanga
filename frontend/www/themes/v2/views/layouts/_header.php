@@ -21,7 +21,7 @@
 
         <div class="telefon">
             <span class="prefix">8 800</span> 333-45-06<Br>
-            <span class="free">звонок бесплатно</span>
+            <span class="free">звонок бесплатный</span>
         </div>
         <div class="slide-turn-mode">
             <div class="switch"><span class="l"></span><span class="c"></span><span class="r"></span></div>

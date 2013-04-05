@@ -2,7 +2,7 @@
 <div class="oneBlock buyTicket">
     <!--=== ===-->
     <div class="paybuyContent">
-        <h1>Оформление заказа &#8470;<?php echo $orderId; ?></h1>
+        <h1><?php echo $header ?></h1>
         <!-- ALL TICKETS DIV -->
         <div class="allTicketsDIV">
             <span data-bind="template: {name: 'items', data: itemsToBuy}"></span>
