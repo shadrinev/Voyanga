@@ -31,7 +31,7 @@ HelpLayerElement = (function() {
       var ddy, hh;
       ddy = _this.dy;
       if (typeof _this.dy === 'string') {
-        hh = _this.jElem.height();
+        hh = $(_this.selector).height();
         ddy = ddy.replace('h', hh.toString());
         ddy = eval(ddy);
       }
@@ -43,7 +43,7 @@ HelpLayerElement = (function() {
       var ddx, ww;
       ddx = _this.dx;
       if (typeof _this.dx === 'string') {
-        ww = _this.jElem.width();
+        ww = $(_this.selector).width();
         ddx = ddx.replace('w', ww.toString());
         ddx = eval(ddx);
       }
@@ -101,19 +101,26 @@ HelpLayer = (function() {
       'tours': [
         {
           selector: '.left-content .my-trip-list',
-          "class": 'hint-tours-elements'
+          "class": 'hint-tours-elements',
+          dx: 'w',
+          dy: 'h/2'
         }, {
           selector: '.left-content .finish-result:eq(0)',
-          "class": 'hint-tours-selected-price-info'
+          "class": 'hint-tours-selected-price-info',
+          dx: 'w - 100'
         }, {
           selector: '.left-content .finish-result.voyasha',
-          "class": 'hint-tours-voyasha'
+          "class": 'hint-tours-voyasha',
+          dx: 'w'
         }, {
           selector: '.how-many-man',
-          "class": 'hint-tours-route-edit'
+          "class": 'hint-tours-route-edit',
+          dy: 'h'
         }, {
           selector: '.filter-block .innerFilter',
-          "class": 'hint-tours-filters'
+          "class": 'hint-tours-filters',
+          dx: 40,
+          dy: 21
         }
       ]
     };

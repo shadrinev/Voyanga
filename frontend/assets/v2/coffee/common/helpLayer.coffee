@@ -19,14 +19,14 @@ class HelpLayerElement
     @posTop.subscribe (newVal)=>
       ddy = @dy
       if typeof(@dy) == 'string'
-        hh = @jElem.height()
+        hh = $(@selector).height()
         ddy = ddy.replace('h',hh.toString())
         ddy = eval(ddy)
       @jElem.css({'top':(newVal+ddy) + 'px'})
     @posLeft.subscribe (newVal)=>
       ddx = @dx
       if typeof(@dx) == 'string'
-        ww = @jElem.width()
+        ww = $(@selector).width()
         ddx = ddx.replace('w',ww.toString())
         ddx = eval(ddx)
       @jElem.css({'left':(newVal+ddx) + 'px'})
@@ -50,11 +50,11 @@ class HelpLayer
     @pageElements = {
       'main':[{selector:'.tdCity',class:'hint-input',dx:40,dy:21},],
       'tours':[
-        {selector:'.left-content .my-trip-list',class:'hint-tours-elements'},
-        {selector:'.left-content .finish-result:eq(0)',class:'hint-tours-selected-price-info'},
-        {selector:'.left-content .finish-result.voyasha',class:'hint-tours-voyasha'},
-        {selector:'.how-many-man',class:'hint-tours-route-edit'},
-        {selector:'.filter-block .innerFilter',class:'hint-tours-filters'},
+        {selector:'.left-content .my-trip-list',class:'hint-tours-elements',dx:'w',dy:'h/2'},
+        {selector:'.left-content .finish-result:eq(0)',class:'hint-tours-selected-price-info',dx:'w - 100'},
+        {selector:'.left-content .finish-result.voyasha',class:'hint-tours-voyasha',dx:'w'},
+        {selector:'.how-many-man',class:'hint-tours-route-edit',dy:'h'},
+        {selector:'.filter-block .innerFilter',class:'hint-tours-filters',dx:40,dy:21},
 
       ]
     }
