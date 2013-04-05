@@ -122,11 +122,13 @@ class TourSearchParams extends SearchParams
       room.fromPEGObject(room)
       @rooms.push room
 
-    wantedKeys = {eventId:1, orderId:1, flightHash:1, hotelId: 1}
+    wantedKeys = {eventId:1, orderId:1, flightHash:1}
     @hotelId(false)
     for pair in data.extra
       if wantedKeys[pair.key]
-        @[pair.key] = pair.value
+        @[pair.key] =  pair.value
+      if pair.key == 'hotelId'
+        @hotelId pair.value
 
     if beforeUrl == @url()
       @urlChanged(false)
