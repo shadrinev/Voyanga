@@ -818,7 +818,7 @@ HotelResult = (function() {
     } else {
       ticketValidCheck = $.Deferred();
       ticketValidCheck.done(function(roomSet) {
-        var result, _i, _len, _ref;
+        var adt, result, _i, _len, _ref;
         result = {};
         result.module = 'Hotels';
         result.type = 'hotel';
@@ -830,7 +830,11 @@ HotelResult = (function() {
         _ref = _this.parent.rawSP.rooms;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           room = _ref[_i];
-          result.adults += room.adultCount * 1;
+          adt = room.adt;
+          if (!(adt != null)) {
+            adt += room.adultCount;
+          }
+          result.adults += adt * 1;
           if (room.childAge) {
             result.age = room.childAgeage;
           }
