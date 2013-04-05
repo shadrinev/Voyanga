@@ -213,7 +213,6 @@ HotelsSearchParams = (function() {
       parts.push(room.getHash());
     }
     hash = 'hotels/search/' + parts.join('/') + '/';
-    window.voyanga_debug("Generated hash for hotels search", hash);
     return hash;
   };
 

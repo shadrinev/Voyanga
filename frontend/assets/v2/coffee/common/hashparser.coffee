@@ -17,7 +17,7 @@ DESTINATIONS = start:START_FROM destinations:DESTINATION+ {
 START_FROM = from:IATA '/' rt:RT '/'
 {  return {
       from: from,
-      return: rt=='1',
+      return: rt,
   }
 }
 
