@@ -127,7 +127,6 @@ TourSearchParams = (function(_super) {
       params.push('orderId=' + this.orderId);
     }
     result += params.join("&");
-    window.voyanga_debug("Generated search url for tours", result);
     return result;
   };
 
@@ -160,57 +159,46 @@ TourSearchParams = (function(_super) {
     return hash;
   };
 
-  TourSearchParams.prototype.fromList = function(data) {
-    var beforeUrl, destination, doingrooms, hotelIdBefore, i, oldSelection, room, toSaveIn, _i, _ref;
+  TourSearchParams.prototype.fromString = function(data) {
+    var beforeUrl, dest, destination, hotelIdBefore, pair, room, wantedKeys, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    data = PEGHashParser.parse(data, 'tour');
     beforeUrl = this.url();
     hotelIdBefore = this.hotelId();
-    this.startCity(data[0]);
-    this.returnBack(data[1]);
-    doingrooms = false;
+    this.startCity(data.start.from);
+    this.returnBack(data.start["return"]);
     this.destinations([]);
     this.rooms([]);
-    for (i = _i = 2, _ref = data.length; _i <= _ref; i = _i += 3) {
-      if (data[i] === 'rooms') {
-        break;
-      }
+    _ref = data.destinations;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      dest = _ref[_i];
       destination = new DestinationSearchParams();
-      destination.city(data[i]);
-      destination.dateFrom(moment(data[i + 1], 'D.M.YYYY').toDate());
-      destination.dateTo(moment(data[i + 2], 'D.M.YYYY').toDate());
+      destination.city(dest.to);
+      destination.dateFrom(dest.dateFrom);
+      destination.dateTo(dest.dateTo);
       this.destinations.push(destination);
     }
-    i = i + 1;
-    oldSelection = false;
-    while (i < data.length) {
-      if ((data[i] === 'eventId') || (data[i] === 'orderId') || (data[i] === 'flightHash')) {
-        toSaveIn = data[i];
-        oldSelection = true;
-        break;
-      }
-      if (data[i] === 'hotelId') {
-        break;
-      }
+    _ref1 = data.rooms;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      room = _ref1[_j];
       room = new SpRoom(this);
-      room.fromList(data[i]);
+      room.fromPEGObject(room);
       this.rooms.push(room);
-      i++;
     }
-    if (oldSelection) {
-      i++;
-      this[toSaveIn] = data[i];
-    }
+    wantedKeys = {
+      eventId: 1,
+      orderId: 1,
+      flightHash: 1
+    };
     this.hotelId(false);
-    i = 0;
-    while (i < data.length) {
-      if (data[i] === 'hotelId') {
-        this.hotelId(0);
-      } else {
-        if (this.hotelId() === 0) {
-          this.hotelId(data[i]);
-          break;
-        }
+    _ref2 = data.extra;
+    for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+      pair = _ref2[_k];
+      if (wantedKeys[pair.key]) {
+        this[pair.key] = pair.value;
       }
-      i++;
+      if (pair.key === 'hotelId') {
+        this.hotelId(pair.value);
+      }
     }
     if (beforeUrl === this.url()) {
       this.urlChanged(false);
