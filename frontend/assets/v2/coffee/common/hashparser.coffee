@@ -65,7 +65,8 @@ AGES = (':' age:[0-9]+ {return parseInt(age.join(""))})*
 
 KEYVALUES = (KEYVALUE)*
 
-KEYVALUE = key:[^/]+ '/' val:[^/]+ '/' { return {key: key.join(""), value: val.join("")} }
+// FIXME '/' should not be optional
+KEYVALUE = key:[^/]+ '/' val:[^/]+ '/'? { return {key: key.join(""), value: val.join("")} }
 
 """
 

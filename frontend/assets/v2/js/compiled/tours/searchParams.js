@@ -188,7 +188,8 @@ TourSearchParams = (function(_super) {
     wantedKeys = {
       eventId: 1,
       orderId: 1,
-      flightHash: 1
+      flightHash: 1,
+      hotelId: 1
     };
     this.hotelId(false);
     _ref2 = data.extra;
@@ -196,9 +197,6 @@ TourSearchParams = (function(_super) {
       pair = _ref2[_k];
       if (wantedKeys[pair.key]) {
         this[pair.key] = pair.value;
-      }
-      if (pair.key === 'hotelId') {
-        this.hotelId(pair.value);
       }
     }
     if (beforeUrl === this.url()) {
