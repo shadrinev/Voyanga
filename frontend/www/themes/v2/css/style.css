@@ -2385,6 +2385,9 @@ input.hotel-input {
 .allTicketsDIV .ticketBox .tdPath .timeAndPath {
     margin-left: -25px;
 }
+.timeAndPath .text {
+    cursor: pointer;
+}
 .allTicketsDIV .ticketBox .tdPath .ico-path {
     background: none;
     height: 16px;
@@ -3960,8 +3963,8 @@ a.whereData span {
     line-height: 28px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
     margin-bottom: 15px;
-    padding-right: 136px;
-    padding-left: 159px;
+    padding-right: 130px;
+    padding-left: 155px;
     position: relative;
 }
 .andOthers .priceSale {
