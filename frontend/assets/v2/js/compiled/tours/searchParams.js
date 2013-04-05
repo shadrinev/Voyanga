@@ -127,7 +127,6 @@ TourSearchParams = (function(_super) {
       params.push('orderId=' + this.orderId);
     }
     result += params.join("&");
-    window.voyanga_debug("Generated search url for tours", result);
     return result;
   };
 

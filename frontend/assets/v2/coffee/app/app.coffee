@@ -133,7 +133,6 @@ class Application extends Backbone.Router
       @render(data, view)
 
     for route, action of controller.routes
-      window.voyanga_debug "APP: registreing route", prefix, route, action
       @route prefix + route, prefix, action
       # Register appplication-wide default action
       if isDefault && route == ''
