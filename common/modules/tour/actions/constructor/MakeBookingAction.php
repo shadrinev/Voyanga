@@ -17,7 +17,7 @@ class MakeBookingAction extends CAction
     public function run($secretKey)
     {
         if (!$this->orderBooking)
-            $this->orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+            $this->orderBooking = OrderBooking::model()->findByAttributes(array('secretKey' => $secretKey));
 
         $this->controller->assignTitle('enterCredentials');
         $this->getController()->layout = 'static';
@@ -28,7 +28,8 @@ class MakeBookingAction extends CAction
         $haveHotels = false;
         $haveFlights = false;
         $flightParams = array();
-        foreach($this->tripItems as $tripItem){
+        foreach ($this->tripItems as $tripItem)
+        {
             if ($tripItem instanceof HotelTripElement)
             {
 
@@ -41,15 +42,16 @@ class MakeBookingAction extends CAction
                 $flightParams['cityFrom'] = $tripItem->flightVoyage->getDepartureCity(0)->code;
                 $flightParams['cityTo'] = $tripItem->flightVoyage->getArrivalCity(0)->code;
                 $dateTime = new DateTime($tripItem->flightVoyage->getDepartureDate(0));
-                $dateTime->setTime (0,0,0);
+                $dateTime->setTime(0, 0, 0);
                 $flightParams['checkIn'] = $dateTime->format('d.m.Y');
                 $flightParams['duration'] = 7;
                 $flightParams['rt'] = 0;
-                if($tripItem->flightVoyage->isRoundTrip()){
+                if ($tripItem->flightVoyage->isRoundTrip())
+                {
                     $flightParams['rt'] = 1;
 
                     $dateTimeBack = new DateTime($tripItem->flightVoyage->getDepartureDate(1));
-                    $dateTimeBack->setTime (0,0,0);
+                    $dateTimeBack->setTime(0, 0, 0);
                     $interval = $dateTime->diff($dateTimeBack);
                     $flightParams['duration'] = $interval->format('%d');
                 }
@@ -57,8 +59,6 @@ class MakeBookingAction extends CAction
                 $flightParams['checkOut'] = $dateTime->format('d.m.Y');
             }
         }
-        //print_r(array($flightParams,$haveHotels,$haveFlights,$dateTime));die();
-
 
         if ($this->areNotAllItemsLinked())
             throw new CHttpException(500, 'There are exists element inside trip that are not linked. You cannot continue booking');
@@ -84,7 +84,10 @@ class MakeBookingAction extends CAction
             else
             {
                 header("Content-type: application/json");
-                echo json_encode(array('status'=>'error', 'message' => $this->validationErrors));
+                echo json_encode(array(
+                                      'status' => 'error',
+                                      'message' => $this->validationErrors
+                                 ));
                 Yii::app()->end();
             }
         }
@@ -98,6 +101,7 @@ class MakeBookingAction extends CAction
             'bookingForm' => $this->bookingForm,
             'trip' => $trip,
             'orderId' => $orderBookingId,
+            'textForOrder' => $tripStorage->getTextForOrder(),
             'icon' => $icon,
             'header' => $header,
             'flightCross' => $haveFlights && !$haveHotels,
@@ -111,7 +115,7 @@ class MakeBookingAction extends CAction
 
     private function weGotPassportsAndBooking()
     {
-        foreach ($this->passportForms as $i=>$pf)
+        foreach ($this->passportForms as $i => $pf)
         {
             if (($pf instanceof FlightAdultPassportForm) and (!isset($_POST['FlightAdultPassportForm'])))
                 return false;
@@ -136,31 +140,33 @@ class MakeBookingAction extends CAction
         return !$this->bookingForm->hasErrors(); //just to get passport data ability to check too
     }
 
-    public static function formCompare($a,$b)
+    public static function formCompare($a, $b)
     {
-        if(
-            isset($a['formData']['birthdayYear'],$a['formData']['birthdayMonth'],$a['formData']['birthdayDay']) &&
-            ($a['formData']['birthdayYear'] && $a['formData']['birthdayMonth'] && $a['formData']['birthdayDay'])
-        ){
-            $abd = $a['formData']['birthdayYear'].'-'.$a['formData']['birthdayMonth'].'-'.$a['formData']['birthdayDay'];
-        }else{
+        if (isset($a['formData']['birthdayYear'], $a['formData']['birthdayMonth'], $a['formData']['birthdayDay']) && ($a['formData']['birthdayYear'] && $a['formData']['birthdayMonth'] && $a['formData']['birthdayDay'])
+        )
+        {
+            $abd = $a['formData']['birthdayYear'] . '-' . $a['formData']['birthdayMonth'] . '-' . $a['formData']['birthdayDay'];
+        }
+        else
+        {
             $abd = '1900-01-01';
         }
-        $at = DateTime::createFromFormat('Y-m-d',$abd);
+        $at = DateTime::createFromFormat('Y-m-d', $abd);
 
-        if(
-            isset($b['formData']['birthdayYear'],$b['formData']['birthdayMonth'],$b['formData']['birthdayDay']) &&
-            ($b['formData']['birthdayYear'] && $b['formData']['birthdayMonth'] && $b['formData']['birthdayDay'])
-        ){
-            $bbd = $b['formData']['birthdayYear'].'-'.$b['formData']['birthdayMonth'].'-'.$b['formData']['birthdayDay'];
-        }else{
+        if (isset($b['formData']['birthdayYear'], $b['formData']['birthdayMonth'], $b['formData']['birthdayDay']) && ($b['formData']['birthdayYear'] && $b['formData']['birthdayMonth'] && $b['formData']['birthdayDay'])
+        )
+        {
+            $bbd = $b['formData']['birthdayYear'] . '-' . $b['formData']['birthdayMonth'] . '-' . $b['formData']['birthdayDay'];
+        }
+        else
+        {
             $bbd = '1900-01-01';
         }
-        $bt = DateTime::createFromFormat('Y-m-d',$bbd);
+        $bt = DateTime::createFromFormat('Y-m-d', $bbd);
         $diff = $bt->diff($at);
         //print_r($diff->days);
         //echo "diff: ".($diff->days*($diff->invert ? -1 : 1))." abd:$abd bbd: $bbd";
-        $ret = (($diff->days*($diff->invert ? -1 : 1)) > 0) ? 1 : ((($diff->days*($diff->invert ? -1 : 1)) < 0) ? -1 : 0);
+        $ret = (($diff->days * ($diff->invert ? -1 : 1)) > 0) ? 1 : ((($diff->days * ($diff->invert ? -1 : 1)) < 0) ? -1 : 0);
         //echo "ret: $ret ||";
         return $ret;
     }
@@ -183,7 +189,10 @@ class MakeBookingAction extends CAction
             {
                 foreach ($_POST['FlightAdultPassportForm'] as $formData)
                 {
-                    $formsData[$i] = array('i'=>$i,'formData'=>$formData);
+                    $formsData[$i] = array(
+                        'i' => $i,
+                        'formData' => $formData
+                    );
                     $i++;
                 }
             }
@@ -191,7 +200,10 @@ class MakeBookingAction extends CAction
             {
                 foreach ($_POST['FlightChildPassportForm'] as $formData)
                 {
-                    $formsData[$i] = array('i'=>$i,'formData'=>$formData);
+                    $formsData[$i] = array(
+                        'i' => $i,
+                        'formData' => $formData
+                    );
                     $i++;
                 }
             }
@@ -199,38 +211,48 @@ class MakeBookingAction extends CAction
             {
                 foreach ($_POST['FlightInfantPassportForm'] as $formData)
                 {
-                    $formsData[$i] = array('i'=>$i,'formData'=>$formData);
+                    $formsData[$i] = array(
+                        'i' => $i,
+                        'formData' => $formData
+                    );
                     $i++;
                 }
             }
 
-            if(count($formsData)>1){
-                usort($formsData,'MakeBookingAction::formCompare');
+            if (count($formsData) > 1)
+            {
+                usort($formsData, 'MakeBookingAction::formCompare');
             }
-            foreach($formsData as $formInfo){
-                if($adcnt > 0){
+            foreach ($formsData as $formInfo)
+            {
+                if ($adcnt > 0)
+                {
                     $adcnt--;
                     $adultPassport = new FlightAdultPassportForm();
                     $adultPassport->attributes = $formInfo['formData'];
                     $adultPassport->handleFields();
                     $adultsPassports[] = $adultPassport;
-                    $p = $adultsPassports[(count($adultsPassports)-1)];
+                    $p = $adultsPassports[(count($adultsPassports) - 1)];
 
-                }elseif($chcnt > 0){
+                }
+                elseif ($chcnt > 0)
+                {
                     $chcnt--;
                     $childrenPassport = new FlightChildPassportForm();
                     $childrenPassport->attributes = $formInfo['formData'];
                     $childrenPassport->handleFields();
                     $childrenPassports[] = $childrenPassport;
-                    $p = $childrenPassports[(count($childrenPassports)-1)];
+                    $p = $childrenPassports[(count($childrenPassports) - 1)];
 
-                }elseif($incnt > 0){
+                }
+                elseif ($incnt > 0)
+                {
                     $incnt--;
                     $infantsPassport = new FlightInfantPassportForm();
                     $infantsPassport->attributes = $formInfo['formData'];
                     $infantsPassport->handleFields();
                     $infantsPassports[] = $infantsPassport;
-                    $p = $infantsPassports[(count($infantsPassports)-1)];
+                    $p = $infantsPassports[(count($infantsPassports) - 1)];
 
                 }
                 if (!$p->validate())
@@ -240,7 +262,7 @@ class MakeBookingAction extends CAction
                 }
             }
 
-            if ($errorCounter>0)
+            if ($errorCounter > 0)
                 return false;
 
             foreach ($this->tripItems as $item)
@@ -252,9 +274,9 @@ class MakeBookingAction extends CAction
                 }
                 elseif ($item instanceof HotelTripElement)
                 {
-                    foreach ($item->rooms as $i=>$room)
+                    foreach ($item->rooms as $i => $room)
                     {
-                        $roomPassport = ($i==0) ? array(
+                        $roomPassport = ($i == 0) ? array(
                             'adults' => $adultsPassports,
                             'children' => $childrenPassports
                         ) : array();
@@ -326,7 +348,7 @@ class MakeBookingAction extends CAction
             }
         }
 
-        if ($errorCounter>0)
+        if ($errorCounter > 0)
             return false;
 
         $i = 0;
@@ -345,9 +367,9 @@ class MakeBookingAction extends CAction
                 $adultsPassports = $this->getPassportsByType('FlightAdultPassportForm', $formsData[$i]);
                 $childrenPassports = $this->getPassportsByType('FlightChildPassportForm', $formsData[$i]);
 
-                foreach ($item->rooms as $i=>$room)
+                foreach ($item->rooms as $i => $room)
                 {
-                    $roomPassport = ($i==0) ? array(
+                    $roomPassport = ($i == 0) ? array(
                         'adults' => $adultsPassports,
                         'children' => $childrenPassports
                     ) : array();

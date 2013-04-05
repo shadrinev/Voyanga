@@ -277,9 +277,18 @@ class HotelTripElement extends TripElement
         return $result;
     }
 
-
     public function setBookerId($id)
     {
         $this->hotelBookerId = $id;
+    }
+
+    public function getTotalPeople()
+    {
+        $total = 0;
+        foreach ($this->rooms as $room)
+        {
+            $total += $room->adultCount + $room->childCount + $room->cots;
+        }
+        return $total;
     }
 }
