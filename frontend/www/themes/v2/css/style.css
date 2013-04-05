@@ -26,11 +26,11 @@
 }
 input:-moz-placeholder {
     color: #aaaaaa !important;
-    font-size: 12px;
+    font-size: 12px !important;
 }
 input:focus:-moz-placeholder {
     color: #aaaaaa !important;
-    font-size: 12px;
+    font-size: 12px !important;
 }
 .btn {
     cursor: pointer;
