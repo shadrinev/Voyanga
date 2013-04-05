@@ -37,7 +37,7 @@ RT
  = [01]
 
 DATE
- = d:DAY '.' m:MONTH '.' y:YEAR {return new Date(y,m,d)}
+ = d:DAY '.' m:MONTH '.' y:YEAR {return new Date(y, m - 1,d)}
 
 DAY
  = digits:[0-9]+ {return parseInt(digits.join("")) }
