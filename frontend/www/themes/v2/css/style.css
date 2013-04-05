@@ -25,11 +25,11 @@
     text-decoration: underline;
 }
 input:-moz-placeholder {
-    color: #CCCCCC !important;
+    color: #aaaaaa !important;
     font-size: 12px;
 }
 input:focus:-moz-placeholder {
-    color: #CCCCCC !important;
+    color: #aaaaaa !important;
     font-size: 12px;
 }
 .btn {
