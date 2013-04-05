@@ -300,7 +300,7 @@ class TripDataProvider
         if ($onlyFlights)
         {
             $icon = 'ico-fly';
-            $message = 'Данные '.UtilsHelper::WordAfterNum(array('пассажира','пассажиров','пассажиров'), $totalPeople);
+            $message = 'Введите данные '.UtilsHelper::WordAfterNum(array('пассажира','пассажиров','пассажиров'), $totalPeople);
         }
         elseif ($onlyHotels)
         {
@@ -310,7 +310,7 @@ class TripDataProvider
         else
         {
             $icon = 'ico-fly';
-            $message = 'Данные '.UtilsHelper::WordAfterNum(array('пассажира','пассажиров','пассажиров'), $totalPeople);
+            $message = 'Введите данные '.UtilsHelper::WordAfterNum(array('пассажира','пассажиров','пассажиров'), $totalPeople);
         }
         return array($icon, $message);
     }
