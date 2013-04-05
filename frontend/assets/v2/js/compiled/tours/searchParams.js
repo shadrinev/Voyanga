@@ -44,7 +44,6 @@ TourSearchParams = (function(_super) {
 
     var _this = this;
     TourSearchParams.__super__.constructor.call(this);
-    voyanga_debug('CREATING TOURS SEARCH PARAMS!!!!!!!!!!');
     if (window.currentCityCode) {
       this.startCity = ko.observable(window.currentCityCode);
     } else {
@@ -155,7 +154,6 @@ TourSearchParams = (function(_super) {
       return parts.push(room.getHash());
     });
     hash = 'tours/search/' + parts.join('/') + '/';
-    $.cookie('currentTourHash', hash);
     return hash;
   };
 

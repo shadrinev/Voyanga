@@ -3599,6 +3599,10 @@ a.whereData span {
     width: 100%;
     margin-bottom: 50px;
 }
+.tableFAQ a {
+    color: #1c81bb;
+    text-decoration: underline;
+}
 .tableFAQ thead td {
     vertical-align: middle;
     padding-top: 0px;

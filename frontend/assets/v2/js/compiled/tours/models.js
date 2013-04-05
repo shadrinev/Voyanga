@@ -1622,7 +1622,6 @@ TourTripResultSet = (function() {
     });
     if (this.crossUrlHref()) {
       this.crossUrlHref(this.crossUrlHref() + 'rooms/' + this.roomsHash + '/flightHash/' + this.simHashes.join('/') + '/');
-      $.cookie('currentTourHash', this.crossUrlHref());
     }
     if (this.additional) {
       this.cities.push(this.additional);
