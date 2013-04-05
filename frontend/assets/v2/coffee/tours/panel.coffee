@@ -251,10 +251,10 @@ class TourPanel extends SearchPanel
       url = '/#' + @sp.getHash()
       if @startParams == url
         if @selectedParams.eventId
-          url += 'eventId/' + @selectedParams.eventId
+          url += 'eventId/' + @selectedParams.eventId + '/'
           $.cookie 'currentTourHash', url
         else if @selectedParams.orderId
-          url += 'orderId/' + @selectedParams.orderId
+          url += 'orderId/' + @selectedParams.orderId + '/'
           $.cookie 'currentTourHash', url
       window.location.href = url
 
