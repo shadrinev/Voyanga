@@ -145,8 +145,8 @@
             <h2>Контактная информация</h2>
 
             <div class="textBlock telefon">
-                <div class="floatLeft">Служба поддержки<br>10:00 - 21:00</div>
-                <div class="floatRight">+7 (499) 553-09-33</div>
+                <div class="floatLeft">Служба поддержки<br>10:00 - 22:00</div>
+                <div class="floatRight">8 800 333-45-06</div>
             </div>
             <div class="textBlock hEmail">
                 <div class="floatLeft">
@@ -181,6 +181,7 @@
                 <div class="floatRight lh28">
                     <img src="<?= $theme ?>/images/ico-fb-small.png" alt="facebook.com/voyanga"> <a
                         href="http://facebook.com/voyanga" target="_blank">facebook.com/voyanga</a>
+                    </br>
                     <img src="<?= $theme ?>/images/ico-vk-small.png" alt="vk.com/voyanga"> <a
                         href="http://vk.com/voyanga" target="_blank">vk.com/voyanga</a><br>
                 </div>

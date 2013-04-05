@@ -22,7 +22,7 @@
         <?php if($flightCross): ?>
         <div class="andOthers" style="display: block;">
             <span class="priceSale"></span>
-            Возможно, вам будет интересно добавить отель в <?php echo City::getCityByCode($flightParams['cityTo'])->casePre;?> с комплексной скидкой до 10%
+            Добавьте отель в <?php echo City::getCityByCode($flightParams['cityTo'])->casePre;?> и получите скидку до 10% за комплексное бронирование
             <a href="#" class="btn-addItems" data-bind="attr:{href: itemsToBuy.crossUrlHref()}"><span class="l"></span>Добавить отель</a>
         </div>
         <?php endif; ?>
