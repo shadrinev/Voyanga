@@ -278,6 +278,8 @@ Utils = {
       }
     }
     form_html += '</form>';
+    console.log("SETUP COOKIE", window.location.hash.substring(1));
+    $.cookie("currentTourHash", window.location.hash.substring(1));
     $('body').append(form_html);
     return $('#buy-form').submit();
   },

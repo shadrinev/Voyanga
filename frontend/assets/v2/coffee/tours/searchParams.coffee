@@ -17,7 +17,6 @@ class RoomsSearchParams
 class TourSearchParams extends SearchParams
   constructor: ->
     super()
-    voyanga_debug('CREATING TOURS SEARCH PARAMS!!!!!!!!!!')
     if(window.currentCityCode)
       @startCity = ko.observable window.currentCityCode
     else
@@ -76,7 +75,6 @@ class TourSearchParams extends SearchParams
     if(@orderId)
       params.push 'orderId='+@orderId
     result += params.join "&"
-    window.voyanga_debug "Generated search url for tours", result
     return result
 
   key: ->
@@ -98,7 +96,6 @@ class TourSearchParams extends SearchParams
       parts.push room.getHash()
 
     hash = 'tours/search/' + parts.join('/') + '/'
-    $.cookie 'currentTourHash', hash
     return hash
 
   fromString: (data)->
