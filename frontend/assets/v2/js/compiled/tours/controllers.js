@@ -42,7 +42,9 @@ ToursController = (function() {
     var args, backUrl, sp, urls,
       _this = this;
     args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    this.searchParams.fromString(args[0]);
+    args[0] = exTrim(args[0], '/');
+    args = args[0].split('/');
+    this.searchParams.fromList(args);
     voyanga_debug('routing urlChanged:', this.searchParams.urlChanged(), this.searchParams.hotelChanged(), this.searchParams.hotelId());
     sp = this.searchParams;
     GAPush(['_trackEvent', 'Trip_press_button_search', sp.GAKey(), sp.GAData()]);
