@@ -40,14 +40,6 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     <script type="text/javascript"
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
-    <script type="text/javascript">
-        $(function() {
-            $.ajax({
-                url: encodeURI('http://calltracker.mn-team.ru/sites/get/?input=voyanga;'+escape(document.referrer)+';'+escape(document.URL)),
-                dataType: 'script'
-            });
-        });
-    </script>
 </head>
 <body data-bind="css: {fixed: in1}">
 <?php $this->renderPartial('//layouts/_counters'); ?>
