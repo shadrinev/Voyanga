@@ -1959,7 +1959,7 @@ input.hotel-input {
 .paybuyContent h1 {
     font-size: 24px;
     text-shadow: 0px 1px 0px #FFF;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 .paybuyEnd {
     color: #1D222B;
@@ -2428,10 +2428,10 @@ input.hotel-input {
 }
 .paybuyContent .theSum {
 	overflow: hidden;
-	margin-top: 17px;
+	margin-top: 24px;
 	font-size: 17px;
 	color: #1d222b;
-    margin-bottom: 15px;
+    margin-bottom: 19px;
 }
 .paybuyContent .theSum .left {
     float: left;
@@ -2453,9 +2453,9 @@ input.hotel-input {
 	border-bottom: 1px solid #babbbe;
 }
 .oneBlock.buyTicket {
-    padding-top: 35px;
+    padding-top: 27px;
     background: url(../images/bg-buyTicket.png) repeat-x center bottom #c3c5cb;
-    border-bottom: 1px solid #8E9195;
+    border-bottom: 0px solid #8E9195;
 }
 
 .paybuyContent h2 {
@@ -3964,7 +3964,7 @@ a.whereData span {
     font-size: 15px;
     line-height: 28px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-    margin-bottom: 15px;
+    margin-bottom: 7px;
     padding-right: 130px;
     padding-left: 155px;
     position: relative;
