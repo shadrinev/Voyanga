@@ -287,7 +287,7 @@ class HotelTripElement extends TripElement
         $total = 0;
         foreach ($this->rooms as $room)
         {
-            $total += $room->adultCount + $room->childCount + $room->cots;
+            $total += $room['adt'] + $room['chd'] + $room['cots'];
         }
         return $total;
     }
