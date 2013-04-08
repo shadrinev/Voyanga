@@ -82,7 +82,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     ));
     ?>
     <?php if (!$fromCity): ?>
-    <div class="center-block" data-bind="style: {overflow: landBP.showGrafik() ? '' : 'hidden'}">
+    <div class="center-block headTitle" data-bind="style: {overflow: landBP.showGrafik() ? '' : 'hidden'}">
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
 
         <h3>Стоимость на месяц вперед из

@@ -69,7 +69,7 @@
         )
     ));
     ?>
-    <div class="center-block">
+    <div class="center-block headTitle">
         <?php if ($citySet): ?>
         <h1>Отели в <?php echo $city->casePre;?></h1>
         <?php else: ?>

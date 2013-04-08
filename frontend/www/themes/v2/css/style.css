@@ -2474,6 +2474,8 @@ input.hotel-input {
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 10px;
+    cursor: default !important;
+    border: none !important;
 }
 .paybuyContent h2 .ico-hotel {
 	background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
@@ -3127,9 +3129,7 @@ input.hotel-input {
     width: 1000px;
     color: #1d222b;
 }
-.headBlockOne .center-block {
-    margin-top: -5px;
-}
+
 .headBlockOne h1 {
     color: #1d222b;
     font-size: 24px;
@@ -4012,4 +4012,7 @@ a.whereData span {
 }
 .panelBuy table td .oneString .data {
     font-size: 17px;
+}
+.headTitle {
+    margin-top: -5px;
 }
