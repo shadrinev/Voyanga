@@ -23,7 +23,7 @@ EOD;
             {
                 $city = City::getCityByPk($cityId);
                 $one = array(
-                    'value' => $city->localRu . ', '.$city->country->localRu,
+                    'value' => $city->localRu,
                     'tokens' => $this->getTokensForCity($city),
                     'code' => $city->code,
                     'country' => $city->country->localRu,

@@ -22,7 +22,7 @@ ko.bindingHandlers.autocomplete = {
         valueAccessor().readableAcc(data.nameAcc);
         valueAccessor().readablePre(data.namePre);
         $(element).val(data.name);
-        return $(element).siblings('input.input-path').val(data.value);
+        return $(element).siblings('input.input-path').val(data.value + ', ' + data.country);
       });
     }, 500);
   },
