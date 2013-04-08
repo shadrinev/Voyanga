@@ -4002,8 +4002,6 @@ a.whereData span {
 .panelBuy table td {
     height: 64px;
     vertical-align: middle;
-
-
 }
 .panelBuy table td .oneString {
     font-size: 24px;
@@ -4017,4 +4015,77 @@ a.whereData span {
 }
 .headTitle {
     margin-top: -5px;
+}
+
+
+
+.twitter-typeahead {
+    position: absolute !important;
+}
+.tt-dropdown-menu {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6);
+    color: #16181A;
+    font-size: 14px;
+    margin-top: -4px;
+    overflow: hidden;
+    padding-top: 4px;
+    width: 100%;
+}
+.tt-suggestion {
+    cursor: pointer;
+    overflow: hidden;
+    padding: 7px 10px;
+    position: relative;
+    white-space: nowrap;
+}
+.tt-suggestion:hover {
+    background: none repeat scroll 0 0 #E2E5EB;
+}
+.tt-suggestion:hover .code {
+    background: none repeat scroll 0 0 #E2E5EB;
+    box-shadow: -7px 0 6px #E2E5EB;
+}
+.tt-suggestion .code {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 0 4px 4px;
+    box-shadow: -7px 0 6px #FFFFFF;
+    color: #969BA1;
+    display: block;
+    font-size: 11px;
+    padding: 7px 0 7px 5px;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    text-transform: uppercase;
+    top: 0;
+    width: 36px;
+}
+.tt-suggestion .country {
+    color: #969BA1;
+}
+.tt-dropdown-menu .left {
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll left 0 #FFFFFF;
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 5%;
+}
+.tt-dropdown-menu .center {
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 7% 0 #FFFFFF;
+    height: 8px;
+    left: 5%;
+    position: absolute;
+    top: 0;
+    width: 90%;
+}
+.tt-dropdown-menu .right {
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll right 0 #FFFFFF;
+    height: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5%;
 }
