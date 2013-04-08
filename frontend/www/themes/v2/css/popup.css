@@ -11,7 +11,6 @@
     z-index: 999;
 }
 #helpLayer{
-    background: none repeat scroll 0 0 #26292E;
     height: 100%;
     left: 0;
     opacity: 0.01;
@@ -21,12 +20,70 @@
     width: 100%;
     z-index: 999;
 }
-#helpLayer .hint-input{
-    width: 325px;
-    height: 97px;
+#helpLayer .grayLayer{
+    background: none repeat scroll 0 0 #26292e;
+    height: 100%;
+    left: 0;
+    opacity: 0.93;
+    overflow: hidden;
     position: absolute;
-    background-image: url('/images/hint-input.png');
+    top: 0;
+    width: 100%;
 }
+#helpLayer .hint-tours-route-edit{
+    width: 604px;
+    height: 68px;
+    position: absolute;
+    background-image: url('/themes/v2/images/tips-edit.png');
+}
+#helpLayer .hint-tours-elements{
+    width: 678px;
+    height: 35px;
+    position: absolute;
+    background-image: url('/themes/v2/images/tips-elements.png');
+}
+#helpLayer .hint-tours-selected-price-info{
+    width: 534px;
+    height: 59px;
+    position: absolute;
+    background-image: url('/themes/v2/images/tips-total.png');
+}
+#helpLayer .hint-tours-voyasha{
+    width: 468px;
+    height: 54px;
+    position: absolute;
+    background-image: url('/themes/v2/images/tips-voyasha.png');
+}
+#helpLayer .hint-tours-filters{
+    width: 416px;
+    height: 35px;
+    margin-left: -416px;
+    position: absolute;
+    background-image: url('/themes/v2/images/tips-filter.png');
+}
+#helpLayer .hint-tours-close-button{
+    width: 235px;
+    height: 67px;
+    margin-left: -117px;
+    left: 50%;
+    position: absolute;
+    background-image: url('/themes/v2/images/start-planning.png');
+}
+#helpLayer .hint-close{
+    width: 19px;
+    height: 19px;
+    right: 40px;
+    top: 21px;
+    position: absolute;
+    background-image: url('/themes/v2/images/close-help.png');
+}
+#helpLayer .hint-tours-header{
+    width: 631px;
+    height: 36px;
+    position: absolute;
+    margin-left: -315px;
+    background-image: url('/themes/v2/images/help-header.png');
+ }
 .body-popup {
     height: 100%;
     left: 0;
