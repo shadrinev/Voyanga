@@ -60,7 +60,9 @@
             'chosen/chosen.jquery.min.js',
             'jquery.cookie.js',
             'mdetect.js',
-            'peg-0.7.0.min.js'
+            'peg-0.7.0.min.js',
+            'hogan-2.0.0.js',
+            'typeahead.min.js'
         ),
         'depends' => array('jquery')
     ),

@@ -3,50 +3,28 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    var showCode,
-      _this = this;
-    showCode = (valueAccessor().showCode === undefined ? true : valueAccessor().showCode);
-    setTimeout(function() {
+    var _this = this;
+    return setTimeout(function() {
       $(element).bind("focus", function() {
         return $(element).change();
       });
-      return $(element).autocomplete({
-        serviceUrl: window.apiEndPoint + "/helper/autocomplete/" + valueAccessor().source,
-        minChars: 2,
-        delimiter: /(,|;)\s*/,
-        maxHeight: 400,
-        zIndex: 9999,
-        deferRequestBy: 0,
-        delay: 0,
-        showCode: showCode,
-        onSelect: function(value, data) {
-          valueAccessor().iata(data.code);
-          valueAccessor().readable(data.name);
-          valueAccessor().readableGen(data.nameGen);
-          valueAccessor().readableAcc(data.nameAcc);
-          valueAccessor().readablePre(data.namePre);
-          $(element).val(data.name);
-          return $(element).siblings('input.input-path').val(value);
-        },
-        onActivate: function(value, data) {
-          valueAccessor().readable(data.name);
-          valueAccessor().readableGen(data.nameGen);
-          valueAccessor().readableAcc(data.nameAcc);
-          valueAccessor().readablePre(data.namePre);
-          $(element).val(data.name);
-          return $(element).siblings('input.input-path').val(value);
-        }
-      }, 500);
-    });
-    return $(element).on("keyup", function(e) {
-      if ((e.keyCode === 8) || (e.keyCode === 46)) {
-        valueAccessor().iata('');
-        valueAccessor().readable('');
-        valueAccessor().readableGen('');
-        valueAccessor().readableAcc('');
-        return valueAccessor().readablePre('');
-      }
-    });
+      $(element).typeahead({
+        name: 'cities',
+        limit: 10,
+        prefetch: '/js/cities.json',
+        template: '<div title="{{value}}"><span class="city">{{name}}, </span><span class="country">{{country}}</span><span class="code">{{code}}</span></div>',
+        engine: Hogan
+      });
+      return $(element).on('typeahead:selected', function(e, data) {
+        valueAccessor().iata(data.code);
+        valueAccessor().readable(data.name);
+        valueAccessor().readableGen(data.nameGen);
+        valueAccessor().readableAcc(data.nameAcc);
+        valueAccessor().readablePre(data.namePre);
+        $(element).val(data.name);
+        return $(element).siblings('input.input-path').val(data.value);
+      });
+    }, 500);
   },
   update: function(element, valueAccessor) {
     var handleResults, iataCode, url;
