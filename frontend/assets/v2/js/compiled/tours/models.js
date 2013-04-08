@@ -656,7 +656,7 @@ ToursHotelsResultSet = (function(_super) {
     if (this.results() && this.results().data() && this.results().data().length) {
       if (result.roomSet) {
         ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet));
-      } else {
+      } else if (result.roomSets && result.roomSets()) {
         ret = this.results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0]);
       }
       if (!ret) {

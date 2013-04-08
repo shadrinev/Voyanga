@@ -94,7 +94,7 @@
     ));
     ?>
 
-    <div class="center-block">
+    <div class="center-block headTitle">
         <h1>Дешевые авиабилеты в <?php echo $countryMorph['caseAcc'];?></h1>
         <?php if ($citiesFrom): ?>
         <h3>Стоимость из
