@@ -68,6 +68,7 @@
     left: 50%;
     position: absolute;
     background-image: url('/themes/v2/images/start-planning.png');
+    cursor: pointer;
 }
 #helpLayer .hint-close{
     width: 19px;
