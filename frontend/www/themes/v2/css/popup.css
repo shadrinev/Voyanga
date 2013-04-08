@@ -11,7 +11,6 @@
     z-index: 999;
 }
 #helpLayer{
-    background: none repeat scroll 0 0 #26292E;
     height: 100%;
     left: 0;
     opacity: 0.01;
@@ -20,6 +19,16 @@
     top: 0;
     width: 100%;
     z-index: 999;
+}
+#helpLayer .grayLayer{
+    background: none repeat scroll 0 0 #26292e;
+    height: 100%;
+    left: 0;
+    opacity: 0.93;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 #helpLayer .hint-tours-route-edit{
     width: 604px;
@@ -52,6 +61,29 @@
     position: absolute;
     background-image: url('/themes/v2/images/tips-filter.png');
 }
+#helpLayer .hint-tours-close-button{
+    width: 235px;
+    height: 67px;
+    margin-left: -117px;
+    left: 50%;
+    position: absolute;
+    background-image: url('/themes/v2/images/start-planning.png');
+}
+#helpLayer .hint-close{
+    width: 19px;
+    height: 19px;
+    right: 40px;
+    top: 21px;
+    position: absolute;
+    background-image: url('/themes/v2/images/close-help.png');
+}
+#helpLayer .hint-tours-header{
+    width: 631px;
+    height: 36px;
+    position: absolute;
+    margin-left: -315px;
+    background-image: url('/themes/v2/images/help-header.png');
+ }
 .body-popup {
     height: 100%;
     left: 0;

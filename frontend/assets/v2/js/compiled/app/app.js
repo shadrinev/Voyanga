@@ -109,6 +109,7 @@ Application = (function(_super) {
     });
     this.viewData = ko.observable({});
     this.slider = new Slider();
+    this.helpLayer = new HelpLayer();
     this.slider.init();
     this.activeModule.subscribe(this.slider.handler);
     this.debugMode = ko.observable(false);
@@ -302,6 +303,7 @@ Application = (function(_super) {
   };
 
   Application.prototype.contentRendered = function() {
+    var _this = this;
     window.voyanga_debug("APP: Content rendered");
     this.trigger(this.activeModule() + ':contentRendered');
     ResizeFun();
@@ -310,7 +312,10 @@ Application = (function(_super) {
       this.runned = true;
       return;
     }
-    return window.VisualLoaderInstance.hide();
+    window.VisualLoaderInstance.hide();
+    return window.setTimeout(function() {
+      return _this.helpLayer.tryShow();
+    }, 200);
   };
 
   Application.prototype.mapRendered = function(elem) {

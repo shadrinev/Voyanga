@@ -19,6 +19,7 @@ class ToursController
 
   searchAction: (args...)=>
 #    args[0] = exTrim args[0], '/'
+    window.app.helpLayer.pageName('tours')
     @searchParams.fromString args[0]
     voyanga_debug('routing urlChanged:',@searchParams.urlChanged(),@searchParams.hotelChanged(),@searchParams.hotelId())
     # Searcheng
@@ -28,6 +29,7 @@ class ToursController
     if @searchParams.urlChanged()
       window.VisualLoaderInstance.start(@api.loaderDescription)
       @doSearch()
+
       if @searchParams.hotelId()
         backUrl = window.location.hash
         urls = backUrl.split('hotelId')
@@ -71,6 +73,8 @@ class ToursController
       @trigger "results", @stacked
       @render 'results', @stacked
       ko.processAllDeferredBindingUpdates()
+
+
 
   handleResults: (data) =>
     #data.allVariants[1].hotels = []

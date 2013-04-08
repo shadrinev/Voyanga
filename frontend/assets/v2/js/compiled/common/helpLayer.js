@@ -26,6 +26,11 @@ HelpLayerElement = (function() {
     } else {
       this.jElem = $('<div class="' + configOptions["class"] + '"></div>');
     }
+    if (configOptions.close) {
+      this.jElem.click(function() {
+        return _this.parent.close();
+      });
+    }
     this.parent.mainLayer.append(this.jElem);
     this.posTop.subscribe(function(newVal) {
       var ddy, hh;
@@ -43,6 +48,12 @@ HelpLayerElement = (function() {
       var ddx, ww;
       ddx = _this.dx;
       if (typeof _this.dx === 'string') {
+        if (_this.dx === 'center') {
+          _this.jElem.css({
+            'left': ' 50%'
+          });
+          return;
+        }
         ww = $(_this.selector).width();
         ddx = ddx.replace('w', ww.toString());
         ddx = eval(ddx);
@@ -80,6 +91,8 @@ HelpLayer = (function() {
 
     this.zindex = __bind(this.zindex, this);
 
+    this.tryShow = __bind(this.tryShow, this);
+
     var _this = this;
     this.pageName = ko.observable('main');
     this.pageName.subscribe(function(newVal) {
@@ -90,14 +103,6 @@ HelpLayer = (function() {
       return _this.layerElements([]);
     });
     this.pageElements = {
-      'main': [
-        {
-          selector: '.tdCity',
-          "class": 'hint-input',
-          dx: 40,
-          dy: 21
-        }
-      ],
       'tours': [
         {
           selector: '.left-content .my-trip-list',
@@ -107,26 +112,50 @@ HelpLayer = (function() {
         }, {
           selector: '.left-content .finish-result:eq(0)',
           "class": 'hint-tours-selected-price-info',
-          dx: 'w - 100'
+          dx: 'w - 185'
         }, {
           selector: '.left-content .finish-result.voyasha',
           "class": 'hint-tours-voyasha',
           dx: 'w'
         }, {
-          selector: '.how-many-man',
+          selector: '.panelTable',
           "class": 'hint-tours-route-edit',
-          dy: 'h'
+          dy: 'h',
+          dx: 'w/2'
         }, {
           selector: '.filter-block .innerFilter',
           "class": 'hint-tours-filters',
-          dx: 40,
-          dy: 21
+          dx: 0,
+          dy: 45
+        }, {
+          selector: '.left-content .finish-result.voyasha',
+          "class": 'hint-tours-close-button',
+          dx: 'center',
+          dy: 'h + 13',
+          close: true
+        }, {
+          selector: '.panelTable',
+          "class": 'hint-tours-header',
+          dy: -30,
+          dx: 'center'
         }
       ]
     };
     this.layerElements = ko.observableArray([]);
     this.inited = false;
   }
+
+  HelpLayer.prototype.tryShow = function() {
+    var key, val;
+    key = 'helpLayer' + this.pageName();
+    if (this.pageElements[this.pageName()]) {
+      val = $.cookie(key);
+      if (!val) {
+        $.cookie(key, true);
+        return this.show();
+      }
+    }
+  };
 
   HelpLayer.prototype.zindex = function() {
     if (!window.POPUP_NEXT_ZINDEX) {
@@ -136,15 +165,23 @@ HelpLayer = (function() {
   };
 
   HelpLayer.prototype.init = function() {
-    var opts, _i, _len, _ref;
+    var closeDiv, fullHeight, opts, _i, _len, _ref,
+      _this = this;
     if (!this.inited) {
-      this.mainLayer = $('<div id="helpLayer" style="z-index:' + this.zindex() + '"></div>');
+      this.mainLayer = $('<div id="helpLayer" style="z-index:' + this.zindex() + '"><div class="grayLayer"></div></div>');
+      fullHeight = $('html')[0].scrollHeight || $('body')[0].scrollHeight;
+      this.mainLayer.css('height', fullHeight + 'px');
       $('body').prepend(this.mainLayer);
       _ref = this.pageElements[this.pageName()];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         opts = _ref[_i];
         this.layerElements.push(new HelpLayerElement(opts, this));
       }
+      closeDiv = $('<div class="hint-close"></div>');
+      this.mainLayer.append(closeDiv);
+      closeDiv.click(function() {
+        return _this.close();
+      });
       return this.inited = true;
     } else {
       return this.refresh();
@@ -162,7 +199,7 @@ HelpLayer = (function() {
     this.init();
     this.mainLayer.show();
     return this.mainLayer.animate({
-      opacity: 0.7
+      opacity: 0.98
     }, 300, function() {
       return voyanga_debug("opacitied");
     });

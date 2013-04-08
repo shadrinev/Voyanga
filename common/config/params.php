@@ -32,7 +32,7 @@ return CMap::mergeArray(array(
         'password' => 'HHFJGYU3*^H',
         'userId' => 15,
         'apiHost' => 'http://test.nemo-ibe.com',
-        'agencyBookingWsdlUri' => 'http://test.nemo-ibe.com/nemoflights/wsdl.php?for=',
+        'agencyBookingWsdlUri' => 'http://easytrip.nemo-ibe.com/nemoflights/wsdl.php?for=',
         'agencyWsdlUri' => 'http://easytrip.nemo-ibe.com/nemoflights/wsdl.php?for=',
 
         //прямые запросы с сайта
