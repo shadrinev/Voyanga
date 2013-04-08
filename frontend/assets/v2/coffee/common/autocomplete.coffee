@@ -16,31 +16,9 @@ ko.bindingHandlers.autocomplete =
           valueAccessor().readableAcc(data.nameAcc)
           valueAccessor().readablePre(data.namePre)
           $(element).val(data.name)
-          $(element).siblings('input.input-path').val(data.value + ', ' + data.country)
+          $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country)
     , 500
 
   update: (element, valueAccessor) =>
     iataCode = valueAccessor().iata()
-
-    url = (code) ->
-      result = window.apiEndPoint + '/helper/autocomplete/citiesReadable?'
-      params = []
-      params.push 'codes[0]=' + code
-      result += params.join "&"
-      return result
-
-    handleResults = (data) ->
-      valueAccessor().readable(data[iataCode].name)
-      valueAccessor().readableGen(data[iataCode].nameGen)
-      valueAccessor().readableAcc(data[iataCode].nameAcc)
-      valueAccessor().readablePre(data[iataCode].namePre)
-      if ($(element).val().length == 0)
-        $(element).val(data[iataCode].name)
-        $(element).siblings('input.input-path').val(data[iataCode].label)
-
-    if (iataCode.length > 0)
-      $.ajax
-        url: url iataCode
-        dataType: 'json'
-        success: handleResults
-
+    console.log $(element)
