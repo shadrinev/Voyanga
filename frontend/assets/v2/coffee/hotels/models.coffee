@@ -637,7 +637,11 @@ class HotelResult
         result.age = false
         result.cots = 0
         for room in @parent.rawSP.rooms
-          result.adults += room.adultCount * 1
+          # FIXME CHECK IF IT REALLY CAN HAPIN
+          adt = room.adt
+          if ! adt?
+            adt += room.adultCount
+          result.adults += adt * 1
           # FIXME looks like this could be array
           if room.childAge
             result.age = room.childAgeage

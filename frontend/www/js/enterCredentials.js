@@ -128,6 +128,7 @@ $(function () {
 
 function checkFlight()
 {
+    return;
     if (window.fromPartner == 1) {
         window.VisualLoaderInstance.show();
         window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета', 10);

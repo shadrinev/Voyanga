@@ -11,7 +11,14 @@
     <div id="tariff-rules" style="display: block;" class="contentWrapBg">
         <div class="wrapDiv">
             <div class="wrapContent">
-                <h1 >Правила тарифов</h1>
+                <h1>Правила применения тарифов</h1>
+                <div>
+                     Возврат билетов производится строго по правилам тарифов. 
+                     Пожалуйста, обратите ваше внимание, что  
+                     мы вправе удерживать дополнительный сервисный сбор за услугу оформления 
+                     обмена/возврата билета в размере 3% от стоимости заказа, но не менее 400 рублей.
+                    <br><br>
+                </div>
                 <div data-bind="foreach: data.tariffs" style="color:#000;">
                     <div onclick="nextSlideDownRules(this);" class="tariff-route" data-bind="text: route"></div>
                     <div class="tariff-codes" style="display:none;">
@@ -127,7 +134,7 @@
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
-               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и <a onclick=\'window.app.itemsToBuy.showTariffRules()\' href=\'#\'>правилами тарифов</a>', checked: 1}" name="agree" id="agreeCheck">
+               <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и <a onclick=\'window.app.itemsToBuy.showTariffRules()\' href=\'#\'>правилами возврата</a>', checked: 1}" name="agree" id="agreeCheck">
            </label>
         </div>
         <div class="pressButton inactive" id='submit-passport'>

@@ -198,7 +198,6 @@ Application = (function(_super) {
     _ref = controller.routes;
     for (route in _ref) {
       action = _ref[route];
-      window.voyanga_debug("APP: registreing route", prefix, route, action);
       this.route(prefix + route, prefix, action);
       if (isDefault && route === '') {
         this.route(route, prefix, action);
