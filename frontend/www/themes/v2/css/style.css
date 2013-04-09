@@ -2306,6 +2306,10 @@ input.hotel-input {
     position: absolute;
     top: -16px;
 }
+.statusOrder .price {
+    width: 100%;
+    left: 0px;
+}
 .allTicketsDIV .price .rur {
     font-size: 21px;
 }
