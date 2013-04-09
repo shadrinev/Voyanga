@@ -2193,7 +2193,7 @@ input.hotel-input {
     background: url("../images/ico-fly.png") no-repeat scroll center center transparent;
 }
 .allTicketsDIV .aviaTickets .tdICO .ico.from {
-    background: url("../images/ico-fly-from.png") no-repeat scroll center center transparent;
+    background: url("../images/ico-fly-froms.png") no-repeat scroll center center transparent;
 }
 .allTicketsDIV .hotelTickets .tdICO .ico, .allTicketsDIV .ticketBox.inactive .hotelTickets .tdICO .ico:hover {
     display: inline-block;
