@@ -43,11 +43,12 @@ ko.bindingHandlers.autocomplete =
         if (s.length>0)
           _.each s, (s)->
             if (s.datum.code==iataCode)
+              console.log "Updating element. Found", s
               data = s.datum
               valueAccessor().readable(data.name)
               valueAccessor().readableGen(data.nameGen)
               valueAccessor().readableAcc(data.nameAcc)
               valueAccessor().readablePre(data.namePre)
-              if ($(element).val().length==0)
+              if (($(element).val().length==0) || ($(element).val() != data.name))
                 $(element).val(data.name)
                 $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country)
