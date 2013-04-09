@@ -18,10 +18,20 @@ ko.bindingHandlers.autocomplete =
       valueAccessor().readablePre(data.namePre)
       $(element).val(data.name)
       $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country)
+      if ((!$(element).is('.arrivalCity')) && ($('input.arrivalCity').length>0))
+        $('input.arrivalCity.second-path').focus()
     $(element).on 'typeahead:over', (e, data) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
       $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country)
     $(element).on 'typeahead:reset', (e) -> # Callback функция, срабатывающая на выбор одного из предложенных вариантов,
       $(element).parent().siblings('input.input-path').val('')
+
+    $(element).on "keyup", (e) ->
+      if ((e.keyCode == 8) || (e.keyCode == 46))
+        valueAccessor().iata('')
+        valueAccessor().readable('')
+        valueAccessor().readableGen('')
+        valueAccessor().readableAcc('')
+        valueAccessor().readablePre('')
 
 
   update: (element, valueAccessor) =>

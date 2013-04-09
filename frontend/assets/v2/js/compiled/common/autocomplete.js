@@ -21,13 +21,25 @@ ko.bindingHandlers.autocomplete = {
       valueAccessor().readableAcc(data.nameAcc);
       valueAccessor().readablePre(data.namePre);
       $(element).val(data.name);
-      return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
+      $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
+      if ((!$(element).is('.arrivalCity')) && ($('input.arrivalCity').length > 0)) {
+        return $('input.arrivalCity.second-path').focus();
+      }
     });
     $(element).on('typeahead:over', function(e, data) {
       return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
     });
-    return $(element).on('typeahead:reset', function(e) {
+    $(element).on('typeahead:reset', function(e) {
       return $(element).parent().siblings('input.input-path').val('');
+    });
+    return $(element).on("keyup", function(e) {
+      if ((e.keyCode === 8) || (e.keyCode === 46)) {
+        valueAccessor().iata('');
+        valueAccessor().readable('');
+        valueAccessor().readableGen('');
+        valueAccessor().readableAcc('');
+        return valueAccessor().readablePre('');
+      }
     });
   },
   update: function(element, valueAccessor) {
