@@ -3,7 +3,6 @@ ko.bindingHandlers.autocomplete =
     $(element).bind "focus", ->
       $(element).select()
     $(element).typeahead
-      name: 'cities' + valueAccessor().name
       limit: 5 # The max number of suggestions from the dataset to display for a given query
       prefetch: '/js/cities.json'
       remote: window.apiEndPoint + "helper/autocomplete/" + valueAccessor().source + '/query/%QUERY' # Страница для обработки запросов автозаполнения

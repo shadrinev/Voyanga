@@ -7,7 +7,6 @@ ko.bindingHandlers.autocomplete = {
       return $(element).select();
     });
     $(element).typeahead({
-      name: 'cities' + valueAccessor().name,
       limit: 5,
       prefetch: '/js/cities.json',
       remote: window.apiEndPoint + "helper/autocomplete/" + valueAccessor().source + '/query/%QUERY',
