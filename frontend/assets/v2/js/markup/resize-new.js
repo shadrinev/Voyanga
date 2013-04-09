@@ -1746,7 +1746,7 @@ function startIE() {
             $(this).find('.second-path').focus();
         });
 
-        $("body").find("input[type='text']").each(function() {
+        $(".infoPassengers").find("input[type='text']").each(function() {
             var tp = $(this).attr("placeholder");
             $(this).attr('value',tp).css('color','#ccc');
         }).focusin(function() {
@@ -1762,7 +1762,7 @@ function startIE() {
             });
 
         /* Protected send form */
-        $("body").submit(function() {
+        $(".infoPassengers").submit(function() {
             $(this).find("input[type='text']").each(function() {
                 var val = $(this).attr('placeholder');
                 if($(this).val() == val) {
