@@ -17,7 +17,13 @@ class MakeBookingAction extends CAction
     public function run($secretKey)
     {
         if (!$this->orderBooking)
+        {
             $this->orderBooking = OrderBooking::model()->findByAttributes(array('secretKey' => $secretKey));
+            if ($this->orderBooking)
+            {
+                Yii::app()->user->setState('orderBookingId', $this->orderBooking->id);
+            }
+        }
 
         $this->controller->assignTitle('enterCredentials');
         $this->getController()->layout = 'static';
