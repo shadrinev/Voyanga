@@ -4052,13 +4052,10 @@ a.whereData span {
     position: relative;
     white-space: nowrap;
 }
-.tt-suggestion:hover {
+.tt-is-under-cursor {
     background: none repeat scroll 0 0 #E2E5EB;
 }
-.tt-suggestion:hover .code {
-    background: none repeat scroll 0 0 #E2E5EB;
-    box-shadow: -7px 0 6px #E2E5EB;
-}
+
 .tt-suggestion .code {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 0 0 4px 4px;
@@ -4074,6 +4071,12 @@ a.whereData span {
     top: 0;
     width: 36px;
 }
+
+.tt-is-under-cursor .code {
+    background: none repeat scroll 0 0 #E2E5EB;
+    box-shadow: -7px 0 6px #E2E5EB;
+}
+
 .tt-suggestion .country {
     color: #969BA1;
 }
