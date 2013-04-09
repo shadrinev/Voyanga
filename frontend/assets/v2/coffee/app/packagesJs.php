@@ -62,7 +62,8 @@
             'mdetect.js',
             'peg-0.7.0.min.js',
             'hogan-2.0.0.js',
-            'typeahead.min.js'
+            'typeahead.min.js',
+            'date.fromISO.js'
         ),
         'depends' => array('jquery')
     ),
