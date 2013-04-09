@@ -3,37 +3,78 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    $(element).bind("focus", function() {
-      return $(element).change();
+    var showCode,
+      _this = this;
+    showCode = (valueAccessor().showCode === undefined ? true : valueAccessor().showCode);
+    setTimeout(function() {
+      $(element).bind("focus", function() {
+        return $(element).change();
+      });
+      return $(element).autocomplete({
+        serviceUrl: window.apiEndPoint + "/helper/autocomplete/" + valueAccessor().source,
+        minChars: 2,
+        delimiter: /(,|;)\s*/,
+        maxHeight: 400,
+        zIndex: 9999,
+        deferRequestBy: 0,
+        delay: 0,
+        showCode: showCode,
+        onSelect: function(value, data) {
+          valueAccessor().iata(data.code);
+          valueAccessor().readable(data.name);
+          valueAccessor().readableGen(data.nameGen);
+          valueAccessor().readableAcc(data.nameAcc);
+          valueAccessor().readablePre(data.namePre);
+          $(element).val(data.name);
+          return $(element).siblings('input.input-path').val(value);
+        },
+        onActivate: function(value, data) {
+          valueAccessor().readable(data.name);
+          valueAccessor().readableGen(data.nameGen);
+          valueAccessor().readableAcc(data.nameAcc);
+          valueAccessor().readablePre(data.namePre);
+          $(element).val(data.name);
+          return $(element).siblings('input.input-path').val(value);
+        }
+      }, 500);
     });
-    $(element).typeahead({
-      name: 'cities',
-      limit: 10,
-      prefetch: '/js/cities.json',
-      template: '<div title="{{value}}"><span class="city">{{name}}, </span><span class="country">{{country}}</span><span class="code">{{code}}</span></div>',
-      engine: Hogan
-    });
-    return $(element).on('typeahead:selected', function(e, data) {
-      valueAccessor().iata(data.code);
-      valueAccessor().readable(data.name);
-      valueAccessor().readableGen(data.nameGen);
-      valueAccessor().readableAcc(data.nameAcc);
-      valueAccessor().readablePre(data.namePre);
-      $(element).val(data.name);
-      return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
+    return $(element).on("keyup", function(e) {
+      if ((e.keyCode === 8) || (e.keyCode === 46)) {
+        valueAccessor().iata('');
+        valueAccessor().readable('');
+        valueAccessor().readableGen('');
+        valueAccessor().readableAcc('');
+        return valueAccessor().readablePre('');
+      }
     });
   },
   update: function(element, valueAccessor) {
-    var iataCode;
+    var handleResults, iataCode, url;
     iataCode = valueAccessor().iata();
-    return $(element).typeahead("setQuery", iataCode).data('ttView').datasets[0].getSuggestions(iataCode, function(s) {
-      var data;
-      data = s[0].datum;
-      $(element).val(data.name);
-      valueAccessor().readable(data.name);
-      valueAccessor().readableGen(data.nameGen);
-      valueAccessor().readableAcc(data.nameAcc);
-      return valueAccessor().readablePre(data.namePre);
-    });
+    url = function(code) {
+      var params, result;
+      result = window.apiEndPoint + '/helper/autocomplete/citiesReadable?';
+      params = [];
+      params.push('codes[0]=' + code);
+      result += params.join("&");
+      return result;
+    };
+    handleResults = function(data) {
+      valueAccessor().readable(data[iataCode].name);
+      valueAccessor().readableGen(data[iataCode].nameGen);
+      valueAccessor().readableAcc(data[iataCode].nameAcc);
+      valueAccessor().readablePre(data[iataCode].namePre);
+      if ($(element).val().length === 0) {
+        $(element).val(data[iataCode].name);
+        return $(element).siblings('input.input-path').val(data[iataCode].label);
+      }
+    };
+    if (iataCode.length > 0) {
+      return $.ajax({
+        url: url(iataCode),
+        dataType: 'json',
+        success: handleResults
+      });
+    }
   }
 };
