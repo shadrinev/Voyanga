@@ -96,7 +96,7 @@
             <thead>
             <tr>
                 <td colspan="7" class="paybuyContent"><br>
-                    <h3>Введите данные пассажиров</h3>
+                    <h3>2. Введите данные пассажиров</h3>
                     <h2><span class="ico-fly"></span><?php echo $headers['flights'][$flightCounter++]; ?></h2>
                     <?php $curEl++; ?>
                 </td>

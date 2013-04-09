@@ -1,7 +1,7 @@
 <div class="oneBlock">
 <!--=== ===-->
 <div class="paybuyContent" id="tableStartRun">
-<h2><span class="<?php echo $icon ?>"></span><?php echo $header ?></h2>
+<h2>2. <?php echo $header ?></h2>
 <table class="infoPassengers">
 <thead>
 <?php $currentRoomId = 0; $currentRoomAdults = 0; $currentRoomChild = 0; ?>
