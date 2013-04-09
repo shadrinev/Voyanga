@@ -26,16 +26,16 @@ describe 'PEG ROOMS rule', ->
 describe 'PEG DESTINATIONS rule', ->
   it 'can parse single destination', ->
     result = parser.parse('MOW/1/LED/5.9.2013/7.9.2013/', 'DESTINATIONS')
-    expect(result).toEqual {start: {from:'MOW', return:'1'}, destinations:[{to: 'LED', dateFrom: new Date(2013,8,5), dateTo: new Date(2013,8,7)}]}
+    expect(result).toEqual {start: {from:'MOW', rt:'1'}, destinations:[{to: 'LED', dateFrom: new Date(2013,8,5), dateTo: new Date(2013,8,7)}]}
 
     result = parser.parse('MOW/0/LED/5.9.2013/7.9.2013/', 'DESTINATIONS')
-    expect(result).toEqual {start: {from:'MOW', return:'0'}, destinations:[{to: 'LED', dateFrom: new Date(2013,8,5), dateTo: new Date(2013,8,7)}]}
+    expect(result).toEqual {start: {from:'MOW', rt:'0'}, destinations:[{to: 'LED', dateFrom: new Date(2013,8,5), dateTo: new Date(2013,8,7)}]}
 
 
   it 'can parse multiple destination', ->
     result = parser.parse('MOW/1/LED/5.9.2013/7.9.2013/PAR/9.9.2013/11.9.2013/', 'DESTINATIONS')
     expect(result).toEqual {
-      start: {from:'MOW', return:'1'},
+      start: {from:'MOW', rt:'1'},
       destinations:[
         {to: 'LED', dateFrom: new Date(2013,8,5), dateTo: new Date(2013,8,7)},
         {to: 'PAR', dateFrom: new Date(2013,8,9), dateTo: new Date(2013,8,11)}]

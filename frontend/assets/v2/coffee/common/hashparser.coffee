@@ -61,11 +61,10 @@ HOTELS_WO_KV = city:IATA '/' fromDate:DATE '/' toDate:DATE '/' rooms:ROOMS {
 
 
 START_FROM = from:IATA '/' rt:RT '/'
-{  var result = {
-      from: from
-  };
-  result.return = rt;
-  return result;
+{  return {
+      from: from,
+      rt:rt
+  }
 }
 
 DESTINATION =  to:IATA '/' fromDate:DATE '/' toDate:DATE '/'
