@@ -13,7 +13,8 @@ Yii::setPathOfAlias('imageStorage', $root . '/frontend/www/image_storage');
 
 return array(
     'preload' => array(
-        'notification', 'RSentryException'
+        'notification',
+        'RSentryException'
     ),
 
     'import' => array(
@@ -36,30 +37,39 @@ return array(
         ),
     ),
 
-    'components'=>array(
+    'components' => array(
 
         'assetManager' => array(
             'forceCopy' => YII_DEBUG,
             'baseUrl' => '/assets/',
         ),
 
-        'cron'=>array(
-            'class'=>'site.common.components.cron.CronComponent'
+        'cron' => array(
+            'class' => 'site.common.components.cron.CronComponent'
         ),
 
         'session' => array(
             'autoCreateSessionTable' => YII_DEBUG,
-            'class'=>'CDbHttpSession',
-            'connectionID'=>'db',
-            'sessionTableName'=>'yii_session',
-            'timeout' => 3600 //1hr to store items inside session
+            'class' => 'CDbHttpSession',
+            'connectionID' => 'db',
+            'sessionTableName' => 'yii_session',
+            'timeout' => 3600
+            //1hr to store items inside session
         ),
 
         'pCache' => array(
             'class' => 'common.extensions.redis.CRedisCache',
             'keyPrefix' => 'voyanga-',
             'hashKey' => false,
-            'serializer' => array('igbinary_serialize', 'igbinary_unserialize'),
+            'servers' => array(
+                'host' => 'voyanga.com',
+                'password' => 'lZm6aqS3lf5f1Ooqn5QCY64E',
+                'port' => 6379
+            ),
+            'serializer' => array(
+                'igbinary_serialize',
+                'igbinary_unserialize'
+            ),
         ),
 
         //быстрый кэш доступный во всех приложениях по одному ключу
@@ -77,13 +87,13 @@ return array(
             )
         ),
 
-        'RSentryException'=> array(
-            'dsn'=> $params['sentry.dsn'],
+        'RSentryException' => array(
+            'dsn' => $params['sentry.dsn'],
             'class' => 'common.extensions.yii-sentry-log.RSentryComponent',
         ),
 
         'flightBooker' => array(
-            'class'=>'site.common.components.flightBooker.FlightBookerComponent',
+            'class' => 'site.common.components.flightBooker.FlightBookerComponent',
         ),
 
         'newRelic' => array(
@@ -91,33 +101,26 @@ return array(
         ),
 
         'hotelBooker' => array(
-            'class'=>'site.common.components.hotelBooker.HotelBookerComponent',
+            'class' => 'site.common.components.hotelBooker.HotelBookerComponent',
         ),
 
-        'workflow'=> array(
-            'class'=>'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
+        'workflow' => array(
+            'class' => 'site.common.extensions.simpleWorkflow.SWPhpWorkflowSource',
         ),
 
         'pdfGenerator' => array(
-            'class'=>'site.common.components.PdfGenerator'
+            'class' => 'site.common.components.PdfGenerator'
         ),
 
         'observer' => array(
             'class' => 'site.common.components.observer.ObserverComponent',
             'observers' => array(
-                'onEnterCredentials' => array(
-                ),
-                'onBeforeFlightSearch'=>array(
-                ),
-                'onAfterFlightSearch'=>array(
-                ),
-                'onBeforeFlightBooking'=>array(
-                ),
-                'onAfterFlightBooking'=>array(
-                ),
-                'onBeforeBookingTimeLimitError'=>array(
-
-                )
+                'onEnterCredentials' => array(),
+                'onBeforeFlightSearch' => array(),
+                'onAfterFlightSearch' => array(),
+                'onBeforeFlightBooking' => array(),
+                'onAfterFlightBooking' => array(),
+                'onBeforeBookingTimeLimitError' => array()
             )
         ),
 
@@ -135,17 +138,18 @@ return array(
         ),
 
         'mongodb' => array(
-            'class'             => 'EMongoDB',
-            'connectionString'  => $params['mongo.connectionString'],
-            'dbName'            => $params['mongo.dbName'],
-            'fsyncFlag'         => false,
-            'safeFlag'          => false,
-            'useCursor'         => false,
+            'class' => 'EMongoDB',
+            'connectionString' => $params['mongo.connectionString'],
+            'dbName' => $params['mongo.dbName'],
+            'fsyncFlag' => false,
+            'safeFlag' => false,
+            'useCursor' => false,
         ),
 
         'mail' => array(
             'class' => 'common.extensions.yii-mail.YiiMail',
-            'transportType' => 'smtp', // change to 'php' when running in real domain.
+            'transportType' => 'smtp',
+            // change to 'php' when running in real domain.
             'viewPath' => 'frontend.www.themes.v2.views.mail',
             'logging' => true,
             'dryRun' => false,
@@ -158,56 +162,67 @@ return array(
             ),
         ),
 
-        'configManager' => array (
+        'configManager' => array(
             'class' => 'ConfigurationManager',
         ),
 
         'format' => array(
-            'numberFormat' => array('decimals'=>2, 'decimalSeparator'=>'.', 'thousandSeparator'=>' '),
+            'numberFormat' => array(
+                'decimals' => 2,
+                'decimalSeparator' => '.',
+                'thousandSeparator' => ' '
+            ),
             'datetimeFormat' => 'd.m.Y H:i'
         ),
 
-        'db'=>array(
+        'db' => array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
             'connectionString' => $params['db.connectionString'],
             'username' => $params['db.username'],
             'password' => $params['db.password'],
-            'schemaCachingDuration' => YII_DEBUG ? 0 : 864000,  // 1000 days
-            'schemaCachingExclude' => array('order_booking', 'partner'),
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 864000,
+            // 1000 days
+            'schemaCachingExclude' => array(
+                'order_booking',
+                'partner'
+            ),
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
         ),
 
-        'logdb'=>array(
+        'logdb' => array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
             'connectionString' => $params['log_db.connectionString'],
             'username' => $params['log_db.username'],
             'password' => $params['log_db.password'],
-            'schemaCachingDuration' => YII_DEBUG ? 0 : 864000,  // 1000 days
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 864000,
+            // 1000 days
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
         ),
 
-        'backendDb'=>array(
+        'backendDb' => array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
             'connectionString' => $params['backendDb.connectionString'],
             'username' => $params['backendDb.username'],
             'password' => $params['backendDb.password'],
-            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,
+            // 1000 days
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
         ),
 
-        'userDb'=>array(
+        'userDb' => array(
             'class' => 'CDbConnection',
             'pdoClass' => 'NestedPDO',
             'connectionString' => $params['userDb.connectionString'],
             'username' => $params['userDb.username'],
             'password' => $params['userDb.password'],
-            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,  // 1000 days
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400000,
+            // 1000 days
             'enableParamLogging' => true,
             'charset' => 'utf8',
         ),
@@ -243,18 +258,18 @@ return array(
                 array(
                     'class' => 'common.extensions.yii-sentry-log.RSentryLog',
                     'filter' => 'VoyangaLogFilter',
-                    'dsn'=> $params['sentry.dsn'],
-                    'levels'=> 'error, warning',
+                    'dsn' => $params['sentry.dsn'],
+                    'levels' => 'error, warning',
                 ),
             )
         ),
 
-        'hotelsRating'=>array(
-            'class'=>'common.components.HotelsRatingComponent'
+        'hotelsRating' => array(
+            'class' => 'common.components.HotelsRatingComponent'
         ),
 
-        'httpClient'=>array(
-            'class'=>'HttpClient'
+        'httpClient' => array(
+            'class' => 'HttpClient'
         ),
 
         'payments' => array(
@@ -269,10 +284,11 @@ return array(
         ),
     ),
 
-    'modules'=>array(
+    'modules' => array(
         'users' => array(
             'class' => 'packages.users.AUsersModule',
-            'userModelClass' => 'User', // the name of your custom user class
+            'userModelClass' => 'User',
+            // the name of your custom user class
         ),
         'email' => array(
             'class' => 'packages.email.AEmailModule',

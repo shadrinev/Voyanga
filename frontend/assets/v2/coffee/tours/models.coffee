@@ -391,7 +391,7 @@ class ToursHotelsResultSet extends TourEntry
     if @results() && @results().data() && @results().data().length
       if result.roomSet
         ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSet))
-      else
+      else if result.roomSets && result.roomSets()
         ret = @results().findAndSelectSame(ko.utils.unwrapObservable(result.roomSets)[0])
       if !ret
         ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())

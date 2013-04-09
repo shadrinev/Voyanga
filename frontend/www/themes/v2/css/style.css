@@ -25,10 +25,12 @@
     text-decoration: underline;
 }
 input:-moz-placeholder {
-    color: #CCCCCC !important;
+    color: #aaaaaa !important;
+    font-size: 12px !important;
 }
 input:focus:-moz-placeholder {
-    color: #CCCCCC !important;
+    color: #aaaaaa !important;
+    font-size: 12px !important;
 }
 .btn {
     cursor: pointer;
@@ -1952,19 +1954,19 @@ input.hotel-input {
     color: #1D222B;
     margin: 0 auto;
     max-width: 950px;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
 }
 .paybuyContent h1 {
     font-size: 24px;
     text-shadow: 0px 1px 0px #FFF;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 .paybuyEnd {
     color: #1D222B;
     height: 65px;
     margin: 0 auto 22px;
     max-width: 950px;
-    padding-top: 22px;
+    padding-top: 17px;
     position: relative;
     text-align: right;
 }
@@ -2115,7 +2117,7 @@ input.hotel-input {
 }
 
 .allTicketsDIV {
-    background: none repeat scroll 0 0 #F4F7F9;
+    background: none repeat scroll 0 0 #FFF;
     border-radius: 6px 6px 6px 6px;
     -webkit-border-radius:  6px 6px 6px 6px;
     -moz-border-radius: 6px 6px 6px 6px;
@@ -2385,6 +2387,9 @@ input.hotel-input {
 .allTicketsDIV .ticketBox .tdPath .timeAndPath {
     margin-left: -25px;
 }
+.timeAndPath .text, .timeAndPath .ico-path {
+    cursor: pointer;
+}
 .allTicketsDIV .ticketBox .tdPath .ico-path {
     background: none;
     height: 16px;
@@ -2422,11 +2427,11 @@ input.hotel-input {
     background: inherit !important;
 }
 .paybuyContent .theSum {
-	overflow: hidden;
-	margin-top: 17px;
-	font-size: 17px;
-	color: #1d222b;
-    margin-bottom: 15px;
+    overflow: hidden;
+    margin-top: 16px;
+    font-size: 17px;
+    color: #1d222b;
+    margin-bottom: 31px;
 }
 .paybuyContent .theSum .left {
     float: left;
@@ -2448,9 +2453,9 @@ input.hotel-input {
 	border-bottom: 1px solid #babbbe;
 }
 .oneBlock.buyTicket {
-    padding-top: 35px;
-    background: url(../images/bg-buyTicket.png) repeat-x center bottom #b6b8bd;
-    border-bottom: 1px solid #8E9195;
+    padding-top: 33px;
+    background: url(../images/bg-buyTicket.png) repeat-x center bottom #c3c5cb;
+    border-bottom: 0px solid #8E9195;
 }
 
 .paybuyContent h2 {
@@ -2458,8 +2463,8 @@ input.hotel-input {
     font-size: 24px;
     letter-spacing: -0.05em;
     line-height: 26px;
-    margin-bottom: 15px;
-    margin-top: 25px;
+    margin-bottom: 11px;
+    margin-top: 17px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 .paybuyContent h2 .ico-fly {
@@ -2469,6 +2474,8 @@ input.hotel-input {
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 10px;
+    cursor: default !important;
+    border: none !important;
 }
 .paybuyContent h2 .ico-hotel {
 	background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
@@ -3122,9 +3129,7 @@ input.hotel-input {
     width: 1000px;
     color: #1d222b;
 }
-.headBlockOne .center-block {
-    margin-top: -5px;
-}
+
 .headBlockOne h1 {
     color: #1d222b;
     font-size: 24px;
@@ -3828,22 +3833,29 @@ a.whereData span {
 }
 .tariffStyle {
     background: none repeat scroll 0 0 #CCCCCC;
-    border: 1px solid;
-    margin-left: -20px;
-    margin-right: -20px;
+    border: 1px solid #CCC;
+    margin-left: -35px;
+    margin-right: -35px;
     margin-top: 5px;
-    padding: 20px;
+    padding: 20px 35px;
+    white-space: pre;
+    font-family: monospace !important;
+    text-transform: uppercase;
+    color: #333;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 300px;
+}
+.tariffStyle pre {
+    white-space: pre;
+    font-family: monospace !important;
+    font-size: 14px;
 }
 .tariff-route {
     border-bottom: 1px dashed;
     display: inline-block;
     cursor: pointer;
     color: #1C81BB;
-}
-.tariffStyle > span {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
 }
 
 #socialButtons {
@@ -3959,9 +3971,9 @@ a.whereData span {
     font-size: 15px;
     line-height: 28px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-    margin-bottom: 15px;
-    padding-right: 136px;
-    padding-left: 159px;
+    margin-bottom: 7px;
+    padding-right: 130px;
+    padding-left: 155px;
     position: relative;
 }
 .andOthers .priceSale {
@@ -4007,4 +4019,80 @@ a.whereData span {
 }
 .panelBuy table td .oneString .data {
     font-size: 17px;
+}
+.headTitle {
+    margin-top: -5px;
+}
+
+
+
+.twitter-typeahead {
+    position: absolute !important;
+}
+.tt-dropdown-menu {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 2px rgba(1, 1, 1, 0.6);
+    color: #16181A;
+    font-size: 14px;
+    margin-top: -4px;
+    overflow: hidden;
+    padding-top: 4px;
+    width: 100%;
+}
+.tt-suggestion {
+    cursor: pointer;
+    overflow: hidden;
+    padding: 7px 10px;
+    position: relative;
+    white-space: nowrap;
+}
+.tt-suggestion:hover {
+    background: none repeat scroll 0 0 #E2E5EB;
+}
+.tt-suggestion:hover .code {
+    background: none repeat scroll 0 0 #E2E5EB;
+    box-shadow: -7px 0 6px #E2E5EB;
+}
+.tt-suggestion .code {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 0 0 4px 4px;
+    box-shadow: -7px 0 6px #FFFFFF;
+    color: #969BA1;
+    display: block;
+    font-size: 11px;
+    padding: 7px 0 7px 5px;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    text-transform: uppercase;
+    top: 0;
+    width: 36px;
+}
+.tt-suggestion .country {
+    color: #969BA1;
+}
+.tt-dropdown-menu .left {
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll left 0 #FFFFFF;
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 5%;
+}
+.tt-dropdown-menu .center {
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll 7% 0 #FFFFFF;
+    height: 8px;
+    left: 5%;
+    position: absolute;
+    top: 0;
+    width: 90%;
+}
+.tt-dropdown-menu .right {
+    background: url("../images/autocompleteTopBgAvia.png") no-repeat scroll right 0 #FFFFFF;
+    height: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5%;
 }

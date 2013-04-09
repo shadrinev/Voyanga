@@ -41,6 +41,7 @@ ToursController = (function() {
   ToursController.prototype.searchAction = function(args) {
     var backUrl, sp, urls,
       _this = this;
+    window.app.helpLayer.pageName('tours');
     this.searchParams.fromString(args);
     voyanga_debug('routing urlChanged:', this.searchParams.urlChanged(), this.searchParams.hotelChanged(), this.searchParams.hotelId());
     sp = this.searchParams;

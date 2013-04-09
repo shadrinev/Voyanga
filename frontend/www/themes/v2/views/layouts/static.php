@@ -74,7 +74,7 @@ foreach ($templates as $template)
     echo "<!-- END OF TEMPLATE $template -->\n";
 }
 ?>
-<?php echo $this->renderPartial('//layouts/_popup', array('theme'=>$theme)); ?>
+<?php echo $this->renderPartial('//layouts/_popup', array('theme'=>$theme,'page'=>'static')); ?>
 <div id="trackCode">11-11</div>
 </body>
 </html>

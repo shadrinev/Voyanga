@@ -1311,7 +1311,11 @@
 	background-position: 0px 0px;
 }
 .tickets-details .content .information .place {
-	float: left;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 290px;
 }
 .tickets-details .content .end-path .information .place {
     margin-top: 3px;

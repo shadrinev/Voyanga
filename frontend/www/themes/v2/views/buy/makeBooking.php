@@ -11,7 +11,14 @@
     <div id="tariff-rules" style="display: block;" class="contentWrapBg">
         <div class="wrapDiv">
             <div class="wrapContent">
-                <h1 >Правила тарифов</h1>
+                <h1>Правила применения тарифов</h1>
+                <div>
+                     Возврат билетов производится строго по правилам тарифов. 
+                     Пожалуйста, обратите ваше внимание, что  
+                     мы вправе удерживать дополнительный сервисный сбор за услугу оформления 
+                     обмена/возврата билета в размере 3% от стоимости заказа, но не менее 400 рублей.
+                    <br><br>
+                </div>
                 <div data-bind="foreach: data.tariffs" style="color:#000;">
                     <div onclick="nextSlideDownRules(this);" class="tariff-route" data-bind="text: route"></div>
                     <div class="tariff-codes" style="display:none;">

@@ -57,6 +57,7 @@ class Application extends Backbone.Router
     @viewData = ko.observable {}
 
     @slider = new Slider()
+    @helpLayer = new HelpLayer()
     @slider.init()
     @activeModule.subscribe @slider.handler
     @debugMode = ko.observable false
@@ -222,6 +223,11 @@ class Application extends Backbone.Router
       return
       
     window.VisualLoaderInstance.hide()
+    window.setTimeout(
+      =>
+        @helpLayer.tryShow()
+      , 200
+    )
 
   mapRendered: (elem) =>
     $('.slideTours').find('.active').find('.triangle').animate({'top' : '-16px'}, 200);

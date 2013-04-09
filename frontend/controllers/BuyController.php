@@ -194,8 +194,8 @@ class BuyController extends FrontendController
     public function addFlightToTrip($searchKey, $searchId)
     {
         //to override igbinary_unserialize_long: 64bit long on 32bit platform
-        $flightSearchResult = @Yii::app()->pCache->get('flightSearchResult' . $searchId);
-        $flightSearchParams = @Yii::app()->pCache->get('flightSearchParams' . $searchId);
+        $flightSearchResult = Yii::app()->pCache->get('flightSearchResult' . $searchId);
+        $flightSearchParams = Yii::app()->pCache->get('flightSearchParams' . $searchId);
         if (($flightSearchParams) and ($flightSearchResult))
         {
             foreach ($flightSearchResult->flightVoyages as $result)
