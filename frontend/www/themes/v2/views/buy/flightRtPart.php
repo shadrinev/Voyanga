@@ -2,11 +2,12 @@
     <div class="ticketBox">
     <table class="aviaTickets">
         <tbody>
-        <tr>
-            <td class="tdICO paddingBottom" rowspan="2">
-                <div class="ico"></div>
+        <tr class="oneWay">
+            <td class="tdICO">
+                <div class="ico"></div><br>
+                Туда
             </td>
-            <td class="tdFrom paddingBottom">
+            <td class="tdFrom">
                 <div class="what">Вылет</div>
                 <div class="city"><span data-bind="text: $data.departureCity()">Санкт-Петербург</span>, <span data-bind="text: $data.departureAirport()" class="airport">Пулково-1</span></div>
                 <div class="time"><span data-bind="text: $data.departureTime()">2:35</span>, <span class="date" data-bind="text: $data.departureDayMo()">28 мая</span></div>
@@ -19,12 +20,12 @@
                     <div class="text" data-bind="click: $data.showDetailsOverview">Всего <span data-bind="text: $data.duration()"></span></div>
                 </div>
             </td>
-            <td class="tdTo paddingBottom">
+            <td class="tdTo">
                 <div class="what">Прилет</div>
                 <div class="city"><span data-bind="text: $data.arrivalCity()">Санкт-Петербург</span>, <span class="airport" data-bind="text: $data.arrivalAirport()">Пулково-1</span></div>
                 <div class="time"><span data-bind="text: $data.arrivalTime()">2:35</span>, <span class="date" data-bind="text: $data.arrivalDayMo()">28 мая</span></div>
             </td>
-            <td class="tdAvia paddingBottom">
+            <td class="tdAvia">
                 <div>
                     <span class="tooltip" data-bind="click: $data.showDetailsOverview, attr: {'rel': $data.firstAirlineName()}"><img data-bind="attr: {'src': '/img/airlines/' + $data.firstAirline() +'.png'}" ></span>
                 </div>
@@ -32,6 +33,10 @@
             </td>
         </tr>
         <tr>
+            <td class="tdICO">
+                <div class="ico from"></div><br>
+                &nbsp;&nbsp;Обратно
+            </td>
             <td class="tdFrom">
                 <div class="what">Вылет</div>
                 <div class="city"><span data-bind="text: $data.rtDepartureCity()">Санкт-Петербург</span>, <span data-bind="text: $data.rtDepartureAirport()" class="airport">Пулково-1</span></div>

@@ -9,10 +9,21 @@ tour = dests:DESTINATIONS 'rooms/' rooms:ROOMS kv:KEYVALUES {
     extra: kv
   }
 }
+  / segments:(AVIA_SEGMENT / HOTELS_SEGMENT)+ kv:KEYVALUES{
+  return {
+    complex: true,
+    segments: segments,
+    extra: kv
+  }
+}
 
 DESTINATIONS = start:START_FROM destinations:DESTINATION+ {
   return {start: start, destinations: destinations};
 }
+
+AVIA_SEGMENT = 'a/' segment:AVIA { segment.avia = true; return segment;}
+
+HOTELS_SEGMENT =  'h/' segment:HOTELS_WO_KV { segment.hotels = true; return segment}
 
 AVIA = from: IATA '/' to: IATA '/' date:DATE '/' rtDate:(date:DATE '/' {return date})? passangers:PASSANGERS '/' rtLegacy:(date:DATE '/' {return date})?
 {
@@ -33,21 +44,26 @@ AVIA = from: IATA '/' to: IATA '/' date:DATE '/' rtDate:(date:DATE '/' {return d
   return result;
 }
 
-HOTELS = city:IATA '/' fromDate:DATE '/' toDate:DATE '/' rooms:ROOMS kv:KEYVALUES
+HOTELS = hotels:HOTELS_WO_KV  kv:KEYVALUES
 {
+  hotels.extra = kv;
+  return hotels;
+}
+
+HOTELS_WO_KV = city:IATA '/' fromDate:DATE '/' toDate:DATE '/' rooms:ROOMS {
   return {
     to: city,
     dateFrom: fromDate,
     dateTo: toDate,
     rooms: rooms,
-    extra: kv
   }
 }
+
 
 START_FROM = from:IATA '/' rt:RT '/'
 {  return {
       from: from,
-      return: rt
+      rt:rt
   }
 }
 
