@@ -730,6 +730,7 @@ function ResizeAviaClb() {
     ifIpadLoad();
     slideToursPanel();
     resizeLandsHotels();
+    DayMonthYear();
 }
 
 function ResizeFun() {
@@ -1211,7 +1212,7 @@ function openPopUpProj() {
     });
 }
 
-function closePopUpProj() {
+function closePopUpProj() {divInputBirthday
     $('.mainWrapBg').hide();
     $('body').css('overflow', 'auto');
     clickYes = false;
