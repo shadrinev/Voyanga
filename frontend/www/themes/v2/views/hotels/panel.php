@@ -13,7 +13,7 @@
                     </div>
                     <input class="input-path" tabindex="-1" type="text">
                     <input class="second-path" type="text" placeholder="Куда едем?"
-                           data-bind="autocomplete: {source:'city/hotel_req/1', iata: city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre, showCode: false}">
+                           data-bind="autocomplete: {name:'hotel', source:'city/hotel_req/1', iata: city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre, showCode: false}">
 
                     <div class="date" data-bind="click: showCalendar, html:checkInHtml()">
                     </div>

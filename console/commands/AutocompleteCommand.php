@@ -19,8 +19,9 @@ EOD;
         {
             $result = array();
             $popularCitiesCodes = $this->getPopularCitiesIds();
-            foreach ($popularCitiesCodes as $cityId)
+            foreach ($popularCitiesCodes as $i=>$cityId)
             {
+                if ($i%100==0) echo $i."\n";
                 $city = City::getCityByPk($cityId);
                 $one = array(
                     'value' => $city->localRu,
@@ -34,7 +35,7 @@ EOD;
                 );
                 $result[] = $one;
             }
-            $jsonResult = json_encode($result);
+            $jsonResult = json_encode($result, JSON_UNESCAPED_UNICODE);
             $this->saveToOutputFolder($jsonResult);
         }
         else
@@ -42,6 +43,18 @@ EOD;
             echo "Unknown type\n";
             echo $this->getHelp();
         }
+    }
+
+    public function actionConvert()
+    {
+        $folderAlias = 'frontend.www.js';
+        $folder = Yii::getPathOfAlias($folderAlias);
+        $filename = 'cities.json';
+        $result = file_get_contents($folder . DIRECTORY_SEPARATOR . $filename);
+        $result = json_decode($result, JSON_UNESCAPED_UNICODE);
+        $filename2 = 'cities2.json';
+        $result2 = json_encode($result);
+        $result = file_put_contents($folder . DIRECTORY_SEPARATOR . $filename2, $result2);
     }
 
 
@@ -52,7 +65,7 @@ EOD;
         $model = ReportExecuter::run($report);
         $directs = $model->findAll();
         $result = array();
-        foreach ($directs as $direct)
+        foreach ($directs as $i=>$direct)
         {
             $fromId = intval($direct->_id['departureCityId']);
             $toId = intval($direct->_id['arrivalCityId']);

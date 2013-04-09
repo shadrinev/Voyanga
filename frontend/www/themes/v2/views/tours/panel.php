@@ -19,7 +19,7 @@
                             </div>
                             <input type="text" tabindex="-1" class="input-path" data-bind="blur: hideFromCityInput">
                             <input type="text" placeholder="Санкт-Петербург" class="second-path"
-                                   data-bind="blur: hideFromCityInput, autocomplete: {source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen, readablePre: $parent.startCityReadablePre}">
+                                   data-bind="blur: hideFromCityInput, autocomplete: {name:'tour', source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen, readablePre: $parent.startCityReadablePre}">
                         </div>
                         <!-- /ko -->
                     </div>

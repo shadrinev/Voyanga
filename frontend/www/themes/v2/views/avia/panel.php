@@ -14,7 +14,7 @@
                         </div>
                         <input class="input-path departureCity" type="text" tabindex="-1">
                         <input class="second-path departureCity" type="text" placeholder="Откуда"
-                               data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen, readablePre: departureCityReadablePre}">
+                               data-bind="autocomplete: {name:'avia', source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen, readablePre: departureCityReadablePre}">
 
                         <div class="date" data-bind="click: showCalendar">
                             <span class="f17" data-bind="text: departureDateDay()">12</span>
