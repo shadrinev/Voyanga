@@ -3,6 +3,7 @@ ko.bindingHandlers.autocomplete =
     $(element).bind "focus", ->
       $(element).select()
     $(element).typeahead
+      name: 'cities'
       limit: 5 # The max number of suggestions from the dataset to display for a given query
       prefetch: '/js/cities.json'
       remote: window.apiEndPoint + "helper/autocomplete/" + valueAccessor().source + '/query/%QUERY' # Страница для обработки запросов автозаполнения
@@ -38,13 +39,15 @@ ko.bindingHandlers.autocomplete =
     content = valueAccessor().readable()
     if content == undefined then content=iataCode
     _.each $(element).typeahead("setQueryInternal", content).data('ttView').datasets, (dataset)->
-      dataset.getOneSuggestion iataCode, (s) ->
-        if ((s.length>0) && (s[0].datum.code==iataCode))
-          data = s[0].datum
-          valueAccessor().readable(data.name)
-          valueAccessor().readableGen(data.nameGen)
-          valueAccessor().readableAcc(data.nameAcc)
-          valueAccessor().readablePre(data.namePre)
-          if ($(element).val().length==0)
-            $(element).val(data.name)
-            $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country)
+      dataset.getSuggestions iataCode, (s) ->
+        if (s.length>0)
+          _.each s, (s)->
+            if (s.datum.code==iataCode)
+              data = s.datum
+              valueAccessor().readable(data.name)
+              valueAccessor().readableGen(data.nameGen)
+              valueAccessor().readableAcc(data.nameAcc)
+              valueAccessor().readablePre(data.namePre)
+              if ($(element).val().length==0)
+                $(element).val(data.name)
+                $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country)
