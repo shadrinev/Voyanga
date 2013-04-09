@@ -50,7 +50,6 @@
             'backbone.js',
             'jquery-ui-1.8.22.custom.min.js',
             'jquery.easing.1.3.js',
-            'jquery.autocomplete.js',
             'jquery.dotdotdot-1.5.1.js',
             'moment.js',
             'moment-ru.js',

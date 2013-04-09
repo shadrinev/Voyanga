@@ -118,7 +118,7 @@
                                                 <div class="right"></div>
                                             </div>
                                             <input type="text" placeholder="Куда едем?" class="second-path"
-                                                   data-bind="autocomplete: {source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre}"
+                                                   data-bind="autocomplete: {name: 'hotel', source:'city/hotel_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen, readablePre: cityReadablePre}"
                                                    autocomplete="off">
                                             <input type="text" tabindex="-1" class="input-path">
 
