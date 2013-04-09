@@ -2219,7 +2219,7 @@ input.hotel-input {
     line-height: 8px;
     text-align: center;
     vertical-align: middle;
-    width: 60px;
+    width: 70px;
 }
 .allTicketsDIV .aviaTickets .tdICO.paddingBottom {
     padding-bottom: 9px;
@@ -2343,7 +2343,7 @@ input.hotel-input {
     /*background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;*/
     text-align: center;
     vertical-align: middle;
-    width: 60px;
+    width: 70px;
 }
 .allTicketsDIV .hotelTickets .tdHotel {
 	width: 336px;
@@ -2872,7 +2872,7 @@ input.hotel-input {
     text-align: left;
     width: 235px;
     right: 0px;
-    top: 36px;
+    top: 31px;
     font-size: 13px;
 }
 .paybuyEnd .armoring .text {
@@ -4050,7 +4050,10 @@ a.whereData span {
     overflow: hidden;
     padding: 7px 10px;
     position: relative;
-    white-space: nowrap;
+    white-space: nowrap !important;
+}
+.tt-suggestion div {
+    white-space: nowrap !important;
 }
 .tt-is-under-cursor {
     background: none repeat scroll 0 0 #E2E5EB;

@@ -391,7 +391,7 @@ $(window).load(getLink);
 function DayMonthYear() {
     if($('.divInputBirthday').length > 0 && $('.divInputBirthday').is(':visible')) {
 
-        var _birthday = $('.divInputBirthday').find('input');
+        var _birthday = $('.tdBirthday').find('.divInputBirthday').find('input');
 
         _birthday.keypress(function(e) {
             if (e.which > 47 && e.which < 58) {
