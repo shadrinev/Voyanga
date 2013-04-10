@@ -77,7 +77,6 @@ class BuyController extends FrontendController
         $el = $tdp->getSortedCartItemsOnePerGroup();
         if ($el[0] instanceof FlightTripElement)
             $result = $el[0]->flightVoyage->getIsValid();
-        $result = false;
         echo json_encode(array('result'=>$result));
     }
 

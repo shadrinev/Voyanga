@@ -58,6 +58,7 @@ class FlightVoyage extends CApplicationComponent
         Yii::import('common.modules.gds.models.*');
         $request = new GDSNemoAgency();
         $res = $request->checkFlight($this->flightKey);
+        $res = false;
         if (!$res)
         {
             FlightManager::excludeFlight($this);
