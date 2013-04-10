@@ -49,6 +49,7 @@ ko.bindingHandlers.autocomplete = {
     if (content === void 0) {
       content = iataCode;
     }
+    console.log("iataCode", iataCode, "readable", content);
     return _.each($(element).typeahead("setQueryInternal", content).data('ttView').datasets, function(dataset) {
       return dataset.getSuggestions(iataCode, function(s) {
         if (s.length > 0) {

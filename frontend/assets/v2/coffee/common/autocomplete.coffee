@@ -38,6 +38,7 @@ ko.bindingHandlers.autocomplete =
     iataCode = valueAccessor().iata()
     content = valueAccessor().readable()
     if content == undefined then content=iataCode
+    console.log "iataCode", iataCode, "readable", content
     _.each $(element).typeahead("setQueryInternal", content).data('ttView').datasets, (dataset)->
       dataset.getSuggestions iataCode, (s) ->
         if (s.length>0)
