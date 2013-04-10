@@ -11,6 +11,7 @@ REST_HOURS_PRICE = 800;
 FlightPart = (function() {
 
   function FlightPart(part) {
+    this.markOrTransportAirline = __bind(this.markOrTransportAirline, this);
     this.part = part;
     this.departureDate = Date.fromISO(part.datetimeBegin + Utils.tzOffset);
     this.arrivalDate = Date.fromISO(part.datetimeEnd + Utils.tzOffset);
@@ -52,6 +53,14 @@ FlightPart = (function() {
 
   FlightPart.prototype.stopoverText = function() {
     return dateUtils.formatDuration(this.stopoverLength);
+  };
+
+  FlightPart.prototype.markOrTransportAirline = function() {
+    if (window.use_transport === '1') {
+      return this.transportAirline;
+    } else {
+      return this.markAirline;
+    }
   };
 
   return FlightPart;

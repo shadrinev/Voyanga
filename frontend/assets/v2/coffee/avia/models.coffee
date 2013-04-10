@@ -43,6 +43,12 @@ class FlightPart
 
   stopoverText: -> 
     dateUtils.formatDuration @stopoverLength
+
+  markOrTransportAirline: =>
+    if window.use_transport=='1'
+      @transportAirline
+    else
+      @markAirline
     
   
 
