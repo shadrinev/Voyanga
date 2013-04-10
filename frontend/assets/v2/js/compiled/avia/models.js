@@ -495,19 +495,35 @@ AviaResult = (function() {
   };
 
   AviaResult.prototype.firstAirline = function() {
-    return this.activeVoyage().parts[0].markAirline;
+    if (window.use_transport === '1') {
+      return this.activeVoyage().parts[0].transportAirline;
+    } else {
+      return this.activeVoyage().parts[0].markAirline;
+    }
   };
 
   AviaResult.prototype.firstAirlineName = function() {
-    return this.activeVoyage().parts[0].markAirlineName;
+    if (window.use_transport === '1') {
+      return this.activeVoyage().parts[0].transportAirlineName;
+    } else {
+      return this.activeVoyage().parts[0].markAirlineName;
+    }
   };
 
   AviaResult.prototype.rtFirstAirline = function() {
-    return this.activeVoyage().activeBackVoyage().parts[0].markAirline;
+    if (window.use_transport === '1') {
+      return this.activeVoyage().activeBackVoyage().parts[0].transportAirline;
+    } else {
+      return this.activeVoyage().activeBackVoyage().parts[0].markAirline;
+    }
   };
 
   AviaResult.prototype.rtFirstAirlineName = function() {
-    return this.activeVoyage().activeBackVoyage().parts[0].markAirlineName;
+    if (window.use_transport === '1') {
+      return this.activeVoyage().activeBackVoyage().parts[0].transportAirlineName;
+    } else {
+      return this.activeVoyage().activeBackVoyage().parts[0].markAirlineName;
+    }
   };
 
   AviaResult.prototype.rtServiceClass = function() {
