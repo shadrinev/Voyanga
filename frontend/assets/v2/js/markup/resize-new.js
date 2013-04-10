@@ -1746,7 +1746,7 @@ function startIE() {
             $(this).find('.second-path').focus();
         });
 
-        $("#passport_form").find("input[type='text']").each(function() {
+        $("#passport_form").find("input[type='text'],input[type='email']").each(function() {
             var tp = $(this).attr("placeholder");
             $(this).attr('value',tp).css('color','#ccc');
         }).focusin(function() {
