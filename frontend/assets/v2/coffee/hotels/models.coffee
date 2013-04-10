@@ -615,7 +615,7 @@ class HotelResult
   back: =>
     @trigger 'back'
 
-  select: (room) =>
+  select: (room,elem) =>
     # it is actually cheapest click
     if room.roomSets
       room = room.roomSets()[0]
@@ -623,7 +623,7 @@ class HotelResult
       return
     if @tours()
       @activeResultId room.resultId
-      @trigger 'select', {roomSet: room, hotel: @}
+      @trigger 'select', {roomSet: room, hotel: @},elem
     else
       ticketValidCheck = $.Deferred()
       ticketValidCheck.done (roomSet)=>
