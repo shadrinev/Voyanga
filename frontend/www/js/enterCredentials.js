@@ -127,7 +127,6 @@ $(function () {
 
 function checkFlight()
 {
-    return;
     if (window.fromPartner == 1) {
         window.VisualLoaderInstance.show();
         window.VisualLoaderInstance.start('Идёт проверка доступности выбранного авиабилета', 10);
@@ -139,7 +138,11 @@ function checkFlight()
             .done(function (response) {
                 window.VisualLoaderInstance.renew(100);
                 if (!response.result) {
-                    window.location.href = '/#' + window.redirectHash;
+                    message = 'Данный билет более недоступен. Переходим к поиску альтернативных вариантов.';
+                    window.VisualLoaderInstance.hide(message, 2000);
+                    _.delay(function(){
+                        window.location.href = '/#' + window.redirectHash;
+                    }, 1000);
                 }
                 else {
                     _.delay(function () {

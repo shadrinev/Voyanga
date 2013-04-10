@@ -756,12 +756,15 @@ AviaResult = (function() {
   AviaResult.prototype.showDetailsPopup = function() {
     this.parent._popup = new GenericPopup('#avia-body-popup', this);
     ko.processAllDeferredBindingUpdates();
+    voyanga_debug('make ne popup');
     SizeBox('avia-body-popup');
     return ResizeBox('avia-body-popup');
   };
 
-  AviaResult.prototype.showDetails = function() {
+  AviaResult.prototype.showDetails = function(res, evnt) {
+    voyanga_debug('open avia popup');
     this.overviewMode = false;
+    this.parent._popupElem = evnt;
     return this.showDetailsPopup();
   };
 

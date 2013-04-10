@@ -19,10 +19,13 @@ EOD;
         {
             $result = array();
             $popularCitiesCodes = $this->getPopularCitiesIds();
-            foreach ($popularCitiesCodes as $i=>$cityId)
+            $criteria = new CDbCriteria();
+            $criteria->addInCondition('id', $popularCitiesCodes);
+            $criteria->order = 'position desc';
+            $cities = City::model()->findAll($criteria);
+            foreach ($cities as $i=>$city)
             {
                 if ($i%100==0) echo $i."\n";
-                $city = City::getCityByPk($cityId);
                 $one = array(
                     'value' => $city->localRu,
                     'tokens' => $this->getTokensForCity($city),

@@ -801,7 +801,7 @@ HotelResult = (function() {
     return this.trigger('back');
   };
 
-  HotelResult.prototype.select = function(room) {
+  HotelResult.prototype.select = function(room, elem) {
     var ticketValidCheck,
       _this = this;
     if (room.roomSets) {
@@ -814,7 +814,7 @@ HotelResult = (function() {
       return this.trigger('select', {
         roomSet: room,
         hotel: this
-      });
+      }, elem);
     } else {
       ticketValidCheck = $.Deferred();
       ticketValidCheck.done(function(roomSet) {
