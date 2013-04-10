@@ -83,6 +83,8 @@ ToursAviaResultSet = (function(_super) {
   __extends(ToursAviaResultSet, _super);
 
   function ToursAviaResultSet(raw, sp) {
+    this.doBuyAnimation = __bind(this.doBuyAnimation, this);
+
     this.afterRender = __bind(this.afterRender, this);
 
     this.beforeRender = __bind(this.beforeRender, this);
@@ -171,9 +173,8 @@ ToursAviaResultSet = (function(_super) {
     result.postInit();
     result.recommendTemplate = 'avia-tours-recommend';
     result.tours = true;
-    result.select = function(res) {
-      _this.select(res, result);
-      return _this.trigger('next');
+    result.select = function(res, elem) {
+      return _this.select(res, result, elem);
     };
     this.avia = true;
     this.noresults = result.noresults;
@@ -234,21 +235,48 @@ ToursAviaResultSet = (function(_super) {
     return result;
   };
 
-  ToursAviaResultSet.prototype.select = function(res) {
+  ToursAviaResultSet.prototype.select = function(res, result, elem) {
+    var btn;
+    voyanga_debug('click select in at', res, result, elem);
     if (!(res != null)) {
       return;
     }
     if (res.ribbon) {
       res = res.data;
     }
-    return this._selectResult(res);
+    if (elem) {
+      btn = $(elem.target);
+      if (btn.parents('#avia-ticket-info-popup').length > 0) {
+        btn = $(res.parent._popupElem.target);
+        res.parent._popup.close();
+        btn = btn.parent();
+        if (btn.hasClass('details')) {
+          btn = btn.parent();
+        } else if (!btn.hasClass('buy-ticket')) {
+          btn = btn.parent();
+          btn = btn.find('.text');
+        }
+        btn = btn.find('.pressButton .price');
+        elem.target = btn[0];
+      }
+    }
+    return this._selectResult(res, elem);
   };
 
-  ToursAviaResultSet.prototype._selectResult = function(res) {
-    this.results().selected_key(res.key);
-    res.parent.filtersConfig = res.parent.filters.getConfig();
-    this.results().selected_best(res.best | false);
-    return this.selection(res);
+  ToursAviaResultSet.prototype._selectResult = function(res, elem) {
+    var needAnimation;
+    needAnimation = true && !!elem;
+    if (needAnimation) {
+      return this.doBuyAnimation(res, elem);
+    } else {
+      this.results().selected_key(res.key);
+      res.parent.filtersConfig = res.parent.filters.getConfig();
+      this.results().selected_best(res.best | false);
+      this.selection(res);
+      if (elem) {
+        return this.trigger('next');
+      }
+    }
   };
 
   ToursAviaResultSet.prototype.toBuyRequest = function() {
@@ -447,6 +475,90 @@ ToursAviaResultSet = (function(_super) {
     }
   };
 
+  ToursAviaResultSet.prototype.doBuyAnimation = function(res, elem) {
+    var minDelta, oldWidth, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
+      _this = this;
+    voyanga_debug('animation', res, elem);
+    ticket = $(elem.target).parent().parent().parent().parent();
+    if (ticket.hasClass('content')) {
+      ticket = ticket.parent();
+    }
+    pos = ticket.position();
+    posAbs = ticket.offset();
+    posCont = $('#content').offset();
+    if (ticket.parent().hasClass('recommended-ticket')) {
+      ticket = ticket.parent();
+      posAbs = ticket.offset();
+      voyanga_debug('pos', pos);
+    }
+    pos = {
+      top: posAbs.top - posCont.top,
+      left: posAbs.left - posCont.left
+    };
+    oldWidth = ticket.width();
+    ticketClone = ticket.clone();
+    voyanga_debug('objects', ticket, ticketClone);
+    ticket.css('visibility', 'hidden');
+    $('#content').append(ticketClone);
+    ticketClone.css({
+      'position': 'absolute',
+      'width': oldWidth + 'px',
+      'top': pos.top + 'px',
+      'z-index': 400,
+      'left': pos.left + 'px'
+    });
+    $('.main-block').css('overflow', 'hidden');
+    startAbsTop = posAbs.top;
+    startTop = pos.top;
+    startScrollTop = $("html").scrollTop() | $("body").scrollTop();
+    minDelta = 70;
+    return ticketClone.animate({
+      top: ['70px', 'easeOutCubic']
+    }, {
+      duration: 500,
+      step: function(now, fx) {
+        var delta, nowAbsTop, nowScrollTop;
+        delta = startTop - now;
+        nowAbsTop = startAbsTop - delta;
+        if ((nowAbsTop - startScrollTop) < minDelta) {
+          nowScrollTop = nowAbsTop - minDelta;
+          return $("html,body").scrollTop(nowScrollTop);
+        }
+      },
+      easing: 'easeOutCubic',
+      complete: function() {
+        window.setTimeout(function() {
+          ticketClone.animate({
+            left: '-800px'
+          }, {
+            duration: 300,
+            complete: function() {
+              $('.my-trip-list .items a.active .noChoise').hide('slow');
+              _this.results().selected_key(res.key);
+              res.parent.filtersConfig = res.parent.filters.getConfig();
+              _this.results().selected_best(res.best | false);
+              _this.selection(res);
+              ticketClone.remove();
+              $('.my-trip-list .items a.active .time').animate({
+                opacity: 0.1
+              }, 300, function() {
+                return $('.my-trip-list .items a.active .time').animate({
+                  opacity: 1
+                }, 300, function() {
+                  $('.main-block').css('overflow', '');
+                  return _this.trigger('next');
+                });
+              });
+              return voyanga_debug('animate end');
+            }
+          });
+          return voyanga_debug('animate end');
+        }, 100);
+        return voyanga_debug('animate end');
+      }
+    });
+  };
+
   return ToursAviaResultSet;
 
 })(TourEntry);
@@ -456,6 +568,8 @@ ToursHotelsResultSet = (function(_super) {
   __extends(ToursHotelsResultSet, _super);
 
   function ToursHotelsResultSet(raw, sp) {
+    this.doBuyAnimation = __bind(this.doBuyAnimation, this);
+
     this.savings = __bind(this.savings, this);
 
     this.afterRender = __bind(this.afterRender, this);
@@ -565,11 +679,10 @@ ToursHotelsResultSet = (function(_super) {
       });
       hotel.getFullInfo();
       hotel.off('select');
-      hotel.on('select', function(roomData) {
+      hotel.on('select', function(roomData, elem) {
         window.app.navigate(backUrl);
         window.app.activeModuleInstance().controller.searchParams.hotelId(false);
-        _this.select(roomData);
-        return _this.trigger('next');
+        return _this.select(roomData, elem);
       });
       return _this.trigger('setActive', {
         'data': hotel,
@@ -598,11 +711,10 @@ ToursHotelsResultSet = (function(_super) {
         });
       });
       hotel.off('select');
-      hotel.on('select', function(roomData) {
+      hotel.on('select', function(roomData, elem) {
         window.app.navigate(backUrl);
         window.app.activeModuleInstance().controller.searchParams.hotelId(false);
-        _this.select(roomData);
-        return _this.trigger('next');
+        return _this.select(roomData, elem);
       });
       return _this.trigger('setActive', {
         'data': hotel,
@@ -666,9 +778,18 @@ ToursHotelsResultSet = (function(_super) {
     }
   };
 
-  ToursHotelsResultSet.prototype.select = function(roomData) {
+  ToursHotelsResultSet.prototype.select = function(roomData, elem) {
+    var needAnimate;
+    needAnimate = true && !!elem;
     if (roomData != null) {
-      return this._selectRoomSet(roomData.roomSet);
+      if (needAnimate) {
+        return this.doBuyAnimation(roomData.roomSet, elem);
+      } else {
+        this._selectRoomSet(roomData.roomSet);
+        if (elem) {
+          return this.trigger('next');
+        }
+      }
     }
   };
 
@@ -858,6 +979,88 @@ ToursHotelsResultSet = (function(_super) {
       return 0;
     }
     return this.selection().roomSet.price - this.selection().roomSet.discountPrice;
+  };
+
+  ToursHotelsResultSet.prototype.doBuyAnimation = function(roomSet, elem) {
+    var minDelta, oldWidth, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
+      _this = this;
+    ticket = $(elem.target);
+    voyanga_debug('now i want do animate', elem, roomSet, ticket);
+    ticket = ticket.parent();
+    ticket = ticket.parent();
+    ticket = ticket.parent();
+    ticket = ticket.parent();
+    ticket = ticket.parent();
+    if (!ticket.is("div")) {
+      ticket = ticket.parent();
+    }
+    if (!ticket.is("div")) {
+      ticket = ticket.parent();
+    }
+    voyanga_debug('element', ticket);
+    pos = ticket.position();
+    posAbs = ticket.offset();
+    posCont = $('#content').offset();
+    pos = {
+      top: posAbs.top - posCont.top,
+      left: posAbs.left - posCont.left
+    };
+    oldWidth = ticket.width();
+    ticketClone = ticket.clone();
+    ticket.css('visibility', 'hidden');
+    $('#content').append(ticketClone);
+    ticketClone.css({
+      'position': 'absolute',
+      'width': oldWidth + 'px',
+      'top': pos.top + 'px',
+      'z-index': 400,
+      'left': pos.left + 'px'
+    });
+    $('.main-block').css('overflow', 'hidden');
+    startAbsTop = posAbs.top;
+    startTop = pos.top;
+    startScrollTop = $("html").scrollTop() | $("body").scrollTop();
+    minDelta = 70;
+    return ticketClone.animate({
+      top: ['70px', 'easeOutCubic']
+    }, {
+      duration: 500,
+      step: function(now, fx) {
+        var delta, nowAbsTop, nowScrollTop;
+        delta = startTop - now;
+        nowAbsTop = startAbsTop - delta;
+        if ((nowAbsTop - startScrollTop) < minDelta) {
+          nowScrollTop = nowAbsTop - minDelta;
+          $("html,body").scrollTop(nowScrollTop);
+        }
+        return voyanga_debug('step', now, fx);
+      },
+      easing: 'easeOutCubic',
+      complete: function() {
+        return window.setTimeout(function() {
+          return ticketClone.animate({
+            left: '-1200px'
+          }, {
+            duration: 300,
+            complete: function() {
+              $('.my-trip-list .items a.active .noChoise').hide('slow');
+              _this._selectRoomSet(roomSet);
+              ticketClone.remove();
+              return $('.my-trip-list .items a.active .time').animate({
+                opacity: 0.1
+              }, 300, function() {
+                return $('.my-trip-list .items a.active .time').animate({
+                  opacity: 1
+                }, 300, function() {
+                  $('.main-block').css('overflow', '');
+                  return _this.trigger('next');
+                });
+              });
+            }
+          });
+        }, 100);
+      }
+    });
   };
 
   return ToursHotelsResultSet;

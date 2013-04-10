@@ -67,9 +67,9 @@ class ToursAviaResultSet extends TourEntry
     result.postInit()
     result.recommendTemplate = 'avia-tours-recommend'
     result.tours = true
-    result.select = (res)=>
-      @select res, result
-      @trigger 'next'
+    result.select = (res,elem)=>
+      @select res, result,elem
+
     @avia = true
     @noresults = result.noresults
     @results result
@@ -114,20 +114,47 @@ class ToursAviaResultSet extends TourEntry
     @_selectResult(result)
     return result
 
-  select: (res)=>
+  select: (res,result,elem)=>
+    voyanga_debug('click select in at',res,result,elem)
     if !res?
       return
     # FIXME looks retardely stupid
     if res.ribbon
       #it is actually recommnd ticket
       res = res.data
-    @_selectResult(res)
+    if elem
+      btn = $(elem.target)
+      if btn.parents('#avia-ticket-info-popup').length > 0
+        btn = $(res.parent._popupElem.target)
+        res.parent._popup.close()
+        btn = btn.parent()
+        if btn.hasClass('details')
+          btn = btn.parent()
+        else if(!btn.hasClass('buy-ticket'))
+          btn = btn.parent()
+          btn = btn.find('.text')
+        btn = btn.find('.pressButton .price')
+        elem.target = btn[0]
+        #res.parent._popupElem = null
+        #res.parent._popup = null
+        #hujachim noviy target
 
-  _selectResult: (res)=>
-    @results().selected_key res.key
-    res.parent.filtersConfig = res.parent.filters.getConfig()
-    @results().selected_best res.best | false
-    @selection(res)
+
+
+    @_selectResult(res,elem)
+
+  _selectResult: (res,elem)=>
+    needAnimation = true && !!elem
+    if needAnimation
+      @doBuyAnimation(res,elem)
+    else
+      @results().selected_key res.key
+      res.parent.filtersConfig = res.parent.filters.getConfig()
+      @results().selected_best res.best | false
+      @selection(res)
+      if elem
+        @trigger 'next'
+
 
     
   toBuyRequest: =>
@@ -273,6 +300,87 @@ class ToursAviaResultSet extends TourEntry
           , 50
         )
 
+  doBuyAnimation: (res,elem)=>
+    voyanga_debug('animation',res,elem)
+    ticket = $(elem.target).parent().parent().parent().parent()
+    if ticket.hasClass('content')
+      ticket = ticket.parent()
+    pos = ticket.position()
+    posAbs = ticket.offset()
+    posCont = $('#content').offset()
+    if ticket.parent().hasClass('recommended-ticket')
+      ticket = ticket.parent()
+      #pos = ticket.position()
+      posAbs = ticket.offset()
+
+
+      voyanga_debug('pos',pos)
+    pos = {top: (posAbs.top - posCont.top),left:(posAbs.left - posCont.left)}
+    oldWidth = ticket.width()
+    ticketClone = ticket.clone()
+    voyanga_debug('objects', ticket,ticketClone)
+    ticket.css('visibility','hidden')
+    $('#content').append(ticketClone)
+    ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px'})
+    $('.main-block').css('overflow','hidden')
+    startAbsTop = posAbs.top
+    startTop = pos.top
+    startScrollTop = $("html").scrollTop() | $("body").scrollTop()
+    minDelta = 70
+
+    ticketClone.animate(
+      {
+        top:['70px', 'easeOutCubic']
+      },
+      {
+        duration:500,
+        step: (now, fx)->
+          delta = startTop - now
+          nowAbsTop = startAbsTop - delta
+          if (nowAbsTop - startScrollTop) < minDelta
+            nowScrollTop = nowAbsTop - minDelta
+            $("html,body").scrollTop(nowScrollTop)
+          #self.animateStep(now, fx);
+        , easing:'easeOutCubic',
+        complete: =>
+          #self.animateScrollAction = false;
+          window.setTimeout(
+            =>
+              ticketClone.animate(
+                {
+                  left: '-800px'
+                },
+                {
+                  duration:300,
+                  complete: =>
+                    $('.my-trip-list .items a.active .noChoise').hide('slow');
+                    @results().selected_key res.key
+                    res.parent.filtersConfig = res.parent.filters.getConfig()
+                    @results().selected_best res.best | false
+                    @selection(res)
+                    ticketClone.remove()
+                    $('.my-trip-list .items a.active .time').animate(
+                      { opacity: 0.1 },
+                      300,
+                      =>
+                        $('.my-trip-list .items a.active .time').animate(
+                          {opacity: 1 },
+                          300,
+                          =>
+                            $('.main-block').css('overflow','')
+                            @trigger 'next'
+                        )
+                    )
+                    voyanga_debug('animate end')
+                }
+              )
+              voyanga_debug('animate end')
+            , 100
+          )
+          voyanga_debug('animate end')
+      }
+    )
+
        
 class ToursHotelsResultSet extends TourEntry
   constructor: (raw, sp)->
@@ -325,11 +433,11 @@ class ToursHotelsResultSet extends TourEntry
             hotel.parent.showFullMapFunc(null,null,true)
       hotel.getFullInfo()
       hotel.off 'select'
-      hotel.on 'select', (roomData) =>
+      hotel.on 'select', (roomData,elem) =>
         window.app.navigate backUrl
         window.app.activeModuleInstance().controller.searchParams.hotelId(false)
-        @select roomData
-        @trigger 'next'
+        @select roomData,elem
+
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     result.selectFromPopup = (hotel) =>
       hotel.parent = result
@@ -342,18 +450,16 @@ class ToursHotelsResultSet extends TourEntry
       window.app.activeModuleInstance().controller.searchParams.lastHotel = hotel
       hotel.off 'back'
       hotel.on 'back', =>
-
         @trigger 'setActive', @, false, false, hotel.oldPageTop,=>
           window.app.navigate backUrl
           window.app.activeModuleInstance().controller.searchParams.hotelId(false)
           if !hotel.parent.showFullMap()
             Utils.scrollTo('#hotelResult'+hotel.hotelId)
       hotel.off 'select'
-      hotel.on 'select', (roomData) =>
+      hotel.on 'select', (roomData,elem) =>
         window.app.navigate backUrl
         window.app.activeModuleInstance().controller.searchParams.hotelId(false)
-        @select roomData
-        @trigger 'next'
+        @select roomData,elem
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
     # FIXME WTF
     @hotels = true
@@ -397,9 +503,15 @@ class ToursHotelsResultSet extends TourEntry
         ret = @results().findAndSelectSameParams(result.categoryId,result.getLatLng())
       @_selectRoomSet ret
       
-  select: (roomData)=>
+  select: (roomData,elem)=>
+    needAnimate = true && !!elem
     if roomData?
-      @_selectRoomSet roomData.roomSet
+      if needAnimate
+        @doBuyAnimation(roomData.roomSet,elem)
+      else
+        @_selectRoomSet roomData.roomSet
+        if elem
+          @trigger 'next'
 
   _selectRoomSet: (roomSet)=>
     hotel = roomSet.parent
@@ -432,6 +544,7 @@ class ToursHotelsResultSet extends TourEntry
       hotel.parent.pagesLoad = pageFound
     else
       hotel.parent.pagesLoad = hotel.parent.showParts()
+
 
 
   toBuyRequest: =>
@@ -556,6 +669,87 @@ class ToursHotelsResultSet extends TourEntry
     if(@selection()==null)
       return 0
     @selection().roomSet.price - @selection().roomSet.discountPrice
+
+  doBuyAnimation: (roomSet,elem)=>
+    ticket = $(elem.target)
+    voyanga_debug('now i want do animate',elem,roomSet,ticket)
+    ticket = ticket.parent()
+    ticket = ticket.parent()
+    ticket = ticket.parent()
+    ticket = ticket.parent()
+    ticket = ticket.parent()
+    if !ticket.is("div")
+      ticket = ticket.parent()
+    if !ticket.is("div")
+      ticket = ticket.parent()
+    voyanga_debug('element',ticket)
+    pos = ticket.position()
+    posAbs = ticket.offset()
+
+    posCont = $('#content').offset()
+    pos = {top: (posAbs.top - posCont.top),left:(posAbs.left - posCont.left)}
+
+    oldWidth = ticket.width()
+    ticketClone = ticket.clone()
+    ticket.css('visibility','hidden')
+    $('#content').append(ticketClone)
+    ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px'})
+    $('.main-block').css('overflow','hidden')
+    startAbsTop = posAbs.top
+    startTop = pos.top
+    startScrollTop = $("html").scrollTop() | $("body").scrollTop()
+    minDelta = 70
+
+    ticketClone.animate(
+      {
+        top:['70px', 'easeOutCubic']
+      },
+      {
+      duration:500,
+      step: (now, fx)->
+        delta = startTop - now
+        nowAbsTop = startAbsTop - delta
+        if (nowAbsTop - startScrollTop) < minDelta
+          nowScrollTop = nowAbsTop - minDelta
+          $("html,body").scrollTop(nowScrollTop)
+
+        voyanga_debug('step',now,fx)
+      #self.animateStep(now, fx);
+      , easing:'easeOutCubic',
+      complete: =>
+        #self.animateScrollAction = false;
+        window.setTimeout(
+          =>
+            ticketClone.animate(
+              {
+              left: '-1200px'
+              },
+              {
+              duration:300,
+              complete: =>
+                $('.my-trip-list .items a.active .noChoise').hide('slow');
+                @_selectRoomSet roomSet
+                ticketClone.remove()
+                $('.my-trip-list .items a.active .time').animate(
+                  { opacity: 0.1 },
+                  300,
+                  =>
+                    $('.my-trip-list .items a.active .time').animate(
+                      {opacity: 1 },
+                      300,
+                      =>
+                        $('.main-block').css('overflow','')
+                        @trigger 'next'
+                    )
+                )
+              }
+            )
+          , 100
+        )
+      }
+    )
+
+    #@_selectRoomSet roomData.roomSet
     
 
 class ToursResultSet

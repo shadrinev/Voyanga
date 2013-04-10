@@ -520,14 +520,17 @@ class AviaResult
   showDetailsPopup: =>
     @parent._popup = new GenericPopup '#avia-body-popup', @
     ko.processAllDeferredBindingUpdates()
+    voyanga_debug('make ne popup')
 
     SizeBox('avia-body-popup');
     ResizeBox('avia-body-popup');
 
   # Shows popup with detailed info about given result
   # Generic mode
-  showDetails: =>
+  showDetails: (res,evnt)=>
+    voyanga_debug('open avia popup')
     @overviewMode = false
+    @parent._popupElem = evnt
     do @showDetailsPopup
 
   showDetailsOverview: =>
