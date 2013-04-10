@@ -4,8 +4,7 @@ SEARCH controller, should be splitted once we will get more actions here
 */
 
 var AviaController,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __slice = [].slice;
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 AviaController = (function() {
 
@@ -23,18 +22,15 @@ AviaController = (function() {
 
     this.api = new AviaAPI;
     this.routes = {
-      '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': this.searchAction,
-      '/search/:from/:to/:when/:adults/:children/:infants/': this.searchAction,
+      '/search/*rest': this.searchAction,
       '': this.indexAction
     };
     this.results = ko.observable();
     _.extend(this, Backbone.Events);
   }
 
-  AviaController.prototype.searchAction = function() {
-    var args;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    this.searchParams.fromList(args);
+  AviaController.prototype.searchAction = function(args) {
+    this.searchParams.fromString(args);
     window.VisualLoaderInstance.start(this.api.loaderDescription, 18);
     return this.api.search(this.searchParams.url(), this.handleSearch);
   };

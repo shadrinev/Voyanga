@@ -5,8 +5,7 @@ class AviaController
   constructor: (@searchParams)->
     @api = new AviaAPI
     @routes =
-      '/search/:from/:to/:when/:adults/:children/:infants/:rtwhen/': @searchAction
-      '/search/:from/:to/:when/:adults/:children/:infants/': @searchAction
+      '/search/*rest': @searchAction
       '': @indexAction
 
     @results = do ko.observable 
@@ -14,9 +13,9 @@ class AviaController
     # Mix in events
     _.extend @, Backbone.Events
 
-  searchAction: (args...)=>
+  searchAction: (args)=>
     # update search params with values in route
-    @searchParams.fromList(args)
+    @searchParams.fromString args
     window.VisualLoaderInstance.start(@api.loaderDescription,18)
     @api.search  @searchParams.url(), @handleSearch
 
