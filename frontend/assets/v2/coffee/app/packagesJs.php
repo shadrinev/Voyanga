@@ -50,7 +50,6 @@
             'backbone.js',
             'jquery-ui-1.8.22.custom.min.js',
             'jquery.easing.1.3.js',
-            'jquery.autocomplete.js',
             'jquery.dotdotdot-1.5.1.js',
             'moment.js',
             'moment-ru.js',
@@ -60,7 +59,10 @@
             'chosen/chosen.jquery.min.js',
             'jquery.cookie.js',
             'mdetect.js',
-            'peg-0.7.0.min.js'
+            'peg-0.7.0.min.js',
+            'hogan-2.0.0.js',
+            'typeahead.min.js',
+            'date.fromISO.js'
         ),
         'depends' => array('jquery')
     ),

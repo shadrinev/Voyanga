@@ -356,19 +356,19 @@ function nextSlideDownRules(_this) {
 }
 function divInputBirthday() {
     if($('.divInputBirthday').length > 0 && $('.divInputBirthday').is(':visible')) {
-        var _this = $('.divInputBirthday').find('input');
-        _this.focus(function() {
-            $(this).attr('rel', $(this).val());
-            $(this).val('');
-            $(this).blur(function() {
-                if($(this).val() < 1) {
-                    $(this).val($(this).attr('rel'));
-                }
-                else {
-                    return;
-                }
-            });
-        });
+//        var _this = $('.divInputBirthday').find('input');
+//        _this.focus(function() {
+//            $(this).attr('rel', $(this).val());
+//            $(this).val('');
+//            $(this).blur(function() {
+//                if($(this).val() < 1) {
+//                    $(this).val($(this).attr('rel'));
+//                }
+//                else {
+//                    return;
+//                }
+//            });
+//        });
     }
 }
 $(window).load(divInputBirthday);
@@ -386,3 +386,192 @@ function getLink() {
     });
 }
 $(window).load(getLink);
+
+
+function DayMonthYear() {
+    if($('.divInputBirthday').length > 0 && $('.divInputBirthday').is(':visible')) {
+
+        var _birthday = $('.tdBirthday').find('.divInputBirthday').find('input');
+
+        _birthday.keypress(function(e) {
+            if (e.which > 47 && e.which < 58) {
+
+                _birthday.keyup(function(e) {
+
+                    if ($(this).hasClass('dd')) {
+                        console.log('DD = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                        if ($(this).val() > 31) {
+                            $(this).addClass('error');
+                        }
+                        else {
+                            $(this).removeClass('error');
+                        }
+                        if (e.which == 9) {
+                            if ($(this).val().length < 2) {
+                                if ($(this).val() == 0) {
+                                    $(this).addClass('error');
+                                }
+                                else {
+                                    $(this).val('0'+$(this).val());
+                                    $(this).removeClass('error');
+                                    $(this).next().focus();
+                                }
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+
+                    }
+                    else if ($(this).hasClass('mm')) {
+                        console.log('MM = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                        if ($(this).val() > 12) {
+                            $(this).addClass('error');
+                        }
+                        else {
+                            $(this).removeClass('error');
+                        }
+
+                        if (e.which == 9) {
+                            if ($(this).val().length < 2) {
+                                if ($(this).val() == 0) {
+                                    $(this).addClass('error');
+                                }
+                                else {
+                                    $(this).val('0'+$(this).val());
+                                    $(this).removeClass('error');
+                                    $(this).next().focus();
+                                }
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+
+                    }
+                    else if ($(this).hasClass('yy')) {
+                        console.log('YY = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                        if (e.which == 9) {
+                            if ($(this).val().length > 1 && $(this).val().length < 3) {
+                                if ($(this).val() < 14) {
+                                    $(this).val('20'+$(this).val());
+                                    $(this).removeClass('error');
+                                    $(this).parent().parent().next().next().find('input').focus();
+                                }
+                                else {
+                                    $(this).val('19'+$(this).val());
+                                    $(this).removeClass('error');
+                                    $(this).parent().parent().next().next().find('input').focus();
+                                }
+                            }
+                            else if ($(this).val().length < 2 && $(this).val().length > 0) {
+                                $(this).val('200'+$(this).val());
+                                $(this).removeClass('error');
+                                $(this).parent().parent().next().next().find('input').focus();
+                            }
+                            else if ($(this).val().length > 3) {
+                                $(this).parent().parent().next().next().find('input').focus();
+                            }
+                            else {
+                                $(this).addClass('error');
+                            }
+                        }
+                        else {
+                            return true;
+                        }
+
+                    }
+                    else {
+                        console.log(e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                    }
+
+                });
+
+            }
+            else if (e.which == 8) {
+                $(this).removeClass('error');
+                return true;
+            }
+            else if (e.which == 9) {
+                $(this).removeClass('error');
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+
+        _birthday.focusout(function() {
+            if ($(this).hasClass('dd')) {
+                if ($(this).val() > 31) {
+                    $(this).addClass('error');
+                }
+                else {
+                    if ($(this).val().length < 2) {
+                        if ($(this).val() == 0) {
+                            $(this).addClass('error');
+                        }
+                        else {
+                            $(this).val('0'+$(this).val());
+                            $(this).removeClass('error');
+                            $(this).next().focus();
+                        }
+                    }
+                    else {
+                        return true;
+                    }
+                }
+
+            }
+            else if ($(this).hasClass('mm')) {
+
+                if ($(this).val() > 12) {
+                    $(this).addClass('error');
+                }
+                else {
+                    if ($(this).val().length < 2) {
+                        if ($(this).val() == 0) {
+                            $(this).addClass('error');
+                        }
+                        else {
+                            $(this).val('0'+$(this).val());
+                            $(this).removeClass('error');
+                            $(this).next().focus();
+                        }
+                    }
+                    else {
+                        return true;
+                    }
+                }
+
+            }
+            else if ($(this).hasClass('yy')) {
+                if ($(this).val().length > 1 && $(this).val().length < 3) {
+                    if ($(this).val() < 14) {
+                        $(this).val('20'+$(this).val());
+                        $(this).removeClass('error');
+                        $(this).parent().parent().next().next().find('input').focus();
+                    }
+                    else {
+                        $(this).val('19'+$(this).val());
+                        $(this).removeClass('error');
+                        $(this).parent().parent().next().next().find('input').focus();
+                    }
+                }
+                else if ($(this).val().length < 2 && $(this).val().length > 0) {
+                    $(this).val('200'+$(this).val());
+                    $(this).removeClass('error');
+                    $(this).parent().parent().next().next().find('input').focus();
+                }
+                else if ($(this).val().length > 3) {
+                    $(this).parent().parent().next().next().find('input').focus();
+                }
+                else {
+                    $(this).addClass('error');
+                }
+
+            }
+        });
+
+    }
+}

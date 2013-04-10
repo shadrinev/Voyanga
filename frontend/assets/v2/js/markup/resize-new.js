@@ -730,6 +730,7 @@ function ResizeAviaClb() {
     ifIpadLoad();
     slideToursPanel();
     resizeLandsHotels();
+    DayMonthYear();
 }
 
 function ResizeFun() {
@@ -1211,7 +1212,7 @@ function openPopUpProj() {
     });
 }
 
-function closePopUpProj() {
+function closePopUpProj() {divInputBirthday
     $('.mainWrapBg').hide();
     $('body').css('overflow', 'auto');
     clickYes = false;
@@ -1744,6 +1745,32 @@ function startIE() {
         $(document).on('click', '.data', function() {
             $(this).find('.second-path').focus();
         });
+
+        $("body").find("input[type='text'],input[type='email']").each(function() {
+            var tp = $(this).attr("placeholder");
+            $(this).attr('value',tp).css('color','#ccc');
+        }).focusin(function() {
+                var val = $(this).attr('placeholder');
+                if($(this).val() == val) {
+                    $(this).attr('value','').css('color','#303030');
+                }
+            }).focusout(function() {
+                var val = $(this).attr('placeholder');
+                if($(this).val() == "") {
+                    $(this).attr('value', val).css('color','#ccc');
+                }
+            });
+
+        /* Protected send form */
+        $("body").submit(function() {
+            $(this).find("input[type='text']").each(function() {
+                var val = $(this).attr('placeholder');
+                if($(this).val() == val) {
+                    $(this).attr('value','');
+                }
+            })
+        });
+
     }
 }
 

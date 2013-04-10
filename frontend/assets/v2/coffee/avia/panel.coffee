@@ -61,6 +61,7 @@ class AviaPanel extends SearchPanel
       if @rt()
         result = result && @rtFromChosen()
       return result
+      return result
 
     @formNotFilled = ko.computed =>
       !@formFilled()

@@ -8,7 +8,7 @@ class AutocompleteController extends ApiController
 {
     public function actionCity($query, $airport_req = false, $hotel_req = false)
     {
-        $cacheKey = 'apiAutocompleteCities4' . md5(serialize(array($query, $airport_req, $hotel_req)));
+        $cacheKey = 'apiAutocompleteCities5' . md5(serialize(array($query, $airport_req, $hotel_req)));
         $citiesCache = Yii::app()->cache->get($cacheKey);
         if ($citiesCache) {
             $this->send($citiesCache);
@@ -56,25 +56,17 @@ class AutocompleteController extends ApiController
 
     private function buildResult($query, $cities)
     {
-        /*
-         * query:'Li', // Оригинальный запрос
-           suggestions:['Liberia','Libyan Arab Jamahiriya','Liechtenstein','Lithuania'], // Список подсказок
-           data:['LR','LY','LI','LT'] // Необязательный параметр, список ключей вариантов подсказок. Используется в callback функции
-         */
         $result = array();
-        $result['query'] = $query;
-        $result['suggestions'] = array();
-        $result['data'] = array();
         foreach ($cities as $i => $city) {
-            $suggestion = $city['label'];
+            $data['value'] = $city['name'];
+            $data['tokens'] = $city['tokens'];
+            $data['code'] = $city['code'];
+            $data['country'] = $city['country'];
             $data['name'] = $city['name'];
             $data['nameGen'] = $city['nameGen'];
             $data['nameAcc'] = $city['nameAcc'];
             $data['namePre'] = $city['namePre'];
-            $data['code'] = $city['code'];
-            $data['country'] = $city['country'];
-            $result['suggestions'][] = $suggestion;
-            $result['data'][] = $data;
+            $result[] = $data;
         }
         return $result;
     }
@@ -83,14 +75,20 @@ class AutocompleteController extends ApiController
     {
         foreach ($cities as $i => $one) {
             $city = City::getCityByPk($one['id']);
-            $cities[$i]['code'] = $city->code;
-            $cities[$i]['name'] = $city->localRu;
+            $cities[$i]['code'] = $city->countAirports > 0 ? $city->code : '';
+            $cities[$i]['country'] = $city->country->localRu;
+            $cities[$i]['name'] = $city->caseNom;
+            $cities[$i]['tokens'] = $this->getTokensForCity($city);
             $cities[$i]['nameGen'] = $city->caseGen;
             $cities[$i]['nameAcc'] = $city->caseAcc;
             $cities[$i]['namePre'] = $city->casePre;
             $cities[$i]['country'] = $city->country->localRu;
-            $cities[$i]['label'] = CityManager::parseTemplate(CityManager::templateForLabelAutocomplete(), $city);
         }
         return $cities;
+    }
+
+    private function getTokensForCity(City $city)
+    {
+        return array($city->localRu, $city->localEn, $city->code);
     }
 }

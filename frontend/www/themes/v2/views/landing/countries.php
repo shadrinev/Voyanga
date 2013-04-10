@@ -36,7 +36,7 @@
         )
     ));
     ?>
-<div class="center-block">
+<div class="center-block headTitle">
     <h1>Авиабилеты и отели по всему миру!</h1>
 
 </div>

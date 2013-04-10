@@ -3,40 +3,34 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    var showCode,
-      _this = this;
-    showCode = (valueAccessor().showCode === undefined ? true : valueAccessor().showCode);
-    setTimeout(function() {
-      $(element).bind("focus", function() {
-        return $(element).change();
-      });
-      return $(element).autocomplete({
-        serviceUrl: window.apiEndPoint + "/helper/autocomplete/" + valueAccessor().source,
-        minChars: 2,
-        delimiter: /(,|;)\s*/,
-        maxHeight: 400,
-        zIndex: 9999,
-        deferRequestBy: 0,
-        delay: 0,
-        showCode: showCode,
-        onSelect: function(value, data) {
-          valueAccessor().iata(data.code);
-          valueAccessor().readable(data.name);
-          valueAccessor().readableGen(data.nameGen);
-          valueAccessor().readableAcc(data.nameAcc);
-          valueAccessor().readablePre(data.namePre);
-          $(element).val(data.name);
-          return $(element).siblings('input.input-path').val(value);
-        },
-        onActivate: function(value, data) {
-          valueAccessor().readable(data.name);
-          valueAccessor().readableGen(data.nameGen);
-          valueAccessor().readableAcc(data.nameAcc);
-          valueAccessor().readablePre(data.namePre);
-          $(element).val(data.name);
-          return $(element).siblings('input.input-path').val(value);
-        }
-      }, 500);
+    $(element).bind("focus", function() {
+      return $(element).select();
+    });
+    $(element).typeahead({
+      name: 'cities' + valueAccessor().name,
+      limit: 5,
+      prefetch: '/js/cities.json',
+      remote: window.apiEndPoint + "helper/autocomplete/" + valueAccessor().source + '/query/%QUERY',
+      template: '<div title="{{value}}"><span class="city">{{name}}, </span><span class="country">{{country}}</span><span class="code">{{code}}</span></div>',
+      engine: Hogan
+    });
+    $(element).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+      valueAccessor().iata(data.code);
+      valueAccessor().readable(data.name);
+      valueAccessor().readableGen(data.nameGen);
+      valueAccessor().readableAcc(data.nameAcc);
+      valueAccessor().readablePre(data.namePre);
+      $(element).val(data.name);
+      $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
+      if ((!$(element).is('.arrivalCity')) && ($('input.arrivalCity').length > 0)) {
+        return $('input.arrivalCity.second-path').focus();
+      }
+    });
+    $(element).on('typeahead:over', function(e, data) {
+      return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
+    });
+    $(element).on('typeahead:reset', function(e) {
+      return $(element).parent().siblings('input.input-path').val('');
     });
     return $(element).on("keyup", function(e) {
       if ((e.keyCode === 8) || (e.keyCode === 46)) {
@@ -49,32 +43,31 @@ ko.bindingHandlers.autocomplete = {
     });
   },
   update: function(element, valueAccessor) {
-    var handleResults, iataCode, url;
+    var content, iataCode;
     iataCode = valueAccessor().iata();
-    url = function(code) {
-      var params, result;
-      result = window.apiEndPoint + '/helper/autocomplete/citiesReadable?';
-      params = [];
-      params.push('codes[0]=' + code);
-      result += params.join("&");
-      return result;
-    };
-    handleResults = function(data) {
-      valueAccessor().readable(data[iataCode].name);
-      valueAccessor().readableGen(data[iataCode].nameGen);
-      valueAccessor().readableAcc(data[iataCode].nameAcc);
-      valueAccessor().readablePre(data[iataCode].namePre);
-      if ($(element).val().length === 0) {
-        $(element).val(data[iataCode].name);
-        return $(element).siblings('input.input-path').val(data[iataCode].label);
-      }
-    };
-    if (iataCode.length > 0) {
-      return $.ajax({
-        url: url(iataCode),
-        dataType: 'json',
-        success: handleResults
-      });
+    content = valueAccessor().readable();
+    if (content === void 0) {
+      content = iataCode;
     }
+    return _.each($(element).typeahead("setQueryInternal", content).data('ttView').datasets, function(dataset) {
+      return dataset.getSuggestions(iataCode, function(s) {
+        if (s.length > 0) {
+          return _.each(s, function(s) {
+            var data;
+            if (s.datum.code === iataCode) {
+              data = s.datum;
+              valueAccessor().readable(data.name);
+              valueAccessor().readableGen(data.nameGen);
+              valueAccessor().readableAcc(data.nameAcc);
+              valueAccessor().readablePre(data.namePre);
+              if (($(element).val().length === 0) || ($(element).val() !== data.name)) {
+                $(element).val(data.name);
+                return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
+              }
+            }
+          });
+        }
+      });
+    });
   }
 };

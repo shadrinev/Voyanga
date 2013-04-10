@@ -82,7 +82,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
     ));
     ?>
     <?php if (!$fromCity): ?>
-    <div class="center-block" data-bind="style: {overflow: landBP.showGrafik() ? '' : 'hidden'}">
+    <div class="center-block headTitle" data-bind="style: {overflow: landBP.showGrafik() ? '' : 'hidden'}">
         <h1>Авиабилеты в <?php echo $city->caseAcc;?></h1>
 
         <h3>Стоимость на месяц вперед из
@@ -173,7 +173,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
                                     <input class="input-path departureCity" type="text" tabindex="-1"
                                            style="width: 227.5px;">
                                     <input class="second-path departureCity" type="text" placeholder="Откуда"
-                                           data-bind="autocomplete: {source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen, readablePre: departureCityReadablePre}"
+                                           data-bind="autocomplete: {name: 'avia', name: 'avia', source:'city/airport_req/1', iata: departureCity, readable: departureCityReadable, readableAcc: departureCityReadableAcc, readableGen: departureCityReadableGen, readablePre: departureCityReadablePre}"
                                            style="width: 227.5px;" autocomplete="off">
 
                                     <div class="date" data-bind="click: showCalendar">

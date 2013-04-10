@@ -2,7 +2,7 @@
 <div class="oneBlock">
     <!--=== ===-->
     <div class="paybuyContent">
-        <h2>Покупатель</h2>
+        <h2>3. Данные покупателя</h2>
         <table class="dopInfoPassengers">
             <thead>
             <tr>

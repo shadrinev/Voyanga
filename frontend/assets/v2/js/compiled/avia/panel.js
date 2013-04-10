@@ -79,6 +79,7 @@ AviaPanel = (function(_super) {
         result = result && _this.rtFromChosen();
       }
       return result;
+      return result;
     });
     this.formNotFilled = ko.computed(function() {
       return !_this.formFilled();

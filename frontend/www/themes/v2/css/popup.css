@@ -24,7 +24,7 @@
     background: none repeat scroll 0 0 #26292e;
     height: 100%;
     left: 0;
-    opacity: 0.93;
+    opacity: 0.76;
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -68,6 +68,7 @@
     left: 50%;
     position: absolute;
     background-image: url('/themes/v2/images/start-planning.png');
+    cursor: pointer;
 }
 #helpLayer .hint-close{
     width: 19px;

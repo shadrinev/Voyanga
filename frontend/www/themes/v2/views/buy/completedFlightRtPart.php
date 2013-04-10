@@ -3,10 +3,11 @@
         <table class="aviaTickets">
             <tbody>
             <tr>
-                <td class="tdICO paddingBottom" rowspan="2">
-                    <div class="ico"></div>
+                <td class="tdICO">
+                    <div class="ico"></div><br>
+                    Туда
                 </td>
-                <td class="tdFrom paddingBottom">
+                <td class="tdFrom">
                     <div class="what">Вылет</div>
                     <div class="city"><span data-bind="text: $data[0].departureCity()">Санкт-Петербург</span>, <span data-bind="text: $data[0].departureAirport()" class="airport">Пулково-1</span></div>
                     <div class="time"><span data-bind="text: $data[0].departureTime()">2:35</span>, <span class="date" data-bind="text: $data[0].departureDayMo()">28 мая</span></div>
@@ -19,18 +20,22 @@
                         <div class="text">Всего <span data-bind="text: $data[0].duration()"></span></div>
                     </div>
                 </td>
-                <td class="tdTo paddingBottom">
+                <td class="tdTo">
                     <div class="what">Прилет</div>
                     <div class="city"><span data-bind="text: $data[0].arrivalCity()">Санкт-Петербург</span>, <span class="airport" data-bind="text: $data[0].arrivalAirport()">Пулково-1</span></div>
                     <div class="time"><span data-bind="text: $data[0].arrivalTime()">2:35</span>, <span class="date" data-bind="text: $data[0].arrivalDayMo()">28 мая</span></div>
                 </td>
-                <td class="tdAvia paddingBottom">
+                <td class="tdAvia">
                     <div class="airline" data-bind="text:$data[0].airlineName">Аэрофлот</div>
                     <div class="voyage"><span data-bind="text: $data[0].flightCodesText">Рейс</span>: <span class="number" data-bind="html: $data[0].flightCodes()">S7-76</span></div>
                     <div class="class">Класс: <span class="classMine" data-bind='text: $data[0].serviceClassReadable'>Эконом</span></div>
                 </td>
             </tr>
             <tr>
+                <td class="tdICO">
+                    <div class="ico from"></div><br>
+                    &nbsp;&nbsp;Обратно
+                </td>
                 <td class="tdFrom">
                     <div class="what">Вылет</div>
                     <div class="city"><span data-bind="text: $data[0].rtDepartureCity()">Санкт-Петербург</span>, <span data-bind="text: $data[0].rtDepartureAirport()" class="airport">Пулково-1</span></div>

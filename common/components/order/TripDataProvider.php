@@ -155,9 +155,9 @@ class TripDataProvider
         $flightsString = UtilsHelper::WordAfterNum(array('билета', 'билетов', 'билетов'), $flights);
         $hotelsString = UtilsHelper::WordAfterNum(array('отеля', 'отелей', 'отлей'), $hotels);
         if (($flights>0) && ($hotels==0))
-            return 'Покупка '.$flightsString;
+            return 'Подтверждение '.$flightsString;
         if (($hotels>0) && ($flights==0))
-            return 'Бронирование '.$hotelsString;
+            return 'Подтверждение '.$hotelsString;
         return 'Оформление '.$flightsString.' и '.$hotelsString;
     }
 
