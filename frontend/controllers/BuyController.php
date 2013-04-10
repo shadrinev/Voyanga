@@ -63,7 +63,8 @@ class BuyController extends FrontendController
         {
             Yii::app()->user->setState('fromPartner', 0);
         }
-        $orderBooking = $this->createNewOrderBooking();
+        $direct = isset($_GET['dir']);
+        $orderBooking = $this->createNewOrderBooking($direct);
         $this->createBookers();
         $this->redirect('buy/makeBooking/secretKey/'.$orderBooking->secretKey.$marker);
     }
@@ -329,13 +330,18 @@ class BuyController extends FrontendController
         return $bookingForm;
     }
 
-    private function createNewOrderBooking()
+    private function createNewOrderBooking($direct)
     {
+        if ($direct)
+            $directValue = 1;
+        else
+            $directValue = 0;
         if (is_numeric(Yii::app()->user->getState('todayOrderId')))
             return OrderBooking::model()->findByAttributes(array('readableId'=>Yii::app()->user->getState('todayOrderId')));
         $orderBooking = new OrderBooking();
         $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
         $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
+        $orderBooking->direct = $directValue;
         $orderBooking->save();
         $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
         $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);

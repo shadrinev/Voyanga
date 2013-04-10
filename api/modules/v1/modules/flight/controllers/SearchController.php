@@ -321,7 +321,7 @@ class SearchController extends ApiController
         $i = 0;
         foreach ($results as $variant)
         {
-            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$variant['cacheId'].'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey();
+            $query = 'item[0][module]=Avia&item[0][type]=avia&item[0][searchId]='.$variant['cacheId'].'&item[0][searchKey]='.$variant['flightKey'].'&pid='.Partner::getCurrentPartnerKey().'&dir=1';
             $url = Yii::app()->params['baseUrl'].'/buy?'.$query;
             $prepared[$i] = array(
                 'price' => $variant['price'],
