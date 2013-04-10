@@ -1,6 +1,7 @@
 $(function () {
     var avia, hotels, tour;
     window.app = new Application();
+    window.enterCredentials = true;
     avia = new AviaModule();
     hotels = new HotelsModule();
     tour = new ToursModule();

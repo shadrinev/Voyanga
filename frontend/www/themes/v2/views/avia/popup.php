@@ -50,7 +50,7 @@
               <hr class="lines">
               <div class="finish">
               	<div class="floatLeft">
-              		<div class="back">
+              		<div class="back" data-bind='visible: showRefundable'>
               			<span class="ico-back" data-bind="css: {yes: refundable, no:!refundable}"></span>
               			<span data-bind="text: refundableText"></span>
               		</div>

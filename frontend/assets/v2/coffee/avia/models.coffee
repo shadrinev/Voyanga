@@ -283,6 +283,7 @@ class AviaResult
     @serviceClassReadable = if data.serviceClass == 'E' then 'Эконом' else if data.serviceClass=='F' then 'Первый' else 'Бизнес'
     @refundable = data.refundable
     @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
+    @showRefundable = if (window.enterCredentials && !@refundable) then false else true
     @freeWeight = data.freeWeight
     @freeWeight = '$' if @freeWeight == '0'
     @freeWeightText = data.freeWeightDescription

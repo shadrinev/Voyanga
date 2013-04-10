@@ -430,6 +430,7 @@ AviaResult = (function() {
     this.serviceClassReadable = data.serviceClass === 'E' ? 'Эконом' : data.serviceClass === 'F' ? 'Первый' : 'Бизнес';
     this.refundable = data.refundable;
     this.refundableText = this.refundable ? "Билет возвратный" : "Билет не возвратный";
+    this.showRefundable = window.enterCredentials && !this.refundable ? false : true;
     this.freeWeight = data.freeWeight;
     if (this.freeWeight === '0') {
       this.freeWeight = '$';
