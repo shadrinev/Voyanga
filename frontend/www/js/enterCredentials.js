@@ -8,8 +8,7 @@ $(function () {
     window.app.register('hotels', hotels);
     window.app.register('avia', avia);
     window.toursOverviewActive = true;
-    new ErrorPopup('passportBookingError', [""], function() {});
-    return;
+
     $('.genderField').each(function () {
         var $this = $(this),
             value = $this.val(),
