@@ -7,7 +7,7 @@ ko.bindingHandlers.autocomplete = {
       return $(element).select();
     });
     $(element).typeahead({
-      name: 'cities',
+      name: 'cities' + valueAccessor().name,
       limit: 5,
       prefetch: '/js/cities.json',
       remote: window.apiEndPoint + "helper/autocomplete/" + valueAccessor().source + '/query/%QUERY',
@@ -49,14 +49,12 @@ ko.bindingHandlers.autocomplete = {
     if (content === void 0) {
       content = iataCode;
     }
-    console.log("iataCode", iataCode, "readable", content);
     return _.each($(element).typeahead("setQueryInternal", content).data('ttView').datasets, function(dataset) {
       return dataset.getSuggestions(iataCode, function(s) {
         if (s.length > 0) {
           return _.each(s, function(s) {
             var data;
             if (s.datum.code === iataCode) {
-              console.log("Updating element. Found", s);
               data = s.datum;
               valueAccessor().readable(data.name);
               valueAccessor().readableGen(data.nameGen);

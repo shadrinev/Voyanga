@@ -3,7 +3,7 @@ ko.bindingHandlers.autocomplete =
     $(element).bind "focus", ->
       $(element).select()
     $(element).typeahead
-      name: 'cities'
+      name: 'cities' + valueAccessor().name
       limit: 5 # The max number of suggestions from the dataset to display for a given query
       prefetch: '/js/cities.json'
       remote: window.apiEndPoint + "helper/autocomplete/" + valueAccessor().source + '/query/%QUERY' # Страница для обработки запросов автозаполнения
@@ -38,13 +38,11 @@ ko.bindingHandlers.autocomplete =
     iataCode = valueAccessor().iata()
     content = valueAccessor().readable()
     if content == undefined then content=iataCode
-    console.log "iataCode", iataCode, "readable", content
     _.each $(element).typeahead("setQueryInternal", content).data('ttView').datasets, (dataset)->
       dataset.getSuggestions iataCode, (s) ->
         if (s.length>0)
           _.each s, (s)->
             if (s.datum.code==iataCode)
-              console.log "Updating element. Found", s
               data = s.datum
               valueAccessor().readable(data.name)
               valueAccessor().readableGen(data.nameGen)
