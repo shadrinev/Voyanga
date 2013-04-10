@@ -520,14 +520,17 @@ class AviaResult
   showDetailsPopup: =>
     @parent._popup = new GenericPopup '#avia-body-popup', @
     ko.processAllDeferredBindingUpdates()
+    voyanga_debug('make ne popup')
 
     SizeBox('avia-body-popup');
     ResizeBox('avia-body-popup');
 
   # Shows popup with detailed info about given result
   # Generic mode
-  showDetails: =>
+  showDetails: (res,evnt)=>
+    voyanga_debug('open avia popup')
     @overviewMode = false
+    @parent._popupElem = evnt
     do @showDetailsPopup
 
   showDetailsOverview: =>
@@ -889,7 +892,6 @@ class AviaSearchParams extends SearchParams
     @infants = @passengers.infants
 
   url: ->
-    console.log "window.isLuxury", window.isLuxury == 1
     if (window.isLuxury == '1')
       result = 'flight/search/BEF?'
     else
@@ -927,20 +929,18 @@ class AviaSearchParams extends SearchParams
     hash = 'avia/search/' + parts.join('/') + '/'
     return hash
 
+  fromString: (data)->
+    data = PEGHashParser.parse(data,'AVIA')
+    @dep data.from
+    @arr data.to
+    @date data.dateFrom
+    @adults data.passangers.adults
+    @children data.passangers.children
+    @infants data.passangers.infants
+    @rt data.rt
+    if data.rt
+      @rtDate data.rtDateFrom
 
-  fromList: (data)->
-    # FIXME looks too ugly to hit production, yet does not support RT
-    @dep data[0]
-    @arr data[1]
-    @date moment(data[2], 'D.M.YYYY').toDate()
-    @adults data[3]
-    @children data[4]
-    @infants data[5]
-    if data.length == 7
-      @rt true
-      @rtDate  moment(data[6], 'D.M.YYYY').toDate()
-    else
-      @rt false
 
   fromObject: (data)=>
     @adults data.adt

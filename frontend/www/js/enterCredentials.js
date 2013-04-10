@@ -106,13 +106,11 @@ $(function () {
                             dataType: 'json'
                         })
                             .success(function (response) {
-                                console.log ('success');
                                 statuses[i] = 1;
                                 ids[i] = response.bookerId;
                                 checkStatuses(statuses, ids);
                             })
                             .error(function (xhr, ajaxOptions, thrownError) {
-                                console.log ('error');
                                 statuses[i] = xhr.responseText;
                                 checkStatuses(statuses, ids);
                             });

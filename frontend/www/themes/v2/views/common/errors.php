@@ -15,7 +15,7 @@
                                             обратного перелета 14 августа или позднее.</p>
 
                                         <p align="center">
-                                            <a href="#" class="btnBackMain" style="margin-top:40px"
+                                            <a href="#" class="btnBackMain" style="margin-top:20px"
                                                data-bind="click: close">Перейти на главную</a>
                                         </p>
                                     </div>
@@ -44,7 +44,7 @@
                                         <h1 data-bind="text: data.title">Ошибка</h1>
                                         <p data-bind="html: data.text"></p>
                                         <p align="center">
-                                            <a href="#" class="btnBackMain" style="margin-top:40px"
+                                            <a href="#" class="btnBackMain" style="margin-top:20px"
                                                data-bind="click: close, text: data.buttonText">Перейти на главную</a>
                                         </p>
                                     </div>

@@ -43,7 +43,8 @@ ERRORS =
   passportBookingError:
     title: "Ошибка бронирования"
     text: "Это могло произойти по причине того что выбранный вариант уже купил кто-то другой. Попробуйте выбрать другой вариант."
-    buttonText: "Вернуться к результатам поиска"
+    buttonText: "Выбрать другой"
+      
 
 class ErrorPopup extends GenericPopup
   constructor: (key, params = false, @onclose=false)->
