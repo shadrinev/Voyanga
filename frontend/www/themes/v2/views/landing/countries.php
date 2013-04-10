@@ -22,7 +22,7 @@
 
     $(document).ready(function(){
         initLandingPage();
-        //eventPhotos = new EventPhotoBox(window.eventPhotos);
+        $('.registerForm').hide();
     })
 </script>
 <div class="headBlockOne">

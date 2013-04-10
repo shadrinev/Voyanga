@@ -9,6 +9,8 @@ $(function () {
     window.app.register('avia', avia);
     window.toursOverviewActive = true;
 
+    $('.registerForm').hide();
+
     $('.genderField').each(function () {
         var $this = $(this),
             value = $this.val(),
