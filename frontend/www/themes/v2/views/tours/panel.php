@@ -1,4 +1,5 @@
 <script type="text/html" id="tour-panel-template">
+    <input class="fake" style="display: none">
     <!-- ko template: {foreach: $data.panels, afterRender: $data.afterRender, beforeRemove: $data.beforeRemove} -->
     <div class="deleteTab" data-bind="click: $parent.deletePanel"></div>
     <div class="panel">

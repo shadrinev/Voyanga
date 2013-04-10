@@ -25,6 +25,9 @@ ko.bindingHandlers.autocomplete = {
       if ((!$(element).is('.arrivalCity')) && ($('input.arrivalCity').length > 0)) {
         return $('input.arrivalCity.second-path').focus();
       }
+      else {
+          $(element).blur();
+      }
     });
     $(element).on('typeahead:over', function(e, data) {
       return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
