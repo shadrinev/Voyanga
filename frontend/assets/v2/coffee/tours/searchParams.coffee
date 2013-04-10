@@ -103,7 +103,7 @@ class TourSearchParams extends SearchParams
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
     @startCity data.start.from
-    @returnBack data.start.return
+    @returnBack data.start.rt
     @destinations []
     @rooms []
     for dest in data.destinations

@@ -163,7 +163,7 @@ TourSearchParams = (function(_super) {
     beforeUrl = this.url();
     hotelIdBefore = this.hotelId();
     this.startCity(data.start.from);
-    this.returnBack(data.start["return"]);
+    this.returnBack(data.start.rt);
     this.destinations([]);
     this.rooms([]);
     _ref = data.destinations;
