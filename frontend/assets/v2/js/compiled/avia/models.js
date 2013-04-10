@@ -1279,7 +1279,6 @@ AviaSearchParams = (function(_super) {
 
   AviaSearchParams.prototype.url = function() {
     var params, result;
-    console.log("window.isLuxury", window.isLuxury === 1);
     if (window.isLuxury === '1') {
       result = 'flight/search/BEF?';
     } else {
@@ -1325,18 +1324,17 @@ AviaSearchParams = (function(_super) {
     return hash;
   };
 
-  AviaSearchParams.prototype.fromList = function(data) {
-    this.dep(data[0]);
-    this.arr(data[1]);
-    this.date(moment(data[2], 'D.M.YYYY').toDate());
-    this.adults(data[3]);
-    this.children(data[4]);
-    this.infants(data[5]);
-    if (data.length === 7) {
-      this.rt(true);
-      return this.rtDate(moment(data[6], 'D.M.YYYY').toDate());
-    } else {
-      return this.rt(false);
+  AviaSearchParams.prototype.fromString = function(data) {
+    data = PEGHashParser.parse(data, 'AVIA');
+    this.dep(data.from);
+    this.arr(data.to);
+    this.date(data.dateFrom);
+    this.adults(data.passangers.adults);
+    this.children(data.passangers.children);
+    this.infants(data.passangers.infants);
+    this.rt(data.rt);
+    if (data.rt) {
+      return this.rtDate(data.rtDateFrom);
     }
   };
 
