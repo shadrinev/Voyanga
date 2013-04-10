@@ -55,9 +55,6 @@ class OrderBookingController extends Controller
 
         }
 
-
-        //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
-        //$dataProvider=new EMongoDocumentDataProvider('GeoNames',array('criteria'=>array('conditions'=>array('iataCode'=>array('type'=>2)) )));
         $dataProvider=new CActiveDataProvider('OrderBooking', array(
             'criteria'=>$criteria,
             'pagination'=>array(
