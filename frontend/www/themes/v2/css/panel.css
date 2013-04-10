@@ -287,6 +287,9 @@
 /* ================ */
 /* ================ */
 /* ================ */
+.sub-head > .center-block {
+    z-index: 1000;
+}
 .sub-head .panel .content {
 	cursor: pointer;
 }

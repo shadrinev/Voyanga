@@ -1746,7 +1746,7 @@ function startIE() {
             $(this).find('.second-path').focus();
         });
 
-        $("#passport_form").find("input[type='text'],input[type='email']").each(function() {
+        $("body").find("input[type='text'],input[type='email']").each(function() {
             var tp = $(this).attr("placeholder");
             $(this).attr('value',tp).css('color','#ccc');
         }).focusin(function() {
@@ -1762,7 +1762,7 @@ function startIE() {
             });
 
         /* Protected send form */
-        $("#passport_form").submit(function() {
+        $("body").submit(function() {
             $(this).find("input[type='text']").each(function() {
                 var val = $(this).attr('placeholder');
                 if($(this).val() == val) {
