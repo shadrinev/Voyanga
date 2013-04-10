@@ -391,7 +391,9 @@ $(window).load(getLink);
 function DayMonthYear() {
     if($('.divInputBirthday').length > 0 && $('.divInputBirthday').is(':visible')) {
 
-        var _birthday = $('.tdBirthday').find('.divInputBirthday').find('input');
+        var _birthday = $('.divInputBirthday').find('input');
+
+
 
         _birthday.keypress(function(e) {
             if (e.which > 47 && e.which < 58) {
@@ -399,7 +401,7 @@ function DayMonthYear() {
                 _birthday.keyup(function(e) {
 
                     if ($(this).hasClass('dd')) {
-                        console.log('DD = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                        //console.log('DD = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
                         if ($(this).val() > 31) {
                             $(this).addClass('error');
                         }
@@ -408,7 +410,10 @@ function DayMonthYear() {
                         }
                         if (e.which == 9) {
                             if ($(this).val().length < 2) {
-                                if ($(this).val() == 0) {
+                                if ($(this).val() == '' || $(this).val() == ' ') {
+                                    $(this).removeClass('error');
+                                }
+                                else if ($(this).val() == 0) {
                                     $(this).addClass('error');
                                 }
                                 else {
@@ -424,7 +429,7 @@ function DayMonthYear() {
 
                     }
                     else if ($(this).hasClass('mm')) {
-                        console.log('MM = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                        //console.log('MM = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
                         if ($(this).val() > 12) {
                             $(this).addClass('error');
                         }
@@ -433,8 +438,12 @@ function DayMonthYear() {
                         }
 
                         if (e.which == 9) {
+                            console.log('WHAT THE FUCK = '+ $(this).val());
                             if ($(this).val().length < 2) {
-                                if ($(this).val() == 0) {
+                                if ($(this).val() == '' || $(this).val() == ' ') {
+                                    $(this).removeClass('error');
+                                }
+                                else if ($(this).val() == 0) {
                                     $(this).addClass('error');
                                 }
                                 else {
@@ -450,9 +459,12 @@ function DayMonthYear() {
 
                     }
                     else if ($(this).hasClass('yy')) {
-                        console.log('YY = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
+                        //console.log('YY = ' + e.which +' '+ $(this).hasClass('dd') + ' '+ $(this).val()+ ' '+ $(this).val().length);
                         if (e.which == 9) {
-                            if ($(this).val().length > 1 && $(this).val().length < 3) {
+                            if ($(this).val() == '' || $(this).val() == ' ') {
+                                $(this).removeClass('error');
+                            }
+                            else if ($(this).val().length > 1 && $(this).val().length < 3) {
                                 if ($(this).val() < 14) {
                                     $(this).val('20'+$(this).val());
                                     $(this).removeClass('error');
@@ -572,6 +584,7 @@ function DayMonthYear() {
 
             }
         });
+
 
     }
 }

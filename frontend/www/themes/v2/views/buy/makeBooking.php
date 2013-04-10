@@ -170,8 +170,8 @@
                     <td>
                         <span style="line-height: 18px;">Ваши билеты готовы и будут отправлены по электронной почте сразу после оплаты.</span>
                     </td>
-                    <td>
-
+                    <td style="text-align: right; font-size: 12px;">
+                        <span style="line-height: 18px;">Не закрывайте страницу до завершения оплаты.</span>
                     </td>
                 </tr>
             </table>

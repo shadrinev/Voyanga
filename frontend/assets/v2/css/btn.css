@@ -2,7 +2,7 @@
 .pressButton span{position:relative;z-index:2;}
 .pressButton span.text{display:inline-block;height:37px;vertical-align:middle;margin-right:5px;}
 .pressButton .price{display:inline-block;font-size:26px;height:37px;vertical-align:middle;}
-.pressButton .rur{display:inline-block;font-size:25px;margin-top:3px;vertical-align:middle;}.pressButton .rur.f21{margin-top:5px;}
+.pressButton .rur{display:inline-block;font-size:25px;vertical-align:middle;margin-top:0px;height:32px;line-height:37px;}.pressButton .rur.f21{margin-top:5px;}
 .pressButton .l{background:url("/themes/v2/images/btn.png") no-repeat scroll left 0 transparent;display:block;position:absolute;height:37px;width:6px;left:-4px;top:0px;z-index:1;}
 .pressButton:hover .l{background-position:left -37px;}
 .pressButton.orange{background-position:right -74px;text-shadow:0px 1px 0px #c36408;}.pressButton.orange:hover{background-position:right -111px;}
@@ -24,7 +24,7 @@
 .btn-find.inactive{background-position:-166px -300px;cursor:default;}
 .btn-addItems{background:url("/themes/v2/images/btn.png") no-repeat scroll right -347px transparent;cursor:pointer;display:inline-block;height:30px;vertical-align:middle;line-height:28px;text-shadow:0px 1px 0px #111213;font-size:12px;color:#FFF;padding:0 14px 0 7px;position:relative;}.btn-addItems .l{display:block;position:absolute;background:url("/themes/v2/images/btn.png") no-repeat scroll left -347px transparent;top:0px;left:-6px;width:7px;height:100%;}
 .btn-allVariantion{background:url("/themes/v2/images/btn.png") no-repeat scroll right -407px transparent;cursor:pointer;display:inline-block;height:30px;vertical-align:middle;line-height:28px;text-shadow:0px 1px 0px #111213;font-size:12px;color:#FFF;padding:0 12px 0 7px;margin-left:10px;position:relative;}.btn-allVariantion .l{display:block;position:absolute;background:url("/themes/v2/images/btn.png") no-repeat scroll left -407px transparent;top:0px;left:-6px;width:7px;height:100%;}
-@media screen and (-webkit-min-device-pixel-ratio:0){body:first-of-type .pressButton .rur{font-size:25px;margin-top:4px;}}.recommended-ticket .ticket-items .content .details-selecte .pressButton{width:180px;float:right;margin-left:5px;}
+@media screen and (-webkit-min-device-pixel-ratio:0){body:first-of-type .pressButton .rur{font-size:25px;margin-top:0px;line-height:37px;}}.recommended-ticket .ticket-items .content .details-selecte .pressButton{width:180px;float:right;margin-left:5px;}
 .ticket-items .content .buy-ticket .text .pressButton{width:78%;}
 .hotels-tickets .content .full-info .choose-a-hotel .pressButton{position:absolute;top:50px;width:122px;}
 .hotel-details .book .pressButton{width:126px;}

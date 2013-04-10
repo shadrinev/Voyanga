@@ -1745,7 +1745,7 @@ function startIE() {
         $(document).on('click', '.data', function() {
             $(this).find('.second-path').focus();
         });
-
+        console.log('THIS IS IE, MOTHERFUCKER!');
         $("body").find("input[type='text'],input[type='email']").each(function() {
             var tp = $(this).attr("placeholder");
             $(this).attr('value',tp).css('color','#ccc');
@@ -1761,15 +1761,15 @@ function startIE() {
                 }
             });
 
-        /* Protected send form */
-        $("body").submit(function() {
-            $(this).find("input[type='text']").each(function() {
-                var val = $(this).attr('placeholder');
-                if($(this).val() == val) {
-                    $(this).attr('value','');
-                }
-            })
-        });
+//        /* Protected send form */
+//        $("body").submit(function() {
+//            $(this).find("input[type='text']").each(function() {
+//                var val = $(this).attr('placeholder');
+//                if($(this).val() == val) {
+//                    $(this).attr('value','');
+//                }
+//            })
+//        });
 
     }
 }
