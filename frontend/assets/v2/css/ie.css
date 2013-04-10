@@ -7,4 +7,4 @@
 .ie8 .one-str .ages input{padding-top:5px;height:27px;}
 .ie8 .loadWrapBg,.ie8 .contentWrapBg,.ie8 .loginWrapBg,.ie8 .mainWrapBg{background:url("/themes/v2/images/loadWrapBg.png");}
 .ie8 .loginWrapBg .wrapDiv .wrapContent .divInput input{height:30px;padding-top:6px;}
-.ie8 .infoPassengers input[type="text"],.ie8 .dopInfoPassengers input{height:25px;padding-top:8px;}
+.ie8 .infoPassengers input[type="text"],.ie8 .dopInfoPassengers input[type="email"],.ie8 .dopInfoPassengers input[type="text"]{height:25px;padding-top:8px;}
