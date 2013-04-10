@@ -71,24 +71,24 @@ TourPanelSet = (function() {
     this.activeCityAcc = ko.observable('');
     this.activeCityGen = ko.observable('');
     this.sp.calendarActivated = ko.observable(true);
+    this.lastPanel = null;
+    this.i = 0;
+    this.activeCalendarPanel = ko.observable(this.panels()[0]);
+    this.addPanel();
     this.calendarText = ko.computed(function() {
       var result;
       result = 'Введите город';
-      if (_this.activeCity()) {
+      if (_this.activeCalendarPanel().cityReadable()) {
         if (_this.selectionIndex() === 0) {
-          result = 'Выберите дату приезда в город ' + _this.activeCity();
+          result = 'Выберите дату приезда в город ' + _this.activeCalendarPanel().cityReadable();
         } else if (_this.selectionIndex() === 1) {
-          result = 'Выберите дату отъезда из города ' + _this.activeCity();
+          result = 'Выберите дату отъезда из города ' + _this.activeCalendarPanel().cityReadable();
         } else if (_this.selectionIndex() === 2) {
-          result = _this.activeCity() + ', ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkOut());
+          result = _this.activeCalendarPanel().cityReadable() + ', ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(_this.activeCalendarPanel().checkOut());
         }
       }
       return result;
     });
-    this.lastPanel = null;
-    this.i = 0;
-    this.addPanel();
-    this.activeCalendarPanel = ko.observable(this.panels()[0]);
     this.height = ko.computed(function() {
       return 64 * _this.panels().length + 'px';
     });
@@ -178,6 +178,9 @@ TourPanelSet = (function() {
       if ((this.panels().length === 1) && (this.panels()[0].city().length === 0)) {
         el = $('div.from');
         $(el).find('.second-path').attr('placeholder', 'Введите первый город');
+        _.delay(function() {
+          return $('.second-path.tour').last().focus();
+        }, 200);
         Utils.flashMessage(el);
       } else {
         el = $('div.innerCalendar').find('h1');
@@ -215,7 +218,8 @@ TourPanelSet = (function() {
     VoyangaCalendarStandart.clear();
     this.activeCity('');
     this.activeCityAcc('');
-    return this.activeCityGen('');
+    this.activeCityGen('');
+    return this.activeCalendarPanel(newPanel);
   };
 
   TourPanelSet.prototype.showPanelCalendar = function(args) {
@@ -323,8 +327,9 @@ TourPanel = (function(_super) {
       result = "Выберите дату поездки ";
       return result;
     });
-    this.hasfocus.subscribe(function(newValue) {
-      return _this.trigger("tourPanel:hasFocus", _this);
+    $(document).on('focus', '.second-path.tour', function(e) {
+      $(e.target).closest('.panel').css('z-index', '5000').siblings('.panel').css('z-index', '2000');
+      return _this.trigger("tourPanel:hasFocus", ko.contextFor(e.target)['$data']);
     });
     this.city.subscribe(function(newValue) {
       if (_this.sp.calendarActivated()) {

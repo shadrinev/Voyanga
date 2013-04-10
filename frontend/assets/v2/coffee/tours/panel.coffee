@@ -43,21 +43,22 @@ class TourPanelSet
     @activeCityAcc = ko.observable('')
     @activeCityGen = ko.observable('')
     @sp.calendarActivated = ko.observable(true)
-    @calendarText = ko.computed =>
-      result = 'Введите город'
-      if @activeCity()
-        if (@selectionIndex() == 0)
-          result = 'Выберите дату приезда в город ' + @activeCity()
-        else if (@selectionIndex() == 1)
-          result = 'Выберите дату отъезда из города ' + @activeCity()
-        else if @selectionIndex() == 2
-          result = @activeCity() + ', ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
-      result
 
     @lastPanel = null
     @i = 0
-    @addPanel()
     @activeCalendarPanel = ko.observable @panels()[0]
+    @addPanel()
+
+    @calendarText = ko.computed =>
+      result = 'Введите город'
+      if @activeCalendarPanel().cityReadable()
+        if (@selectionIndex() == 0)
+          result = 'Выберите дату приезда в город ' + @activeCalendarPanel().cityReadable()
+        else if (@selectionIndex() == 1)
+          result = 'Выберите дату отъезда из города ' + @activeCalendarPanel().cityReadable()
+        else if @selectionIndex() == 2
+          result = @activeCalendarPanel().cityReadable() + ', ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkIn()) + ' - ' + dateUtils.formatDayShortMonth(@activeCalendarPanel().checkOut())
+      result
 
     @height = ko.computed =>
       64 * @panels().length + 'px'
@@ -129,6 +130,9 @@ class TourPanelSet
       if ((@panels().length == 1) && (@panels()[0].city().length == 0))
         el = $('div.from')
         $(el).find('.second-path').attr('placeholder', 'Введите первый город')
+        _.delay ()->
+          $('.second-path.tour').last().focus()
+        , 200
         Utils.flashMessage el
       else
         el = $('div.innerCalendar').find('h1')
@@ -158,6 +162,7 @@ class TourPanelSet
     @activeCity('')
     @activeCityAcc('')
     @activeCityGen('')
+    @activeCalendarPanel(newPanel)
 
   showPanelCalendar: (args) =>
     @activeCalendarPanel args[0]
@@ -234,8 +239,9 @@ class TourPanel extends SearchPanel
       result = "Выберите дату поездки "
       return result
 
-    @hasfocus.subscribe (newValue) =>
-      @trigger "tourPanel:hasFocus", @
+    $(document).on 'focus', '.second-path.tour', (e)=>
+      $(e.target).closest('.panel').css('z-index','5000').siblings('.panel').css('z-index', '2000');
+      @trigger "tourPanel:hasFocus", ko.contextFor(e.target)['$data']
 
     @city.subscribe (newValue) =>
       if @sp.calendarActivated()

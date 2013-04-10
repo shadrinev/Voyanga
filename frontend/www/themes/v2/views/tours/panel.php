@@ -28,7 +28,7 @@
                     <div class="data">
                         <div class="from" data-bind="css: {active: checkIn()}">
                             <input type="text" tabindex="-1" readonly="readonly" autocomplete="off" class="input-path">
-                            <input type="text" placeholder="Куда едем?" class="second-path"
+                            <input type="text" placeholder="Куда едем?" class="second-path tour"
                                    data-bind="autocomplete: {name: 'tour-2', source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen,readablePre: cityReadablePre}, css: {isFirst: $parent.isFirst()}">
 
                             <div class="date"
