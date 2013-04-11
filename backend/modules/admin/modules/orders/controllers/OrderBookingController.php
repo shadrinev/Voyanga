@@ -143,10 +143,10 @@ class OrderBookingController extends Controller
         $retArr['userDescription'] = $model->userDescription;
         $retArr['flightBookings'] = array();
         $retArr['hotelBookings'] = array();
+        $retArr['meta'] = (strlen($model->meta)>0) ? @unserialize($model->meta) : array();
 
         foreach($model->flightBookers as $flightBooker) {
             $retArr['flightBookings'][] = $flightBooker;
-//            die(var_dump($flightBooker->flightVoyage->taxes));
         }
 
         foreach($model->hotelBookers as $hotelBooker){

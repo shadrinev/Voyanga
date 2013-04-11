@@ -184,3 +184,7 @@ $this->breadcrumbs=array(
         <?php endif; ?>
   </tbody>
 </table>
+<table>
+    <tr><th>Переменные окружения</th></tr>
+    <tr><td><?php VarDumper::dump($data['meta']) ?></td></tr>
+</table>

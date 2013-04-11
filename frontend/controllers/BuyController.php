@@ -342,6 +342,7 @@ class BuyController extends FrontendController
         $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
         $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
         $orderBooking->direct = $directValue;
+        $orderBooking->meta = serialize($_SERVER);
         $orderBooking->save();
         $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
         $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
