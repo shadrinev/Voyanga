@@ -91,7 +91,7 @@ class Siblings
     if rtDate!=false
       panel.sp.rtDate rtDate.toDate()
 
-    app.navigate panel.sp.getHash(), {trigger: true}
+    app.navigate panel.sp.hash(), {trigger: true}
 
   search: =>
     if @roundTrip

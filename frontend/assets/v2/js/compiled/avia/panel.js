@@ -205,11 +205,11 @@ AviaPanel = (function(_super) {
   AviaPanel.prototype.handlePanelSubmit = function() {
     if (window.location.pathname.replace('/', '') !== '') {
       $('#loadWrapBgMin').show();
-      window.location.href = '/#' + this.sp.getHash();
+      window.location.href = '/#' + this.sp.hash();
       return;
     }
     GAPush(['_trackEvent', 'Avia_press_button_search', this.sp.GAKey(), this.sp.GAData()]);
-    app.forceNavigate(this.sp.getHash());
+    app.forceNavigate(this.sp.hash());
     return this.minimizedCalendar(true);
   };
 

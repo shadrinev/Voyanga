@@ -11,6 +11,7 @@
 #
 # implement(Class, IInterface)
 implement = (class_, interface_) ->
+  source = class_.prototype || class_
   for key, val of interface_
-    if !class_.prototype[key] || typeof(class_.prototype[key]) != "function"
+    if !source[key] || typeof(source[key]) != "function"
       throw "Implement method `#{key}` of interface `#{interface_.name}` on  `#{class_.name}`"

@@ -784,7 +784,6 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
-    window.voyanga_debug('checkOut', @checkOut)
     @city = @searchParams.cityFull
     if @searchParams.duration
       duration = @searchParams.duration
@@ -893,7 +892,6 @@ class HotelsResultSet
 
 
   select: (hotel, event) =>
-    window.voyanga_debug ' i wonna get hotel for you', hotel
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     backUrl = window.location.hash
     backUrl = backUrl.split('hotelId')[0]

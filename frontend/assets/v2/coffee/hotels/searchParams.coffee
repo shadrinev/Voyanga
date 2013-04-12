@@ -31,17 +31,6 @@ class SpRoom
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
 
-  # FIXME remove meh
-  fromList: (item) ->
-    parts = item.split(':')
-    @adults parts[0]
-    @children parts[1]
-    @infants parts[2]
-    # FIXME: FIXME FIXME
-    if @children() > 0
-      for i in [0..(@children()-1)]
-       @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:{min: 0, max: 12}}}
-
   fromPEGObject: (item) ->
     @adults item.adults
     @children item.children
@@ -74,7 +63,6 @@ class SpRoom
     agesTextVals = []
     j = 0
     for ageObj in @ages()
-      console.log('age', ageObj, ageObj.age())
       agesTextVals.push("rooms[#{i}][chdAges][#{j}]=" + ageObj.age())
       j++
     if(agesTextVals.length)
@@ -83,7 +71,7 @@ class SpRoom
       agesText = "rooms[#{i}][chdAges]=0"
     return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&" + agesText + "&rooms[#{i}][cots]=" + @infants()
 
-class HotelsSearchParams
+class HotelsSearchParams extends RoomsContainerMixin
   constructor: ->
     @city = ko.observable('')
     @checkIn = ko.observable(false)
@@ -99,35 +87,37 @@ class HotelsSearchParams
         result += room.children()
       return result
 
-  getHash: =>
+  hash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
     for room in @rooms()
       parts.push room.getHash()
     hash = 'hotels/search/' + parts.join('/') + '/'
     return hash
 
-  fromList: (data)=>
-    # FIXME looks too ugly to hit production, yet does not support RT
+  fromString: (data)=>
+    data = PEGHashParser.parse(data,'HOTELS')
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
-    @city data[0]
-    @checkIn moment(data[1], 'D.M.YYYY').toDate()
-    @checkOut moment(data[2], 'D.M.YYYY').toDate()
+    @city data.to
+    @checkIn data.dateFrom
+    @checkOut data.dateTo
     @rooms.splice(0)
     @hotelId(false)
-    rest = data[3].split('/')
-    for item in rest
-      if item == 'hotelId'
-        @hotelId(0)
-      else
-        if @hotelId() == 0
-          @hotelId(item)
-          break
-        else
-          if item
-            r = new SpRoom(@)
-            r.fromList(item)
-            @rooms.push r
+
+    for room in data.rooms
+      room = new SpRoom(@)
+      room.fromPEGObject(room)
+      @rooms.push room
+
+    @hotelId(false)
+    for pair in data.extra
+      if pair.key == 'hotelId'
+        @hotelId pair.value
+    for room in data.rooms
+      r = new SpRoom(@)
+      r.fromPEGObject(room)
+      @rooms.push r
+
     if beforeUrl == @url()
       @urlChanged(false)
       if hotelIdBefore == @hotelId()
@@ -170,3 +160,6 @@ class HotelsSearchParams
     result += ", " + moment(@checkIn()).format('D.M.YYYY') + ' - ' + moment(@checkOut()).format('D.M.YYYY')
     result += ", " + moment(@checkIn()).diff(moment(), 'days') + " - " + moment(@checkOut()).diff(moment(@checkIn()), 'days')
     return result
+
+implement(HotelsSearchParams, ISearchParams)
+implement(HotelsSearchParams, IRoomsContainer)

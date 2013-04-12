@@ -1,9 +1,20 @@
+
 # Куда летим
 class DestinationSearchParams
   constructor: ->
     @city = ko.observable ''
     @dateFrom = ko.observable ''
     @dateTo = ko.observable ''
+
+# Куда летим
+class ComplexDestinationSearchParams
+  constructor: ->
+    @from = ko.observable ''
+    @to = ko.observable ''
+    @dateFrom = ko.observable ''
+    @dateTo = ko.observable ''
+
+
 
 # Кто летит
 class RoomsSearchParams
@@ -13,10 +24,8 @@ class RoomsSearchParams
     @chdAge = ko.observable false
     @cots = ko.observable false
 
-# Used in TourPanel and search controller
-class TourSearchParams extends SearchParams
+class SimpleSearchParams extends RoomsContainerMixin
   constructor: ->
-    super()
     if(window.currentCityCode)
       @startCity = ko.observable window.currentCityCode
     else
@@ -27,6 +36,7 @@ class TourSearchParams extends SearchParams
     @rooms = ko.observableArray [new SpRoom(@)]
     @rooms()[0].adults(1)
     @hotelId = ko.observable(false)
+    # FIXME не нужно быть обсерваблом
     @urlChanged = ko.observable(false)
     @hotelChanged = ko.observable(false)
     @overall = ko.computed =>
@@ -46,62 +56,15 @@ class TourSearchParams extends SearchParams
         result += room.children()
       return result
 
-  addSpRoom: =>
-    @rooms.push new SpRoom(@)
 
-  url: ->
-    result = 'tour/search?'
-    params = []
-    params.push 'start=' + @startCity()
-    params.push 'return=' + @returnBack()
-    _.each @destinations(), (destination, ind) =>
-      if moment(destination.dateFrom())
-        dateFrom = moment(destination.dateFrom()).format('D.M.YYYY')
-      else
-        dateFrom = '1.1.1970'
-      if moment(destination.dateTo())
-        dateTo = moment(destination.dateTo()).format('D.M.YYYY')
-      else
-        dateTo = '1.1.1970'
-      params.push 'destinations[' + ind + '][city]=' + destination.city()
-      params.push 'destinations[' + ind + '][dateFrom]=' + dateFrom
-      params.push 'destinations[' + ind + '][dateTo]=' + dateTo
-
-    _.each @rooms(), (room, ind) =>
-      params.push room.getUrl(ind)
-
-    if(@eventId)
-      params.push 'eventId='+@eventId
-    if(@orderId)
-      params.push 'orderId='+@orderId
-    result += params.join "&"
-    return result
-
-  key: ->
-    key = @startCity()
-    _.each @destinations(), (destination) ->
-      key += destination.city() + destination.dateFrom() + destination.dateTo()
-    _.each @rooms(), (room) ->
-      key += room.getHash()
-    return key
-
-  getHash: ->
-    parts =  [@startCity(), @returnBack()]
-    _.each @destinations(), (destination) ->
-      parts.push destination.city()
-      parts.push moment(destination.dateFrom()).format('D.M.YYYY')
-      parts.push moment(destination.dateTo()).format('D.M.YYYY')
-    parts.push 'rooms'
-    _.each @rooms(), (room) ->
-      parts.push room.getHash()
-
-    hash = 'tours/search/' + parts.join('/') + '/'
-    return hash
-
-  fromString: (data)->
+  fromString: (data) =>
     data = PEGHashParser.parse(data,'tour')
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
+    if data.complex
+      @complex = true
+      @parseComplex data
+      return
     @startCity data.start.from
     @returnBack data.start.rt
     @destinations []
@@ -138,8 +101,6 @@ class TourSearchParams extends SearchParams
       @hotelChanged(false)
 
   fromObject: (data)->
-    window.voyanga_debug "Restoring TourSearchParams from object"
-
     _.each data.destinations, (destination) ->
       destination = new DestinationSearchParams()
       destination.city(destination.city)
@@ -154,19 +115,47 @@ class TourSearchParams extends SearchParams
     if(data.eventId)
       @eventId = data.eventId
 
-    window.voyanga_debug 'Result', @
+  url: ->
+    result = 'tour/search?'
+    params = []
+    params.push 'start=' + @startCity()
+    params.push 'return=' + @returnBack()
+    _.each @destinations(), (destination, ind) =>
+      if moment(destination.dateFrom())
+        dateFrom = moment(destination.dateFrom()).format('D.M.YYYY')
+      else
+        dateFrom = '1.1.1970'
+      if moment(destination.dateTo())
+        dateTo = moment(destination.dateTo()).format('D.M.YYYY')
+      else
+        dateTo = '1.1.1970'
+      params.push 'destinations[' + ind + '][city]=' + destination.city()
+      params.push 'destinations[' + ind + '][dateFrom]=' + dateFrom
+      params.push 'destinations[' + ind + '][dateTo]=' + dateTo
 
-  removeItem: (item, event)=>
-    event.stopPropagation()
-    if @data().length <2
-      return
-    idx = @data.indexOf(item)
+    _.each @rooms(), (room, ind) =>
+      params.push room.getUrl(ind)
 
-    if idx ==-1
-      return
-    @data.splice(idx, 1)
-    if item == @selection()
-      @setActive @data()[0]
+    if(@eventId)
+      params.push 'eventId='+@eventId
+    if(@orderId)
+      params.push 'orderId='+@orderId
+    result += params.join "&"
+    return result
+
+  hash: ->
+    parts =  [@startCity(), @returnBack()]
+    _.each @destinations(), (destination) ->
+      parts.push destination.city()
+      parts.push moment(destination.dateFrom()).format('D.M.YYYY')
+      parts.push moment(destination.dateTo()).format('D.M.YYYY')
+    parts.push 'rooms'
+    _.each @rooms(), (room) ->
+      parts.push room.getHash()
+
+    hash = 'tours/search/' + parts.join('/') + '/'
+    return hash
+
 
   GAKey: =>
     result = []
@@ -190,4 +179,84 @@ class TourSearchParams extends SearchParams
       stayData += ", " + moment(destination.dateFrom()).diff(moment(), 'days') + " - " + moment(destination.dateTo()).diff(moment(destination.dateFrom()), 'days')
       result.push stayData
     result.join "//"
+    
 
+implement(SimpleSearchParams, ISearchParams)
+implement(SimpleSearchParams, IRoomsContainer)  
+
+# Used in TourPanel and search controller
+class TourSearchParams
+  constructor: ->
+    @simpleSP = new SimpleSearchParams()
+#  addSpRoom: =>
+#    @rooms.push new SpRoom(@)
+
+  url: ->
+    do @simpleSP.url
+#  key: ->
+#    key = @startCity()
+#    _.each @destinations(), (destination) ->
+#      key += destination.city() + destination.dateFrom() + destination.dateTo()
+#    _.each @rooms(), (room) ->
+#      key += room.getHash()
+#    return key
+
+  hash: ->
+    do @simpleSP.hash
+
+  fromString: (data)->
+    @simpleSP.fromString data
+
+
+  fromObject: (data)->
+    @simpleSP.fromObject data
+
+#  removeItem: (item, event)=>
+#    event.stopPropagation()
+#    if @data().length <2
+#      return
+#    idx = @data.indexOf(item)
+
+#    if idx ==-1
+#      return
+#    @data.splice(idx, 1)
+#    if item == @selection()
+#      @setActive @data()[0]
+
+  GAKey: =>
+    do @simpleSP.GAKey
+
+  GAData: =>
+    do @simpleSP.GAData
+
+  ############
+  # Методы для панели туров на главной
+  #############
+  
+  # Добавляем точку назначения для набора панелей на главной,
+  # т.е. в простые параметры
+  addDestination: =>
+    @simpleSP.destinations.push new DestinationSearchParams()
+
+  # Удаляем точку назначение с набора панелей на главной,
+  # т.е. всегда из простых параметров.
+  removeDestination: (index, len)=>
+    @simpleSP.destinations.splice(index, len)
+
+  # Отдаем последнюю точку назначения,
+  # i.e. свежедобавленную для свежесозданной панели.
+  getLastDestination: =>
+    _.last(@simpleSP.destinations())
+
+  getRoomsContainer: =>
+    @simpleSP
+
+  getStartCity: =>
+    @simpleSP.startCity
+
+  urlChanged: =>
+    @simpleSP.urlChanged()
+
+  # FIXME можно жить без него
+  hotelId: =>
+    @simpleSP.hotelId()

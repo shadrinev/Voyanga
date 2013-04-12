@@ -200,9 +200,7 @@ HelpLayer = (function() {
     this.mainLayer.show();
     return this.mainLayer.animate({
       opacity: 0.98
-    }, 300, function() {
-      return voyanga_debug("opacitied");
-    });
+    }, 300);
   };
 
   HelpLayer.prototype.close = function() {

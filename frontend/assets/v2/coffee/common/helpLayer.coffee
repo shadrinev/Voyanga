@@ -115,8 +115,6 @@ class HelpLayer
         opacity: 0.98
       },
       300,
-      ->
-        voyanga_debug("opacitied")
     )
 
   close: =>

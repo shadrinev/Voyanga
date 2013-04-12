@@ -237,7 +237,6 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.select = function(res, result, elem) {
     var btn;
-    voyanga_debug('click select in at', res, result, elem);
     if (!(res != null)) {
       return;
     }
@@ -478,7 +477,6 @@ ToursAviaResultSet = (function(_super) {
   ToursAviaResultSet.prototype.doBuyAnimation = function(res, elem) {
     var minDelta, oldWidth, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
       _this = this;
-    voyanga_debug('animation', res, elem);
     ticket = $(elem.target).parent().parent().parent().parent();
     if (ticket.hasClass('content')) {
       ticket = ticket.parent();
@@ -489,7 +487,6 @@ ToursAviaResultSet = (function(_super) {
     if (ticket.parent().hasClass('recommended-ticket')) {
       ticket = ticket.parent();
       posAbs = ticket.offset();
-      voyanga_debug('pos', pos);
     }
     pos = {
       top: posAbs.top - posCont.top,
@@ -497,7 +494,6 @@ ToursAviaResultSet = (function(_super) {
     };
     oldWidth = ticket.width();
     ticketClone = ticket.clone();
-    voyanga_debug('objects', ticket, ticketClone);
     ticket.css('visibility', 'hidden');
     $('#content').append(ticketClone);
     ticketClone.css({
@@ -527,8 +523,8 @@ ToursAviaResultSet = (function(_super) {
       },
       easing: 'easeOutCubic',
       complete: function() {
-        window.setTimeout(function() {
-          ticketClone.animate({
+        return window.setTimeout(function() {
+          return ticketClone.animate({
             left: '-800px'
           }, {
             duration: 300,
@@ -539,7 +535,7 @@ ToursAviaResultSet = (function(_super) {
               _this.results().selected_best(res.best | false);
               _this.selection(res);
               ticketClone.remove();
-              $('.my-trip-list .items a.active .time').animate({
+              return $('.my-trip-list .items a.active .time').animate({
                 opacity: 0.1
               }, 300, function() {
                 return $('.my-trip-list .items a.active .time').animate({
@@ -549,12 +545,9 @@ ToursAviaResultSet = (function(_super) {
                   return _this.trigger('next');
                 });
               });
-              return voyanga_debug('animate end');
             }
           });
-          return voyanga_debug('animate end');
         }, 100);
-        return voyanga_debug('animate end');
       }
     });
   };
@@ -985,7 +978,6 @@ ToursHotelsResultSet = (function(_super) {
     var minDelta, oldWidth, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
       _this = this;
     ticket = $(elem.target);
-    voyanga_debug('now i want do animate', elem, roomSet, ticket);
     ticket = ticket.parent();
     ticket = ticket.parent();
     ticket = ticket.parent();
@@ -997,7 +989,6 @@ ToursHotelsResultSet = (function(_super) {
     if (!ticket.is("div")) {
       ticket = ticket.parent();
     }
-    voyanga_debug('element', ticket);
     pos = ticket.position();
     posAbs = ticket.offset();
     posCont = $('#content').offset();
@@ -1031,9 +1022,8 @@ ToursHotelsResultSet = (function(_super) {
         nowAbsTop = startAbsTop - delta;
         if ((nowAbsTop - startScrollTop) < minDelta) {
           nowScrollTop = nowAbsTop - minDelta;
-          $("html,body").scrollTop(nowScrollTop);
+          return $("html,body").scrollTop(nowScrollTop);
         }
-        return voyanga_debug('step', now, fx);
       },
       easing: 'easeOutCubic',
       complete: function() {
@@ -1706,7 +1696,7 @@ TourTripResultSet = (function() {
       if (item.isFlight) {
         asp = new AviaSearchParams;
         asp.fromObject(item.searchParams);
-        window.redirectHash = asp.getHash();
+        window.redirectHash = asp.hash();
         if (!_this.firstDate) {
           _this.firstDate = dateUtils.formatDayShortMonth(asp.date());
         }
@@ -1739,7 +1729,6 @@ TourTripResultSet = (function() {
         if (asp.rt()) {
           rtDate = moment(asp.rtDate());
           _this.simHashes.push(aviaResult.similarityHash() + '.' + aviaResult.rtSimilarityHash());
-          voyanga_debug('ASP:', asp, asp.rt(), asp.date(), asp.rtDate());
         } else {
           _this.simHashes.push(aviaResult.similarityHash());
         }
@@ -1780,7 +1769,7 @@ TourTripResultSet = (function() {
       } else if (item.isHotel) {
         asp = new HotelsSearchParams;
         asp.fromObject(item.searchParams);
-        window.redirectHash = asp.getHash();
+        window.redirectHash = asp.hash();
         _this.hasHotel = true;
         if (!_this.firstDate) {
           _this.firstDate = dateUtils.formatDayShortMonth(moment(item.checkIn)._d);

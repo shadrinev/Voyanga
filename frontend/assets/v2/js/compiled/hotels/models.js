@@ -1047,7 +1047,6 @@ HotelsResultSet = (function() {
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
-    window.voyanga_debug('checkOut', this.checkOut);
     this.city = this.searchParams.cityFull;
     if (this.searchParams.duration) {
       duration = this.searchParams.duration;
@@ -1171,7 +1170,6 @@ HotelsResultSet = (function() {
   HotelsResultSet.prototype.select = function(hotel, event) {
     var backUrl,
       _this = this;
-    window.voyanga_debug(' i wonna get hotel for you', hotel);
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
     backUrl = window.location.hash;
     backUrl = backUrl.split('hotelId')[0];

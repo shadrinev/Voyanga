@@ -207,12 +207,9 @@ Application = (function(_super) {
     return this.on("beforeroute:" + prefix, function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      window.voyanga_debug("APP: routing", args);
       if (this.panel() === void 0 || (prefix !== this.activeModule())) {
         this.minimizeCalendar();
-        window.voyanga_debug("APP: switching active module to", prefix);
         this.activeModule(prefix);
-        window.voyanga_debug("APP: activating panel", ko.utils.unwrapObservable(module.panel));
         this.activeModuleInstance(module);
         $(window).unbind('resize');
         $(window).resize(module.resize);
@@ -304,7 +301,6 @@ Application = (function(_super) {
 
   Application.prototype.contentRendered = function() {
     var _this = this;
-    window.voyanga_debug("APP: Content rendered");
     this.trigger(this.activeModule() + ':contentRendered');
     ResizeFun();
     WidthMine();

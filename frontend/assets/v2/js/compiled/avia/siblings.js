@@ -153,7 +153,7 @@ Siblings = (function() {
     if (rtDate !== false) {
       panel.sp.rtDate(rtDate.toDate());
     }
-    return app.navigate(panel.sp.getHash(), {
+    return app.navigate(panel.sp.hash(), {
       trigger: true
     });
   };

@@ -25,7 +25,6 @@ PeopleSelector = (function() {
     el = $('.popup');
     if (!el.hasClass('active')) {
       $(document.body).mousedown(function(event) {
-        console.log('click event', event);
         if (($(event.target).parents('.popup').length > 0) || ($(event.target).parents('.how-many-man').length > 0)) {
           return;
         }
@@ -305,28 +304,28 @@ HotelPeopleSelector = (function(_super) {
 
   __extends(HotelPeopleSelector, _super);
 
-  function HotelPeopleSelector(sp) {
+  function HotelPeopleSelector(roomContainer) {
     var _this = this;
-    this.sp = sp;
+    this.roomContainer = roomContainer;
     this.removeRoom = __bind(this.removeRoom, this);
 
     this.addRoom = __bind(this.addRoom, this);
 
+    implement(this.roomContainer, IRoomsContainer);
     HotelPeopleSelector.__super__.constructor.apply(this, arguments);
     this.template = 'roomers-template';
-    this.rawRooms = this.sp.rooms;
     this.roomsView = ko.computed(function() {
-      var current, index, item, r, result, _i, _len, _ref;
+      var current, index, item, r, result, rooms, _i, _len;
       result = [];
       current = [];
-      _ref = _this.sp.rooms();
-      for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
-        item = _ref[index];
+      rooms = _this.roomContainer.getRooms();
+      for (index = _i = 0, _len = rooms.length; _i < _len; index = ++_i) {
+        item = rooms[index];
         if (current.length === 2) {
           result.push(current);
           current = [];
         }
-        r = new Roomers(item, index, _this.sp.rooms().length);
+        r = new Roomers(item, index, rooms.length);
         r.addRoom = _this.addRoom;
         r.removeRoom = _this.removeRoom;
         current.push(r);
@@ -334,24 +333,15 @@ HotelPeopleSelector = (function(_super) {
       result.push(current);
       return result;
     });
-    this.sp.overall.subscribe(resizePanel);
+    this.roomContainer.onOverallChanged(resizePanel);
   }
 
   HotelPeopleSelector.prototype.addRoom = function() {
-    if (this.sp.rooms().length === 4) {
-      return;
-    }
-    if (this.sp.overall() > 8) {
-      return;
-    }
-    return this.sp.rooms.push(new SpRoom(this.sp));
+    return this.roomContainer.addRoom();
   };
 
   HotelPeopleSelector.prototype.removeRoom = function(roomer) {
-    if (this.sp.rooms().length === 1) {
-      return;
-    }
-    return this.sp.rooms.splice(this.sp.rooms.indexOf(roomer.room), 1);
+    return this.roomContainer.removeRoom(roomer.room);
   };
 
   return HotelPeopleSelector;

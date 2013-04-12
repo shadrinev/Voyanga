@@ -43,10 +43,8 @@ ToursController = (function() {
       _this = this;
     window.app.helpLayer.pageName('tours');
     this.searchParams.fromString(args);
-    voyanga_debug('routing urlChanged:', this.searchParams.urlChanged(), this.searchParams.hotelChanged(), this.searchParams.hotelId());
     sp = this.searchParams;
     GAPush(['_trackEvent', 'Trip_press_button_search', sp.GAKey(), sp.GAData()]);
-    voyanga_debug('next state');
     if (this.searchParams.urlChanged()) {
       window.VisualLoaderInstance.start(this.api.loaderDescription);
       this.doSearch();
@@ -54,7 +52,6 @@ ToursController = (function() {
         backUrl = window.location.hash;
         urls = backUrl.split('hotelId');
         this.searchParams.hotelId(false);
-        voyanga_debug('i want set new url ', urls[0], urls);
         return window.setTimeout(function() {
           return window.app.navigate(urls[0]);
         }, 200);
@@ -65,7 +62,6 @@ ToursController = (function() {
           backUrl = window.location.hash;
           urls = backUrl.split('hotelId');
           this.searchParams.hotelId(false);
-          voyanga_debug('i want set new url ', urls[0], urls);
           return window.setTimeout(function() {
             return window.app.navigate(urls[0]);
           }, 200);

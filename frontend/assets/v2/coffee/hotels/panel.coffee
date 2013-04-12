@@ -96,11 +96,11 @@ class HotelsPanel extends SearchPanel
   handlePanelSubmit: =>
     if window.location.pathname.replace('/', '') != ''
       $('#loadWrapBgMin').show()
-      window.location.href = '/#' + @sp.getHash()
+      window.location.href = '/#' + @sp.hash()
       return
 
     GAPush ['_trackEvent','Hotel_press_button_search', @sp.GAKey(), @sp.GAData()]
-    app.forceNavigate @sp.getHash()
+    app.forceNavigate @sp.hash()
     @minimizedCalendar(true)
 
   checkInHtml: =>

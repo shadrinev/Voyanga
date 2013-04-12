@@ -115,7 +115,6 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   select: (res,result,elem)=>
-    voyanga_debug('click select in at',res,result,elem)
     if !res?
       return
     # FIXME looks retardely stupid
@@ -301,7 +300,6 @@ class ToursAviaResultSet extends TourEntry
         )
 
   doBuyAnimation: (res,elem)=>
-    voyanga_debug('animation',res,elem)
     ticket = $(elem.target).parent().parent().parent().parent()
     if ticket.hasClass('content')
       ticket = ticket.parent()
@@ -314,11 +312,9 @@ class ToursAviaResultSet extends TourEntry
       posAbs = ticket.offset()
 
 
-      voyanga_debug('pos',pos)
     pos = {top: (posAbs.top - posCont.top),left:(posAbs.left - posCont.left)}
     oldWidth = ticket.width()
     ticketClone = ticket.clone()
-    voyanga_debug('objects', ticket,ticketClone)
     ticket.css('visibility','hidden')
     $('#content').append(ticketClone)
     ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px'})
@@ -371,13 +367,10 @@ class ToursAviaResultSet extends TourEntry
                             @trigger 'next'
                         )
                     )
-                    voyanga_debug('animate end')
                 }
               )
-              voyanga_debug('animate end')
             , 100
           )
-          voyanga_debug('animate end')
       }
     )
 
@@ -672,7 +665,6 @@ class ToursHotelsResultSet extends TourEntry
 
   doBuyAnimation: (roomSet,elem)=>
     ticket = $(elem.target)
-    voyanga_debug('now i want do animate',elem,roomSet,ticket)
     ticket = ticket.parent()
     ticket = ticket.parent()
     ticket = ticket.parent()
@@ -682,7 +674,6 @@ class ToursHotelsResultSet extends TourEntry
       ticket = ticket.parent()
     if !ticket.is("div")
       ticket = ticket.parent()
-    voyanga_debug('element',ticket)
     pos = ticket.position()
     posAbs = ticket.offset()
 
@@ -712,8 +703,6 @@ class ToursHotelsResultSet extends TourEntry
         if (nowAbsTop - startScrollTop) < minDelta
           nowScrollTop = nowAbsTop - minDelta
           $("html,body").scrollTop(nowScrollTop)
-
-        voyanga_debug('step',now,fx)
       #self.animateStep(now, fx);
       , easing:'easeOutCubic',
       complete: =>
@@ -1172,7 +1161,7 @@ class TourTripResultSet
       if (item.isFlight)
         asp = new AviaSearchParams
         asp.fromObject item.searchParams
-        window.redirectHash = asp.getHash()
+        window.redirectHash = asp.hash()
         if (!@firstDate)
           @firstDate = dateUtils.formatDayShortMonth(asp.date())
         if asp.rtDate()
@@ -1199,7 +1188,6 @@ class TourTripResultSet
         if asp.rt()
           rtDate = moment(asp.rtDate())
           @simHashes.push(aviaResult.similarityHash()+'.'+aviaResult.rtSimilarityHash())
-          voyanga_debug('ASP:',asp,asp.rt(),asp.date(),asp.rtDate())
         else
           @simHashes.push(aviaResult.similarityHash())
         @crossUrlHref(@crossUrlHref()+asp.arr()+'/'+moment(asp.date()).format('D.M.YYYY')+'/'+rtDate.format('D.M.YYYY')+'/')
@@ -1222,7 +1210,7 @@ class TourTripResultSet
       else if (item.isHotel)
         asp = new HotelsSearchParams
         asp.fromObject item.searchParams
-        window.redirectHash = asp.getHash()
+        window.redirectHash = asp.hash()
         @hasHotel = true
         if (!@firstDate)
           @firstDate = dateUtils.formatDayShortMonth(moment(item.checkIn)._d)
