@@ -66,7 +66,7 @@ if(isset($citiesFrom[($fromCity ? $fromCity->id : $currentCity->id)])){
 
     $(document).ready(function () {
         initLandingPage();
-        //eventPhotos = new EventPhotoBox(window.eventPhotos);
+        $('.registerForm').hide();
     })
 
 </script>

@@ -43,6 +43,12 @@ class FlightPart
 
   stopoverText: -> 
     dateUtils.formatDuration @stopoverLength
+
+  markOrTransportAirline: =>
+    if window.use_transport=='1'
+      @transportAirline
+    else
+      @markAirline
     
   
 
@@ -283,6 +289,7 @@ class AviaResult
     @serviceClassReadable = if data.serviceClass == 'E' then 'Эконом' else if data.serviceClass=='F' then 'Первый' else 'Бизнес'
     @refundable = data.refundable
     @refundableText = if @refundable then "Билет возвратный" else "Билет не возвратный"
+    @showRefundable = if (window.enterCredentials && !@refundable) then false else true
     @freeWeight = data.freeWeight
     @freeWeight = '$' if @freeWeight == '0'
     @freeWeightText = data.freeWeightDescription
@@ -339,16 +346,28 @@ class AviaResult
     if _.size(@activeVoyage().activeBackVoyage().parts)>1 then "Рейсы" else "Рейс"
 
   firstAirline: =>
-    @activeVoyage().parts[0].markAirline
+    if window.use_transport=='1'
+      @activeVoyage().parts[0].transportAirline
+    else
+      @activeVoyage().parts[0].markAirline
 
   firstAirlineName: =>
-    @activeVoyage().parts[0].markAirlineName
+    if window.use_transport=='1'
+      @activeVoyage().parts[0].transportAirlineName
+    else
+      @activeVoyage().parts[0].markAirlineName
 
   rtFirstAirline: =>
-    @activeVoyage().activeBackVoyage().parts[0].markAirline
+    if window.use_transport=='1'
+      @activeVoyage().activeBackVoyage().parts[0].transportAirline
+    else
+      @activeVoyage().activeBackVoyage().parts[0].markAirline
 
   rtFirstAirlineName: =>
-    @activeVoyage().activeBackVoyage().parts[0].markAirlineName
+    if window.use_transport=='1'
+      @activeVoyage().activeBackVoyage().parts[0].transportAirlineName
+    else
+      @activeVoyage().activeBackVoyage().parts[0].markAirlineName
 
 
   rtServiceClass: =>

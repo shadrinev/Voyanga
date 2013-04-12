@@ -58,6 +58,10 @@ $this->menu=array(
             'value'=>'$data->partnerId'
         ),
         array(
+            'header'=>'Прямой',
+            'value'=>'$data->direct'
+        ),
+        array(
             'class'=>'bootstrap.widgets.BootButtonColumn',
             'updateButtonIcon'=>false,
             'template'=>'{view}',

@@ -1,6 +1,7 @@
 $(function () {
     var avia, hotels, tour;
     window.app = new Application();
+    window.enterCredentials = true;
     avia = new AviaModule();
     hotels = new HotelsModule();
     tour = new ToursModule();
@@ -8,6 +9,8 @@ $(function () {
     window.app.register('hotels', hotels);
     window.app.register('avia', avia);
     window.toursOverviewActive = true;
+
+    $('.registerForm').hide();
 
     $('.genderField').each(function () {
         var $this = $(this),

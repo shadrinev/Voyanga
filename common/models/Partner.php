@@ -198,6 +198,13 @@ class Partner extends CActiveRecord
         return false;
     }
 
+    public static function getCurrentPartnerUseTransport()
+    {
+        if (self::getCurrentPartner())
+            return self::$currentPartner->use_transport;
+        return 0;
+    }
+
     public static function getPartnerByKey($key)
     {
         if (strlen(trim($key))==0)

@@ -47,6 +47,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
     window.fromPartner = '<?php echo Yii::app()->user->getState('fromPartner', 0) ?>';
     window.pid = '<?php echo Partner::getCurrentPartnerKey() ?>';
+    window.use_transport = '<?php echo Partner::getCurrentPartnerUseTransport() ?>';
 </script>
 
 <?php echo $content; ?>
