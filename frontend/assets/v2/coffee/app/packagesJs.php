@@ -119,7 +119,7 @@
         'js' => array(
             'panel.js',
             'models.js',
-            'searchparams.js',
+            'searchParams.js',
             'controllers.js',
             'module.js',
         )
