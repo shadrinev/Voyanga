@@ -7,14 +7,32 @@ class DestinationSearchParams
     @dateTo = ko.observable ''
 
 # Куда летим
-class ComplexDestinationSearchParams
+class ComplexSearchParams
   constructor: ->
-    @from = ko.observable ''
-    @to = ko.observable ''
-    @dateFrom = ko.observable ''
-    @dateTo = ko.observable ''
+    @segments = []
 
+  fromString: (data)->
+    data = PEGHashParser.parse(data,'tour')
+    # FIXME if ! data.complex throw
+    @segments = []
+    for segment in data.segments
+      if segment.avia
+        sp = new AviaSearchParams
+        sp.fromPEGObject segment
+        @segments.push sp
+      if segment.hotel
+        sp = new HotelsSearchParams
+        sp.fromPEGObject segment
+        @segments.push sp
 
+  url: ->
+    result = "tour/search/complex?"
+    params = []
+    for segment,i in @segments
+      for param in segment.getParams(true)
+        params.push ("items[#{i}][" + param.replace("[", "][").replace("=","]=")).replace("]]","]").replace("[]","")
+    result += params.join "&"
+    return result
 
 # Кто летит
 class RoomsSearchParams
@@ -61,10 +79,6 @@ class SimpleSearchParams extends RoomsContainerMixin
     data = PEGHashParser.parse(data,'tour')
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
-    if data.complex
-      @complex = true
-      @parseComplex data
-      return
     @startCity data.start.from
     @returnBack data.start.rt
     @destinations []
@@ -188,45 +202,45 @@ implement(SimpleSearchParams, IRoomsContainer)
 class TourSearchParams
   constructor: ->
     @simpleSP = new SimpleSearchParams()
-#  addSpRoom: =>
-#    @rooms.push new SpRoom(@)
-
+    @complexSP = new ComplexSearchParams()
+    @activeSP = @simpleSP
+    @complex = false
+  
   url: ->
-    do @simpleSP.url
-#  key: ->
-#    key = @startCity()
-#    _.each @destinations(), (destination) ->
-#      key += destination.city() + destination.dateFrom() + destination.dateTo()
-#    _.each @rooms(), (room) ->
-#      key += room.getHash()
-#    return key
-
+    do @activeSP.url
+  
   hash: ->
-    do @simpleSP.hash
-
+    do @activeSP.hash
+  
   fromString: (data)->
-    @simpleSP.fromString data
-
-
+    if data.indexOf('a/') == 0 || data.indefOf('h/') == 0
+      @activeSP = @complexSP
+      @complex = true
+    @activeSP.fromString data
+  
   fromObject: (data)->
     @simpleSP.fromObject data
 
-#  removeItem: (item, event)=>
-#    event.stopPropagation()
-#    if @data().length <2
-#      return
-#    idx = @data.indexOf(item)
-
-#    if idx ==-1
-#      return
-#    @data.splice(idx, 1)
-#    if item == @selection()
-#      @setActive @data()[0]
+  #  removeItem: (item, event)=>
+  #    event.stopPropagation()
+  #    if @data().length <2
+  #      return
+  #    idx = @data.indexOf(item)
+  #
+  #    if idx ==-1
+  #      return
+  #    @data.splice(idx, 1)
+  #    if item == @selection()
+  #      @setActive @data()[0]
 
   GAKey: =>
+    if @complex
+      return
     do @simpleSP.GAKey
 
   GAData: =>
+    if @complex
+      return
     do @simpleSP.GAData
 
   ############
@@ -260,3 +274,7 @@ class TourSearchParams
   # FIXME можно жить без него
   hotelId: =>
     @simpleSP.hotelId()
+
+  # FIXME можно жить без него ??!
+  hotelChanged: =>
+    @simpleSP.hotelChanged()

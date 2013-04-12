@@ -96,6 +96,9 @@ class HotelsSearchParams extends RoomsContainerMixin
 
   fromString: (data)=>
     data = PEGHashParser.parse(data,'HOTELS')
+    @fromPEGObject data
+
+  fromPEGObject: (data)=>
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
     @city data.to

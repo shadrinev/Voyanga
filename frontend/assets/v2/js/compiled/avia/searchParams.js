@@ -10,6 +10,8 @@ AviaSearchParams = (function() {
     this.GAKey = __bind(this.GAKey, this);
 
     this.fromObject = __bind(this.fromObject, this);
+
+    this.getParams = __bind(this.getParams, this);
     this.date = ko.observable('');
     if (window.currentCityCode) {
       this.dep = ko.observable(window.currentCityCode);
@@ -32,7 +34,20 @@ AviaSearchParams = (function() {
     } else {
       result = 'flight/search/BE?';
     }
+    params = this.getParams();
+    result += params.join("&");
+    return result;
+  };
+
+  AviaSearchParams.prototype.getParams = function(include_type) {
+    var params;
+    if (include_type == null) {
+      include_type = false;
+    }
     params = [];
+    if (include_type) {
+      params.push('type=avia');
+    }
     params.push('destinations[0][departure]=' + this.dep());
     params.push('destinations[0][arrival]=' + this.arr());
     params.push('destinations[0][date]=' + moment(this.date()).format('D.M.YYYY'));
@@ -44,21 +59,7 @@ AviaSearchParams = (function() {
     params.push('adt=' + this.adults());
     params.push('chd=' + this.children());
     params.push('inf=' + this.infants());
-    result += params.join("&");
-    return result;
-  };
-
-  AviaSearchParams.prototype.key = function() {
-    var key;
-    key = this.dep() + this.arr() + this.date();
-    if (this.rt()) {
-      key += this.rtDate();
-      key += '_rt';
-    }
-    key += this.adults();
-    key += this.children();
-    key += this.infants();
-    return key;
+    return params;
   };
 
   AviaSearchParams.prototype.hash = function() {
@@ -73,6 +74,10 @@ AviaSearchParams = (function() {
 
   AviaSearchParams.prototype.fromString = function(data) {
     data = PEGHashParser.parse(data, 'AVIA');
+    return this.fromPEGObject(data);
+  };
+
+  AviaSearchParams.prototype.fromPEGObject = function(data) {
     this.dep(data.from);
     this.arr(data.to);
     this.date(data.dateFrom);

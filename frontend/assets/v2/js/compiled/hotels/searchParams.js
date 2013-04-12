@@ -160,6 +160,8 @@ HotelsSearchParams = (function(_super) {
 
     this.fromObject = __bind(this.fromObject, this);
 
+    this.fromPEGObject = __bind(this.fromPEGObject, this);
+
     this.fromString = __bind(this.fromString, this);
 
     this.hash = __bind(this.hash, this);
@@ -198,8 +200,12 @@ HotelsSearchParams = (function(_super) {
   };
 
   HotelsSearchParams.prototype.fromString = function(data) {
-    var beforeUrl, hotelIdBefore, pair, r, room, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
     data = PEGHashParser.parse(data, 'HOTELS');
+    return this.fromPEGObject(data);
+  };
+
+  HotelsSearchParams.prototype.fromPEGObject = function(data) {
+    var beforeUrl, hotelIdBefore, pair, r, room, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
     beforeUrl = this.url();
     hotelIdBefore = this.hotelId();
     this.city(data.to);

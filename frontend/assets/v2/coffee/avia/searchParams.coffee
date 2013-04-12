@@ -20,7 +20,15 @@ class AviaSearchParams
       result = 'flight/search/BEF?'
     else
       result = 'flight/search/BE?'
+
+    params = @getParams()
+    result += params.join "&"
+    return result
+
+  getParams: (include_type=false)=>
     params = []
+    if include_type
+      params.push 'type=avia'
     params.push 'destinations[0][departure]=' + @dep()
     params.push 'destinations[0][arrival]=' + @arr()
     params.push 'destinations[0][date]=' + moment(@date()).format('D.M.YYYY')
@@ -32,19 +40,8 @@ class AviaSearchParams
     params.push 'adt=' + @adults()
     params.push 'chd=' + @children()
     params.push 'inf=' + @infants()
-    result += params.join "&"
-    return result
-
-  key: ->
-    key = @dep() + @arr() + @date()
-    if @rt()
-      key += @rtDate()
-      key += '_rt'
-    key += @adults()
-    key += @children()
-    key += @infants()
-    return key
-
+    return params
+    
   hash: ->
     parts =  [@dep(), @arr(), moment(@date()).format('D.M.YYYY'), @adults(), @children(), @infants()]
     if @rt()
@@ -54,6 +51,9 @@ class AviaSearchParams
 
   fromString: (data)->
     data = PEGHashParser.parse(data,'AVIA')
+    @fromPEGObject data
+
+  fromPEGObject: (data)->
     @dep data.from
     @arr data.to
     @date data.dateFrom
