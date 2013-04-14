@@ -1065,6 +1065,8 @@ ToursResultSet = (function() {
     var result, variant, _i, _len, _ref,
       _this = this;
     this.searchParams = searchParams;
+    this.update_hash = __bind(this.update_hash, this);
+
     this.findAndSelectItems = __bind(this.findAndSelectItems, this);
 
     this.findAndSelect = __bind(this.findAndSelect, this);
@@ -1120,20 +1122,7 @@ ToursResultSet = (function() {
       result.on('next', function(entry) {
         return _this.nextEntry();
       });
-      result.on('update_hash', function() {
-        var hash, _j, _len1, _ref1;
-        hash = "tours/search/";
-        _ref1 = _this.data();
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          result = _ref1[_j];
-          if (result.avia) {
-            hash += result.panel.sp.hash().replace('avia/search/', 'a/');
-          } else {
-            hash += result.panel.sp.hash().replace('hotels/search/', 'h/');
-          }
-        }
-        return window.location.hash = hash;
-      });
+      result.on('update_hash', this.update_hash);
     }
     this.timeline = new Timeline(this.data);
     this.selection = ko.observable(this.data()[0]);
@@ -1295,8 +1284,9 @@ ToursResultSet = (function() {
     }
     this.data.splice(idx, 1);
     if (item === this.selection()) {
-      return this.setActive(this.data()[0]);
+      this.setActive(this.data()[0]);
     }
+    return this.update_hash();
   };
 
   ToursResultSet.prototype.deselectItem = function(item, event) {
@@ -1571,6 +1561,26 @@ ToursResultSet = (function() {
       }
     }
     return success;
+  };
+
+  ToursResultSet.prototype.update_hash = function() {
+    var hash, result, _i, _len, _ref, _results;
+    hash = "tours/search/";
+    _ref = this.data();
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      result = _ref[_i];
+      if (result.avia) {
+        hash += result.panel.sp.hash().replace('avia/search/', 'a/');
+      } else {
+        hash += result.panel.sp.hash().replace('hotels/search/', 'h/');
+      }
+      window.app.navigate(hash, {
+        trigger: false
+      });
+      _results.push(this.searchParams.fromTourData(this.data()));
+    }
+    return _results;
   };
 
   return ToursResultSet;

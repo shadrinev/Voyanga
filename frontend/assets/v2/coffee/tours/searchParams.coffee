@@ -25,6 +25,11 @@ class ComplexSearchParams
         sp.fromPEGObject segment
         @segments.push sp
 
+  fromTourData: (data) ->
+    @segments = []
+    for segment in data
+      @segments.push segment.panel.sp
+
   url: ->
     result = "tour/search/complex?"
     params = []
@@ -170,7 +175,6 @@ class SimpleSearchParams extends RoomsContainerMixin
     hash = 'tours/search/' + parts.join('/') + '/'
     return hash
 
-
   GAKey: =>
     result = []
     for destination in @destinations()
@@ -220,6 +224,12 @@ class TourSearchParams
   
   fromObject: (data)->
     @simpleSP.fromObject data
+
+  # Обновляем параметры после изменения тура пользователем
+  fromTourData: (data)->
+    @complex = true
+    @activeSP = @compexSP
+    @complexSP.fromTourData data
 
   #  removeItem: (item, event)=>
   #    event.stopPropagation()

@@ -764,14 +764,7 @@ class ToursResultSet
       result.on 'next', (entry)=>
         @nextEntry()
 
-      result.on 'update_hash', =>
-        hash = "tours/search/"
-        for result in @data()
-          if result.avia
-            hash +=  result.panel.sp.hash().replace('avia/search/', 'a/')
-          else
-            hash += result.panel.sp.hash().replace('hotels/search/', 'h/')
-        window.location.hash = hash
+      result.on 'update_hash', @update_hash
 
     @timeline = new Timeline(@data)
     @selection = ko.observable @data()[0]
@@ -889,6 +882,8 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
+
+    do @update_hash
 
   deselectItem: (item, event)=>
     event.stopPropagation()
@@ -1088,7 +1083,18 @@ class ToursResultSet
           success = false
 
     return success
-    
+
+
+  update_hash: =>
+    hash = "tours/search/"
+    for result in @data()
+      if result.avia
+        hash +=  result.panel.sp.hash().replace('avia/search/', 'a/')
+      else
+        hash += result.panel.sp.hash().replace('hotels/search/', 'h/')
+      window.app.navigate hash, {trigger: false}
+      @searchParams.fromTourData @data()
+        
 # decoupling some presentation logic from resultset
 class ToursOverviewVM
   constructor: (@resultSet)->

@@ -46,6 +46,17 @@ ComplexSearchParams = (function() {
     return _results;
   };
 
+  ComplexSearchParams.prototype.fromTourData = function(data) {
+    var segment, _i, _len, _results;
+    this.segments = [];
+    _results = [];
+    for (_i = 0, _len = data.length; _i < _len; _i++) {
+      segment = data[_i];
+      _results.push(this.segments.push(segment.panel.sp));
+    }
+    return _results;
+  };
+
   ComplexSearchParams.prototype.url = function() {
     var i, param, params, result, segment, _i, _j, _len, _len1, _ref, _ref1;
     result = "tour/search/complex?";
@@ -348,6 +359,12 @@ TourSearchParams = (function() {
 
   TourSearchParams.prototype.fromObject = function(data) {
     return this.simpleSP.fromObject(data);
+  };
+
+  TourSearchParams.prototype.fromTourData = function(data) {
+    this.complex = true;
+    this.activeSP = this.compexSP;
+    return this.complexSP.fromTourData(data);
   };
 
   TourSearchParams.prototype.GAKey = function() {
