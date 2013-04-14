@@ -35,7 +35,7 @@ ComplexSearchParams = (function() {
         sp.fromPEGObject(segment);
         this.segments.push(sp);
       }
-      if (segment.hotel) {
+      if (segment.hotels) {
         sp = new HotelsSearchParams;
         sp.fromPEGObject(segment);
         _results.push(this.segments.push(sp));
@@ -232,7 +232,7 @@ SimpleSearchParams = (function(_super) {
       return params.push('destinations[' + ind + '][dateTo]=' + dateTo);
     });
     _.each(this.rooms(), function(room, ind) {
-      return params.push(room.getUrl(ind));
+      return params.push.apply(params, room.getParams(ind));
     });
     if (this.eventId) {
       params.push('eventId=' + this.eventId);
@@ -339,7 +339,7 @@ TourSearchParams = (function() {
   };
 
   TourSearchParams.prototype.fromString = function(data) {
-    if (data.indexOf('a/') === 0 || data.indefOf('h/') === 0) {
+    if (data.indexOf('a/') === 0 || data.indexOf('h/') === 0) {
       this.activeSP = this.complexSP;
       this.complex = true;
     }

@@ -57,19 +57,18 @@ class SpRoom
       parts.push age.age()
     return parts.join(':')
 
-  getUrl: (i)=>
-    # FIXME FIMXE FIMXE
-    agesText = ''
-    agesTextVals = []
+  getParams: (i)=>
+    params = []
     j = 0
     for ageObj in @ages()
-      agesTextVals.push("rooms[#{i}][chdAges][#{j}]=" + ageObj.age())
+      params.push "rooms[#{i}][chdAges][#{j}]=" + ageObj.age()
       j++
-    if(agesTextVals.length)
-      agesText = agesTextVals.join('&')
-    if !agesText
-      agesText = "rooms[#{i}][chdAges]=0"
-    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&" + agesText + "&rooms[#{i}][cots]=" + @infants()
+    if !params.length
+      params.push "rooms[#{i}][chdAges]=0"
+    params.push "rooms[#{i}][adt]=" + @adults()
+    params.push "rooms[#{i}][chd]=" + @children()
+    params.push "rooms[#{i}][cots]=" + @infants()
+    return params
 
 class HotelsSearchParams extends RoomsContainerMixin
   constructor: ->
@@ -107,15 +106,18 @@ class HotelsSearchParams extends RoomsContainerMixin
     @rooms.splice(0)
     @hotelId(false)
 
+    # FIXME dependency leak ?
+    @rooms []
     for room in data.rooms
       room = new SpRoom(@)
       room.fromPEGObject(room)
       @rooms.push room
 
     @hotelId(false)
-    for pair in data.extra
-      if pair.key == 'hotelId'
-        @hotelId pair.value
+    if data.extra
+      for pair in data.extra
+        if pair.key == 'hotelId'
+          @hotelId pair.value
     for room in data.rooms
       r = new SpRoom(@)
       r.fromPEGObject(room)
@@ -142,12 +144,20 @@ class HotelsSearchParams extends RoomsContainerMixin
       @rooms.push r
 
   url: =>
-    result = "hotel/search?city=" + @city()
-    result += '&checkIn=' + moment(@checkIn()).format('YYYY-M-D')
-    result += '&duration=' + moment(@checkOut()).diff(moment(@checkIn()), 'days')
+    result = "hotel/search?"
+    params = @getParams()
+    result += params.join "&"
+
+  getParams: (include_type=false)=>
+    params = []
+    if include_type
+      params.push 'type=hotel'
+    params.push 'city=' + @city()
+    params.push 'checkIn=' + moment(@checkIn()).format('YYYY-M-D')
+    params.push 'duration=' + moment(@checkOut()).diff(moment(@checkIn()), 'days')
     for room, i in @rooms()
-      result += '&' + room.getUrl(i)
-    return result
+      params.push.apply params, room.getParams(i)
+    return params
 
   GAKey: =>
     @city()

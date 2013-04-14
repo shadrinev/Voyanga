@@ -20,7 +20,7 @@ class ComplexSearchParams
         sp = new AviaSearchParams
         sp.fromPEGObject segment
         @segments.push sp
-      if segment.hotel
+      if segment.hotels
         sp = new HotelsSearchParams
         sp.fromPEGObject segment
         @segments.push sp
@@ -148,7 +148,7 @@ class SimpleSearchParams extends RoomsContainerMixin
       params.push 'destinations[' + ind + '][dateTo]=' + dateTo
 
     _.each @rooms(), (room, ind) =>
-      params.push room.getUrl(ind)
+      params.push.apply params, room.getParams(ind)
 
     if(@eventId)
       params.push 'eventId='+@eventId
@@ -213,7 +213,7 @@ class TourSearchParams
     do @activeSP.hash
   
   fromString: (data)->
-    if data.indexOf('a/') == 0 || data.indefOf('h/') == 0
+    if data.indexOf('a/') == 0 || data.indexOf('h/') == 0
       @activeSP = @complexSP
       @complex = true
     @activeSP.fromString data

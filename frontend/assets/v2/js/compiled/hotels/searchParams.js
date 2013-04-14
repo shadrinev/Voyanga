@@ -9,7 +9,7 @@ SpRoom = (function() {
   function SpRoom(parent) {
     var _this = this;
     this.parent = parent;
-    this.getUrl = __bind(this.getUrl, this);
+    this.getParams = __bind(this.getParams, this);
 
     this.getHash = __bind(this.getHash, this);
 
@@ -123,24 +123,23 @@ SpRoom = (function() {
     return parts.join(':');
   };
 
-  SpRoom.prototype.getUrl = function(i) {
-    var ageObj, agesText, agesTextVals, j, _i, _len, _ref;
-    agesText = '';
-    agesTextVals = [];
+  SpRoom.prototype.getParams = function(i) {
+    var ageObj, j, params, _i, _len, _ref;
+    params = [];
     j = 0;
     _ref = this.ages();
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       ageObj = _ref[_i];
-      agesTextVals.push(("rooms[" + i + "][chdAges][" + j + "]=") + ageObj.age());
+      params.push(("rooms[" + i + "][chdAges][" + j + "]=") + ageObj.age());
       j++;
     }
-    if (agesTextVals.length) {
-      agesText = agesTextVals.join('&');
+    if (!params.length) {
+      params.push("rooms[" + i + "][chdAges]=0");
     }
-    if (!agesText) {
-      agesText = "rooms[" + i + "][chdAges]=0";
-    }
-    return ("rooms[" + i + "][adt]=") + this.adults() + ("&rooms[" + i + "][chd]=") + this.children() + "&" + agesText + ("&rooms[" + i + "][cots]=") + this.infants();
+    params.push(("rooms[" + i + "][adt]=") + this.adults());
+    params.push(("rooms[" + i + "][chd]=") + this.children());
+    params.push(("rooms[" + i + "][cots]=") + this.infants());
+    return params;
   };
 
   return SpRoom;
@@ -155,6 +154,8 @@ HotelsSearchParams = (function(_super) {
     this.GAData = __bind(this.GAData, this);
 
     this.GAKey = __bind(this.GAKey, this);
+
+    this.getParams = __bind(this.getParams, this);
 
     this.url = __bind(this.url, this);
 
@@ -213,6 +214,7 @@ HotelsSearchParams = (function(_super) {
     this.checkOut(data.dateTo);
     this.rooms.splice(0);
     this.hotelId(false);
+    this.rooms([]);
     _ref = data.rooms;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       room = _ref[_i];
@@ -221,11 +223,13 @@ HotelsSearchParams = (function(_super) {
       this.rooms.push(room);
     }
     this.hotelId(false);
-    _ref1 = data.extra;
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      pair = _ref1[_j];
-      if (pair.key === 'hotelId') {
-        this.hotelId(pair.value);
+    if (data.extra) {
+      _ref1 = data.extra;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        pair = _ref1[_j];
+        if (pair.key === 'hotelId') {
+          this.hotelId(pair.value);
+        }
       }
     }
     _ref2 = data.rooms;
@@ -266,16 +270,30 @@ HotelsSearchParams = (function(_super) {
   };
 
   HotelsSearchParams.prototype.url = function() {
-    var i, result, room, _i, _len, _ref;
-    result = "hotel/search?city=" + this.city();
-    result += '&checkIn=' + moment(this.checkIn()).format('YYYY-M-D');
-    result += '&duration=' + moment(this.checkOut()).diff(moment(this.checkIn()), 'days');
+    var params, result;
+    result = "hotel/search?";
+    params = this.getParams();
+    return result += params.join("&");
+  };
+
+  HotelsSearchParams.prototype.getParams = function(include_type) {
+    var i, params, room, _i, _len, _ref;
+    if (include_type == null) {
+      include_type = false;
+    }
+    params = [];
+    if (include_type) {
+      params.push('type=hotel');
+    }
+    params.push('city=' + this.city());
+    params.push('checkIn=' + moment(this.checkIn()).format('YYYY-M-D'));
+    params.push('duration=' + moment(this.checkOut()).diff(moment(this.checkIn()), 'days'));
     _ref = this.rooms();
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       room = _ref[i];
-      result += '&' + room.getUrl(i);
+      params.push.apply(params, room.getParams(i));
     }
-    return result;
+    return params;
   };
 
   HotelsSearchParams.prototype.GAKey = function() {

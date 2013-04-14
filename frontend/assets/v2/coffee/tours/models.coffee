@@ -170,10 +170,12 @@ class ToursAviaResultSet extends TourEntry
 
   doNewSearch: =>
     window.VisualLoaderInstance.start(@api.loaderDescription)
+    @trigger 'update_hash'
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
       ko.processAllDeferredBindingUpdates()
       window.VisualLoaderInstance.hide()
+
   # Overview VM
   overviewText: =>
     "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
@@ -562,6 +564,7 @@ class ToursHotelsResultSet extends TourEntry
 
   doNewSearch: =>
     window.VisualLoaderInstance.start(@api.loaderDescription)
+    @trigger 'update_hash'
     @api.search @panel.sp.url(), (data)=>
       data.searchParams.cacheId = data.cacheId
       @newResults data, data.searchParams
@@ -760,6 +763,15 @@ class ToursResultSet
         @setActive entry, beforeRender, afterRender, scrollTo, callback
       result.on 'next', (entry)=>
         @nextEntry()
+
+      result.on 'update_hash', =>
+        hash = "tours/search/"
+        for result in @data()
+          if result.avia
+            hash +=  result.panel.sp.hash().replace('avia/search/', 'a/')
+          else
+            hash += result.panel.sp.hash().replace('hotels/search/', 'h/')
+        window.location.hash = hash
 
     @timeline = new Timeline(@data)
     @selection = ko.observable @data()[0]

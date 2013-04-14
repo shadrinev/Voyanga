@@ -294,6 +294,7 @@ ToursAviaResultSet = (function(_super) {
   ToursAviaResultSet.prototype.doNewSearch = function() {
     var _this = this;
     window.VisualLoaderInstance.start(this.api.loaderDescription);
+    this.trigger('update_hash');
     return this.api.search(this.panel.sp.url(), function(data) {
       _this.newResults(data.flights.flightVoyages, data.searchParams);
       ko.processAllDeferredBindingUpdates();
@@ -852,6 +853,7 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.doNewSearch = function() {
     var _this = this;
     window.VisualLoaderInstance.start(this.api.loaderDescription);
+    this.trigger('update_hash');
     return this.api.search(this.panel.sp.url(), function(data) {
       data.searchParams.cacheId = data.cacheId;
       _this.newResults(data, data.searchParams);
@@ -1117,6 +1119,20 @@ ToursResultSet = (function() {
       });
       result.on('next', function(entry) {
         return _this.nextEntry();
+      });
+      result.on('update_hash', function() {
+        var hash, _j, _len1, _ref1;
+        hash = "tours/search/";
+        _ref1 = _this.data();
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          result = _ref1[_j];
+          if (result.avia) {
+            hash += result.panel.sp.hash().replace('avia/search/', 'a/');
+          } else {
+            hash += result.panel.sp.hash().replace('hotels/search/', 'h/');
+          }
+        }
+        return window.location.hash = hash;
       });
     }
     this.timeline = new Timeline(this.data);
