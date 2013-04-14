@@ -206,35 +206,27 @@ HotelsSearchParams = (function(_super) {
   };
 
   HotelsSearchParams.prototype.fromPEGObject = function(data) {
-    var beforeUrl, hotelIdBefore, pair, r, room, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var beforeUrl, hotelIdBefore, pair, r, room, _i, _j, _len, _len1, _ref, _ref1;
     beforeUrl = this.url();
     hotelIdBefore = this.hotelId();
     this.city(data.to);
     this.checkIn(data.dateFrom);
     this.checkOut(data.dateTo);
+    this.hotelId(false);
     this.rooms.splice(0);
     this.hotelId(false);
-    this.rooms([]);
-    _ref = data.rooms;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      room = _ref[_i];
-      room = new SpRoom(this);
-      room.fromPEGObject(room);
-      this.rooms.push(room);
-    }
-    this.hotelId(false);
     if (data.extra) {
-      _ref1 = data.extra;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        pair = _ref1[_j];
+      _ref = data.extra;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        pair = _ref[_i];
         if (pair.key === 'hotelId') {
           this.hotelId(pair.value);
         }
       }
     }
-    _ref2 = data.rooms;
-    for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-      room = _ref2[_k];
+    _ref1 = data.rooms;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      room = _ref1[_j];
       r = new SpRoom(this);
       r.fromPEGObject(room);
       this.rooms.push(r);
@@ -273,7 +265,8 @@ HotelsSearchParams = (function(_super) {
     var params, result;
     result = "hotel/search?";
     params = this.getParams();
-    return result += params.join("&");
+    result += params.join("&");
+    return result;
   };
 
   HotelsSearchParams.prototype.getParams = function(include_type) {

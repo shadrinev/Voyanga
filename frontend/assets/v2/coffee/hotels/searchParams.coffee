@@ -103,16 +103,10 @@ class HotelsSearchParams extends RoomsContainerMixin
     @city data.to
     @checkIn data.dateFrom
     @checkOut data.dateTo
-    @rooms.splice(0)
     @hotelId(false)
 
     # FIXME dependency leak ?
-    @rooms []
-    for room in data.rooms
-      room = new SpRoom(@)
-      room.fromPEGObject(room)
-      @rooms.push room
-
+    @rooms.splice 0
     @hotelId(false)
     if data.extra
       for pair in data.extra
@@ -138,6 +132,7 @@ class HotelsSearchParams extends RoomsContainerMixin
     @checkIn moment(data.checkIn, 'YYYY-M-D').toDate()
     @checkOut moment(data.checkIn, 'YYYY-M-D').add('days', data.duration).toDate()
     @rooms.splice(0)
+
     for item in data.rooms
       r = new SpRoom(@)
       r.fromObject(item)
@@ -147,7 +142,8 @@ class HotelsSearchParams extends RoomsContainerMixin
     result = "hotel/search?"
     params = @getParams()
     result += params.join "&"
-
+    return result
+    
   getParams: (include_type=false)=>
     params = []
     if include_type
