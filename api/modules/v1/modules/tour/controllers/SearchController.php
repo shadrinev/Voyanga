@@ -81,7 +81,7 @@ class SearchController extends ApiController
             }
             $i++;
         }
-        $this->sendWithCorrectFormat($format, $result);
+        $this->sendWithCorrectFormat($format, array('allVariants' => $result));
     }
 
     public function actionUpdateEvent()
@@ -239,14 +239,7 @@ class SearchController extends ApiController
         $grouped = array();
         foreach ($items as $item)
         {
-            if ($item instanceof FlightTripElement)
-            {
-                $grouped[$item->getGroupId()][] = $item;
-            }
-            else
-            {
-                $grouped[$item->getGroupId()][] = $item;
-            }
+            $grouped[$item->getGroupId()][] = $item;
         }
         foreach ($grouped as $group)
         {
