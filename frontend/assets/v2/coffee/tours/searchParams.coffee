@@ -10,8 +10,13 @@ class DestinationSearchParams
 class ComplexSearchParams
   constructor: ->
     @segments = []
+    @hotelId = ko.observable false
+    @urlChanged = ko.observable(false)
+    @hotelChanged = ko.observable(false)
 
   fromString: (data)->
+    beforeUrl = @url()
+    hotelIdBefore = @hotelId()
     data = PEGHashParser.parse(data,'tour')
     # FIXME if ! data.complex throw
     @segments = []
@@ -24,6 +29,25 @@ class ComplexSearchParams
         sp = new HotelsSearchParams
         sp.fromPEGObject segment
         @segments.push sp
+
+    wantedKeys = {eventId:1, orderId:1, flightHash:1}
+    @hotelId(false)
+    for pair in data.extra
+      if wantedKeys[pair.key]
+        @[pair.key] =  pair.value
+      if pair.key == 'hotelId'
+        @hotelId pair.value
+
+    if beforeUrl == @url()
+      @urlChanged(false)
+      if hotelIdBefore == @hotelId()
+        @hotelChanged(false)
+      else
+        @hotelChanged(true)
+    else
+      @urlChanged(true)
+      @hotelChanged(false)
+
 
   fromTourData: (data) ->
     @segments = []
@@ -279,12 +303,12 @@ class TourSearchParams
     @simpleSP.startCity
 
   urlChanged: =>
-    @simpleSP.urlChanged()
+    @activeSP.urlChanged()
 
   # FIXME можно жить без него
   hotelId: =>
-    @simpleSP.hotelId()
+    @activeSP.hotelId()
 
   # FIXME можно жить без него ??!
   hotelChanged: =>
-    @simpleSP.hotelChanged()
+    @activeSP.hotelChanged()

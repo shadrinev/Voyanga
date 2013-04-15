@@ -1577,9 +1577,7 @@ ToursResultSet = (function() {
       } else {
         hash += result.panel.sp.hash().replace('hotels/search/', 'h/');
       }
-      window.app.navigate(hash, {
-        trigger: false
-      });
+      window.app.navigate(hash);
       _results.push(this.searchParams.fromTourData(this.data()));
     }
     return _results;

@@ -1094,7 +1094,7 @@ class ToursResultSet
         hash +=  result.panel.sp.hash().replace('avia/search/', 'a/')
       else
         hash += result.panel.sp.hash().replace('hotels/search/', 'h/')
-      window.app.navigate hash, {trigger: false}
+      window.app.navigate hash
       @searchParams.fromTourData @data()
         
 # decoupling some presentation logic from resultset

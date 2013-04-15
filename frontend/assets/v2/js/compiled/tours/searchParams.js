@@ -20,14 +20,18 @@ ComplexSearchParams = (function() {
 
   function ComplexSearchParams() {
     this.segments = [];
+    this.hotelId = ko.observable(false);
+    this.urlChanged = ko.observable(false);
+    this.hotelChanged = ko.observable(false);
   }
 
   ComplexSearchParams.prototype.fromString = function(data) {
-    var segment, sp, _i, _len, _ref, _results;
+    var beforeUrl, hotelIdBefore, pair, segment, sp, wantedKeys, _i, _j, _len, _len1, _ref, _ref1;
+    beforeUrl = this.url();
+    hotelIdBefore = this.hotelId();
     data = PEGHashParser.parse(data, 'tour');
     this.segments = [];
     _ref = data.segments;
-    _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       segment = _ref[_i];
       if (segment.avia) {
@@ -38,12 +42,36 @@ ComplexSearchParams = (function() {
       if (segment.hotels) {
         sp = new HotelsSearchParams;
         sp.fromPEGObject(segment);
-        _results.push(this.segments.push(sp));
-      } else {
-        _results.push(void 0);
+        this.segments.push(sp);
       }
     }
-    return _results;
+    wantedKeys = {
+      eventId: 1,
+      orderId: 1,
+      flightHash: 1
+    };
+    this.hotelId(false);
+    _ref1 = data.extra;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      pair = _ref1[_j];
+      if (wantedKeys[pair.key]) {
+        this[pair.key] = pair.value;
+      }
+      if (pair.key === 'hotelId') {
+        this.hotelId(pair.value);
+      }
+    }
+    if (beforeUrl === this.url()) {
+      this.urlChanged(false);
+      if (hotelIdBefore === this.hotelId()) {
+        return this.hotelChanged(false);
+      } else {
+        return this.hotelChanged(true);
+      }
+    } else {
+      this.urlChanged(true);
+      return this.hotelChanged(false);
+    }
   };
 
   ComplexSearchParams.prototype.fromTourData = function(data) {
@@ -402,15 +430,15 @@ TourSearchParams = (function() {
   };
 
   TourSearchParams.prototype.urlChanged = function() {
-    return this.simpleSP.urlChanged();
+    return this.activeSP.urlChanged();
   };
 
   TourSearchParams.prototype.hotelId = function() {
-    return this.simpleSP.hotelId();
+    return this.activeSP.hotelId();
   };
 
   TourSearchParams.prototype.hotelChanged = function() {
-    return this.simpleSP.hotelChanged();
+    return this.activeSP.hotelChanged();
   };
 
   return TourSearchParams;
