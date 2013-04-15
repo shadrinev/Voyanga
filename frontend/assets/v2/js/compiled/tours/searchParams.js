@@ -367,6 +367,7 @@ TourSearchParams = (function() {
     this.complexSP = new ComplexSearchParams();
     this.activeSP = this.simpleSP;
     this.complex = false;
+    this.returnBack = this.simpleSP.returnBack;
   }
 
   TourSearchParams.prototype.url = function() {
@@ -391,7 +392,7 @@ TourSearchParams = (function() {
 
   TourSearchParams.prototype.fromTourData = function(data) {
     this.complex = true;
-    this.activeSP = this.compexSP;
+    this.activeSP = this.complexSP;
     return this.complexSP.fromTourData(data);
   };
 

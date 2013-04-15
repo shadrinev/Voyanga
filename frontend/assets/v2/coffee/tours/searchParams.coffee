@@ -233,6 +233,7 @@ class TourSearchParams
     @complexSP = new ComplexSearchParams()
     @activeSP = @simpleSP
     @complex = false
+    @returnBack = @simpleSP.returnBack
   
   url: ->
     do @activeSP.url
@@ -252,7 +253,7 @@ class TourSearchParams
   # Обновляем параметры после изменения тура пользователем
   fromTourData: (data)->
     @complex = true
-    @activeSP = @compexSP
+    @activeSP = @complexSP
     @complexSP.fromTourData data
 
   #  removeItem: (item, event)=>
