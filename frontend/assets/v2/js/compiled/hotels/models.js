@@ -1152,15 +1152,6 @@ HotelsResultSet = (function() {
       }
       return ret;
     });
-    this.data.sort(function(left, right) {
-      if (left.minPrice < right.minPrice) {
-        return -1;
-      }
-      if (left.minPrice > right.minPrice) {
-        return 1;
-      }
-      return 0;
-    });
     this.showButtonMoreResults = ko.computed(function() {
       return (_this.numResults() > (_this.showParts() * _this.showLimit)) && (DetectMobileQuick() || DetectTierTablet());
     });

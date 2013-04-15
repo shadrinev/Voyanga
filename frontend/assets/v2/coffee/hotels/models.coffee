@@ -850,12 +850,8 @@ class HotelsResultSet
           limit--
         if limit <= 0
           break
-      #if @sortBy() == 'minPrice'
-      #  results = _.sortBy results, (el)-> el.minPrice
-      #else
-      #  results = _.sortBy results, (el)-> el.rating
-
       return results
+    
     @numResults = ko.observable 0
     @filtersConfig = false
     @pagesLoad = false
@@ -878,13 +874,6 @@ class HotelsResultSet
       if @sortBy() == 'rating'
         ret += ' active'
       return ret
-
-    @data.sort (left, right)->
-      if left.minPrice < right.minPrice
-        return -1
-      if left.minPrice > right.minPrice
-        return  1
-      return 0
 
     @showButtonMoreResults = ko.computed =>
       return (@numResults() > (@showParts() * @showLimit)) && (DetectMobileQuick() || DetectTierTablet())
