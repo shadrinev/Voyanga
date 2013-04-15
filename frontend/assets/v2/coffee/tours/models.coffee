@@ -144,7 +144,8 @@ class ToursAviaResultSet extends TourEntry
     @_selectResult(res,elem)
 
   _selectResult: (res,elem)=>
-    needAnimation = true && !!elem
+    needAnimation = !(DetectMobileQuick() || DetectTierTablet())
+    needAnimation = needAnimation && !!elem
     if needAnimation
       @doBuyAnimation(res,elem)
     else
@@ -308,12 +309,12 @@ class ToursAviaResultSet extends TourEntry
     pos = ticket.position()
     posAbs = ticket.offset()
     posCont = $('#content').offset()
+    needSmallStep = true
     if ticket.parent().hasClass('recommended-ticket')
       ticket = ticket.parent()
       #pos = ticket.position()
       posAbs = ticket.offset()
-
-
+      needSmallStep = false
       voyanga_debug('pos',pos)
     pos = {top: (posAbs.top - posCont.top),left:(posAbs.left - posCont.left)}
     oldWidth = ticket.width()
@@ -321,65 +322,45 @@ class ToursAviaResultSet extends TourEntry
     voyanga_debug('objects', ticket,ticketClone)
     ticket.css('visibility','hidden')
     $('#content').append(ticketClone)
-    ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px'})
+    ticketClone.addClass('shadow')
+    ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px','box-shadow':'rgba(0, 0, 0, 0.80) 6px 9px 29px'})
+
     $('.main-block').css('overflow','hidden')
     startAbsTop = posAbs.top
     startTop = pos.top
     startScrollTop = $("html").scrollTop() | $("body").scrollTop()
     minDelta = 70
 
-    ticketClone.animate(
-      {
-        top:['70px', 'easeOutCubic']
-      },
-      {
-        duration:500,
-        step: (now, fx)->
-          delta = startTop - now
-          nowAbsTop = startAbsTop - delta
-          if (nowAbsTop - startScrollTop) < minDelta
-            nowScrollTop = nowAbsTop - minDelta
-            $("html,body").scrollTop(nowScrollTop)
-          #self.animateStep(now, fx);
-        , easing:'easeOutCubic',
-        complete: =>
-          #self.animateScrollAction = false;
-          window.setTimeout(
-            =>
-              ticketClone.animate(
-                {
-                  left: '-800px'
-                },
-                {
-                  duration:300,
-                  complete: =>
-                    $('.my-trip-list .items a.active .noChoise').hide('slow');
-                    @results().selected_key res.key
-                    res.parent.filtersConfig = res.parent.filters.getConfig()
-                    @results().selected_best res.best | false
-                    @selection(res)
-                    ticketClone.remove()
-                    $('.my-trip-list .items a.active .time').animate(
-                      { opacity: 0.1 },
-                      300,
-                      =>
-                        $('.my-trip-list .items a.active .time').animate(
-                          {opacity: 1 },
-                          300,
-                          =>
-                            $('.main-block').css('overflow','')
-                            @trigger 'next'
-                        )
-                    )
-                    voyanga_debug('animate end')
-                }
-              )
-              voyanga_debug('animate end')
-            , 100
-          )
-          voyanga_debug('animate end')
-      }
-    )
+    paramsCascade = []
+    if needSmallStep
+      paramsCascade.push {object: ticketClone,propeties: {'top': (pos.top-10)+'px'},options: {duration:500}}
+    paramsCascade.push {object: ticketClone,propeties: {'top': ['70px', 'easeOutCubic']},options: {duration:500}}
+    lastInd = paramsCascade.length - 1
+    paramsCascade[lastInd]['options']['step'] = (now, fx)->
+      delta = startTop - now
+      nowAbsTop = startAbsTop - delta
+      if (nowAbsTop - startScrollTop) < minDelta
+        nowScrollTop = nowAbsTop - minDelta
+        $("html,body").scrollTop(nowScrollTop)
+    paramsCascade.push {object: ticketClone,propeties: {'top': '70px'},options: {duration:100}}
+    ##Utils.animationCascade(paramsCascade)
+
+    paramsCascade.push {object: ticketClone,propeties: {left: '-800px'},options: {duration:300}}
+    lastInd = paramsCascade.length - 1
+    paramsCascade[lastInd]['options']['complete'] = =>
+      $('.my-trip-list .items a.active .noChoise').hide('slow')
+      @results().selected_key res.key
+      res.parent.filtersConfig = res.parent.filters.getConfig()
+      @results().selected_best res.best | false
+      @selection(res)
+      ticketClone.remove()
+    paramsCascade.push {object: $('.my-trip-list .items a.active .time'),propeties: {opacity: 0.1},options: {duration:300}}
+    paramsCascade.push {object: $('.my-trip-list .items a.active .time'),propeties: {opacity: 1},options: {duration:300}}
+    lastInd = paramsCascade.length - 1
+    paramsCascade[lastInd]['options']['complete'] = =>
+      $('.main-block').css('overflow','')
+      @trigger 'next'
+    Utils.animationCascade(paramsCascade)
 
        
 class ToursHotelsResultSet extends TourEntry
@@ -504,7 +485,8 @@ class ToursHotelsResultSet extends TourEntry
       @_selectRoomSet ret
       
   select: (roomData,elem)=>
-    needAnimate = true && !!elem
+    needAnimation = !(DetectMobileQuick() || DetectTierTablet())
+    needAnimate = needAnimation && !!elem
     if roomData?
       if needAnimate
         @doBuyAnimation(roomData.roomSet,elem)
@@ -693,63 +675,38 @@ class ToursHotelsResultSet extends TourEntry
     ticketClone = ticket.clone()
     ticket.css('visibility','hidden')
     $('#content').append(ticketClone)
-    ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px'})
+    ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px','box-shadow':'rgba(0, 0, 0, 0.80) 6px 9px 29px'})
     $('.main-block').css('overflow','hidden')
     startAbsTop = posAbs.top
     startTop = pos.top
     startScrollTop = $("html").scrollTop() | $("body").scrollTop()
     minDelta = 70
 
-    ticketClone.animate(
-      {
-        top:['70px', 'easeOutCubic']
-      },
-      {
-      duration:500,
-      step: (now, fx)->
-        delta = startTop - now
-        nowAbsTop = startAbsTop - delta
-        if (nowAbsTop - startScrollTop) < minDelta
-          nowScrollTop = nowAbsTop - minDelta
-          $("html,body").scrollTop(nowScrollTop)
+    paramsCascade = []
+    paramsCascade.push {object: ticketClone,propeties: {'top': (pos.top-10)+'px'},options: {duration:500}}
+    paramsCascade.push {object: ticketClone,propeties: {'top': ['70px', 'easeOutCubic']},options: {duration:500}}
+    lastInd = paramsCascade.length - 1
+    paramsCascade[lastInd]['options']['step'] = (now, fx)->
+      delta = startTop - now
+      nowAbsTop = startAbsTop - delta
+      if (nowAbsTop - startScrollTop) < minDelta
+        nowScrollTop = nowAbsTop - minDelta
+        $("html,body").scrollTop(nowScrollTop)
+    paramsCascade.push {object: ticketClone,propeties: {'top': '70px'},options: {duration:100}}
+    paramsCascade.push {object: ticketClone,propeties: {left: '-1200px'},options: {duration:300}}
+    lastInd = paramsCascade.length - 1
+    paramsCascade[lastInd]['options']['complete'] = =>
+      $('.my-trip-list .items a.active .noChoise').hide('slow');
+      @_selectRoomSet roomSet
+      ticketClone.remove()
+    paramsCascade.push {object: $('.my-trip-list .items a.active .time'),propeties: {opacity: 0.1},options: {duration:300}}
+    paramsCascade.push {object: $('.my-trip-list .items a.active .time'),propeties: {opacity: 1},options: {duration:300}}
+    lastInd = paramsCascade.length - 1
+    paramsCascade[lastInd]['options']['complete'] = =>
+      $('.main-block').css('overflow','')
+      @trigger 'next'
+    Utils.animationCascade(paramsCascade)
 
-        voyanga_debug('step',now,fx)
-      #self.animateStep(now, fx);
-      , easing:'easeOutCubic',
-      complete: =>
-        #self.animateScrollAction = false;
-        window.setTimeout(
-          =>
-            ticketClone.animate(
-              {
-              left: '-1200px'
-              },
-              {
-              duration:300,
-              complete: =>
-                $('.my-trip-list .items a.active .noChoise').hide('slow');
-                @_selectRoomSet roomSet
-                ticketClone.remove()
-                $('.my-trip-list .items a.active .time').animate(
-                  { opacity: 0.1 },
-                  300,
-                  =>
-                    $('.my-trip-list .items a.active .time').animate(
-                      {opacity: 1 },
-                      300,
-                      =>
-                        $('.main-block').css('overflow','')
-                        @trigger 'next'
-                    )
-                )
-              }
-            )
-          , 100
-        )
-      }
-    )
-
-    #@_selectRoomSet roomData.roomSet
     
 
 class ToursResultSet

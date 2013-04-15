@@ -45,6 +45,9 @@
 	display: block;
 	z-index: 1;
 }
+.ticket-items.shadow .bh {
+    display: none;
+}
 .allTicketsDIV .lv {
     background: url("../images/border-new-bilets.png") no-repeat scroll 0 bottom transparent;
     display: block;

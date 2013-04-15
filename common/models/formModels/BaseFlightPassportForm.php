@@ -12,17 +12,23 @@ class BaseFlightPassportForm extends BasePassportForm
     * 1 - Passport RF
     * 2 - Passport other country
     * 3 - Zagran
+    * 4 - Svidetelstvo
+    * 5 - grazdanin Drugoi strani
     */
     const TYPE_RF = 1;
     const TYPE_OTHER = 2;
     const TYPE_INTERNATIONAL = 3;
     const TYPE_BIRTH_CERT = 4;
+    const TYPE_OTHER_COUNTRY = 5;
+
     public $documentTypeId = self::TYPE_RF;
 
     /** gender */
     const GENDER_MALE = 1;
     const GENDER_FEMALE = 2;
     public $genderId;
+
+    private $countries = array();
 
     public $countryId;
 
@@ -38,6 +44,8 @@ class BaseFlightPassportForm extends BasePassportForm
     public $expirationYear;
     public $ticketNumber='';
     public $passengerType = Passenger::TYPE_ADULT;
+    public $bonusCard = '';
+    public $bonusCardAirlineCode = '';
 
     public $srok = false;
 
@@ -54,7 +62,7 @@ class BaseFlightPassportForm extends BasePassportForm
             array('documentTypeId', 'in', 'range'=>array_keys(self::getPossibleTypes())),
             array('genderId', 'in', 'range'=>array_keys(self::getPossibleGenders())),
             array('birthday', 'date', 'format' => 'dd.MM.yyyy'),
-            array('srok, expirationDay, expirationMonth, expirationYear', 'safe'),
+            array('srok, expirationDay, expirationMonth, expirationYear, bonusCard, bonusCardAirlineCode', 'safe'),
             array('expirationDate', 'validateExpirationDate'),
         ));
     }
@@ -90,6 +98,56 @@ class BaseFlightPassportForm extends BasePassportForm
         $this->birthdayYear = date('Y', $utime);
     }
 
+    public function setCountries($countriesIds)
+    {
+        $this->countries = $countriesIds;
+    }
+
+    public function setDocType($departureDate = null)
+    {
+        $ruCountries = true;
+        //определение возможен ли тип Пасспорта РФ и Св-ва о роджд.
+        $sngCountries = array(23,84,92,199,212,174);
+        //ID of Countries with Expire date in Document
+        $aExpCountries = array(7, 25, 40, 53, 61, 64, 79, 80, 81, 106, 111, 113, 126, 145, 150, 171, 172, 191, 192, 217, 219, 225, 227, 228, 234);
+        if($this->countries){
+            foreach($this->countries as $countryId){
+                if(!in_array($countryId,$sngCountries)){
+                    $ruCountries = false;
+                }
+            }
+        }
+        $number = $this->seriesNumber;
+        $numLen = strlen($number);
+        if($this->countryId == 174){
+            if(!$ruCountries){
+                if($numLen == 10){
+                    //alarm
+                }elseif($numLen == 9){
+                    $this->documentTypeId = self::TYPE_INTERNATIONAL;
+                }else{
+                    $this->documentTypeId = self::TYPE_OTHER;
+                }
+            }else{
+                if($numLen == 10 && is_numeric($number)){
+                    //rf
+                    $this->documentTypeId = self::TYPE_RF;
+                }elseif($numLen == 9 && is_numeric($number)){
+                    $this->documentTypeId = self::TYPE_INTERNATIONAL;
+                    //zagran
+                }elseif((!is_numeric($number)) && ($this->getAge($departureDate) < 14)){
+                    //svidetelstvo
+                    $this->documentTypeId = self::TYPE_BIRTH_CERT;
+                }else{
+                    //other
+                    $this->documentTypeId = self::TYPE_OTHER;
+                }
+            }
+        }else{
+            $this->documentTypeId = self::TYPE_OTHER_COUNTRY;
+        }
+    }
+
     public function getExpirationDate()
     {
         return $this->expirationDay.'.'.$this->expirationMonth.'.'.$this->expirationYear;
@@ -101,6 +159,22 @@ class BaseFlightPassportForm extends BasePassportForm
         $this->expirationDay = date('d', $utime);
         $this->expirationMonth = date('m', $utime);
         $this->expirationYear = date('Y', $utime);
+    }
+
+    public function getAge($departureDate = null)
+    {
+        $ret = null;
+        if($departureDate){
+            $depDateTime = DateTime::createFromFormat('Y-m-d', $departureDate);
+        }else{
+            $depDateTime = new DateTime();
+        }
+        if($this->getBirthday()){
+            $birthdayDateTime = DateTime::createFromFormat('d.m.Y', $this->getBirthday());
+            $diff = $birthdayDateTime->diff($depDateTime);
+            return $diff->y;
+        }
+        return $ret;
     }
 
     public function getNumber()

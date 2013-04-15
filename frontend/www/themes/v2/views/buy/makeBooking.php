@@ -94,7 +94,8 @@
                 'passportForms' => $passportForms,
                 'headers'=>$headersForAmbigous,
                 'roomCounters'=>$roomCounters,
-                'hide' => false
+                'hide' => false,
+                'valAirline' =>$valAirline
             )); ?>
         <?php else: ?>
             <?php $this->renderPartial('_simplePassport', array(
@@ -102,7 +103,8 @@
                 'icon'=>$icon,
                 'header'=>$header,
                 'roomCounters'=>$roomCounters,
-                'hide' => false
+                'hide' => false,
+                'valAirline' =>$valAirline
             ));
             ?>
         <?php endif;?>

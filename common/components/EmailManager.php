@@ -89,5 +89,16 @@ class EmailManager
         Yii::app()->mail->send($msg);
     }
 
+    static public function sendChangePriceInfo($params)
+    {
+        $msg = new YiiMailMessage();
+        $msg->view = 'changePrice';
+        $msg
+            ->setFrom(appParams('adminEmail'), appParams('adminEmailName'))
+            ->setTo("hello@voyanga.com")
+            ->setSubject('Изменился ценник билета');
+        $msg->setBody($params, 'text/html');
+        Yii::app()->mail->send($msg);
+    }
 
 }

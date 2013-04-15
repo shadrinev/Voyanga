@@ -3,7 +3,7 @@ class GDSNemoAgency extends CComponent
 {
     public $wsdlUri = null;
     public static $lastRequestDescription = '';
-    public static $passportTypesMap = array(1 => 'C', 2 => 'A', 3 => 'V');
+    public static $passportTypesMap = array(1 => 'P', 2 => 'P', 3 => 'P',4 => 'P',5 => 'P');
     public static $requestIds = array();
     const ERROR_CODE_EMPTY = 1;
     const ERROR_CODE_INVALID = 2;
@@ -569,6 +569,10 @@ class GDSNemoAgency extends CComponent
                 $oTraveller['DocumentInfo']['DocNum'] = ($passenger->passport->series ? $passenger->passport->series : '') . $passenger->passport->number;
                 $oTraveller['DocumentInfo']['CountryCode'] = Country::getCountryByPk($passenger->passport->countryId)->code;
                 $oTraveller['DocumentInfo']['DocElapsedTime'] = UtilsHelper::dateToPointDate($passenger->passport->expiration);
+                header("paspType: ".(get_class($passenger->passport)));
+                if($passenger->passport->bonusCard){
+                    $oTraveller['LoyaltyCard'] = array('OpCode'=>$passenger->passport->bonusCardAirlineCode,'Number'=>$passenger->passport->bonusCard);
+                }
                 $oTraveller['ContactInfo'] = array();
                 $oTraveller['ContactInfo']['EmailID'] = $oFlightBookingParams->contactEmail;
                 $oTraveller['ContactInfo']['Telephone'] = array();
