@@ -34,8 +34,6 @@ class Voyasha
 
   # Длина вектора {Звезды, Рейтинг, Близость центра, Дешевизна} и есть рейтинг отеля
   getRating: (x, maxPrice, maxDistance) ->
-    # Веса(== максимальные значения) координат.
-    
     if x.rating == '-'
       userRating = 0
     else

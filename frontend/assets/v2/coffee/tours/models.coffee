@@ -73,6 +73,7 @@ class ToursAviaResultSet extends TourEntry
     @avia = true
     @noresults = result.noresults
     @results result
+    @selection null
 
   GAKey: =>
     @rawSP.destinations[0].departure_iata + '/' + @rawSP.destinations[0].arrival_iata

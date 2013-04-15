@@ -178,7 +178,8 @@ ToursAviaResultSet = (function(_super) {
     };
     this.avia = true;
     this.noresults = result.noresults;
-    return this.results(result);
+    this.results(result);
+    return this.selection(null);
   };
 
   ToursAviaResultSet.prototype.GAKey = function() {
