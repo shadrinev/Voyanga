@@ -1110,7 +1110,6 @@ HotelsResultSet = (function() {
     this.showLimit = 20;
     this.sortBy = ko.observable('minPrice');
     this.ordBy = ko.observable(1);
-    this.sortBy('voyangaRating');
     this.PRICE_WEIGHT = ko.observable(5);
     this.RATING_WEIGHT = ko.observable(3);
     this.STARS_WEIGHT = ko.observable(4);

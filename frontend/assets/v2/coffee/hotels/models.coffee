@@ -843,7 +843,7 @@ class HotelsResultSet
     @sortBy = ko.observable('minPrice')
     @ordBy = ko.observable 1
 
-    @sortBy 'voyangaRating'
+#    @sortBy 'voyangaRating'
 
     @PRICE_WEIGHT = ko.observable 5
     @RATING_WEIGHT = ko.observable 3

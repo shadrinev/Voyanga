@@ -188,10 +188,10 @@ VoyashaOptima = (function(_super) {
   }
 
   VoyashaOptima.prototype.init = function() {
-    this.PRICE_WEIGHT = 5;
+    this.PRICE_WEIGHT = 10;
     this.RATING_WEIGHT = 3;
-    this.STARS_WEIGHT = 4;
-    return this.DISTANCE_WEIGHT = 2;
+    this.STARS_WEIGHT = 5;
+    return this.DISTANCE_WEIGHT = 7;
   };
 
   VoyashaOptima.prototype.getTitle = function() {
