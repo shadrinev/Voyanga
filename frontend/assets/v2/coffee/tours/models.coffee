@@ -460,6 +460,7 @@ class ToursHotelsResultSet extends TourEntry
     # FIXME WTF
     @hotels = true
     @selection null
+    @activeHotel 'nope'
     @noresults = result.noresults
     @results result
 

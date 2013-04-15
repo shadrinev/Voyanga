@@ -719,6 +719,7 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection(null);
+    this.activeHotel('nope');
     this.noresults = result.noresults;
     return this.results(result);
   };
