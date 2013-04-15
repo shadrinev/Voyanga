@@ -50,7 +50,8 @@ class HotelsController
       if err=='e404'
         new ErrorPopup 'hotels404'
         return
-      throw new Error("Unable to build HotelResultSet from search response")
+      new ErrorPopup 'e500'
+      return
 
     @results stacked
     GAPush ['_trackEvent', 'Hotel_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data().length]

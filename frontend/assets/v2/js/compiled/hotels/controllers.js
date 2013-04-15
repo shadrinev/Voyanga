@@ -71,7 +71,8 @@ HotelsController = (function() {
         new ErrorPopup('hotels404');
         return;
       }
-      throw new Error("Unable to build HotelResultSet from search response");
+      new ErrorPopup('e500');
+      return;
     }
     this.results(stacked);
     GAPush(['_trackEvent', 'Hotel_show_search_results', this.searchParams.GAKey(), this.searchParams.GAData(), stacked.data().length]);
