@@ -1124,6 +1124,9 @@ HotelsResultSet = (function() {
     this.resultsForRender = ko.computed(function() {
       var args, limit, ordKey, results, sortKey, _k, _len2, _ref2;
       limit = _this.showParts() * _this.showLimit;
+      if (!limit) {
+        limit = _this.showLimit;
+      }
       results = [];
       sortKey = _this.sortBy();
       ordKey = _this.ordBy();

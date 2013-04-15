@@ -858,6 +858,9 @@ class HotelsResultSet
 
     @resultsForRender = ko.computed =>
       limit = @showParts() * @showLimit
+      # FIXME temporary fix
+      if !limit
+        limit = @showLimit
       results = []
       sortKey = @sortBy()
       ordKey = @ordBy()
