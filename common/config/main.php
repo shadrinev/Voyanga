@@ -185,7 +185,8 @@ return array(
             // 1000 days
             'schemaCachingExclude' => array(
                 'order_booking',
-                'partner'
+                'partner',
+                'flight_booking_passport'
             ),
             'enableParamLogging' => YII_DEBUG,
             'charset' => 'utf8',
