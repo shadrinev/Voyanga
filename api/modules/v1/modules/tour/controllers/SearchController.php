@@ -168,7 +168,7 @@ class SearchController extends ApiController
 
     private function addAviaAsyncRequest($sp)
     {
-        $url = Yii::app()->createAbsoluteUrl('/v1/flight/search/BE');
+        $url = Yii::app()->params['app.api.flightSearchNoSecure'].'/search/BE';
         $query = http_build_query(array(
             'destinations' => $sp['destinations'],
             'adt' => $sp['adt'],
@@ -181,7 +181,7 @@ class SearchController extends ApiController
 
     private function addHotelAsyncRequest($sp)
     {
-        $url = Yii::app()->createAbsoluteUrl('/v1/hotel/search');
+        $url = $url = Yii::app()->params['app.api.hotelSearchNoSecure'].'/search';
         $query = http_build_query(array(
             'city' => $sp['city'],
             'checkIn' => $sp['checkIn'],
