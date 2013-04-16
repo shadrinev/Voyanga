@@ -209,7 +209,9 @@ class OrderBooking extends CActiveRecord
             $timeOfCreatingOrder = strtotime($flightBooker->timestamp);
             $currentTime = time();
             $ago = ($currentTime - $timeOfCreatingOrder);
-            if (($cur=='enterCredentials') and ($ago>3*3600))
+            if (($cur=='waitingForPayment') and ($ago>6*3600))
+                $state = 'CANCELLED';
+            elseif (($cur=='enterCredentials') and ($ago>3*3600))
                 $state = 'CANCELLED';
         }
         if (($ok) && (!$first))
