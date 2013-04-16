@@ -260,11 +260,10 @@ class EventTourResultSet
     @activePanel(panelSet)
     @activePanel().startCity(@resultSet.city.code)
     @activePanel().selectedParams = {ticketParams: [], eventId: @eventId}
-    @activePanel().sp.calendarActivated(false)
+    @activePanel().calendarActivated(false)
     window.app.fakoPanel(panelSet)
 
     @startCity(@resultSet.city.localRu)
-    console.log('reinitEventData', @)
     @flightCounterWord = ko.computed =>
       res = Utils.wordAfterNum @flightCounter(), 'авивабилет', 'авиабилета', 'авиабилетов'
       if (@hotelCounter() > 0)
@@ -309,7 +308,6 @@ class EventTourResultSet
           @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
           @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut) + '</div>')
           @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()
-          console.log "Add to items hotel ", @lastHotel
           @items.push(@lastHotel)
           @totalCost += @lastHotel.roomSets()[0].discountPrice
       _.sortBy(
@@ -328,14 +326,7 @@ class EventTourResultSet
           else
             #@activePanel().sp.rooms = item.serachParams.rooms
             #@activePanel().sp.rooms([])
-            i = 0
-            for room in item.serachParams.rooms
-              if !@activePanel().sp.rooms()[i]
-                @activePanel().sp.addRoom()
-              @activePanel().sp.rooms()[i].adults(room.adultCount)
-              @activePanel().sp.rooms()[i].children(room.childCount)
-              @activePanel().sp.rooms()[i].ages(room.childAge)
-              i++
+            @activePanel().sp.fromObject item.serachParams
             firstHotel = false
 
           @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
@@ -348,13 +339,12 @@ class EventTourResultSet
         else '') + (if @activePanel().sp.children() then ' ' + Utils.wordAfterNum(@activePanel().sp.children(), 'ребенка', 'детей', 'детей')
         else '')
       )
-      console.log('activePanel', @activePanel())
       @activePanel().saveStartParams()
       _.last(@activePanel().panels()).minimizedCalendar(true)
       window.setTimeout(
         =>
           console.log('calendar activated')
-          @activePanel().sp.calendarActivated(true)
+          @activePanel().calendarActivated(true)
 
         , 1000
       )

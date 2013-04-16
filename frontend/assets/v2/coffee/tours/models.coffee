@@ -1473,7 +1473,7 @@ class TourResultSet
       startCityReadable = window.currentCityCodeReadable
     @activePanel().startCity(startCity)
     @activePanel().selectedParams = {ticketParams: [], orderId: @orderId}
-    @activePanel().sp.calendarActivated(false)
+    @activePanel().calendarActivated(false)
     window.app.fakoPanel(panelSet)
 
     @startCity(startCityReadable)
@@ -1532,15 +1532,7 @@ class TourResultSet
           if !firstHotel
             @activePanel().addPanel(true)
           else
-            i = 0
-            # FIXME рак какойто
-            for room in item.serachParams.rooms
-              if !@activePanel().sp.rooms()[i]
-                @activePanel().sp.addRoom()
-              @activePanel().sp.rooms()[i].adults(room.adultCount)
-              @activePanel().sp.rooms()[i].children(room.childCount)
-              @activePanel().sp.rooms()[i].ages(room.childAge)
-              i++
+            @activePanel().sp.fromObject item.serachParams
             firstHotel = false
 
           @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
@@ -1553,7 +1545,7 @@ class TourResultSet
       @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
 
       setTimeout ()=>
-        @activePanel().sp.calendarActivated(true)
+        @activePanel().calendarActivated(true)
       , 1000
 
       window.setTimeout ()=>

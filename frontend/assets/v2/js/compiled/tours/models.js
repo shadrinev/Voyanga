@@ -2044,7 +2044,7 @@ TourResultSet = (function() {
   }
 
   TourResultSet.prototype.reinit = function(resultSet) {
-    var firstHotel, i, item, panelSet, room, startCity, startCityReadable, _i, _j, _len, _len1, _ref, _ref1,
+    var firstHotel, item, panelSet, startCity, startCityReadable, _i, _len, _ref,
       _this = this;
     this.resultSet = resultSet;
     this.hasFlight = false;
@@ -2071,7 +2071,7 @@ TourResultSet = (function() {
       ticketParams: [],
       orderId: this.orderId
     };
-    this.activePanel().sp.calendarActivated(false);
+    this.activePanel().calendarActivated(false);
     window.app.fakoPanel(panelSet);
     this.startCity(startCityReadable);
     this.flightCounterWord = ko.computed(function() {
@@ -2137,18 +2137,7 @@ TourResultSet = (function() {
           if (!firstHotel) {
             this.activePanel().addPanel(true);
           } else {
-            i = 0;
-            _ref1 = item.serachParams.rooms;
-            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-              room = _ref1[_j];
-              if (!this.activePanel().sp.rooms()[i]) {
-                this.activePanel().sp.addRoom();
-              }
-              this.activePanel().sp.rooms()[i].adults(room.adultCount);
-              this.activePanel().sp.rooms()[i].children(room.childCount);
-              this.activePanel().sp.rooms()[i].ages(room.childAge);
-              i++;
-            }
+            this.activePanel().sp.fromObject(item.serachParams);
             firstHotel = false;
           }
           this.activePanel().lastPanel.checkIn(moment(item.checkIn)._d);
@@ -2160,7 +2149,7 @@ TourResultSet = (function() {
       _.last(this.activePanel().panels()).minimizedCalendar(true);
       this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
       setTimeout(function() {
-        return _this.activePanel().sp.calendarActivated(true);
+        return _this.activePanel().calendarActivated(true);
       }, 1000);
       window.setTimeout(function() {
         if (_this.visiblePanel()) {

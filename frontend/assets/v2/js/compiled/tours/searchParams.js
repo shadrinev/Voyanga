@@ -231,6 +231,7 @@ SimpleSearchParams = (function(_super) {
   };
 
   SimpleSearchParams.prototype.fromObject = function(data) {
+    var _this = this;
     _.each(data.destinations, function(destination) {
       destination = new DestinationSearchParams();
       destination.city(destination.city);
@@ -240,8 +241,9 @@ SimpleSearchParams = (function(_super) {
     });
     _.each(data.rooms, function(r) {
       var room;
-      room = new SpRoom(this);
-      return this.rooms.push(this.room.fromObject(r));
+      room = new SpRoom(_this);
+      room.fromObject(r);
+      return _this.rooms.push(room);
     });
     if (data.eventId) {
       return this.eventId = data.eventId;
@@ -361,6 +363,12 @@ TourSearchParams = (function() {
 
     this.addDestination = __bind(this.addDestination, this);
 
+    this.children = __bind(this.children, this);
+
+    this.adults = __bind(this.adults, this);
+
+    this.overall = __bind(this.overall, this);
+
     this.GAData = __bind(this.GAData, this);
 
     this.GAKey = __bind(this.GAKey, this);
@@ -409,6 +417,18 @@ TourSearchParams = (function() {
       return;
     }
     return this.simpleSP.GAData();
+  };
+
+  TourSearchParams.prototype.overall = function() {
+    return this.simpleSP.overall();
+  };
+
+  TourSearchParams.prototype.adults = function() {
+    return this.simpleSP.adults();
+  };
+
+  TourSearchParams.prototype.children = function() {
+    return this.simpleSP.children();
   };
 
   TourSearchParams.prototype.addDestination = function() {

@@ -151,10 +151,11 @@ class SimpleSearchParams extends RoomsContainerMixin
       destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
       @destinations.push destination
 
-    _.each data.rooms, (r) ->
+    _.each data.rooms, (r) =>
       room = new SpRoom(@)
-      @rooms.push @room.fromObject(r)
-
+      room.fromObject(r)
+      @rooms.push room
+      
     if(data.eventId)
       @eventId = data.eventId
 
@@ -277,6 +278,20 @@ class TourSearchParams
     if @complex
       return
     do @simpleSP.GAData
+
+  ############
+  # Костыль для ивентов
+  ############
+
+  overall: =>
+    @simpleSP.overall()
+
+  adults: =>
+    @simpleSP.adults()
+
+  children: =>
+    @simpleSP.children()
+
 
   ############
   # Методы для панели туров на главной
