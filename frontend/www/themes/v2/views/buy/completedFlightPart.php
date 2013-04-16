@@ -16,7 +16,7 @@
                         <div class="ico-path">
                             <span data-bind="html: $data.activeVoyage().stopoverHtml()"></span>
                         </div>
-                        <div class="text">Всего <span data-bind="text: $data.duration()"></span></div>
+                        <div class="text">В пути <span data-bind="text: $data.duration()"></span></div>
                     </div>
                 </td>
                 <td class="tdTo">

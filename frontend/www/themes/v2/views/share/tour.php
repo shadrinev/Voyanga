@@ -426,7 +426,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                 </div>
                 <div class="description">
                     <div class="title">
-                        <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span>
+                        <h2><span data-bind="text:hotelName, click: showDetails">Рэдиссон Соня Отель</span> <span class="gradient"></span>
                         </h2>
 
                         <div data-bind="attr: {'class': 'stars ' + stars}"></div>
