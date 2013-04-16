@@ -9,6 +9,8 @@ AviaSearchParams = (function() {
 
     this.GAKey = __bind(this.GAKey, this);
 
+    this.key = __bind(this.key, this);
+
     this.fromObject = __bind(this.fromObject, this);
 
     this.getParams = __bind(this.getParams, this);
@@ -101,6 +103,12 @@ AviaSearchParams = (function() {
     if (this.rt()) {
       return this.rtDate(new Date(data.destinations[1].date));
     }
+  };
+
+  AviaSearchParams.prototype.key = function() {
+    var result;
+    result = 'avia_' + this.dep() + this.arr() + this.rt() + this.date() + (this.rt() ? result += this.rtDate() : void 0);
+    return result;
   };
 
   AviaSearchParams.prototype.GAKey = function() {

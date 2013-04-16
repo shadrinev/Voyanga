@@ -77,6 +77,13 @@ class AviaSearchParams
     if @rt()
       @rtDate new Date(data.destinations[1].date)
 
+  # Ключ для сравнения ивентов и поисков
+  key: =>
+    result = 'avia_' + @dep() + @arr() + @rt() + @date() +
+    if @rt()
+      result+= @rtDate()
+    return result
+
   GAKey: =>
     @dep() + '/' + @arr()
 

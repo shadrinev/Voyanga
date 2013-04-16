@@ -161,6 +161,15 @@ ToursAviaResultSet = (function(_super) {
     this.data = {
       results: this.results
     };
+    this.searchkey = ko.computed(function() {
+      sp = _this.observableSP();
+      if (!sp) {
+        return 'nope';
+      }
+      sp = new AviaSearchParams();
+      sp.fromObject(_this.observableSP());
+      return sp.key();
+    });
   }
 
   ToursAviaResultSet.prototype.newResults = function(raw, sp) {
@@ -689,6 +698,15 @@ ToursHotelsResultSet = (function(_super) {
     this.observableSP = ko.observable();
     this.savingsWithAviaOnly = true;
     this.newResults(raw, sp);
+    this.searchkey = ko.computed(function() {
+      sp = _this.observableSP();
+      if (!sp) {
+        return 'nopeh';
+      }
+      sp = new HotelsSearchParams();
+      sp.fromObject(_this.observableSP());
+      return 'hotel_' + sp.city();
+    });
   }
 
   ToursHotelsResultSet.prototype.newResults = function(data, sp) {
@@ -1613,7 +1631,7 @@ ToursResultSet = (function() {
   };
 
   ToursResultSet.prototype.findAndSelectItems = function(items) {
-    var entry, index, result, success, _i, _len;
+    var entry, found, key, result, resultSet, sp, success, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
     if (items.length !== this.data().length) {
       return false;
     }
@@ -1633,22 +1651,44 @@ ToursResultSet = (function() {
         1: 1
       };
     });
-    for (index = _i = 0, _len = items.length; _i < _len; index = ++_i) {
-      entry = items[index];
-      if (this.data()[index].isAvia()) {
-        result = this.data()[index].findAndSelect(entry);
-        if (!result) {
-          result = this.data()[index].findAndSelect(this.data()[index].results().cheapest());
-        }
-        if (!result) {
-          success = false;
+    for (_i = 0, _len = items.length; _i < _len; _i++) {
+      entry = items[_i];
+      found = false;
+      if (entry.isFlight) {
+        sp = new AviaSearchParams;
+        sp.fromObject(entry.searchParams);
+        _ref = this.data();
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          resultSet = _ref[_j];
+          if (resultSet.searchkey() === sp.key()) {
+            console.log("YAY");
+            result = resultSet.findAndSelect(entry);
+            if (!result) {
+              result = this.data()[index].findAndSelect(resultSet.results().cheapest());
+            }
+            if (!result) {
+              success = false;
+            } else {
+              found = true;
+            }
+          }
         }
       } else {
-        result = this.data()[index].findAndSelectSame(entry);
-        if (!result) {
-          success = false;
+        key = 'hotel_' + entry.cityCode;
+        _ref1 = this.data();
+        for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+          resultSet = _ref1[_k];
+          if (resultSet.searchkey() === key) {
+            result = resultSet.findAndSelectSame(entry);
+            if (!result) {
+              success = false;
+            } else {
+              found = true;
+            }
+          }
         }
       }
+      success = success && found;
     }
     return success;
   };

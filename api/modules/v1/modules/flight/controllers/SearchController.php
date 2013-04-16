@@ -10,7 +10,6 @@ class SearchController extends ApiController
     public $defaultAction = 'default';
     private $results;
 
-    private $logId;
 
     /**
      * @param array $destinations
