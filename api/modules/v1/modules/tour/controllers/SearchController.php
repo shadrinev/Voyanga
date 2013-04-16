@@ -77,7 +77,9 @@ class SearchController extends ApiController
             else
             {
                 $result[$i] = array();
-                $errors[$i] = 'Error ' . $httpCode;    
+                $errors[$i] = 'Error ' . $httpCode;
+                $newException = new Exception("Incorrect response: ".CVarDumper::dumpAsString($response));
+                Yii::app()->RSentryException->logException($newException);
             }
             $i++;
         }
