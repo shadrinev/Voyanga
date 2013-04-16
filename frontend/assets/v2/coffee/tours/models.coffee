@@ -73,6 +73,7 @@ class ToursAviaResultSet extends TourEntry
     @avia = true
     @noresults = result.noresults
     @results result
+    @selection null
 
   GAKey: =>
     @rawSP.destinations[0].departure_iata + '/' + @rawSP.destinations[0].arrival_iata
@@ -172,10 +173,12 @@ class ToursAviaResultSet extends TourEntry
 
   doNewSearch: =>
     window.VisualLoaderInstance.start(@api.loaderDescription)
+    @trigger 'update_hash'
     @api.search @panel.sp.url(), (data)=>
       @newResults data.flights.flightVoyages, data.searchParams
       ko.processAllDeferredBindingUpdates()
       window.VisualLoaderInstance.hide()
+
   # Overview VM
   overviewText: =>
     "Перелет " + @results().departureCity + ' &rarr; ' + @results().arrivalCity
@@ -319,7 +322,6 @@ class ToursAviaResultSet extends TourEntry
     pos = {top: (posAbs.top - posCont.top),left:(posAbs.left - posCont.left)}
     oldWidth = ticket.width()
     ticketClone = ticket.clone()
-    voyanga_debug('objects', ticket,ticketClone)
     ticket.css('visibility','hidden')
     $('#content').append(ticketClone)
     ticketClone.addClass('shadow')
@@ -445,6 +447,7 @@ class ToursHotelsResultSet extends TourEntry
     # FIXME WTF
     @hotels = true
     @selection null
+    @activeHotel 'nope'
     @noresults = result.noresults
     @results result
 
@@ -551,6 +554,7 @@ class ToursHotelsResultSet extends TourEntry
 
   doNewSearch: =>
     window.VisualLoaderInstance.start(@api.loaderDescription)
+    @trigger 'update_hash'
     @api.search @panel.sp.url(), (data)=>
       data.searchParams.cacheId = data.cacheId
       @newResults data, data.searchParams
@@ -654,7 +658,6 @@ class ToursHotelsResultSet extends TourEntry
 
   doBuyAnimation: (roomSet,elem)=>
     ticket = $(elem.target)
-    voyanga_debug('now i want do animate',elem,roomSet,ticket)
     ticket = ticket.parent()
     ticket = ticket.parent()
     ticket = ticket.parent()
@@ -664,7 +667,6 @@ class ToursHotelsResultSet extends TourEntry
       ticket = ticket.parent()
     if !ticket.is("div")
       ticket = ticket.parent()
-    voyanga_debug('element',ticket)
     pos = ticket.position()
     posAbs = ticket.offset()
 
@@ -728,6 +730,8 @@ class ToursResultSet
         @setActive entry, beforeRender, afterRender, scrollTo, callback
       result.on 'next', (entry)=>
         @nextEntry()
+
+      result.on 'update_hash', @update_hash
 
     @timeline = new Timeline(@data)
     @selection = ko.observable @data()[0]
@@ -845,6 +849,8 @@ class ToursResultSet
     @data.splice(idx, 1)
     if item == @selection()
       @setActive @data()[0]
+
+    do @update_hash
 
   deselectItem: (item, event)=>
     event.stopPropagation()
@@ -1044,7 +1050,18 @@ class ToursResultSet
           success = false
 
     return success
-    
+
+
+  update_hash: =>
+    hash = "tours/search/"
+    for result in @data()
+      if result.avia
+        hash +=  result.panel.sp.hash().replace('avia/search/', 'a/')
+      else
+        hash += result.panel.sp.hash().replace('hotels/search/', 'h/')
+      window.app.navigate hash
+      @searchParams.fromTourData @data()
+        
 # decoupling some presentation logic from resultset
 class ToursOverviewVM
   constructor: (@resultSet)->
@@ -1129,7 +1146,7 @@ class TourTripResultSet
       if (item.isFlight)
         asp = new AviaSearchParams
         asp.fromObject item.searchParams
-        window.redirectHash = asp.getHash()
+        window.redirectHash = asp.hash()
         if (!@firstDate)
           @firstDate = dateUtils.formatDayShortMonth(asp.date())
         if asp.rtDate()
@@ -1156,7 +1173,6 @@ class TourTripResultSet
         if asp.rt()
           rtDate = moment(asp.rtDate())
           @simHashes.push(aviaResult.similarityHash()+'.'+aviaResult.rtSimilarityHash())
-          voyanga_debug('ASP:',asp,asp.rt(),asp.date(),asp.rtDate())
         else
           @simHashes.push(aviaResult.similarityHash())
         @crossUrlHref(@crossUrlHref()+asp.arr()+'/'+moment(asp.date()).format('D.M.YYYY')+'/'+rtDate.format('D.M.YYYY')+'/')
@@ -1179,7 +1195,7 @@ class TourTripResultSet
       else if (item.isHotel)
         asp = new HotelsSearchParams
         asp.fromObject item.searchParams
-        window.redirectHash = asp.getHash()
+        window.redirectHash = asp.hash()
         @hasHotel = true
         if (!@firstDate)
           @firstDate = dateUtils.formatDayShortMonth(moment(item.checkIn)._d)
@@ -1482,9 +1498,10 @@ class TourResultSet
             @activePanel().addPanel(true)
           else
             i = 0
+            # FIXME рак какойто
             for room in item.serachParams.rooms
               if !@activePanel().sp.rooms()[i]
-                @activePanel().sp.addSpRoom()
+                @activePanel().sp.addRoom()
               @activePanel().sp.rooms()[i].adults(room.adultCount)
               @activePanel().sp.rooms()[i].children(room.childCount)
               @activePanel().sp.rooms()[i].ages(room.childAge)

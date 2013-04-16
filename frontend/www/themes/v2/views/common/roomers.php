@@ -1,7 +1,7 @@
 <script type="text/html" id="roomers-template">
   <div class="how-many-man hotel" >
     <div class="wrapDivContent"  data-bind="click: show">
-        <!-- ko foreach: rawRooms -->
+        <!-- ko foreach: roomContainer.getRooms() -->
         <div class="content">
           <span class="num" data-bind="text: $index() + 1"></span>
           <div class="man" data-bind="repeat: adults"></div>

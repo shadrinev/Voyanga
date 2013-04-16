@@ -57,7 +57,6 @@ AviaController = (function() {
 
   AviaController.prototype.handleResults = function(data) {
     var stacked;
-    window.voyanga_debug("searchAction: handling results", data);
     stacked = new AviaResultSet(data.flights.flightVoyages, data.siblings);
     stacked.injectSearchParams(data.searchParams);
     stacked.postInit();
@@ -66,7 +65,6 @@ AviaController = (function() {
   };
 
   AviaController.prototype.indexAction = function() {
-    window.voyanga_debug("AVIA: invoking indexAction");
     return this.render("index", {});
   };
 

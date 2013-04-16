@@ -34,8 +34,6 @@ class Voyasha
 
   # Длина вектора {Звезды, Рейтинг, Близость центра, Дешевизна} и есть рейтинг отеля
   getRating: (x, maxPrice, maxDistance) ->
-    # Веса(== максимальные значения) координат.
-    
     if x.rating == '-'
       userRating = 0
     else
@@ -96,10 +94,10 @@ class VoyashaCheapest extends Voyasha
 
 class VoyashaOptima extends Voyasha
   init: =>
-    @PRICE_WEIGHT = 5
+    @PRICE_WEIGHT = 10
     @RATING_WEIGHT = 3
-    @STARS_WEIGHT = 4
-    @DISTANCE_WEIGHT = 2
+    @STARS_WEIGHT = 5
+    @DISTANCE_WEIGHT = 7
 
   getTitle: =>
     'Оптимальный вариант'

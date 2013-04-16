@@ -69,6 +69,10 @@
     'common' => array(
         'basePath' => 'frontend.assets.v2.js.compiled.common',
         'js' => array(
+            //! Core utils
+            'interface.js',
+            'coreInterfaces.js',
+            'coreMixins.js',
             //! Our application logic
             'genericpopup.js',
             'errorpopup.js',
@@ -91,7 +95,6 @@
             'hashparser.js',
             'GAWrapper.js',
             'travellers.js',
-            'searchParams.js',
             'ko.rangeobservable.js',
             'filters.js',
             'searchPanel.js',
@@ -106,6 +109,7 @@
             'panel.js',
             'siblings.js',
             'models.js',
+            'searchParams.js',
             'controllers.js',
             'module.js',
         )
@@ -115,7 +119,7 @@
         'js' => array(
             'panel.js',
             'models.js',
-            'searchparams.js',
+            'searchParams.js',
             'controllers.js',
             'module.js',
         )
@@ -162,4 +166,3 @@
         )
     ),
 );
-?>

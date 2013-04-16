@@ -5,7 +5,7 @@ class HotelsController
   constructor: (@searchParams) ->
     @api = new HotelsAPI
     @routes =
-      '/search/:from/:in/:out/*rest': @searchAction
+      '/search/*rest': @searchAction
 #      '/info/:cacheId/:hotelId/': @infoAction,
       '/timeline/': @timelineAction,
       '': @indexAction
@@ -15,11 +15,8 @@ class HotelsController
     # Mix in events
     _.extend @, Backbone.Events
 
-  searchAction: (args...)=>
-    window.voyanga_debug "HOTELS: Invoking searchAction", args
-    # update search params with values in route
-
-    @searchParams.fromList(args)
+  searchAction: (args)=>
+    @searchParams.fromString args
 
     if @searchParams.urlChanged()
       window.VisualLoaderInstance.start(@api.loaderDescription)
@@ -53,7 +50,8 @@ class HotelsController
       if err=='e404'
         new ErrorPopup 'hotels404'
         return
-      throw new Error("Unable to build HotelResultSet from search response")
+      new ErrorPopup 'e500'
+      return
 
     @results stacked
     GAPush ['_trackEvent', 'Hotel_show_search_results', @searchParams.GAKey(),  @searchParams.GAData(), stacked.data().length]
@@ -72,7 +70,6 @@ class HotelsController
 
 
   handleResults: (data) =>
-    window.voyanga_debug "HOTELS: searchAction: handling results", data
     # FIXME REALLY RETARDED
     stacked = new HotelsResultSet data, data.searchParams
     stacked.postInit()
@@ -105,7 +102,6 @@ class HotelsController
 
 
   indexAction: =>
-    window.voyanga_debug "HOTELS: indexAction"
     @render 'index', {}
 
  
@@ -134,6 +130,4 @@ class HotelsController
     )
 
   render: (view, data) ->
-    window.voyanga_debug "HOTELS: rendering", view, data
-
     @trigger "viewChanged", view, data

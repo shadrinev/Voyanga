@@ -9,7 +9,6 @@ class PeopleSelector
     el = $('.popup')
     if !el.hasClass('active')
       $(document.body).mousedown (event)=>
-        console.log('click event',event)
         if (($(event.target).parents('.popup').length > 0) || ($(event.target).parents('.how-many-man').length > 0))
           return
         @close()
@@ -222,39 +221,33 @@ class Roomers
     return @index+1 == @length
 
 # View Model for hotels people selector
-# FIXME ME move me somewhere
+# FIXME move me somewhere
 class HotelPeopleSelector extends PeopleSelector
-  constructor: (@sp)->
+  constructor: (@roomContainer)->
+    # Проверяем что нам пришел подходящий контейнер
+    implement(@roomContainer, IRoomsContainer)
     super
+
     @template = 'roomers-template'
-    @rawRooms = @sp.rooms
     @roomsView = ko.computed =>
       result = []
       current = []
-      for item, index in @sp.rooms()
+      rooms = @roomContainer.getRooms()
+      for item, index in rooms
         if current.length == 2
           result.push current
           current = []
         # FIXME mem/handlers leak?
-        r = new Roomers item, index, @sp.rooms().length
+        r = new Roomers item, index, rooms.length
         r.addRoom = @addRoom
         r.removeRoom = @removeRoom
         current.push r
       result.push current
       return result
-    @sp.overall.subscribe resizePanel
 
+    @roomContainer.onOverallChanged resizePanel
 
   addRoom: =>
-    if @sp.rooms().length == 4
-      return
-    if @sp.overall() > 8
-      return
-    @sp.rooms.push new SpRoom(@sp)
-
-
+    do @roomContainer.addRoom
   removeRoom: (roomer)=>
-    # You should not be allower to remove last room left
-    if @sp.rooms().length == 1
-      return
-    @sp.rooms.splice @sp.rooms.indexOf(roomer.room),1
+    @roomContainer.removeRoom roomer.room

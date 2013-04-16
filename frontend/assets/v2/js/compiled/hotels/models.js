@@ -489,6 +489,19 @@ HotelResult = (function() {
     this.push(data);
   }
 
+  HotelResult.prototype.voyangaRating = function(RATING_WEIGHT, STARS_WEIGHT, DISTANCE_WEIGHT, PRICE_WEIGHT) {
+    var dCenter, rPrice, stars, userRating;
+    if (this.rating === '-') {
+      userRating = 0;
+    } else {
+      userRating = scaledValue(this.rating, 5, RATING_WEIGHT);
+    }
+    stars = scaledValue(this.starsNumeric, 5, STARS_WEIGHT);
+    dCenter = scaledValue(this.distanceToCenter, this.parent.maxDistance, DISTANCE_WEIGHT, true);
+    rPrice = scaledValue(this.roomSets()[0].discountPrice, this.parent.maxPriceR, PRICE_WEIGHT, true);
+    return -Math.sqrt(stars * stars + userRating * userRating + dCenter * dCenter + rPrice * rPrice);
+  };
+
   HotelResult.prototype.falseFunction = function() {
     return false;
   };
@@ -1047,7 +1060,6 @@ HotelsResultSet = (function() {
     this.tours = ko.observable(false);
     this.checkIn = moment(this.searchParams.checkIn);
     this.checkOut = moment(this.checkIn).add('days', this.searchParams.duration);
-    window.voyanga_debug('checkOut', this.checkOut);
     this.city = this.searchParams.cityFull;
     if (this.searchParams.duration) {
       duration = this.searchParams.duration;
@@ -1098,17 +1110,48 @@ HotelsResultSet = (function() {
     this.showLimit = 20;
     this.sortBy = ko.observable('minPrice');
     this.ordBy = ko.observable(1);
+    this.PRICE_WEIGHT = ko.observable(5);
+    this.RATING_WEIGHT = ko.observable(3);
+    this.STARS_WEIGHT = ko.observable(4);
+    this.DISTANCE_WEIGHT = ko.observable(2);
+    window.UPDATE_WEIGHTS = function(p, r, s, d) {
+      _this.PRICE_WEIGHT(p);
+      _this.RATING_WEIGHT(r);
+      _this.STARS_WEIGHT(s);
+      return _this.DISTANCE_WEIGHT(d);
+    };
     this.resultsForRender = ko.computed(function() {
-      var limit, ordKey, results, sortKey, _k, _len2, _ref2;
+      var args, limit, ordKey, results, sortKey, _k, _len2, _ref2;
       limit = _this.showParts() * _this.showLimit;
+      if (!limit) {
+        limit = _this.showLimit;
+      }
       results = [];
       sortKey = _this.sortBy();
       ordKey = _this.ordBy();
+      args = [];
+      if (sortKey === 'voyangaRating') {
+        args.push(_this.RATING_WEIGHT());
+        args.push(_this.STARS_WEIGHT());
+        args.push(_this.DISTANCE_WEIGHT());
+        args.push(_this.PRICE_WEIGHT());
+      }
       _this.data.sort(function(left, right) {
-        if (left[sortKey] < right[sortKey]) {
+        var leftVal, rightVal;
+        if (typeof left[sortKey] === 'function') {
+          leftVal = left[sortKey].apply(left, args);
+        } else {
+          leftVal = left[sortKey];
+        }
+        if (typeof right[sortKey] === 'function') {
+          rightVal = right[sortKey].apply(right, args);
+        } else {
+          rightVal = right[sortKey];
+        }
+        if (leftVal < rightVal) {
           return -1 * ordKey;
         }
-        if (left[sortKey] > right[sortKey]) {
+        if (leftVal > rightVal) {
           return 1 * ordKey;
         }
         return 0;
@@ -1137,6 +1180,23 @@ HotelsResultSet = (function() {
         this.data.push(result);
       }
     }
+    this.maxPriceR = _.reduce(this.data(), function(memo, hotel) {
+      if (memo > hotel.roomSets()[0].discountPrice) {
+        return memo;
+      } else {
+        return hotel.roomSets()[0].discountPrice;
+      }
+    }, this.data()[0].roomSets()[0].discountPrice);
+    this.maxDistance = _.reduce(this.data(), function(memo, hotel) {
+      if (!hotel.distanceToCenter) {
+        return memo;
+      }
+      if (memo > hotel.distanceToCenter) {
+        return memo;
+      } else {
+        return hotel.distanceToCenter;
+      }
+    }, 0);
     this.sortByPriceClass = ko.computed(function() {
       var ret;
       ret = 'hotel-sort-by-item';
@@ -1153,15 +1213,6 @@ HotelsResultSet = (function() {
       }
       return ret;
     });
-    this.data.sort(function(left, right) {
-      if (left.minPrice < right.minPrice) {
-        return -1;
-      }
-      if (left.minPrice > right.minPrice) {
-        return 1;
-      }
-      return 0;
-    });
     this.showButtonMoreResults = ko.computed(function() {
       return (_this.numResults() > (_this.showParts() * _this.showLimit)) && (DetectMobileQuick() || DetectTierTablet());
     });
@@ -1171,7 +1222,6 @@ HotelsResultSet = (function() {
   HotelsResultSet.prototype.select = function(hotel, event) {
     var backUrl,
       _this = this;
-    window.voyanga_debug(' i wonna get hotel for you', hotel);
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop();
     backUrl = window.location.hash;
     backUrl = backUrl.split('hotelId')[0];

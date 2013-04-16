@@ -30,7 +30,6 @@ TourPanelSet = (function() {
 
     var _this = this;
     _.extend(this, Backbone.Events);
-    window.voyanga_debug('Init of TourPanelSet');
     this.template = 'tour-panel-template';
     this.sp = new TourSearchParams();
     this.prevPanel = 'hotels';
@@ -40,7 +39,7 @@ TourPanelSet = (function() {
     this.icon = 'constructor-ico';
     this.mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">';
     this.indexMode = true;
-    this.startCity = this.sp.startCity;
+    this.startCity = this.sp.getStartCity();
     this.startCityReadable = ko.observable('');
     this.startCityReadableGen = ko.observable('');
     this.startCityReadableAcc = ko.observable('');
@@ -70,7 +69,7 @@ TourPanelSet = (function() {
     this.activeCity = ko.observable('');
     this.activeCityAcc = ko.observable('');
     this.activeCityGen = ko.observable('');
-    this.sp.calendarActivated = ko.observable(true);
+    this.calendarActivated = ko.observable(true);
     this.lastPanel = null;
     this.i = 0;
     this.activeCalendarPanel = ko.observable(this.panels()[0]);
@@ -160,7 +159,7 @@ TourPanelSet = (function() {
     var index;
     index = this.panels.indexOf(elem);
     this.panels.remove(elem);
-    this.sp.destinations.splice(index, 1);
+    this.sp.removeDestination(index, 1);
     return _.last(this.panels()).isLast(true);
   };
 
@@ -188,12 +187,12 @@ TourPanelSet = (function() {
       }
       return;
     }
-    this.sp.destinations.push(new DestinationSearchParams());
+    this.sp.addDestination();
     if (_.last(this.panels())) {
       _.last(this.panels()).isLast(false);
       prevPanel = _.last(this.panels());
     }
-    newPanel = new TourPanel(this.sp, this.i, this.i === 0);
+    newPanel = new TourPanel(this.sp, this.i, this.i === 0, this.calendarActivated);
     newPanel.on("tourPanel:showCalendar", function() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -283,7 +282,9 @@ TourPanel = (function(_super) {
 
   __extends(TourPanel, _super);
 
-  function TourPanel(sp, ind, isFirst) {
+  function TourPanel(sp, ind, isFirst, calendarActivated) {
+    var _this = this;
+    this.calendarActivated = calendarActivated;
     this.checkOutHtml = __bind(this.checkOutHtml, this);
 
     this.checkInHtml = __bind(this.checkInHtml, this);
@@ -296,15 +297,14 @@ TourPanel = (function(_super) {
 
     this.handlePanelSubmitToMain = __bind(this.handlePanelSubmitToMain, this);
 
-    var _this = this;
     TourPanel.__super__.constructor.call(this, isFirst, true);
     this.toggleSubscribers.dispose();
     _.extend(this, Backbone.Events);
     this.hasfocus = ko.observable(false);
     this.sp = sp;
     this.isLast = ko.observable(true);
-    this.peopleSelectorVM = new HotelPeopleSelector(sp);
-    this.destinationSp = _.last(sp.destinations());
+    this.peopleSelectorVM = new HotelPeopleSelector(sp.getRoomsContainer());
+    this.destinationSp = sp.getLastDestination();
     this.city = this.destinationSp.city;
     this.checkIn = this.destinationSp.dateFrom;
     this.checkOut = this.destinationSp.dateTo;
@@ -332,7 +332,7 @@ TourPanel = (function(_super) {
       return _this.trigger("tourPanel:hasFocus", ko.contextFor(e.target)['$data']);
     });
     this.city.subscribe(function(newValue) {
-      if (_this.sp.calendarActivated()) {
+      if (_this.calendarActivated()) {
         return _this.showCalendar();
       }
     });
@@ -348,11 +348,11 @@ TourPanel = (function(_super) {
       onlyHash = true;
     }
     if (onlyHash) {
-      return app.navigate(this.sp.getHash(), {
+      return app.navigate(this.sp.hash(), {
         trigger: true
       });
     } else {
-      url = '/#' + this.sp.getHash();
+      url = '/#' + this.sp.hash();
       if (this.startParams === url) {
         if (this.selectedParams.eventId) {
           url += 'eventId/' + this.selectedParams.eventId + '/';
@@ -366,7 +366,7 @@ TourPanel = (function(_super) {
 
   TourPanel.prototype.saveStartParams = function() {
     var url;
-    url = '/#' + this.sp.getHash();
+    url = '/#' + this.sp.hash();
     return this.startParams = url;
   };
 

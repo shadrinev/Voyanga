@@ -31,17 +31,6 @@ class SpRoom
         @ages.splice(newValue)
       ko.processAllDeferredBindingUpdates()
 
-  # FIXME remove meh
-  fromList: (item) ->
-    parts = item.split(':')
-    @adults parts[0]
-    @children parts[1]
-    @infants parts[2]
-    # FIXME: FIXME FIXME
-    if @children() > 0
-      for i in [0..(@children()-1)]
-       @ages.push {age: ko.observable(parts[3 + i]).extend {integerOnly:{min: 0, max: 12}}}
-
   fromPEGObject: (item) ->
     @adults item.adults
     @children item.children
@@ -68,22 +57,20 @@ class SpRoom
       parts.push age.age()
     return parts.join(':')
 
-  getUrl: (i)=>
-    # FIXME FIMXE FIMXE
-    agesText = ''
-    agesTextVals = []
+  getParams: (i)=>
+    params = []
     j = 0
     for ageObj in @ages()
-      console.log('age', ageObj, ageObj.age())
-      agesTextVals.push("rooms[#{i}][chdAges][#{j}]=" + ageObj.age())
+      params.push "rooms[#{i}][chdAges][#{j}]=" + ageObj.age()
       j++
-    if(agesTextVals.length)
-      agesText = agesTextVals.join('&')
-    if !agesText
-      agesText = "rooms[#{i}][chdAges]=0"
-    return "rooms[#{i}][adt]=" + @adults() + "&rooms[#{i}][chd]=" + @children() + "&" + agesText + "&rooms[#{i}][cots]=" + @infants()
+    if !params.length
+      params.push "rooms[#{i}][chdAges]=0"
+    params.push "rooms[#{i}][adt]=" + @adults()
+    params.push "rooms[#{i}][chd]=" + @children()
+    params.push "rooms[#{i}][cots]=" + @infants()
+    return params
 
-class HotelsSearchParams
+class HotelsSearchParams extends RoomsContainerMixin
   constructor: ->
     @city = ko.observable('')
     @checkIn = ko.observable(false)
@@ -99,35 +86,37 @@ class HotelsSearchParams
         result += room.children()
       return result
 
-  getHash: =>
+  hash: =>
     parts =  [@city(), moment(@checkIn()).format('D.M.YYYY'), moment(@checkOut()).format('D.M.YYYY')]
     for room in @rooms()
       parts.push room.getHash()
     hash = 'hotels/search/' + parts.join('/') + '/'
     return hash
 
-  fromList: (data)=>
-    # FIXME looks too ugly to hit production, yet does not support RT
+  fromString: (data)=>
+    data = PEGHashParser.parse(data,'HOTELS')
+    @fromPEGObject data
+
+  fromPEGObject: (data)=>
     beforeUrl = @url()
     hotelIdBefore = @hotelId()
-    @city data[0]
-    @checkIn moment(data[1], 'D.M.YYYY').toDate()
-    @checkOut moment(data[2], 'D.M.YYYY').toDate()
-    @rooms.splice(0)
+    @city data.to
+    @checkIn data.dateFrom
+    @checkOut data.dateTo
     @hotelId(false)
-    rest = data[3].split('/')
-    for item in rest
-      if item == 'hotelId'
-        @hotelId(0)
-      else
-        if @hotelId() == 0
-          @hotelId(item)
-          break
-        else
-          if item
-            r = new SpRoom(@)
-            r.fromList(item)
-            @rooms.push r
+
+    # FIXME dependency leak ?
+    @rooms.splice 0
+    @hotelId(false)
+    if data.extra
+      for pair in data.extra
+        if pair.key == 'hotelId'
+          @hotelId pair.value
+    for room in data.rooms
+      r = new SpRoom(@)
+      r.fromPEGObject(room)
+      @rooms.push r
+
     if beforeUrl == @url()
       @urlChanged(false)
       if hotelIdBefore == @hotelId()
@@ -143,18 +132,28 @@ class HotelsSearchParams
     @checkIn moment(data.checkIn, 'YYYY-M-D').toDate()
     @checkOut moment(data.checkIn, 'YYYY-M-D').add('days', data.duration).toDate()
     @rooms.splice(0)
+
     for item in data.rooms
       r = new SpRoom(@)
       r.fromObject(item)
       @rooms.push r
 
   url: =>
-    result = "hotel/search?city=" + @city()
-    result += '&checkIn=' + moment(@checkIn()).format('YYYY-M-D')
-    result += '&duration=' + moment(@checkOut()).diff(moment(@checkIn()), 'days')
-    for room, i in @rooms()
-      result += '&' + room.getUrl(i)
+    result = "hotel/search?"
+    params = @getParams()
+    result += params.join "&"
     return result
+    
+  getParams: (include_type=false)=>
+    params = []
+    if include_type
+      params.push 'type=hotel'
+    params.push 'city=' + @city()
+    params.push 'checkIn=' + moment(@checkIn()).format('YYYY-M-D')
+    params.push 'duration=' + moment(@checkOut()).diff(moment(@checkIn()), 'days')
+    for room, i in @rooms()
+      params.push.apply params, room.getParams(i)
+    return params
 
   GAKey: =>
     @city()
@@ -170,3 +169,6 @@ class HotelsSearchParams
     result += ", " + moment(@checkIn()).format('D.M.YYYY') + ' - ' + moment(@checkOut()).format('D.M.YYYY')
     result += ", " + moment(@checkIn()).diff(moment(), 'days') + " - " + moment(@checkOut()).diff(moment(@checkIn()), 'days')
     return result
+
+implement(HotelsSearchParams, ISearchParams)
+implement(HotelsSearchParams, IRoomsContainer)

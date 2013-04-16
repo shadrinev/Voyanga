@@ -306,6 +306,20 @@ class HotelResult
         return 'Посмотреть все результаты'
     @push data
 
+  voyangaRating: (RATING_WEIGHT, STARS_WEIGHT, DISTANCE_WEIGHT, PRICE_WEIGHT)->
+    if @rating == '-'
+      userRating = 0
+    else
+      userRating = scaledValue @rating, 5, RATING_WEIGHT
+    stars = scaledValue @starsNumeric, 5, STARS_WEIGHT
+
+    # расстояние до центра
+    dCenter = scaledValue @distanceToCenter, @parent.maxDistance, DISTANCE_WEIGHT, true
+
+    # разумность цены :D
+    rPrice = scaledValue @roomSets()[0].discountPrice, @parent.maxPriceR, PRICE_WEIGHT, true
+    
+    -Math.sqrt(stars*stars + userRating*userRating + dCenter*dCenter + rPrice*rPrice)
 
 
   falseFunction: ->
@@ -321,7 +335,6 @@ class HotelResult
       @minPrice = set.pricePerNight
       @maxPrice = set.pricePerNight
     else
-      #@cheapestSet = if set.price < @cheapest then set else @cheapestSet
       if set.price < @cheapest
         @cheapestSet = set
       @cheapest = if set.price < @cheapest then set.price else @cheapest
@@ -329,7 +342,6 @@ class HotelResult
       @maxPrice = if set.pricePerNight > @maxPrice then set.pricePerNight else @maxPrice
     @roomSets.push set
     @activeRoomSet(set)
-    #@roomSets = _.sortBy @roomSets, (entry)-> entry.price
     @roomSets.sort (left, right)=>
       if left.price > right.price
         return 1
@@ -784,7 +796,6 @@ class HotelsResultSet
     @tours = ko.observable false
     @checkIn = moment(@searchParams.checkIn)
     @checkOut = moment(@checkIn).add('days', @searchParams.duration)
-    window.voyanga_debug('checkOut', @checkOut)
     @city = @searchParams.cityFull
     if @searchParams.duration
       duration = @searchParams.duration
@@ -832,17 +843,47 @@ class HotelsResultSet
     @sortBy = ko.observable('minPrice')
     @ordBy = ko.observable 1
 
+#    @sortBy 'voyangaRating'
+
+    @PRICE_WEIGHT = ko.observable 5
+    @RATING_WEIGHT = ko.observable 3
+    @STARS_WEIGHT = ko.observable 4
+    @DISTANCE_WEIGHT = ko.observable 2
+
+    window.UPDATE_WEIGHTS = (p, r, s, d) =>
+      @PRICE_WEIGHT p
+      @RATING_WEIGHT r
+      @STARS_WEIGHT s
+      @DISTANCE_WEIGHT d
+
     @resultsForRender = ko.computed =>
       limit = @showParts() * @showLimit
+      # FIXME temporary fix
+      if !limit
+        limit = @showLimit
       results = []
       sortKey = @sortBy()
       ordKey = @ordBy()
-
-
+      args = []
+      if sortKey == 'voyangaRating'
+        args.push @RATING_WEIGHT()
+        args.push @STARS_WEIGHT()
+        args.push @DISTANCE_WEIGHT()
+        args.push @PRICE_WEIGHT()
+        
       @data.sort (left, right)=>
-        if left[sortKey] < right[sortKey]
+        if typeof left[sortKey] == 'function'
+          leftVal = left[sortKey].apply(left, args)
+        else
+          leftVal = left[sortKey]
+        if typeof right[sortKey] == 'function'
+          rightVal = right[sortKey].apply(right, args)
+        else
+          rightVal = right[sortKey]
+          
+        if leftVal < rightVal
           return -1 * ordKey
-        if left[sortKey] > right[sortKey]
+        if leftVal > rightVal
           return  1 * ordKey
         return 0
       for result in @data()
@@ -851,12 +892,8 @@ class HotelsResultSet
           limit--
         if limit <= 0
           break
-      #if @sortBy() == 'minPrice'
-      #  results = _.sortBy results, (el)-> el.minPrice
-      #else
-      #  results = _.sortBy results, (el)-> el.rating
-
       return results
+    
     @numResults = ko.observable 0
     @filtersConfig = false
     @pagesLoad = false
@@ -866,6 +903,16 @@ class HotelsResultSet
     for key, result of @_results
       if result.numPhotos
         @data.push result
+
+    # Максимальная цена для рейтинга, считается только по первому сету
+    @maxPriceR = _.reduce @data(), (memo,hotel)  =>
+        if memo > hotel.roomSets()[0].discountPrice then memo else hotel.roomSets()[0].discountPrice
+      , @data()[0].roomSets()[0].discountPrice
+    @maxDistance = _.reduce @data(), (memo,hotel)  =>
+        if !hotel.distanceToCenter
+          return memo
+        if memo > hotel.distanceToCenter then memo else hotel.distanceToCenter
+      , 0
 
 
     @sortByPriceClass = ko.computed =>
@@ -880,20 +927,12 @@ class HotelsResultSet
         ret += ' active'
       return ret
 
-    @data.sort (left, right)->
-      if left.minPrice < right.minPrice
-        return -1
-      if left.minPrice > right.minPrice
-        return  1
-      return 0
-
     @showButtonMoreResults = ko.computed =>
       return (@numResults() > (@showParts() * @showLimit)) && (DetectMobileQuick() || DetectTierTablet())
     window.hrs = @
 
 
   select: (hotel, event) =>
-    window.voyanga_debug ' i wonna get hotel for you', hotel
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     backUrl = window.location.hash
     backUrl = backUrl.split('hotelId')[0]

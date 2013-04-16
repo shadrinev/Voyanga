@@ -462,7 +462,7 @@ EventTourResultSet = (function() {
             for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
               room = _ref1[_j];
               if (!this.activePanel().sp.rooms()[i]) {
-                this.activePanel().sp.addSpRoom();
+                this.activePanel().sp.addRoom();
               }
               this.activePanel().sp.rooms()[i].adults(room.adultCount);
               this.activePanel().sp.rooms()[i].children(room.childCount);

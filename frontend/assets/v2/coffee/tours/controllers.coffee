@@ -20,11 +20,10 @@ class ToursController
   searchAction: (args)=>
     window.app.helpLayer.pageName('tours')
     @searchParams.fromString args
-    voyanga_debug('routing urlChanged:',@searchParams.urlChanged(),@searchParams.hotelChanged(),@searchParams.hotelId())
     # Searcheng
     sp = @searchParams
     GAPush ['_trackEvent','Trip_press_button_search', sp.GAKey(), sp.GAData()]
-    voyanga_debug('next state')
+
     if @searchParams.urlChanged()
       window.VisualLoaderInstance.start(@api.loaderDescription)
       @doSearch()
@@ -33,7 +32,6 @@ class ToursController
         backUrl = window.location.hash
         urls = backUrl.split('hotelId')
         @searchParams.hotelId(false)
-        voyanga_debug('i want set new url ',urls[0],urls)
         window.setTimeout(
           =>
             window.app.navigate (urls[0])
@@ -46,7 +44,7 @@ class ToursController
           backUrl = window.location.hash
           urls = backUrl.split('hotelId')
           @searchParams.hotelId(false)
-          voyanga_debug('i want set new url ',urls[0],urls)
+
           window.setTimeout(
             =>
               window.app.navigate (urls[0])

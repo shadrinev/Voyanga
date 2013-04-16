@@ -4,8 +4,7 @@ SEARCH controller, should be splitted once we will get more actions here
 */
 
 var HotelsController,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __slice = [].slice;
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 HotelsController = (function() {
 
@@ -25,7 +24,7 @@ HotelsController = (function() {
 
     this.api = new HotelsAPI;
     this.routes = {
-      '/search/:from/:in/:out/*rest': this.searchAction,
+      '/search/*rest': this.searchAction,
       '/timeline/': this.timelineAction,
       '': this.indexAction
     };
@@ -33,11 +32,9 @@ HotelsController = (function() {
     _.extend(this, Backbone.Events);
   }
 
-  HotelsController.prototype.searchAction = function() {
-    var args, backUrl, hotelObj, urls;
-    args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    window.voyanga_debug("HOTELS: Invoking searchAction", args);
-    this.searchParams.fromList(args);
+  HotelsController.prototype.searchAction = function(args) {
+    var backUrl, hotelObj, urls;
+    this.searchParams.fromString(args);
     if (this.searchParams.urlChanged()) {
       window.VisualLoaderInstance.start(this.api.loaderDescription);
       return this.api.search(this.searchParams.url(), this.handleSearch);
@@ -74,7 +71,8 @@ HotelsController = (function() {
         new ErrorPopup('hotels404');
         return;
       }
-      throw new Error("Unable to build HotelResultSet from search response");
+      new ErrorPopup('e500');
+      return;
     }
     this.results(stacked);
     GAPush(['_trackEvent', 'Hotel_show_search_results', this.searchParams.GAKey(), this.searchParams.GAData(), stacked.data().length]);
@@ -97,7 +95,6 @@ HotelsController = (function() {
 
   HotelsController.prototype.handleResults = function(data) {
     var stacked;
-    window.voyanga_debug("HOTELS: searchAction: handling results", data);
     stacked = new HotelsResultSet(data, data.searchParams);
     stacked.postInit();
     stacked.checkTicket = this.checkTicketAction;
@@ -135,7 +132,6 @@ HotelsController = (function() {
   };
 
   HotelsController.prototype.indexAction = function() {
-    window.voyanga_debug("HOTELS: indexAction");
     return this.render('index', {});
   };
 
@@ -247,7 +243,6 @@ HotelsController = (function() {
   };
 
   HotelsController.prototype.render = function(view, data) {
-    window.voyanga_debug("HOTELS: rendering", view, data);
     return this.trigger("viewChanged", view, data);
   };
 

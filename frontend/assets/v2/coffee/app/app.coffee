@@ -142,13 +142,10 @@ class Application extends Backbone.Router
     # FIXME extract to method
     # Handles module switching
     @on "beforeroute:" + prefix, (args...)->
-      window.voyanga_debug "APP: routing", args
       # hide sidebar
       if @panel() == undefined || (prefix != @activeModule())
         @minimizeCalendar()
-        window.voyanga_debug "APP: switching active module to", prefix
         @activeModule(prefix)
-        window.voyanga_debug "APP: activating panel", ko.utils.unwrapObservable module.panel
 
         @activeModuleInstance module
         $(window).unbind 'resize'
@@ -214,7 +211,6 @@ class Application extends Backbone.Router
       callback.apply(@, arguments)
 
   contentRendered: =>
-    window.voyanga_debug "APP: Content rendered"
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
     WidthMine()

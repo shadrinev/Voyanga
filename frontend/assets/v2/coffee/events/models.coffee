@@ -331,7 +331,7 @@ class EventTourResultSet
             i = 0
             for room in item.serachParams.rooms
               if !@activePanel().sp.rooms()[i]
-                @activePanel().sp.addSpRoom()
+                @activePanel().sp.addRoom()
               @activePanel().sp.rooms()[i].adults(room.adultCount)
               @activePanel().sp.rooms()[i].children(room.childCount)
               @activePanel().sp.rooms()[i].ages(room.childAge)

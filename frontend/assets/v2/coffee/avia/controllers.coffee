@@ -36,7 +36,6 @@ class AviaController
     ko.processAllDeferredBindingUpdates()
 
   handleResults: (data) =>
-    window.voyanga_debug "searchAction: handling results", data
     stacked = new AviaResultSet data.flights.flightVoyages, data.siblings
     stacked.injectSearchParams data.searchParams
     stacked.postInit()
@@ -44,7 +43,6 @@ class AviaController
     return stacked
 
   indexAction: =>
-    window.voyanga_debug "AVIA: invoking indexAction"
     @render "index", {}
 
   

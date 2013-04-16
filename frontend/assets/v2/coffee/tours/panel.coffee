@@ -1,9 +1,6 @@
 class TourPanelSet
   constructor: ->
     _.extend @, Backbone.Events
-
-    window.voyanga_debug 'Init of TourPanelSet'
-
     @template = 'tour-panel-template'
     @sp = new TourSearchParams()
 
@@ -15,7 +12,7 @@ class TourPanelSet
     @mainLabel = 'Путешествие: авиабилет + отель <img src="/themes/v2/images/saleTitle.png">'
     @indexMode = true
 
-    @startCity = @sp.startCity
+    @startCity = @sp.getStartCity()
     @startCityReadable = ko.observable ''
     @startCityReadableGen = ko.observable ''
     @startCityReadableAcc = ko.observable ''
@@ -42,7 +39,7 @@ class TourPanelSet
     @activeCity = ko.observable('')
     @activeCityAcc = ko.observable('')
     @activeCityGen = ko.observable('')
-    @sp.calendarActivated = ko.observable(true)
+    @calendarActivated = ko.observable(true)
 
     @lastPanel = null
     @i = 0
@@ -119,7 +116,7 @@ class TourPanelSet
   deletePanel: (elem) =>
     index = @panels.indexOf(elem)
     @panels.remove(elem)
-    @sp.destinations.splice(index, 1)
+    @sp.removeDestination(index, 1)
     _.last(@panels()).isLast(true)
 
   isFirst: =>
@@ -138,11 +135,11 @@ class TourPanelSet
         el = $('div.innerCalendar').find('h1')
         Utils.flashMessage el
       return
-    @sp.destinations.push new DestinationSearchParams()
+    @sp.addDestination()
     if _.last(@panels())
       _.last(@panels()).isLast(false)
       prevPanel = _.last(@panels())
-    newPanel = new TourPanel(@sp, @i, @i == 0)
+    newPanel = new TourPanel(@sp, @i, @i == 0, @calendarActivated)
     newPanel.on "tourPanel:showCalendar", (args...) =>
       @activeCity(newPanel.cityReadable())
       @activeCityAcc(newPanel.cityReadableAcc())
@@ -204,16 +201,17 @@ class TourPanelSet
       $(el).remove()
 
 class TourPanel extends SearchPanel
-  constructor: (sp, ind, isFirst) ->
+  constructor: (sp, ind, isFirst, @calendarActivated) ->
     super(isFirst, true)
     @toggleSubscribers.dispose()
     _.extend @, Backbone.Events
 
     @hasfocus = ko.observable false
+    # FIXME может побрекать по параметрам на панельку?
     @sp = sp
     @isLast = ko.observable true
-    @peopleSelectorVM = new HotelPeopleSelector sp
-    @destinationSp = _.last(sp.destinations())
+    @peopleSelectorVM = new HotelPeopleSelector sp.getRoomsContainer()
+    @destinationSp = sp.getLastDestination()
 
     @city = @destinationSp.city
     @checkIn = @destinationSp.dateFrom
@@ -244,7 +242,7 @@ class TourPanel extends SearchPanel
       @trigger "tourPanel:hasFocus", ko.contextFor(e.target)['$data']
 
     @city.subscribe (newValue) =>
-      if @sp.calendarActivated()
+      if @calendarActivated()
         @showCalendar()
 
   handlePanelSubmitToMain: =>
@@ -252,9 +250,9 @@ class TourPanel extends SearchPanel
 
   handlePanelSubmit: (onlyHash = true)=>
     if onlyHash
-      app.navigate @sp.getHash(), {trigger: true}
+      app.navigate @sp.hash(), {trigger: true}
     else
-      url = '/#' + @sp.getHash()
+      url = '/#' + @sp.hash()
       if @startParams == url
         if @selectedParams.eventId
           url += 'eventId/' + @selectedParams.eventId + '/'
@@ -263,7 +261,7 @@ class TourPanel extends SearchPanel
       window.location.href = url
 
   saveStartParams: ()=>
-    url = '/#' + @sp.getHash()
+    url = '/#' + @sp.hash()
     @startParams = url
 
   close: ->
