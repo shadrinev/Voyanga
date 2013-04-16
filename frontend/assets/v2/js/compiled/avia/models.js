@@ -285,7 +285,7 @@ Voyage = (function() {
   Voyage.prototype.recommendStopoverIco = function() {
     var part, tooltip, _i, _len, _ref;
     if (this.direct) {
-      return;
+      return 'Без пересадок';
     }
     tooltip = [];
     _ref = this.parts.slice(0, -1);

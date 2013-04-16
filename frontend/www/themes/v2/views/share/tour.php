@@ -426,7 +426,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                 </div>
                 <div class="description">
                     <div class="title">
-                        <h2><span data-bind="text:hotelName">Рэдиссон Соня Отель</span> <span class="gradient"></span>
+                        <h2><span data-bind="text:hotelName, click: showDetails">Рэдиссон Соня Отель</span> <span class="gradient"></span>
                         </h2>
 
                         <div data-bind="attr: {'class': 'stars ' + stars}"></div>
@@ -464,8 +464,8 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                 <ul>
                     <li class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: roomSets()[0]}"/>
                 </ul>
-                <!-- div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                   <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
+                <!-- div class="    tab-ul" data-bind="visible: visibleRoomSets().length > 2">
+                   <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все номера</a>
                </div -->
                 <span class="lv"></span>
                 <span class="rv"></span>

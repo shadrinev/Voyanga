@@ -18,6 +18,8 @@
  */
 class OrderBooking extends CActiveRecord
 {
+    private $_hash;
+
     /**
      * The behaviors associated with the user model.
      * @see CActiveRecord::behaviors()
@@ -207,7 +209,9 @@ class OrderBooking extends CActiveRecord
             $timeOfCreatingOrder = strtotime($flightBooker->timestamp);
             $currentTime = time();
             $ago = ($currentTime - $timeOfCreatingOrder);
-            if (($cur=='enterCredentials') and ($ago>3*3600))
+            if (($cur=='waitingForPayment') and ($ago>6*3600))
+                $state = 'CANCELLED';
+            elseif (($cur=='enterCredentials') and ($ago>3*3600))
                 $state = 'CANCELLED';
         }
         if (($ok) && (!$first))
@@ -215,6 +219,23 @@ class OrderBooking extends CActiveRecord
         elseif ($state=='')
             $state = 'PROCESSING';
         return $state;
+    }
+
+    public function getHash()
+    {
+        if ($this->_hash != null)
+            return $this->_hash;
+        $result = $this->userId;
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            $result .= md5($flightBooker->flightVoyageInfo);
+        }
+        foreach ($this->hotelBookers as $hotelBooker)
+        {
+            $result .= md5($hotelBooker->hotelInfo);
+        }
+        $this->_hash = $result;
+        return $result;
     }
 
     private function getPrefixlessState($state) {

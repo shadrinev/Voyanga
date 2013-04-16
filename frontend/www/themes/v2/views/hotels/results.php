@@ -95,7 +95,7 @@
                             </ul>
                         </div>
                         <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
-                            <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все результаты</a>
+                            <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все номера</a>
                         </div>
                         <span class="lv"></span>
                         <span class="rv"></span>
@@ -158,7 +158,7 @@
                         	<table>
                         		<tr>
                         			<td class="text" colspan="2">
-                        				<span data-bind="text: name">Стандартный двухместный номер</span>
+                        				<span data-bind="text: name" style="cursor: pointer;">Стандартный двухместный номер</span>
                         			</td>
                         		</tr>
                         		<tr>

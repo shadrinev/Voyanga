@@ -214,7 +214,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
   # FIXME prolly should have cupLong here too
   recommendStopoverIco: ->
     if @direct
-      return
+      return 'Без пересадок'
     tooltip = []
     for part in @parts[0..-2]
       tooltip.push(@_formatStopOver(part))

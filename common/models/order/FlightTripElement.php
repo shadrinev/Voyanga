@@ -125,7 +125,7 @@ class FlightTripElement extends TripElement
     public function getTime()
     {
         if ($this->flightVoyage)
-            return $this->flightVoyage->getTime($this->departureCity);
+            return $this->flightVoyage->getTime();
         else
             return strtotime($this->departureDate);
     }

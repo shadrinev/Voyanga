@@ -95,7 +95,7 @@
                         	<table>
                         		<tr>
                         			<td class="text" colspan="2">
-                        				<span data-bind="text: name">Стандартный двухместный номер</span>
+                        				<span data-bind="text: name" style="cursor: pointer;">Стандартный двухместный номер</span>
                         			</td>
                         		</tr>
                         		<tr>
@@ -145,7 +145,7 @@
 
                         		<tr>
                         			<td class="text" colspan="2">
-                        				<span data-bind="text: name">Стандартный двухместный номер</span>
+                        				<span data-bind="text: name" style="cursor: pointer;">Стандартный двухместный номер</span>
                         			</td>
                         		</tr>
                         		<tr>

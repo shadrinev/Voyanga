@@ -16,7 +16,7 @@
                         <div class="ico-path" data-bind="click: $data.showDetailsOverview">
                             <span data-bind="html: $data.activeVoyage().stopoverHtml()"></span>
                         </div>
-                        <div class="text" data-bind="click: $data.showDetailsOverview">Всего <span data-bind="text: $data.duration()"></span></div>
+                        <div class="text" data-bind="click: $data.showDetailsOverview">В пути <span data-bind="text: $data.duration()"></span></div>
                     </div>
                 </td>
                 <td class="tdTo">
