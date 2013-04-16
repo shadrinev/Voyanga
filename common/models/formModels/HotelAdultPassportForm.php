@@ -45,4 +45,5 @@ class HotelAdultPassportForm extends BasePassportForm
             self::GENDER_FEMALE => 'Жен'
         );
     }
+
 }

@@ -238,6 +238,7 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.select = function(res, result, elem) {
     var btn;
+    voyanga_debug('click select in at', res, result, elem);
     if (!(res != null)) {
       return;
     }
@@ -265,7 +266,8 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype._selectResult = function(res, elem) {
     var needAnimation;
-    needAnimation = true && !!elem;
+    needAnimation = !(DetectMobileQuick() || DetectTierTablet());
+    needAnimation = needAnimation && !!elem;
     if (needAnimation) {
       return this.doBuyAnimation(res, elem);
     } else {
@@ -477,8 +479,9 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.doBuyAnimation = function(res, elem) {
-    var minDelta, oldWidth, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
+    var lastInd, minDelta, needSmallStep, oldWidth, paramsCascade, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
       _this = this;
+    voyanga_debug('animation', res, elem);
     ticket = $(elem.target).parent().parent().parent().parent();
     if (ticket.hasClass('content')) {
       ticket = ticket.parent();
@@ -486,9 +489,12 @@ ToursAviaResultSet = (function(_super) {
     pos = ticket.position();
     posAbs = ticket.offset();
     posCont = $('#content').offset();
+    needSmallStep = true;
     if (ticket.parent().hasClass('recommended-ticket')) {
       ticket = ticket.parent();
       posAbs = ticket.offset();
+      needSmallStep = false;
+      voyanga_debug('pos', pos);
     }
     pos = {
       top: posAbs.top - posCont.top,
@@ -498,60 +504,102 @@ ToursAviaResultSet = (function(_super) {
     ticketClone = ticket.clone();
     ticket.css('visibility', 'hidden');
     $('#content').append(ticketClone);
+    ticketClone.addClass('shadow');
     ticketClone.css({
       'position': 'absolute',
       'width': oldWidth + 'px',
       'top': pos.top + 'px',
       'z-index': 400,
-      'left': pos.left + 'px'
+      'left': pos.left + 'px',
+      'box-shadow': 'rgba(0, 0, 0, 0.80) 6px 9px 29px'
     });
     $('.main-block').css('overflow', 'hidden');
     startAbsTop = posAbs.top;
     startTop = pos.top;
     startScrollTop = $("html").scrollTop() | $("body").scrollTop();
     minDelta = 70;
-    return ticketClone.animate({
-      top: ['70px', 'easeOutCubic']
-    }, {
-      duration: 500,
-      step: function(now, fx) {
-        var delta, nowAbsTop, nowScrollTop;
-        delta = startTop - now;
-        nowAbsTop = startAbsTop - delta;
-        if ((nowAbsTop - startScrollTop) < minDelta) {
-          nowScrollTop = nowAbsTop - minDelta;
-          return $("html,body").scrollTop(nowScrollTop);
+    paramsCascade = [];
+    if (needSmallStep) {
+      paramsCascade.push({
+        object: ticketClone,
+        propeties: {
+          'top': (pos.top - 10) + 'px'
+        },
+        options: {
+          duration: 500
         }
+      });
+    }
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        'top': ['70px', 'easeOutCubic']
       },
-      easing: 'easeOutCubic',
-      complete: function() {
-        return window.setTimeout(function() {
-          return ticketClone.animate({
-            left: '-800px'
-          }, {
-            duration: 300,
-            complete: function() {
-              $('.my-trip-list .items a.active .noChoise').hide('slow');
-              _this.results().selected_key(res.key);
-              res.parent.filtersConfig = res.parent.filters.getConfig();
-              _this.results().selected_best(res.best | false);
-              _this.selection(res);
-              ticketClone.remove();
-              return $('.my-trip-list .items a.active .time').animate({
-                opacity: 0.1
-              }, 300, function() {
-                return $('.my-trip-list .items a.active .time').animate({
-                  opacity: 1
-                }, 300, function() {
-                  $('.main-block').css('overflow', '');
-                  return _this.trigger('next');
-                });
-              });
-            }
-          });
-        }, 100);
+      options: {
+        duration: 500
       }
     });
+    lastInd = paramsCascade.length - 1;
+    paramsCascade[lastInd]['options']['step'] = function(now, fx) {
+      var delta, nowAbsTop, nowScrollTop;
+      delta = startTop - now;
+      nowAbsTop = startAbsTop - delta;
+      if ((nowAbsTop - startScrollTop) < minDelta) {
+        nowScrollTop = nowAbsTop - minDelta;
+        return $("html,body").scrollTop(nowScrollTop);
+      }
+    };
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        'top': '70px'
+      },
+      options: {
+        duration: 100
+      }
+    });
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        left: '-800px'
+      },
+      options: {
+        duration: 300
+      }
+    });
+    lastInd = paramsCascade.length - 1;
+    paramsCascade[lastInd]['options']['complete'] = function() {
+      $('.my-trip-list .items a.active .noChoise').hide('slow');
+      _this.results().selected_key(res.key);
+      res.parent.filtersConfig = res.parent.filters.getConfig();
+      _this.results().selected_best(res.best | false);
+      _this.selection(res);
+      return ticketClone.remove();
+    };
+    paramsCascade.push({
+      object: $('.my-trip-list .items a.active .time'),
+      propeties: {
+        opacity: 0.1
+      },
+      options: {
+        duration: 300
+      }
+    });
+    paramsCascade.push({
+      object: $('.my-trip-list .items a.active .time'),
+      propeties: {
+        opacity: 1
+      },
+      options: {
+        duration: 300
+      }
+    });
+    lastInd = paramsCascade.length - 1;
+    paramsCascade[lastInd]['options']['complete'] = function() {
+      $('.main-block').css('overflow', '');
+      return _this.trigger('next');
+    };
+    return Utils.animationCascade(paramsCascade);
   };
 
   return ToursAviaResultSet;
@@ -775,8 +823,9 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.select = function(roomData, elem) {
-    var needAnimate;
-    needAnimate = true && !!elem;
+    var needAnimate, needAnimation;
+    needAnimation = !(DetectMobileQuick() || DetectTierTablet());
+    needAnimate = needAnimation && !!elem;
     if (roomData != null) {
       if (needAnimate) {
         return this.doBuyAnimation(roomData.roomSet, elem);
@@ -979,7 +1028,7 @@ ToursHotelsResultSet = (function(_super) {
   };
 
   ToursHotelsResultSet.prototype.doBuyAnimation = function(roomSet, elem) {
-    var minDelta, oldWidth, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
+    var lastInd, minDelta, oldWidth, paramsCascade, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
       _this = this;
     ticket = $(elem.target);
     ticket = ticket.parent();
@@ -1009,52 +1058,91 @@ ToursHotelsResultSet = (function(_super) {
       'width': oldWidth + 'px',
       'top': pos.top + 'px',
       'z-index': 400,
-      'left': pos.left + 'px'
+      'left': pos.left + 'px',
+      'box-shadow': 'rgba(0, 0, 0, 0.80) 6px 9px 29px'
     });
     $('.main-block').css('overflow', 'hidden');
     startAbsTop = posAbs.top;
     startTop = pos.top;
     startScrollTop = $("html").scrollTop() | $("body").scrollTop();
     minDelta = 70;
-    return ticketClone.animate({
-      top: ['70px', 'easeOutCubic']
-    }, {
-      duration: 500,
-      step: function(now, fx) {
-        var delta, nowAbsTop, nowScrollTop;
-        delta = startTop - now;
-        nowAbsTop = startAbsTop - delta;
-        if ((nowAbsTop - startScrollTop) < minDelta) {
-          nowScrollTop = nowAbsTop - minDelta;
-          return $("html,body").scrollTop(nowScrollTop);
-        }
+    paramsCascade = [];
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        'top': (pos.top - 10) + 'px'
       },
-      easing: 'easeOutCubic',
-      complete: function() {
-        return window.setTimeout(function() {
-          return ticketClone.animate({
-            left: '-1200px'
-          }, {
-            duration: 300,
-            complete: function() {
-              $('.my-trip-list .items a.active .noChoise').hide('slow');
-              _this._selectRoomSet(roomSet);
-              ticketClone.remove();
-              return $('.my-trip-list .items a.active .time').animate({
-                opacity: 0.1
-              }, 300, function() {
-                return $('.my-trip-list .items a.active .time').animate({
-                  opacity: 1
-                }, 300, function() {
-                  $('.main-block').css('overflow', '');
-                  return _this.trigger('next');
-                });
-              });
-            }
-          });
-        }, 100);
+      options: {
+        duration: 500
       }
     });
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        'top': ['70px', 'easeOutCubic']
+      },
+      options: {
+        duration: 500
+      }
+    });
+    lastInd = paramsCascade.length - 1;
+    paramsCascade[lastInd]['options']['step'] = function(now, fx) {
+      var delta, nowAbsTop, nowScrollTop;
+      delta = startTop - now;
+      nowAbsTop = startAbsTop - delta;
+      if ((nowAbsTop - startScrollTop) < minDelta) {
+        nowScrollTop = nowAbsTop - minDelta;
+        return $("html,body").scrollTop(nowScrollTop);
+      }
+    };
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        'top': '70px'
+      },
+      options: {
+        duration: 100
+      }
+    });
+    paramsCascade.push({
+      object: ticketClone,
+      propeties: {
+        left: '-1200px'
+      },
+      options: {
+        duration: 300
+      }
+    });
+    lastInd = paramsCascade.length - 1;
+    paramsCascade[lastInd]['options']['complete'] = function() {
+      $('.my-trip-list .items a.active .noChoise').hide('slow');
+      _this._selectRoomSet(roomSet);
+      return ticketClone.remove();
+    };
+    paramsCascade.push({
+      object: $('.my-trip-list .items a.active .time'),
+      propeties: {
+        opacity: 0.1
+      },
+      options: {
+        duration: 300
+      }
+    });
+    paramsCascade.push({
+      object: $('.my-trip-list .items a.active .time'),
+      propeties: {
+        opacity: 1
+      },
+      options: {
+        duration: 300
+      }
+    });
+    lastInd = paramsCascade.length - 1;
+    paramsCascade[lastInd]['options']['complete'] = function() {
+      $('.main-block').css('overflow', '');
+      return _this.trigger('next');
+    };
+    return Utils.animationCascade(paramsCascade);
   };
 
   return ToursHotelsResultSet;

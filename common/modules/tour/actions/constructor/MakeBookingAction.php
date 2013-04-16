@@ -34,6 +34,7 @@ class MakeBookingAction extends CAction
         $haveHotels = false;
         $haveFlights = false;
         $flightParams = array();
+        $valAirline = '';
         foreach ($this->tripItems as $tripItem)
         {
             if ($tripItem instanceof HotelTripElement)
@@ -48,6 +49,9 @@ class MakeBookingAction extends CAction
                 $flightParams['cityFrom'] = $tripItem->flightVoyage->getDepartureCity(0)->code;
                 $flightParams['cityTo'] = $tripItem->flightVoyage->getArrivalCity(0)->code;
                 $dateTime = new DateTime($tripItem->flightVoyage->getDepartureDate(0));
+                if(!$valAirline){
+                    $valAirline = $tripItem->flightVoyage->valAirline;
+                }
                 $dateTime->setTime(0, 0, 0);
                 $flightParams['checkIn'] = $dateTime->format('d.m.Y');
                 $flightParams['duration'] = 7;
@@ -101,6 +105,8 @@ class MakeBookingAction extends CAction
         $tripStorage = new TripDataProvider();
         $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
         list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
+        $airline = 123;
+        $alliance = null;
         $viewData = array(
             'passportForms' => $this->passportForms,
             'ambigousPassports' => $ambigousPassports,
@@ -114,7 +120,8 @@ class MakeBookingAction extends CAction
             'flightParams' => $flightParams,
             'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
             'roomCounters' => (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false,
-            'secretKey' => $secretKey
+            'secretKey' => $secretKey,
+            'valAirline' =>$valAirline
         );
         $this->controller->render('makeBooking', $viewData);
     }

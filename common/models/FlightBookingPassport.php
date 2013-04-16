@@ -18,6 +18,8 @@
  * @property integer $passengerType
  * @property string $ticketNumber
  * @property string $timestamp
+ * @property string $bonusCard
+ * @property string $bonusCardAirlineCode
  *
  * The followings are the available model relations:
  * @property FlightBooker $flightBooking
@@ -53,12 +55,12 @@ class FlightBookingPassport extends CActiveRecord
         return array(
             array('firstName', 'required'),
             array('flightBookingId, documentTypeId,passengerType, countryId, genderId, passengerType', 'numerical', 'integerOnly'=>true),
-            array('firstName, lastName, birthday, series, number', 'length', 'max'=>45),
+            array('firstName, lastName, birthday, series, number, bonusCard, bonusCardAirlineCode', 'length', 'max'=>45),
             array('ticketNumber','length','max'=>15),
             array('expiration, timestamp', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, firstName, lastName, birthday, series, number, flightBookingId, documentTypeId, countryId, expiration, genderId, ticketNumber, timestamp', 'safe', 'on'=>'search'),
+            array('id, firstName, lastName, birthday, series, number, flightBookingId, documentTypeId, countryId, expiration, genderId, ticketNumber, timestamp, bonusCard, bonusCardAirlineCode', 'safe', 'on'=>'search'),
         );
     }
 
@@ -94,6 +96,8 @@ class FlightBookingPassport extends CActiveRecord
             'genderId' => 'Gender',
             'ticketNumber' => 'Ticket Number',
             'timestamp' => 'Timestamp',
+            'bonusCard' => 'Bonus Card',
+            'bonusCardAirlineCode' => 'Bonus Card Airline Code'
         );
     }
 
@@ -122,6 +126,8 @@ class FlightBookingPassport extends CActiveRecord
         $criteria->compare('genderId',$this->genderId);
         $criteria->compare('ticketNumber',$this->ticketNumber,true);
         $criteria->compare('timestamp',$this->timestamp,true);
+        $criteria->compare('bonusCard',$this->bonusCard,true);
+        $criteria->compare('bonusCardAirlineCode',$this->bonusCardAirlineCode,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
@@ -142,7 +148,9 @@ class FlightBookingPassport extends CActiveRecord
         $this->ticketNumber = $passport->ticketNumber;
         $this->documentTypeId = $passport->documentTypeId;
         $this->passengerType = $passport->passengerType;
-        $this->flightBookingId = $flightBookerId;        
+        $this->bonusCard = $passport->bonusCard;
+        $this->bonusCardAirlineCode = $passport->bonusCardAirlineCode;
+        $this->flightBookingId = $flightBookerId;
     }
 
     public function getType()

@@ -257,8 +257,10 @@ class FlightVoyage extends CApplicationComponent
 
     public function updateInfo($params)
     {
+        $oldInfo = array();
         if ($params['aPassengers'])
         {
+            $oldInfo['aPassengers'] = array();
             foreach ($params['aPassengers'] as $passengerType => $passengerInfo)
             {
                 $paramName = '';
@@ -274,10 +276,19 @@ class FlightVoyage extends CApplicationComponent
                         $paramName = 'infantPassengerInfo';
                         break;
                 }
+                $oldInfo['aPassengers'][$paramName]['count'] = $this->{$paramName}->count;
+                $oldInfo['aPassengers'][$paramName]['base_fare'] = $this->{$paramName}->baseFare;
+                $oldInfo['aPassengers'][$paramName]['total_fare'] = $this->{$paramName}->priceDetail;
                 $this->{$paramName}->count = $passengerInfo['count'];
                 $this->{$paramName}->baseFare = $passengerInfo['base_fare'];
                 $this->{$paramName}->priceDetail = $passengerInfo['total_fare'];
             }
+        }
+        $oldInfo['totalPrice'] = $this->price;
+        $oldInfo['charges'] = $this->charges;
+        if(abs($params['totalPrice'] - $this->price) > 2){
+            //send email
+            EmailManager::sendChangePriceInfo(array('oldInfo'=>$oldInfo,'newInfo'=>$params,'voyage'=>$this));
         }
         $this->price = $params['totalPrice'];
         $this->charges = $params['charges'];

@@ -346,6 +346,31 @@ Utils = {
       default:
         return "за компанию";
     }
+  },
+  animationCascade: function(paramsArray, level) {
+    var func, haveFunc, levelParams, obj, opts, props, sizeCascade;
+    if (level == null) {
+      level = 0;
+    }
+    sizeCascade = paramsArray.length;
+    levelParams = paramsArray[level];
+    obj = levelParams['object'];
+    props = levelParams['propeties'];
+    opts = levelParams['options'];
+    haveFunc = false;
+    if (opts['complete']) {
+      haveFunc = true;
+      func = opts['complete'];
+    }
+    opts['complete'] = function() {
+      if (haveFunc) {
+        func();
+      }
+      if (level < (sizeCascade - 1)) {
+        return Utils.animationCascade(paramsArray, level + 1);
+      }
+    };
+    return obj.animate(props, opts);
   }
 };
 

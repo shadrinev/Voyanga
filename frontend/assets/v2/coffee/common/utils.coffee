@@ -296,6 +296,23 @@ Utils =
       when 6 then "за шестерых"
       else "за компанию"
 
+  animationCascade: (paramsArray, level = 0) ->
+    sizeCascade = paramsArray.length
+    levelParams = paramsArray[level]
+    obj = levelParams['object']
+    props = levelParams['propeties']
+    opts = levelParams['options']
+    haveFunc = false
+    if opts['complete']
+      haveFunc = true
+      func = opts['complete']
+    opts['complete'] = ->
+      if haveFunc
+        func()
+      if level < (sizeCascade-1)
+        Utils.animationCascade(paramsArray,(level+1))
+    obj.animate(props,opts)
+
 exTrim = (str, charlist) ->
   charlist = (if not charlist then " s " else charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, "$1"))
   re = new RegExp("^[" + charlist + "]+|[" + charlist + "]+$", "g")

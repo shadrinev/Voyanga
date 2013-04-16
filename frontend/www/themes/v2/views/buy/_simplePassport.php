@@ -158,6 +158,10 @@
             <?php else: ?>
                 <?php echo CHtml::activeHiddenField($model, "[$i]seriesNumber", array('placeholder' => '4008123456', 'value'=>'123')); ?>
             <?php endif ?>
+            <input type="hidden"
+                   name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCard]" value="">
+            <input type="hidden"
+                   name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCardAirlineCode]" value="<?php echo $valAirline->code ?>">
         </td>
         <td class="tdDuration">
             <?php if (!$roomCounters): ?>
@@ -192,6 +196,7 @@
             <td class="tdNationality"></td>
             <td class="tdDocumentNumber"></td>
             <td class="tdDuration">
+
                 <input type="hidden" value="0"
                        name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
                 <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 0}"

@@ -35,4 +35,14 @@ class BasePassportForm extends CFormModel
             'lastName' => 'Фамилия',
         );
     }
+
+    public function setParams($params)
+    {
+        $attrs = $this->getAttributes();
+        foreach($attrs as $attrName =>$attrVal){
+            if(isset($params[$attrName])){
+                $this->{$attrName} = $params[$attrName];
+            }
+        }
+    }
 }
