@@ -89,6 +89,7 @@ class ToursController
           avia.searchParams = item.searchParams
           items.push avia
       if(stacked.findAndSelectItems(items))
+        window.app.helpLayer.pageName('overview')
         stacked.showOverview()
         #need save to tours
         postData = []
