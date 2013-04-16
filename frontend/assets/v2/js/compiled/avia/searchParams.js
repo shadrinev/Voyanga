@@ -91,8 +91,8 @@ AviaSearchParams = (function() {
   };
 
   AviaSearchParams.prototype.fromObject = function(data) {
-    this.adults(data.adt);
-    this.children(data.chd);
+    this.adults(data.adt || data.adultCount);
+    this.children(data.chd || data.childCount);
     this.infants(data.inf);
     this.rt(data.isRoundTrip);
     this.dep(data.destinations[0].departure_iata);

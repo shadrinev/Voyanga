@@ -66,8 +66,8 @@ class AviaSearchParams
 
 
   fromObject: (data)=>
-    @adults item.adt || item.adultCount
-    @children item.chd  || item.childCount
+    @adults data.adt || data.adultCount
+    @children data.chd  || data.childCount
     @infants data.inf
     @rt data.isRoundTrip
     @dep data.destinations[0].departure_iata
