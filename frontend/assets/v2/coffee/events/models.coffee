@@ -332,7 +332,7 @@ class EventTourResultSet
           @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
           @activePanel().lastPanel.checkOut(moment(item.checkOut)._d)
           @activePanel().lastPanel.city(item.cityCode)
-          console.log('try set destData', moment(item.checkIn)._d, moment(item.checkOut)._d, item.cityCode, 'to', @activePanel().lastPanel, @activePanel().lastPanel.checkIn())
+#          console.log('try set destData', moment(item.checkIn)._d, moment(item.checkOut)._d, item.cityCode, 'to', @activePanel().lastPanel, @activePanel().lastPanel.checkIn())
       @overviewPeople(Utils.wordAfterNum(@activePanel().sp.overall(), 'человек', 'человека', 'человек'))
       @overviewPricePeople(
         'Цена за ' + (if @activePanel().sp.adults() then Utils.wordAfterNum(@activePanel().sp.adults(), 'взрослого', 'взрослых', 'взрослых')
@@ -416,8 +416,6 @@ class EventPhotoBox
       $(picture).bind(
         'load error',
         (e)=>
-          console.log('image is loaded', e, @)
-          ;
           if e.type == 'load'
             @totalCount++
             ;

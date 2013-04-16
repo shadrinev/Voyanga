@@ -232,6 +232,7 @@ SimpleSearchParams = (function(_super) {
 
   SimpleSearchParams.prototype.fromObject = function(data) {
     var _this = this;
+    this.rooms([]);
     _.each(data.destinations, function(destination) {
       destination = new DestinationSearchParams();
       destination.city(destination.city);

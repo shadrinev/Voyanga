@@ -144,6 +144,7 @@ class SimpleSearchParams extends RoomsContainerMixin
       @hotelChanged(false)
 
   fromObject: (data)->
+    @rooms []
     _.each data.destinations, (destination) ->
       destination = new DestinationSearchParams()
       destination.city(destination.city)
