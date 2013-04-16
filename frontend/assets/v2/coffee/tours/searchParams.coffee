@@ -120,9 +120,9 @@ class SimpleSearchParams extends RoomsContainerMixin
       destination.dateTo(dest.dateTo)
       @destinations.push destination
 
-    for room in data.rooms
+    for r in data.rooms
       room = new SpRoom(@)
-      room.fromPEGObject(room)
+      room.fromPEGObject(r)
       @rooms.push room
 
     wantedKeys = {eventId:1, orderId:1, flightHash:1}
@@ -151,9 +151,9 @@ class SimpleSearchParams extends RoomsContainerMixin
       destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate())
       @destinations.push destination
 
-    _.each data.rooms, (room) ->
+    _.each data.rooms, (r) ->
       room = new SpRoom(@)
-      @rooms.push @room.fromObject(room)
+      @rooms.push @room.fromObject(r)
 
     if(data.eventId)
       @eventId = data.eventId

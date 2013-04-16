@@ -177,7 +177,7 @@ SimpleSearchParams = (function(_super) {
   }
 
   SimpleSearchParams.prototype.fromString = function(data) {
-    var beforeUrl, dest, destination, hotelIdBefore, pair, room, wantedKeys, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var beforeUrl, dest, destination, hotelIdBefore, pair, r, room, wantedKeys, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
     data = PEGHashParser.parse(data, 'tour');
     beforeUrl = this.url();
     hotelIdBefore = this.hotelId();
@@ -196,9 +196,9 @@ SimpleSearchParams = (function(_super) {
     }
     _ref1 = data.rooms;
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      room = _ref1[_j];
+      r = _ref1[_j];
       room = new SpRoom(this);
-      room.fromPEGObject(room);
+      room.fromPEGObject(r);
       this.rooms.push(room);
     }
     wantedKeys = {
@@ -238,9 +238,10 @@ SimpleSearchParams = (function(_super) {
       destination.dateTo(moment(destination.dateTo, 'D.M.YYYY').toDate());
       return this.destinations.push(destination);
     });
-    _.each(data.rooms, function(room) {
+    _.each(data.rooms, function(r) {
+      var room;
       room = new SpRoom(this);
-      return this.rooms.push(this.room.fromObject(room));
+      return this.rooms.push(this.room.fromObject(r));
     });
     if (data.eventId) {
       return this.eventId = data.eventId;
