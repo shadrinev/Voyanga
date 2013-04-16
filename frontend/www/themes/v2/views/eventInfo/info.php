@@ -177,7 +177,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                                         <input type="text" tabindex="-1" class="input-path"
                                                data-bind="blur: hideFromCityInput">
                                         <input type="text" placeholder="Санкт-Петербург" class="second-path"
-                                               data-bind="blur: hideFromCityInput, autocomplete: {name: 'tour', source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen, readablePre: $parent.startCityReadablePre}"
+                                               data-bind="blur: hideFromCityInput, autocomplete: {name: 'tour-1', source:'city/airport_req/1', iata: $parent.startCity, readable: $parent.startCityReadable, readableAcc: $parent.startCityReadableAcc, readableGen: $parent.startCityReadableGen, readablePre: $parent.startCityReadablePre}"
                                                autocomplete="off" style="">
                                     </div>
                                     <!-- /ko -->
@@ -188,7 +188,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                                     <div class="from" data-bind="css: {active: checkIn()}">
                                         <input type="text" tabindex="-1" readonly="readonly" autocomplete="off" class="input-path">
                                         <input type="text" placeholder="Куда едем?" class="second-path"
-                                               data-bind="hasfocus: hasfocus, autocomplete: {name: 'tour', source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen,readablePre: cityReadablePre}, css: {isFirst: $parent.isFirst()}">
+                                               data-bind="hasfocus: hasfocus, autocomplete: {name: 'tour-2', source:'city/airport_req/1', iata: $data.city, readable: cityReadable, readableAcc: cityReadableAcc, readableGen: cityReadableGen,readablePre: cityReadablePre}, css: {isFirst: $parent.isFirst()}">
 
 
                                         <div class="date"
