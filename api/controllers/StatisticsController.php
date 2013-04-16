@@ -9,6 +9,8 @@
 
 class StatisticsController extends ApiController
 {
+    private $flights = array();
+
     public function actionIndex($date1, $date2, $partner, $password)
     {
         $this->checkCredentials($partner, $password);
@@ -18,27 +20,37 @@ class StatisticsController extends ApiController
         $to = date('Y-m-d H:i:s', $to);
         $criteria = new CDbCriteria();
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
-        $criteria->addCondition('timestamp >= \''.$from.'\'');
-        $criteria->addCondition('timestamp <= \''.$to.'\'');
+        $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
+        $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
         $criteria->addCondition('direct=1');
-        $orders = OrderBooking::model()->findAll($criteria);
+        $orders = OrderBooking::model()->with('flightBookers')->findAll($criteria);
         $results = array();
-        foreach ($orders as $i=>$order)
+        $ordersReady = array();
+        foreach ($orders as $i => $order)
         {
             $state = $order->status;
+            if (!$this->isUniqueOrder($order, $state))
+                continue;
+            $ordersReady[] = $order;
+        }
+
+        foreach ($ordersReady as $i => $order)
+        {
             $price = $order->fullPrice;
+            $state = $this->flights[$order->getHash()];
             $el = array(
                 'id' => $order->readableId,
-                'created_at' => date('Y-m-d H:i', strtotime($order->timestamp) - 4*3600),
+                'created_at' => date('Y-m-d H:i', strtotime($order->timestamp) - 4 * 3600),
                 'marker' => $order->marker,
                 'price' => $price,
                 'profit' => 0,
                 'currency' => 'RUB',
                 'state' => $state
             );
-            if ($price>0)
-                $results['order'.$i] = $el;
+            if ($price > 0)
+                $results['order' . $i] = $el;
         }
+
         $xml = new ArrayToXml('bookings');
         $prepared = $xml->toXml($results);
         $prepared = preg_replace('/order\d+/', 'booking', $prepared);
@@ -46,9 +58,39 @@ class StatisticsController extends ApiController
         $this->_sendResponse(true, 'application/xml');
     }
 
+    /**
+     * Служит для склеивания похожих заказов одного юзера в статистике для метапоиска
+     *
+     * @param $order Заказ
+     * @param $state Его статус
+     * @return bool Нужно ли показывать этот заказ в статистике
+     */
+    private function isUniqueOrder($order, $state)
+    {
+        $hash = $order->getHash();
+        if ($state == 'PAID')
+        {
+            $this->flights[$hash] = $state;
+            return true;
+        }
+        if (!isset($this->flights[$hash]))
+        {
+            $this->flights[$hash] = $state;
+            return true;
+        }
+        else
+        {
+            if (($state == 'PROCESSING') and ($this->flights[$hash] == 'CANCELLED'))
+            {
+                $this->flights[$hash] = 'PROCESSING';
+            }
+            return false;
+        }
+    }
+
     private function checkCredentials($u, $p)
     {
-        $partner = Partner::model()->findByAttributes(array('name'=>$u));
+        $partner = Partner::model()->findByAttributes(array('name' => $u));
         if (($partner) && ($partner->verifyPassword($p)))
         {
             Partner::setPartnerByName($u);
