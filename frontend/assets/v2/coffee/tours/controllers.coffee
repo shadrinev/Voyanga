@@ -82,10 +82,12 @@ class ToursController
       for item in data.items
         if(item.isHotel)
           hotel = new HotelResult item, stacked, item.duration, item, item.hotelDetails
-
+          hotel.searchParams = item.searchParams
           items.push hotel
         else
-          items.push new AviaResult(item, stacked)
+          avia = new AviaResult(item, stacked)
+          avia.searchParams = item.searchParams
+          items.push avia
       if(stacked.findAndSelectItems(items))
         stacked.showOverview()
         #need save to tours

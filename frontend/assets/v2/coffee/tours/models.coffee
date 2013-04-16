@@ -59,6 +59,14 @@ class ToursAviaResultSet extends TourEntry
     @newResults raw, sp
     @data = {results: @results}
 
+    @searchkey = ko.computed =>
+      sp = @observableSP()
+      if !sp
+        return 'nope'
+      sp = new AviaSearchParams()
+      sp.fromObject @observableSP()
+      return sp.key()
+
   newResults: (raw, sp)=>
     @rawSP = sp
     @observableSP sp
@@ -389,6 +397,14 @@ class ToursHotelsResultSet extends TourEntry
     @savingsWithAviaOnly = true
 
     @newResults raw, sp
+    @searchkey = ko.computed =>
+      sp = @observableSP()
+      if !sp
+        return 'nopeh'
+      sp = new HotelsSearchParams()
+      sp.fromObject @observableSP()
+      return 'hotel_' + sp.city()
+
 
   newResults: (data, sp)=>
     @rawSP = sp
@@ -1037,17 +1053,31 @@ class ToursResultSet
     )
         #if
         #return left.lastName == right.lastName ? 0 : (left.lastName < right.lastName ? -1 : 1)
-    for entry, index in items
-      if(@data()[index].isAvia())
-        result = @data()[index].findAndSelect(entry)
-        if !result
-          result = @data()[index].findAndSelect(@data()[index].results().cheapest())
-        if !result
-          success = false
+    for entry in items
+      found = false
+      if entry.isFlight
+        sp = new AviaSearchParams
+        sp.fromObject entry.searchParams
+        for resultSet in @data()
+          if resultSet.searchkey() == sp.key()
+            console.log "YAY"
+            result = resultSet.findAndSelect(entry)
+            if !result
+              result = @data()[index].findAndSelect(resultSet.results().cheapest())
+            if !result
+              success = false
+            else
+              found = true
       else
-        result = @data()[index].findAndSelectSame(entry)
-        if !result
-          success = false
+        key = 'hotel_' + entry.cityCode
+        for resultSet in @data()
+          if resultSet.searchkey() == key
+            result = resultSet.findAndSelectSame(entry)
+            if !result
+              success = false
+            else
+              found = true
+      success = success && found
 
     return success
 

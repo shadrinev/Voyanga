@@ -364,6 +364,8 @@ TourSearchParams = (function() {
 
     this.addDestination = __bind(this.addDestination, this);
 
+    this.startCity = __bind(this.startCity, this);
+
     this.children = __bind(this.children, this);
 
     this.adults = __bind(this.adults, this);
@@ -430,6 +432,10 @@ TourSearchParams = (function() {
 
   TourSearchParams.prototype.children = function() {
     return this.simpleSP.children();
+  };
+
+  TourSearchParams.prototype.startCity = function() {
+    return this.simpleSP.startCity();
   };
 
   TourSearchParams.prototype.addDestination = function() {
