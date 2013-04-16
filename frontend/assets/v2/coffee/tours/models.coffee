@@ -1060,7 +1060,6 @@ class ToursResultSet
         sp.fromObject entry.searchParams
         for resultSet in @data()
           if resultSet.searchkey() == sp.key()
-            console.log "YAY"
             result = resultSet.findAndSelect(entry)
             if !result
               result = @data()[index].findAndSelect(resultSet.results().cheapest())

@@ -1661,7 +1661,6 @@ ToursResultSet = (function() {
         for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
           resultSet = _ref[_j];
           if (resultSet.searchkey() === sp.key()) {
-            console.log("YAY");
             result = resultSet.findAndSelect(entry);
             if (!result) {
               result = this.data()[index].findAndSelect(resultSet.results().cheapest());
