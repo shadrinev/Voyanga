@@ -94,7 +94,7 @@ ToursController = (function() {
   };
 
   ToursController.prototype.handleResults = function(data) {
-    var hotel, item, items, postData, res, resultSet, setAct, stacked, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
+    var avia, hotel, item, items, postData, res, resultSet, setAct, stacked, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
       _this = this;
     stacked = new ToursResultSet(data, this.searchParams);
     if (data.items) {
@@ -104,12 +104,16 @@ ToursController = (function() {
         item = _ref[_i];
         if (item.isHotel) {
           hotel = new HotelResult(item, stacked, item.duration, item, item.hotelDetails);
+          hotel.searchParams = item.searchParams;
           items.push(hotel);
         } else {
-          items.push(new AviaResult(item, stacked));
+          avia = new AviaResult(item, stacked);
+          avia.searchParams = item.searchParams;
+          items.push(avia);
         }
       }
       if (stacked.findAndSelectItems(items)) {
+        window.app.helpLayer.pageName('overview');
         stacked.showOverview();
         postData = [];
         _ref1 = stacked.data();

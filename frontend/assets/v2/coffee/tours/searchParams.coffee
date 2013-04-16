@@ -293,6 +293,9 @@ class TourSearchParams
   children: =>
     @simpleSP.children()
 
+  startCity: =>
+    @simpleSP.startCity()
+
 
   ############
   # Методы для панели туров на главной

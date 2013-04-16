@@ -58,7 +58,6 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
     @parts = []
     for part in flight.flightParts
       @parts.push new FlightPart(part)
-
     @flightKey = flight.flightKey
     @hasStopover = if @stopoverCount > 1 then true else false
     @stopoverLength = 0
