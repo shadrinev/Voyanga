@@ -178,7 +178,8 @@ ToursAviaResultSet = (function(_super) {
     };
     this.avia = true;
     this.noresults = result.noresults;
-    return this.results(result);
+    this.results(result);
+    return this.selection(null);
   };
 
   ToursAviaResultSet.prototype.GAKey = function() {
@@ -296,6 +297,7 @@ ToursAviaResultSet = (function(_super) {
   ToursAviaResultSet.prototype.doNewSearch = function() {
     var _this = this;
     window.VisualLoaderInstance.start(this.api.loaderDescription);
+    this.trigger('update_hash');
     return this.api.search(this.panel.sp.url(), function(data) {
       _this.newResults(data.flights.flightVoyages, data.searchParams);
       ko.processAllDeferredBindingUpdates();
@@ -500,7 +502,6 @@ ToursAviaResultSet = (function(_super) {
     };
     oldWidth = ticket.width();
     ticketClone = ticket.clone();
-    voyanga_debug('objects', ticket, ticketClone);
     ticket.css('visibility', 'hidden');
     $('#content').append(ticketClone);
     ticketClone.addClass('shadow');
@@ -766,6 +767,7 @@ ToursHotelsResultSet = (function(_super) {
     };
     this.hotels = true;
     this.selection(null);
+    this.activeHotel('nope');
     this.noresults = result.noresults;
     return this.results(result);
   };
@@ -902,6 +904,7 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.doNewSearch = function() {
     var _this = this;
     window.VisualLoaderInstance.start(this.api.loaderDescription);
+    this.trigger('update_hash');
     return this.api.search(this.panel.sp.url(), function(data) {
       data.searchParams.cacheId = data.cacheId;
       _this.newResults(data, data.searchParams);
@@ -1028,7 +1031,6 @@ ToursHotelsResultSet = (function(_super) {
     var lastInd, minDelta, oldWidth, paramsCascade, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
       _this = this;
     ticket = $(elem.target);
-    voyanga_debug('now i want do animate', elem, roomSet, ticket);
     ticket = ticket.parent();
     ticket = ticket.parent();
     ticket = ticket.parent();
@@ -1040,7 +1042,6 @@ ToursHotelsResultSet = (function(_super) {
     if (!ticket.is("div")) {
       ticket = ticket.parent();
     }
-    voyanga_debug('element', ticket);
     pos = ticket.position();
     posAbs = ticket.offset();
     posCont = $('#content').offset();
@@ -1154,6 +1155,8 @@ ToursResultSet = (function() {
     var result, variant, _i, _len, _ref,
       _this = this;
     this.searchParams = searchParams;
+    this.update_hash = __bind(this.update_hash, this);
+
     this.findAndSelectItems = __bind(this.findAndSelectItems, this);
 
     this.findAndSelect = __bind(this.findAndSelect, this);
@@ -1209,6 +1212,7 @@ ToursResultSet = (function() {
       result.on('next', function(entry) {
         return _this.nextEntry();
       });
+      result.on('update_hash', this.update_hash);
     }
     this.timeline = new Timeline(this.data);
     this.selection = ko.observable(this.data()[0]);
@@ -1370,8 +1374,9 @@ ToursResultSet = (function() {
     }
     this.data.splice(idx, 1);
     if (item === this.selection()) {
-      return this.setActive(this.data()[0]);
+      this.setActive(this.data()[0]);
     }
+    return this.update_hash();
   };
 
   ToursResultSet.prototype.deselectItem = function(item, event) {
@@ -1648,6 +1653,24 @@ ToursResultSet = (function() {
     return success;
   };
 
+  ToursResultSet.prototype.update_hash = function() {
+    var hash, result, _i, _len, _ref, _results;
+    hash = "tours/search/";
+    _ref = this.data();
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      result = _ref[_i];
+      if (result.avia) {
+        hash += result.panel.sp.hash().replace('avia/search/', 'a/');
+      } else {
+        hash += result.panel.sp.hash().replace('hotels/search/', 'h/');
+      }
+      window.app.navigate(hash);
+      _results.push(this.searchParams.fromTourData(this.data()));
+    }
+    return _results;
+  };
+
   return ToursResultSet;
 
 })();
@@ -1787,7 +1810,7 @@ TourTripResultSet = (function() {
       if (item.isFlight) {
         asp = new AviaSearchParams;
         asp.fromObject(item.searchParams);
-        window.redirectHash = asp.getHash();
+        window.redirectHash = asp.hash();
         if (!_this.firstDate) {
           _this.firstDate = dateUtils.formatDayShortMonth(asp.date());
         }
@@ -1820,7 +1843,6 @@ TourTripResultSet = (function() {
         if (asp.rt()) {
           rtDate = moment(asp.rtDate());
           _this.simHashes.push(aviaResult.similarityHash() + '.' + aviaResult.rtSimilarityHash());
-          voyanga_debug('ASP:', asp, asp.rt(), asp.date(), asp.rtDate());
         } else {
           _this.simHashes.push(aviaResult.similarityHash());
         }
@@ -1861,7 +1883,7 @@ TourTripResultSet = (function() {
       } else if (item.isHotel) {
         asp = new HotelsSearchParams;
         asp.fromObject(item.searchParams);
-        window.redirectHash = asp.getHash();
+        window.redirectHash = asp.hash();
         _this.hasHotel = true;
         if (!_this.firstDate) {
           _this.firstDate = dateUtils.formatDayShortMonth(moment(item.checkIn)._d);
@@ -2208,7 +2230,7 @@ TourResultSet = (function() {
             for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
               room = _ref1[_j];
               if (!this.activePanel().sp.rooms()[i]) {
-                this.activePanel().sp.addSpRoom();
+                this.activePanel().sp.addRoom();
               }
               this.activePanel().sp.rooms()[i].adults(room.adultCount);
               this.activePanel().sp.rooms()[i].children(room.childCount);
