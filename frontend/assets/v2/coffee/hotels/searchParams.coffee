@@ -41,8 +41,8 @@ class SpRoom
         @ages.push {age: ko.observable(item.ages[i]).extend {integerOnly:{min: 0, max: 12}}}
 
   fromObject: (item) ->
-    @adults item.adt
-    @children item.chd
+    @adults item.adt || item.adultCount
+    @children item.chd  || item.childCount
     @infants item.cots
     
     if @children() > 0

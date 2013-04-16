@@ -93,8 +93,8 @@ SpRoom = (function() {
 
   SpRoom.prototype.fromObject = function(item) {
     var i, _i, _ref, _results;
-    this.adults(item.adt);
-    this.children(item.chd);
+    this.adults(item.adt || item.adultCount);
+    this.children(item.chd || item.childCount);
     this.infants(item.cots);
     if (this.children() > 0) {
       _results = [];

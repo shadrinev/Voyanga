@@ -461,7 +461,6 @@ EventTourResultSet = (function() {
           this.activePanel().lastPanel.checkIn(moment(item.checkIn)._d);
           this.activePanel().lastPanel.checkOut(moment(item.checkOut)._d);
           this.activePanel().lastPanel.city(item.cityCode);
-          console.log('try set destData', moment(item.checkIn)._d, moment(item.checkOut)._d, item.cityCode, 'to', this.activePanel().lastPanel, this.activePanel().lastPanel.checkIn());
         }
       }
       this.overviewPeople(Utils.wordAfterNum(this.activePanel().sp.overall(), 'человек', 'человека', 'человек'));
@@ -568,7 +567,6 @@ EventPhotoBox = (function() {
       this.unloadedCount++;
       $(picture).bind('load error', function(e) {
         var photo;
-        console.log('image is loaded', e, _this);
         if (e.type === 'load') {
           _this.totalCount++;
           photo = {};
