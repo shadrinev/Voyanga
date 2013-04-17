@@ -2344,10 +2344,14 @@ input.hotel-input {
     font-size: 11px;
 }
 .allTicketsDIV .hotelTickets .tdICO {
-    /*background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;*/
+    background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
     text-align: center;
     vertical-align: middle;
     width: 70px;
+    color: #1C81BB;
+}
+.allTicketsDIV .hotelTickets .tdICO span {
+    cursor: pointer;
 }
 .allTicketsDIV .hotelTickets .tdHotel {
 	width: 326px;

@@ -629,9 +629,6 @@
     font-size: 11px;
     color: #4B525C;
 }
-.recommended-ticket .ticket-items .content .how-long .ico-path > span {
-    cursor: pointer;
-}
 .tdPath .ico-path {
     background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;
     height: 15px;

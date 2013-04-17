@@ -187,10 +187,9 @@
     </tr>
     <?php if ((!$hide) && (!$roomCounters)): ?>
         <tr class="trDurationPadding">
-            <td class="tdName">
+            <td class="tdName" colspan="2">
                 <!--<input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта', checked: 0}" checked="checked" name="srok[<?php echo $i;?>]" id="srok<?php echo $i;?>">-->
             </td>
-            <td class="tdLastname"></td>
             <td class="tdSex"></td>
             <td class="tdBirthday"></td>
             <td class="tdNationality"></td>
@@ -203,6 +202,17 @@
                        name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
+        <!-- BONUS CARD
+        <tr>
+            <td class="trDurationPadding" colspan="7">
+                <div class="breakDownMenu">
+                    1
+                </div>
+                <div class="inputBonus">
+                    2
+                </div>
+            </td>
+        </tr>-->
     <?php else: ?>
         <input type="hidden" value="1" name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
     <?php endif ?>
