@@ -621,7 +621,7 @@
 	text-align: center;
 }
 .recommended-ticket .ticket-items .content .how-long .ico-path {
-	/*background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;*/
+	background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;
     height: 15px;
     position: relative;
     width: inherit;
