@@ -367,7 +367,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                         </div>
                     </div>
                     <!-- END START -->
-                    <div class="how-long">
+                    <div class="how-long" data-bind='click: showDetails'>
                         <div class="time">
                             В пути <span data-bind="text: duration()">8 ч. 30 м.</span>
                         </div>
@@ -422,7 +422,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                         </div>
                     </div>
                     <!-- END START -->
-                    <div class="how-long">
+                    <div class="how-long" data-bind='click: showDetails'>
                         <div class="time">
                             В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
                         </div>

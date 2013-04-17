@@ -194,7 +194,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
   stopoverHtml: ->
     if @direct
-      return '<span class="path"></span>'
+      return 'Без пересадок'
     htmlResult = ''
 
     for part in @parts[0..-2]
@@ -214,7 +214,7 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
   # FIXME prolly should have cupLong here too
   recommendStopoverIco: ->
     if @direct
-      return 'Без пересадок'
+      return
     tooltip = []
     for part in @parts[0..-2]
       tooltip.push(@_formatStopOver(part))

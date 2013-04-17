@@ -52,7 +52,7 @@
         </div>
 	  </div>
     <!-- END START -->
-    <div class="how-long">
+    <div class="how-long" data-bind='click: showDetails'>
       <div class="time">
         В пути <span data-bind="text: duration()">8 ч. 30 м.</span>
         </div>
@@ -127,7 +127,7 @@
         </div>
     </div>
     <!-- END START -->
-    <div class="how-long">
+    <div class="how-long" data-bind='click: showDetails'>
       <div class="time">
         В пути <span data-bind="text: rtDuration()">8 ч. 30 м.</span>
       </div>

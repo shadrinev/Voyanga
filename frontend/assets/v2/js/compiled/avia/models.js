@@ -256,7 +256,7 @@ Voyage = (function() {
   Voyage.prototype.stopoverHtml = function() {
     var htmlResult, part, _i, _len, _ref;
     if (this.direct) {
-      return '<span class="path"></span>';
+      return 'Без пересадок';
     }
     htmlResult = '';
     _ref = this.parts.slice(0, -1);
@@ -285,7 +285,7 @@ Voyage = (function() {
   Voyage.prototype.recommendStopoverIco = function() {
     var part, tooltip, _i, _len, _ref;
     if (this.direct) {
-      return 'Без пересадок';
+      return;
     }
     tooltip = [];
     _ref = this.parts.slice(0, -1);
