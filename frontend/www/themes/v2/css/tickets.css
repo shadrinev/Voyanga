@@ -190,6 +190,7 @@
     position: absolute;
     top: 0;
     width: 100px;
+    z-index: 2;
 }
 .date-time-city.first .start, .date-time-city.first .finish {
     top: 3px;
@@ -199,6 +200,7 @@
     right: 15px;
     top: 0;
     width: 100px;
+    z-index: 2;
 }
 .recommended-ticket .ticket-items .date-time-city .start {
 	left: 0px;
@@ -628,6 +630,7 @@
     text-align: center;
     font-size: 11px;
     color: #4B525C;
+    cursor: pointer;
 }
 .tdPath .ico-path {
     background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;

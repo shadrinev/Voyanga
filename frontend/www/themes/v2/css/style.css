@@ -2400,6 +2400,11 @@ input.hotel-input {
 .allTicketsDIV .ticketBox .tdPath .timeAndPath {
     margin-left: -25px;
 }
+
+.allTicketsDIV .ticketBox .tdPath .timeAndPath.nine {
+    margin-top: -9px;
+}
+
 .timeAndPath .text, .timeAndPath .ico-path {
     cursor: pointer;
 }
