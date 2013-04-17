@@ -228,7 +228,7 @@ class OrderBooking extends CActiveRecord
         $result = $this->userId;
         foreach ($this->flightBookers as $flightBooker)
         {
-            $result .= md5($flightBooker->flightVoyageInfo);
+            $result .= md5($flightBooker->getFlightVoyage()->getHash());
         }
         foreach ($this->hotelBookers as $hotelBooker)
         {
