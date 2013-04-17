@@ -131,6 +131,7 @@ class EMongoDB extends CApplicationComponent
 		{
 			try
 			{
+                MongoCursor::$timeout = -1;
 				Yii::trace('Opening MongoDB connection', 'ext.MongoDb.EMongoDB');
 				if(empty($this->connectionString))
 					throw new EMongoException(Yii::t('yii', 'EMongoDB.connectionString cannot be empty.'));
