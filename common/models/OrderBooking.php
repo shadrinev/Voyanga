@@ -204,7 +204,7 @@ class OrderBooking extends CActiveRecord
             $first = false;
             $cur = $this->getPrefixlessState($flightBooker->status);
             $ok = $ok && ($cur=='done');
-            if (($cur=='error') || ($cur=='canceled'))
+            if (($cur=='error') || ($cur=='canceled') || ($cur=='paymentError') || ($cur=='ticketingError'))
                 $state = 'CANCELLED';
             $timeOfCreatingOrder = strtotime($flightBooker->timestamp);
             $currentTime = time();
@@ -228,7 +228,7 @@ class OrderBooking extends CActiveRecord
         $result = $this->userId;
         foreach ($this->flightBookers as $flightBooker)
         {
-            $result .= md5($flightBooker->flightVoyageInfo);
+            $result .= md5($flightBooker->getFlightVoyage()->getHash());
         }
         foreach ($this->hotelBookers as $hotelBooker)
         {

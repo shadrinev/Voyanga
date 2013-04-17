@@ -92,7 +92,7 @@
             Домодедово
           </div>
         </div>
-        <div class="how-long">
+        <div class="how-long" data-bind='click: data.showDetails'>
           <div class="path">
             В пути
           </div>
@@ -159,7 +159,7 @@
             Домодедово
           </div>
         </div>
-        <div class="how-long">
+        <div class="how-long" data-bind='click: data.showDetails'>
           <div class="path">
             В пути
           </div>
