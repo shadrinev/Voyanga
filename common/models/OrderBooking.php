@@ -204,7 +204,7 @@ class OrderBooking extends CActiveRecord
             $first = false;
             $cur = $this->getPrefixlessState($flightBooker->status);
             $ok = $ok && ($cur=='done');
-            if (($cur=='error') || ($cur=='canceled'))
+            if (($cur=='error') || ($cur=='canceled') || ($cur=='paymentError'))
                 $state = 'CANCELLED';
             $timeOfCreatingOrder = strtotime($flightBooker->timestamp);
             $currentTime = time();
