@@ -7,7 +7,7 @@
   
     <div class="slide-filter first">
       <div>
-        <select data-bind="slider:true, value: serviceClass.selection"><option value="B">Бизнес</option><option value="A" selected="selected">Эконом</option></select>
+        <select data-bind="slider:serviceClass.selection, value: serviceClass.selection"><option value="B">Бизнес</option><option value="A">Эконом</option></select>
       </div>
     </div>
 	
@@ -18,7 +18,7 @@
 	    <div class="div-filter">
 	      <div class="slider-filter">
 	        <div>
-	          <select data-bind="slider: true, value: onlyDirect.selection"><option value="0" selected="selected">Все рейсы</option><option value="1">Прямые</option></select>
+	          <select data-bind="slider: onlyDirect.selection, value: onlyDirect.selection"><option value="0">Все рейсы</option><option value="1">Прямые</option></select>
 	        </div>
 	      </div>
 	      <input type="checkbox" data-bind="checkbox:{label: 'Только короткие пересадки', checked: shortStopover.selection}" />

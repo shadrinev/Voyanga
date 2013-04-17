@@ -1062,7 +1062,7 @@ class ToursResultSet
           if resultSet.searchkey() == sp.key()
             result = resultSet.findAndSelect(entry)
             if !result
-              result = @data()[index].findAndSelect(resultSet.results().cheapest())
+              result = resultSet.findAndSelect(resultSet.results().cheapest())
             if !result
               success = false
             else

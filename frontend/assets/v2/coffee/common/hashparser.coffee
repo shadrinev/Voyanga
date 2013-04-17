@@ -50,7 +50,7 @@ HOTELS = hotels:HOTELS_WO_KV  kv:KEYVALUES
   return hotels;
 }
 
-HOTELS_WO_KV = city:IATA '/' fromDate:DATE '/' toDate:DATE '/' rooms:ROOMS {
+HOTELS_WO_KV = city:CITYCODE '/' fromDate:DATE '/' toDate:DATE '/' rooms:ROOMS {
   return {
     to: city,
     dateFrom: fromDate,
@@ -78,6 +78,10 @@ DESTINATION =  to:IATA '/' fromDate:DATE '/' toDate:DATE '/'
   
 IATA
  = code:[A-Z0-9]+ { return code.join("") }
+
+CITYCODE
+ = code:[A-Za-z0-9\-]+ { return code.join("") }
+
 
 RT
  = [01]

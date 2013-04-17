@@ -902,7 +902,7 @@ class HotelsResultSet
     # Максимальная цена для рейтинга, считается только по первому сету
     @maxPriceR = _.reduce @data(), (memo,hotel)  =>
         if memo > hotel.roomSets()[0].discountPrice then memo else hotel.roomSets()[0].discountPrice
-      , @data()[0].roomSets()[0].discountPrice
+      , 0
     @maxDistance = _.reduce @data(), (memo,hotel)  =>
         if !hotel.distanceToCenter
           return memo
