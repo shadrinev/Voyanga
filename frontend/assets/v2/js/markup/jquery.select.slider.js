@@ -75,7 +75,7 @@
                     $(this).removeClass('hover');
                 });*/
                 selectDiv.find('.selectList').append(listElement);
-
+		// FIXME Можно удалит ьесли его нет нигде кроме поиска авиа
                 if(listElement.data('original_option').filter(':selected').length > 0) {
                     //$('.'+ mainClass + '.currentItem', replacement).text($(this).text());
                     listElement.addClass('active');
