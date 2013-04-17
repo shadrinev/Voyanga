@@ -204,15 +204,16 @@
         </tr>
         <!-- BONUS CARD
         <tr>
-            <td class="trDurationPadding" colspan="7">
+            <td class="tdBonus" colspan="7">
                 <div class="breakDownMenu">
-                    1
+                    ЗДЕСЬ СДЕЛАЕШЬ SELECT
                 </div>
                 <div class="inputBonus">
-                    2
+                    <input type="text" placeholder="Номер карты" >
                 </div>
             </td>
-        </tr>-->
+        </tr>
+-->
     <?php else: ?>
         <input type="hidden" value="1" name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
     <?php endif ?>

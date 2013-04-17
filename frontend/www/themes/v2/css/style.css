@@ -2547,6 +2547,33 @@ input.hotel-input {
 .infoPassengers .tdName {
 	width: 147px;
 }
+.tdBonus {
+    padding-bottom: 8px !important;
+}
+.tdBonus .breakDownMenu {
+    float: left;
+    width: 207px;
+    height: 29px;
+    background: url(../images/bg-input.png) no-repeat -662px -99px;
+
+}
+.tdBonus .inputBonus {
+    float: left;
+    width: 127px;
+    height: 29px;
+    margin-left: 10px;
+    background: url(../images/bg-input.png) no-repeat -662px -165px;
+}
+.tdBonus .inputBonus input {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    background: none;
+    height: 29px;
+
+    font-size: 15px;
+    width: 107px;
+}
 .infoPassengers .tdName input[type='text'] {
 	width: 127px;
 	padding-left: 5px;

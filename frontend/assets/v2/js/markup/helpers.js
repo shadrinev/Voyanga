@@ -521,7 +521,7 @@ function DayMonthYear() {
                 else {
                     if ($(this).val().length < 2) {
                         if ($(this).val() == 0) {
-                            $(this).addClass('error');
+                            $(this).removeClass('error');
                         }
                         else {
                             $(this).val('0'+$(this).val());
@@ -543,7 +543,7 @@ function DayMonthYear() {
                 else {
                     if ($(this).val().length < 2) {
                         if ($(this).val() == 0) {
-                            $(this).addClass('error');
+                            $(this).removeClass('error');
                         }
                         else {
                             $(this).val('0'+$(this).val());
@@ -577,6 +577,9 @@ function DayMonthYear() {
                 }
                 else if ($(this).val().length > 3) {
                     $(this).parent().parent().next().next().find('input').focus();
+                }
+                else if ($(this).val() == 0) {
+                    $(this).removeClass('error');
                 }
                 else {
                     $(this).addClass('error');
