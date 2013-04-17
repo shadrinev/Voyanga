@@ -402,7 +402,7 @@ $theme = Yii::app()->theme->baseUrl;
             </div>
             <div class="details">
                 <ul>
-                    <li class="not-show" data-bind="template: {'name': 'hotel-roomSet-template', 'data': roomSet}"/>
+                    <li class="not-show" data-bind="template: {'name': 'hotel-roomSet-template', 'data': {roomSet: roomSet,actionName:''}}"/>
                 </ul>
                 <span class="lv"></span>
                 <span class="rv"></span>

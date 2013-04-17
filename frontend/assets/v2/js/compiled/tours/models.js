@@ -783,6 +783,16 @@ ToursHotelsResultSet = (function(_super) {
         'parent': _this
       });
     };
+    result.selectFromResults = function(roomSet, room, evnt) {
+      var elem, hotel;
+      hotel = roomSet.parent;
+      elem = $(evnt.target);
+      elem = elem.parent().parent().parent().parent();
+      evnt.target = elem[0];
+      return _this.select({
+        roomSet: roomSet
+      }, evnt);
+    };
     this.hotels = true;
     this.selection(null);
     this.activeHotel('nope');
@@ -1071,6 +1081,7 @@ ToursHotelsResultSet = (function(_super) {
     ticketClone = ticket.clone();
     ticket.css('visibility', 'hidden');
     $('#content').append(ticketClone);
+    ticketClone.addClass('flyTicket');
     ticketClone.css({
       'position': 'absolute',
       'width': oldWidth + 'px',

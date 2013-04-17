@@ -1046,6 +1046,8 @@ HotelsResultSet = (function() {
 
     this.select = __bind(this.select, this);
 
+    this.selectFromResults = __bind(this.selectFromResults, this);
+
     this._results = {};
     if (rawData.error) {
       throw rawData.error;
@@ -1212,6 +1214,10 @@ HotelsResultSet = (function() {
     });
     window.hrs = this;
   }
+
+  HotelsResultSet.prototype.selectFromResults = function(hotel, room, event) {
+    return this.select(hotel, event);
+  };
 
   HotelsResultSet.prototype.select = function(hotel, event) {
     var backUrl,
