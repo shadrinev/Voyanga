@@ -2405,6 +2405,10 @@ input.hotel-input {
 .allTicketsDIV .ticketBox .tdPath .ico-path {
     background: none;
     height: 16px;
+    color: #1C81BB;
+    font-size: 11px;
+    white-space: nowrap;;
+    text-align: center;
 }
 .allTicketsDIV .ticketBox .tdPath .ico-path .path {
     /*background: url("../images/ico-path.png") no-repeat scroll -0px -148px transparent;*/
@@ -2417,6 +2421,8 @@ input.hotel-input {
     display: inline-block;
     color: #1C81BB;
     font-size: 11px;
+    white-space: nowrap;;
+    text-align: center;
 }
 .allTicketsDIV .ticketBox .tdPath .ico-path .cup.long {
     background: url("../images/ico-path.png") no-repeat scroll -0px -110px transparent;
