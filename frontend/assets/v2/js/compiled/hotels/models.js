@@ -1180,7 +1180,7 @@ HotelsResultSet = (function() {
       } else {
         return hotel.roomSets()[0].discountPrice;
       }
-    }, this.data()[0].roomSets()[0].discountPrice);
+    }, 0);
     this.maxDistance = _.reduce(this.data(), function(memo, hotel) {
       if (!hotel.distanceToCenter) {
         return memo;
