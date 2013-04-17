@@ -1663,7 +1663,7 @@ ToursResultSet = (function() {
           if (resultSet.searchkey() === sp.key()) {
             result = resultSet.findAndSelect(entry);
             if (!result) {
-              result = this.data()[index].findAndSelect(resultSet.results().cheapest());
+              result = resultSet.findAndSelect(resultSet.results().cheapest());
             }
             if (!result) {
               success = false;
