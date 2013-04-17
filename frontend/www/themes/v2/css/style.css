@@ -2344,10 +2344,13 @@ input.hotel-input {
     font-size: 11px;
 }
 .allTicketsDIV .hotelTickets .tdICO {
-    /*background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;*/
+    background: url("../images/ico-hotel.png") no-repeat scroll center center transparent;
     text-align: center;
     vertical-align: middle;
     width: 70px;
+}
+.allTicketsDIV .hotelTickets .tdICO span {
+    cursor: pointer;
 }
 .allTicketsDIV .hotelTickets .tdHotel {
 	width: 326px;
@@ -2404,7 +2407,7 @@ input.hotel-input {
     height: 16px;
 }
 .allTicketsDIV .ticketBox .tdPath .ico-path .path {
-    background: url("../images/ico-path.png") no-repeat scroll -0px -148px transparent;
+    /*background: url("../images/ico-path.png") no-repeat scroll -0px -148px transparent;*/
     height: 16px;
     width: 13px;
     left: auto !important;
@@ -2412,6 +2415,8 @@ input.hotel-input {
     position: relative;
     top: inherit;
     display: inline-block;
+    color: #1C81BB;
+    font-size: 11px;
 }
 .allTicketsDIV .ticketBox .tdPath .ico-path .cup.long {
     background: url("../images/ico-path.png") no-repeat scroll -0px -110px transparent;

@@ -113,6 +113,7 @@ ToursController = (function() {
         }
       }
       if (stacked.findAndSelectItems(items)) {
+        window.app.helpLayer.pageName('overview');
         stacked.showOverview();
         postData = [];
         _ref1 = stacked.data();
