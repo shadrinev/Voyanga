@@ -319,7 +319,7 @@ class HotelResult
     # разумность цены :D
     rPrice = scaledValue @roomSets()[0].discountPrice, @parent.maxPriceR, PRICE_WEIGHT, true
     
-    -Math.sqrt(stars*stars + userRating*userRating + dCenter*dCenter + rPrice*rPrice)
+    Math.sqrt(stars*stars + userRating*userRating + dCenter*dCenter + rPrice*rPrice)
 
 
   falseFunction: ->
@@ -840,15 +840,13 @@ class HotelsResultSet
     @data = ko.observableArray()
     @showParts = ko.observable 1
     @showLimit = 20
-    @sortBy = ko.observable('minPrice')
-    @ordBy = ko.observable 1
+    @sortBy = ko.observable('voyangaRating')
+    @ordBy = ko.observable -1
 
-#    @sortBy 'voyangaRating'
-
-    @PRICE_WEIGHT = ko.observable 5
+    @PRICE_WEIGHT = ko.observable 10
     @RATING_WEIGHT = ko.observable 3
-    @STARS_WEIGHT = ko.observable 4
-    @DISTANCE_WEIGHT = ko.observable 2
+    @STARS_WEIGHT = ko.observable 5
+    @DISTANCE_WEIGHT = ko.observable 7
 
     window.UPDATE_WEIGHTS = (p, r, s, d) =>
       @PRICE_WEIGHT p
@@ -870,7 +868,7 @@ class HotelsResultSet
         args.push @STARS_WEIGHT()
         args.push @DISTANCE_WEIGHT()
         args.push @PRICE_WEIGHT()
-        
+
       @data.sort (left, right)=>
         if typeof left[sortKey] == 'function'
           leftVal = left[sortKey].apply(left, args)
@@ -880,12 +878,9 @@ class HotelsResultSet
           rightVal = right[sortKey].apply(right, args)
         else
           rightVal = right[sortKey]
-          
-        if leftVal < rightVal
-          return -1 * ordKey
-        if leftVal > rightVal
-          return  1 * ordKey
-        return 0
+
+        return ordKey * (leftVal - rightVal)
+        
       for result in @data()
         if result.visible()
           results.push result
@@ -921,9 +916,9 @@ class HotelsResultSet
         ret += ' active'
       return ret
 
-    @sortByRatingClass = ko.computed =>
+    @sortByPopularityClass = ko.computed =>
       ret = 'hotel-sort-by-item'
-      if @sortBy() == 'rating'
+      if @sortBy() == 'voyangaRating'
         ret += ' active'
       return ret
 
@@ -1188,13 +1183,11 @@ class HotelsResultSet
 
   #ko.processAllDeferredBindingUpdates()
 
-  sortByRating: =>
-    if @sortBy() != 'rating'
-      @sortBy('rating')
+  sortByPopularity: =>
+    if @sortBy() != 'voyangaRating'
+      @sortBy('voyangaRating')
       @ordBy(-1)
       @showParts 1
-  #console.log(@data())
-  #ko.processAllDeferredBindingUpdates()
 
   selectHotel: (hotel, event) =>
     @select(hotel, event)
