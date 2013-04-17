@@ -1826,6 +1826,7 @@ input.hotel-input {
 }
 .sorting-panel .hotel-sort-by-item.active {
     border-bottom: medium none;
+    color: inherit;
 }
 .backToBack, .backToBackBottom {
     background: url("../images/btn-back-point.png") no-repeat scroll left center transparent;
