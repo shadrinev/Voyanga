@@ -13,6 +13,7 @@ return array(
     'enableFlightLogging' => true,
 
     "api.endPoint" => "http://api.oleg.voyanga/v1/",
+    'app.api.hotelSearchNoSecure' => 'http://api.oleg.voyanga/v1/hotel',
     'app.api.flightSearchUrl' => 'http://api.oleg.voyanga/v1/flight/search/BE',
     'app.api.flightSearchNoSecure' => 'http://api.oleg.voyanga/v1/flight',
     'app.api.hotelSearchUrl' => 'http://api.oleg.voyanga/v1/hotel/search',

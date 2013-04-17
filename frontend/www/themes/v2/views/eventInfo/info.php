@@ -526,7 +526,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
             </div>
             <div class="details">
                 <ul>
-                    <li class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: roomSets()[0]}"/>
+                    <li class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: {roomSet: roomSets()[0],actionName:''}}"/>
                 </ul>
                 <!-- div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
                    <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все номера</a>

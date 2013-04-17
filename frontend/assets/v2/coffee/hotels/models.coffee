@@ -927,6 +927,9 @@ class HotelsResultSet
     window.hrs = @
 
 
+  selectFromResults: (hotel, room, event) =>
+    @select(hotel,event)
+
   select: (hotel, event) =>
     hotel.oldPageTop = $("html").scrollTop() | $("body").scrollTop()
     backUrl = window.location.hash

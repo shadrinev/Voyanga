@@ -64,8 +64,10 @@ class PaymentsComponent extends CApplicationComponent
             if($booker->flightVoyage->webService=='GALILEO')
             {
                 $channel = $booker->flightVoyage->valAirline->payableViaGalileo?'gds_galileo':'ltr';
-#                $channel = 'ltr';
             }
+            $charges = $booker->flightVoyage->charges;
+            if($charges<0)
+                $channel = 'ltr';
         }
 
         if($this->testMode)
