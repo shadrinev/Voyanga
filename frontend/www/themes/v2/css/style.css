@@ -2559,8 +2559,20 @@ input.hotel-input {
     float: left;
     width: 207px;
     height: 29px;
-    background: url(../images/bg-input.png) no-repeat -662px -99px;
+    /*background: url(../images/bg-input.png) no-repeat -662px -99px;*/
 
+}
+.tdBonus .breakDownMenu .chzn-container-active .chzn-single-with-drop, .tdBonus .breakDownMenu .chzn-container-single .chzn-single {
+    background: url(../images/bg-input.png) no-repeat -662px -99px !important;
+    height: 21px !important;
+    width: 202px !important;
+}
+.tdBonus .breakDownMenu  input[type="text"] {
+    width: 109px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-position: -533px 0px;
+    text-transform: uppercase;
 }
 .tdBonus .inputBonus {
     float: left;
