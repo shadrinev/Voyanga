@@ -10,9 +10,11 @@ class Slider
     @hotelWidth = [95, 295]
     @finishStagesWidth = [148, 403]
 
-
   init: =>
-    activeLI = $('.slide-turn-mode ul').find('.active')
+    @nowActive = 'tours'
+    current_module = '#h-' + @nowActive + '-slider'
+    activeLI = $(current_module)
+    activeLI.addClass('active')
     activeLIindex = activeLI.index()
     if activeLIindex == -1
       activeLIindex = 1
@@ -36,8 +38,14 @@ class Slider
   handler: (newValue)=>
     if newValue is `undefined`
       return
+    # у нас уже активен этот модуль
+    if newValue == @nowActive
+      return
+
+    @nowActive = newValue
     activeLI = $('#h-' + newValue + '-slider')
     activeLIindex = activeLI.index()
+    # FIXME too broad
     $('.btn').removeClass 'active'
 
     @switchSlide.animate

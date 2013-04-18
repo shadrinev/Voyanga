@@ -18,8 +18,11 @@ Slider = (function() {
   }
 
   Slider.prototype.init = function() {
-    var activeLI, activeLIindex;
-    activeLI = $('.slide-turn-mode ul').find('.active');
+    var activeLI, activeLIindex, current_module;
+    this.nowActive = 'tours';
+    current_module = '#h-' + this.nowActive + '-slider';
+    activeLI = $(current_module);
+    activeLI.addClass('active');
     activeLIindex = activeLI.index();
     if (activeLIindex === -1) {
       activeLIindex = 1;
@@ -47,6 +50,10 @@ Slider = (function() {
     if (newValue === undefined) {
       return;
     }
+    if (newValue === this.nowActive) {
+      return;
+    }
+    this.nowActive = newValue;
     activeLI = $('#h-' + newValue + '-slider');
     activeLIindex = activeLI.index();
     $('.btn').removeClass('active');
