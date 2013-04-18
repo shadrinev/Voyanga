@@ -34,7 +34,7 @@ class MakeBookingAction extends CAction
         $haveHotels = false;
         $haveFlights = false;
         $flightParams = array();
-        $valAirline = '';
+        $valAirline = null;
         foreach ($this->tripItems as $tripItem)
         {
             if ($tripItem instanceof HotelTripElement)
@@ -107,6 +107,13 @@ class MakeBookingAction extends CAction
         list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
         $airline = 123;
         $alliance = null;
+        $allianceAirlines = array();
+        if($valAirline && $valAirline->allianceId){
+            $allianceAirlines = Airline::model()->findAllByAttributes(array('allianceId'=>$valAirline->allianceId));
+            $alliance = Alliances::model()->findByPk($valAirline->allianceId);
+        }elseif($valAirline){
+            $allianceAirlines[$valAirline->code] = $valAirline->localRu;
+        }
         $viewData = array(
             'passportForms' => $this->passportForms,
             'ambigousPassports' => $ambigousPassports,
@@ -121,7 +128,9 @@ class MakeBookingAction extends CAction
             'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
             'roomCounters' => (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false,
             'secretKey' => $secretKey,
-            'valAirline' =>$valAirline
+            'valAirline' =>$valAirline,
+            'alliance' => $alliance,
+            'allianceAirlines' => $allianceAirlines
         );
         $this->controller->render('makeBooking', $viewData);
     }

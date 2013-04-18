@@ -764,7 +764,7 @@ function ResizeAviaClb() {
     jsPaneScrollHeight();
     startIE();
     ifIpadLoad();
-    slideToursPanel();
+    //slideToursPanel();
     resizeLandsHotels();
     DayMonthYear();
 }

@@ -104,7 +104,9 @@
                 'header'=>$header,
                 'roomCounters'=>$roomCounters,
                 'hide' => false,
-                'valAirline' =>$valAirline
+                'valAirline' =>$valAirline,
+                'alliance'=>$alliance,
+                'allianceAirlines'=>$allianceAirlines
             ));
             ?>
         <?php endif;?>

@@ -247,7 +247,6 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.select = function(res, result, elem) {
     var btn;
-    voyanga_debug('click select in at', res, result, elem);
     if (!(res != null)) {
       return;
     }
@@ -490,7 +489,6 @@ ToursAviaResultSet = (function(_super) {
   ToursAviaResultSet.prototype.doBuyAnimation = function(res, elem) {
     var lastInd, minDelta, needSmallStep, oldWidth, paramsCascade, pos, posAbs, posCont, startAbsTop, startScrollTop, startTop, ticket, ticketClone,
       _this = this;
-    voyanga_debug('animation', res, elem);
     ticket = $(elem.target).parent().parent().parent().parent();
     if (ticket.hasClass('content')) {
       ticket = ticket.parent();
@@ -503,7 +501,6 @@ ToursAviaResultSet = (function(_super) {
       ticket = ticket.parent();
       posAbs = ticket.offset();
       needSmallStep = false;
-      voyanga_debug('pos', pos);
     }
     pos = {
       top: posAbs.top - posCont.top,

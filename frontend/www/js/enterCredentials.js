@@ -411,11 +411,42 @@ function InputCheckOn() {
         }
     });
 }
+function InputBonusCardCheckOn() {
+    $('.tdName input[type="checkbox"]').each(function (index) {
+        voyanga_debug('check '+index,$(this).attr('checked'));
+        if ($(this).attr('checked') == 'checked') {
+            var rowTr = $(this).closest('tr').next();
+            rowTr.show();
+            /*$(this)
+                .closest('tr')
+                .prev()
+                .find('.checkOn')
+                .addClass('active')
+                .find('input')
+                .attr('disabled', 'disabled');*/
+        }
+        else {
+            var rowTr = $(this).closest('tr').next();
+            rowTr.hide();
+            /*$(this)
+                .closest('tr')
+                .prev()
+                .find('.checkOn')
+                .removeClass('active')
+                .find('input')
+                .removeAttr('disabled');*/
+        }
+    });
+}
 function InputActiveFinishDate() {
     InputCheckOn();
+    InputBonusCardCheckOn();
 
     $('.tdDuration label.ui-hover').click(function () {
         InputCheckOn();
+    });
+    $('.tdName label.ui-hover').click(function () {
+        InputBonusCardCheckOn();
     });
 }
 
