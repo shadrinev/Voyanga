@@ -460,6 +460,13 @@ class ToursHotelsResultSet extends TourEntry
         window.app.activeModuleInstance().controller.searchParams.hotelId(false)
         @select roomData,elem
       @trigger 'setActive', {'data':hotel, template: 'hotels-info-template', 'parent':@}
+    result.selectFromResults = (roomSet,room,evnt) =>
+      hotel = roomSet.parent
+      elem = $(evnt.target)
+      elem = elem.parent().parent().parent().parent()
+      evnt.target = elem[0]
+      #voyanga_debug('selectFromResults',hotel,evnt)
+      @select {roomSet:roomSet},evnt
     # FIXME WTF
     @hotels = true
     @selection null
@@ -693,6 +700,7 @@ class ToursHotelsResultSet extends TourEntry
     ticketClone = ticket.clone()
     ticket.css('visibility','hidden')
     $('#content').append(ticketClone)
+    ticketClone.addClass('flyTicket')
     ticketClone.css({'position':'absolute','width':oldWidth+'px','top':pos.top+'px','z-index':400,'left': pos.left+'px','box-shadow':'rgba(0, 0, 0, 0.80) 6px 9px 29px'})
     $('.main-block').css('overflow','hidden')
     startAbsTop = posAbs.top
@@ -711,6 +719,8 @@ class ToursHotelsResultSet extends TourEntry
         nowScrollTop = nowAbsTop - minDelta
         $("html,body").scrollTop(nowScrollTop)
     paramsCascade.push {object: ticketClone,propeties: {'top': '70px'},options: {duration:100}}
+    #Utils.animationCascade(paramsCascade)
+
     paramsCascade.push {object: ticketClone,propeties: {left: '-1200px'},options: {duration:300}}
     lastInd = paramsCascade.length - 1
     paramsCascade[lastInd]['options']['complete'] = =>

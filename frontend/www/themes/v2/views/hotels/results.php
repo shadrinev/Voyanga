@@ -82,18 +82,34 @@
                         <div class="clear"></div>
                     </div>
                     <div class="details">
+                        <!-- ko if: tours() -->
                         <ul data-bind="foreach: visibleRoomSets()">
                             <!-- ko if: $index() < 2 -->
-                            <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
+                            <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: {roomSet: $data,actionName:'tours'}}" />
                             <!-- /ko -->
                         </ul>
                         <div class="hidden-roomSets">
                             <ul data-bind="foreach: visibleRoomSets()">
                                 <!-- ko if: $index() >= 2 -->
-                                <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: $data}" />
+                                <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: {roomSet: $data,actionName:'tours'}}" />
                                 <!-- /ko -->
                             </ul>
                         </div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: tours() -->
+                        <ul data-bind="foreach: visibleRoomSets()">
+                            <!-- ko if: $index() < 2 -->
+                            <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: {roomSet: $data,actionName:'hotels'}}" />
+                            <!-- /ko -->
+                        </ul>
+                        <div class="hidden-roomSets">
+                            <ul data-bind="foreach: visibleRoomSets()">
+                                <!-- ko if: $index() >= 2 -->
+                                <li  class="not-show" data-bind="template: {name: 'hotel-roomSet-template', data: {roomSet: $data,actionName:'hotels'}}" />
+                                <!-- /ko -->
+                            </ul>
+                        </div>
+                        <!-- /ko -->
                         <div class="tab-ul" data-bind="visible: visibleRoomSets().length > 2">
                             <a href="#" data-bind="click: showAllResults,text: showAllText(),attr: {'class': isShowAll() ? 'active' : ''}">Посмотреть все номера</a>
                         </div>
@@ -149,26 +165,33 @@
 </script>
 <script id="hotel-roomSet-template" type="text/html">
 
-        <div data-bind="css: 'items'+(specialOffer() ? ' specialOffer' : '')">
+        <div data-bind="css: 'items'+(roomSet.specialOffer() ? ' specialOffer' : '')">
             <table class="table-hotel-result">
                 <tr>
-                    <td class="td-float" data-bind="foreach: rooms">
+                    <td class="td-float" data-bind="foreach: {data:roomSet.rooms,as:'room'} ">
                         <div class="float" >
-                        
                         	<table>
                         		<tr>
                         			<td class="text" colspan="2">
-                        				<span data-bind="text: name" style="cursor: pointer;">Стандартный двухместный номер</span>
+                                        <!-- ko if: $parent.actionName == 'tours' -->
+                        				<span data-bind="text: room.name, click: $parents[3].selectFromResults.bind('1',$parents[1])" style="cursor: pointer;">Стандартный двухместный номер</span>
+                                        <!-- /ko -->
+                                        <!-- ko if: $parent.actionName == '' -->
+                                        <span data-bind="text: room.name" style="cursor: pointer;">Стандартный двухместный номер</span>
+                                        <!-- /ko -->
+                                        <!-- ko if: $parent.actionName == 'hotels' -->
+                                        <span data-bind="text: room.name, click: $parents[3].selectFromResults.bind('1',$parents[2])" style="cursor: pointer;">Стандартный двухместный номер</span>
+                                        <!-- /ko -->
                         			</td>
                         		</tr>
                         		<tr>
                         			<td class="tdOrigText">
-                        				<span data-bind="text: nameNemo" class="textOriginal"></span>
-                                        <span data-bind="visible: debugInfo(),text: debugInfo(),click: printDebug"></span>
+                        				<span data-bind="text: room.nameNemo" class="textOriginal"></span>
+                                        <span data-bind="visible: room.debugInfo(),text: room.debugInfo(),click: room.printDebug"></span>
                         			</td>
                         			<td>
-                      				 	<!-- ko if: hasMeal -->
-			                            	<span class="ico-breakfast" data-bind="attr: {'class': mealIcon}"></span> <span data-bind="text:meal">Завтрак</span>
+                      				 	<!-- ko if: room.hasMeal -->
+			                            	<span class="ico-breakfast" data-bind="attr: {'class': room.mealIcon}"></span> <span data-bind="text:room.meal">Завтрак</span>
 			                            <!-- /ko -->
                         			</td>
                         		</tr>
@@ -178,9 +201,9 @@
                     </td>
                     <td class="td-cost">
                         <div class="how-cost">
-                            <span class="cost" data-bind="text: Utils.formatPrice(pricePerNight)">14 200</span><span class="rur f21">o</span> / ночь<br>
-                            <span class="offer tooltip" data-bind="visible: specialOffer(),attr: {rel: specialOffer()}">Спецпредложение<br></span>
-                            <span class="grey em" data-bind="visible: rooms.length == 2">За оба номера</span>
+                            <span class="cost" data-bind="text: Utils.formatPrice(roomSet.pricePerNight)">14 200</span><span class="rur f21">o</span> / ночь<br>
+                            <span class="offer tooltip" data-bind="visible: roomSet.specialOffer(),attr: {rel: roomSet.specialOffer()}">Спецпредложение<br></span>
+                            <span class="grey em" data-bind="visible: roomSet.rooms.length == 2">За оба номера</span>
                         </div>
                     </td>
                 </tr>

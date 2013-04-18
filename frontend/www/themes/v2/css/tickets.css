@@ -190,6 +190,7 @@
     position: absolute;
     top: 0;
     width: 100px;
+    z-index: 2;
 }
 .date-time-city.first .start, .date-time-city.first .finish {
     top: 3px;
@@ -199,6 +200,7 @@
     right: 15px;
     top: 0;
     width: 100px;
+    z-index: 2;
 }
 .recommended-ticket .ticket-items .date-time-city .start {
 	left: 0px;
@@ -628,6 +630,7 @@
     text-align: center;
     font-size: 11px;
     color: #4B525C;
+    cursor: pointer;
 }
 .tdPath .ico-path {
     background: url("../images/ico-path.png") no-repeat scroll center -95px transparent;
@@ -1138,7 +1141,7 @@
 .hotels-tickets .content .details ul li {
 	margin-bottom: 8px;
 }
-.hotels-tickets .content .details ul li .items {
+.hotels-tickets .content .details ul li .items, .flyTicket.items {
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 1px 0 #A6A7AB;
@@ -1146,7 +1149,7 @@
     padding: 0 0px;
     vertical-align: bottom;
 }
-.hotels-tickets .content .details ul li .items.specialOffer {
+.hotels-tickets .content .details ul li .items.specialOffer,  .flyTicket.items.specialOffer {
     border: 0px solid #ffbf0c;
     background: #feffe8;
 }
@@ -1154,11 +1157,11 @@
     border: 0px solid #ffbf0c;
     background: #feffe8 !important;
 }
-.hotels-tickets .content .details ul li .items.specialOffer .how-cost {
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost, .flyTicket.items.specialOffer .how-cost {
     color: #B90C0C;
 }
 
-.hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost {
+.hotels-tickets .content .details ul li .items.specialOffer .how-cost .cost, .flyTicket.items.specialOffer .how-cost .cost {
     color: #B90C0C !important;
 }
 .offer {
@@ -1169,25 +1172,25 @@
     font-size: 11px;
     line-height: 14px;
 }
-.hotels-tickets .content .details ul li .items .float {
+.hotels-tickets .content .details ul li .items .float, .flyTicket.items .float {
 	font-size: 11px;
 	width: 100%;
 	border-top: 1px solid #DFE1E2;
 	padding: 5px 0px;
 	margin-top: -1px;
 }
-.hotels-tickets .content .details ul li .items .float.first {
+.hotels-tickets .content .details ul li .items .float.first, .flyTicket.items .float.first {
 	border: none;
 }
 
-.hotels-tickets .content .details ul li .items .float table {
+.hotels-tickets .content .details ul li .items .float table, .flyTicket.items .float table {
 	width: 100%;
 }
-.hotels-tickets .content .details ul li .items .float table .tdOrigText {
+.hotels-tickets .content .details ul li .items .float table .tdOrigText, .flyTicket.items .float table .tdOrigText {
 	width: 50%;
 	padding-left: 9px;
 }
-.hotels-tickets .content .details ul li .items .float table .textOriginal {
+.hotels-tickets .content .details ul li .items .float table .textOriginal, .flyTicket.items .float table .textOriginal {
 	font-size: 11px;
 	font-style: italic;
 	color: #858585;
@@ -1210,7 +1213,7 @@
 .table-hotel-result .td-float {
 	overflow: hidden;
 }
-.hotels-tickets .content .details ul li .items .text {
+.hotels-tickets .content .details ul li .items .text, .flyTicket.items .text {
 	font-size: 16px;
 	font-weight: bold;
 	color: #2174a3;
@@ -1218,18 +1221,18 @@
 	padding-left: 9px;
 }
 
-.hotels-tickets .content .details ul li .items .how-cost {
+.hotels-tickets .content .details ul li .items .how-cost, .flyTicket.items .how-cost {
     display: inline-block;
     line-height: 14px;
     margin-bottom: 5px;
     margin-top: 5px;
 }
-.hotels-tickets .content .details ul li .items .cost {
+.hotels-tickets .content .details ul li .items .cost, .flyTicket.items .cost {
 	color: #202328; 
 	font-size: 22px;
 	font-weight: bold;
 }
-.hotels-tickets .content .details ul li .items .ico-breakfast {
+.hotels-tickets .content .details ul li .items .ico-breakfast, .flyTicket.items .ico-breakfast {
 	margin-right: 5px;
 	vertical-align: middle;
 }
