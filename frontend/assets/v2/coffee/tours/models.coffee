@@ -124,7 +124,6 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   select: (res,result,elem)=>
-    voyanga_debug('click select in at',res,result,elem)
     if !res?
       return
     # FIXME looks retardely stupid
@@ -313,7 +312,6 @@ class ToursAviaResultSet extends TourEntry
         )
 
   doBuyAnimation: (res,elem)=>
-    voyanga_debug('animation',res,elem)
     ticket = $(elem.target).parent().parent().parent().parent()
     if ticket.hasClass('content')
       ticket = ticket.parent()
@@ -326,7 +324,6 @@ class ToursAviaResultSet extends TourEntry
       #pos = ticket.position()
       posAbs = ticket.offset()
       needSmallStep = false
-      voyanga_debug('pos',pos)
     pos = {top: (posAbs.top - posCont.top),left:(posAbs.left - posCont.left)}
     oldWidth = ticket.width()
     ticketClone = ticket.clone()

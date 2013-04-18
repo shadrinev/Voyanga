@@ -764,7 +764,7 @@ function ResizeAviaClb() {
     jsPaneScrollHeight();
     startIE();
     ifIpadLoad();
-    slideToursPanel();
+    //slideToursPanel();
     resizeLandsHotels();
     DayMonthYear();
 }
@@ -1782,7 +1782,7 @@ function startIE() {
             $(this).find('.second-path').focus();
         });
 
-        $("body").find("input[type='text'],input[type='email']").each(function() {
+        $("body").find("input[type='text'], input[type='email']").each(function() {
             if ($(this).attr('disabled') == 'disabled') {
                 return true;
             }
