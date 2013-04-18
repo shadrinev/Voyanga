@@ -41,7 +41,7 @@ Yii::app()->clientScript->registerScriptFile('/js/runApp.js');
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
 </head>
-<body data-bind="css: {fixed: in1}">
+<body data-bind="css: {fixed: in1}, style: {visibility: appVisibility}" style="visibility: hidden;">
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';

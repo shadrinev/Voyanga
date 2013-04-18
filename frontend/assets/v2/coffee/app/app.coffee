@@ -44,6 +44,7 @@ class Application extends Backbone.Router
         return 'stub'
       @activeModule() + '-' + @_view()
 
+    @appVisibility = ko.observable 'hidden'
     @in1 = ko.observable 0
     @indexMode = ko.computed =>
       @in1(@_view() == 'index')

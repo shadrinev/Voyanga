@@ -11,4 +11,5 @@ $(function() {
     app.run();
     ko.applyBindings(app);
     ko.processAllDeferredBindingUpdates();
+    app.appVisibility('visible');
 });

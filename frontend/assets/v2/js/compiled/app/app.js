@@ -99,6 +99,7 @@ Application = (function(_super) {
       }
       return _this.activeModule() + '-' + _this._view();
     });
+    this.appVisibility = ko.observable('hidden');
     this.in1 = ko.observable(0);
     this.indexMode = ko.computed(function() {
       return _this.in1(_this._view() === 'index');
