@@ -2,7 +2,7 @@
 .pressButton span{position:relative;z-index:2;}
 .pressButton span.text{display:inline-block;height:37px;vertical-align:middle;margin-right:5px;}
 .pressButton .price{display:inline-block;font-size:26px;height:37px;vertical-align:middle;}
-.pressButton .rur{display:inline-block;font-size:25px;vertical-align:middle;margin-top:0px;height:32px;line-height:34px;}.pressButton .rur.f21{margin-top:5px;}
+.pressButton .rur{display:inline-block;font-size:25px;vertical-align:middle;margin-top:0px;height:32px;line-height:32px;}.pressButton .rur.f21{margin-top:5px;}
 .pressButton .l{background:url("/themes/v2/images/btn.png") no-repeat scroll left 0 transparent;display:block;position:absolute;height:37px;width:6px;left:-4px;top:0px;z-index:1;}
 .pressButton:hover .l{background-position:left -37px;}
 .pressButton.orange{background-position:right -74px;text-shadow:0px 1px 0px #c36408;}.pressButton.orange:hover{background-position:right -111px;}
