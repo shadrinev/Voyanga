@@ -1,7 +1,8 @@
 ko.bindingHandlers.autocomplete =
   init: (element, valueAccessor) ->
     $(element).focus () ->
-      this.select();
+      this.select()
+      this.setSelectionRange(0, 9999)
     .mouseup (e)->
       e.preventDefault()
     $(element).typeahead
