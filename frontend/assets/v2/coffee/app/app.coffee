@@ -215,6 +215,7 @@ class Application extends Backbone.Router
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
     WidthMine()
+    inputIEplaceholder()
     if !@runned
       @runned = true
       return
