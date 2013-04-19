@@ -136,6 +136,9 @@
             <div class="bgFinish"></div>
             <div class="bgGradient"></div>
         </div>
+        <div class="someText">
+            Бронирование билетов выполняется автоматическ<br> сразу же после перехода к оплате
+        </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
                <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и <a onclick=\'window.app.itemsToBuy.showTariffRules()\' href=\'#\'>правилами возврата</a>', checked: 1}" name="agree" id="agreeCheck">
@@ -162,6 +165,7 @@
     </div>
     <!--=== ===-->
     <div class="payCardPal" style="display: none;">
+        <h3 style="text-align: center; font-size: 26px;">Билеты успешно забронированы.</h3>
         <div class="centerBlock">
             <table class="headerTitle">
                 <tr>
