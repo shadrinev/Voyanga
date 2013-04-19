@@ -27,22 +27,20 @@ ko.bindingHandlers.autocomplete = {
       $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
       if ((!$(element).is('.arrivalCity')) && ($('input.arrivalCity').length > 0)) {
         return $('input.arrivalCity.second-path').focus();
+      } else {
+        return $(element).blur();
       }
     });
     $(element).on('typeahead:over', function(e, data) {
       return $(element).parent().siblings('input.input-path').val(data.value + ', ' + data.country);
     });
-    $(element).on('typeahead:reset', function(e) {
-      return $(element).parent().siblings('input.input-path').val('');
-    });
-    return $(element).on("keyup", function(e) {
-      if ((e.keyCode === 8) || (e.keyCode === 46)) {
-        valueAccessor().iata('');
-        valueAccessor().readable('');
-        valueAccessor().readableGen('');
-        valueAccessor().readableAcc('');
-        return valueAccessor().readablePre('');
-      }
+    return $(element).on('typeahead:reset', function(e) {
+      $(element).parent().siblings('input.input-path').val('');
+      valueAccessor().iata('');
+      valueAccessor().readable('');
+      valueAccessor().readableGen('');
+      valueAccessor().readableAcc('');
+      return valueAccessor().readablePre('');
     });
   },
   update: function(element, valueAccessor) {
