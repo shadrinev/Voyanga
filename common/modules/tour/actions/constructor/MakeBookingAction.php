@@ -109,7 +109,10 @@ class MakeBookingAction extends CAction
         $alliance = null;
         $allianceAirlines = array();
         if($valAirline && $valAirline->allianceId){
-            $allianceAirlines = Airline::model()->findAllByAttributes(array('allianceId'=>$valAirline->allianceId));
+            $airlines = Airline::model()->findAllByAttributes(array('allianceId'=>$valAirline->allianceId));
+            foreach($airlines as $airline){
+                $allianceAirlines[$airline->code] = $airline->localRu;
+            }
             $alliance = Alliances::model()->findByPk($valAirline->allianceId);
         }elseif($valAirline){
             $allianceAirlines[$valAirline->code] = $valAirline->localRu;

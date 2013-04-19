@@ -1971,6 +1971,14 @@ input.hotel-input {
     position: relative;
     text-align: right;
 }
+.paybuyEnd .someText {
+    display: block;
+    float: left;
+    padding-top: 15px;
+    color: #808186;
+    text-align: left;
+    line-height: 16px;
+}
 .paybuyEnd .agreeConditions {
     display: inline-block;
     margin-right: 25px;
@@ -2399,8 +2407,12 @@ input.hotel-input {
 }
 .allTicketsDIV .ticketBox .tdPath .timeAndPath {
     margin-left: -25px;
+    margin-top: -22px;
 }
-
+.allTicketsDIV .ticketBox .tdPath .timeAndPath .stopOver {
+    color: #879094;
+    font-size: 11px;
+}
 .allTicketsDIV .ticketBox .tdPath .timeAndPath.nine {
     margin-top: -9px;
 }

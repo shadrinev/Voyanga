@@ -22,7 +22,6 @@ class StatisticsController extends ApiController
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
         $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
         $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
-        $criteria->addCondition('direct=1');
         $orders = OrderBooking::model()->with('flightBookers')->findAll($criteria);
         $results = array();
         $ordersReady = array();
@@ -47,8 +46,11 @@ class StatisticsController extends ApiController
                 'currency' => 'RUB',
                 'state' => $state
             );
-            if ($price > 0)
-                $results['order' . $i] = $el;
+            if (($state=='PAID') || ($order->direct==1))
+            {
+                if ($price > 0)
+                    $results['order' . $i] = $el;
+            }
         }
 
         $xml = new ArrayToXml('bookings');
