@@ -122,7 +122,6 @@ class Application extends Backbone.Router
     @viewData(data)
     @_view(view)
     $(window).resize()
-    inputIEplaceholder()
 
   # Register routes from controller
   #

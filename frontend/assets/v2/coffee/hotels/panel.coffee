@@ -141,4 +141,5 @@ class HotelsPanel extends SearchPanel
     do resizePanel
     if (@city() && (!@checkIn() || !@checkOut()))
       @minimizedCalendar(false)
+    inputIEplaceholder()
 
