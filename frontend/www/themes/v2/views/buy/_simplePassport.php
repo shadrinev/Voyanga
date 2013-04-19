@@ -184,8 +184,7 @@
     <?php if ((!$hide) && (!$roomCounters)): ?>
         <tr class="trDurationPadding">
             <td class="tdName" colspan="2">
-
-                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ($alliance ? ' '.$alliance->name.' альянса' :'')?>', checked: 0}">
+                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :'');?>', checked: 0}">
             </td>
             <td class="tdSex"></td>
             <td class="tdBirthday"></td>
@@ -203,17 +202,20 @@
         <tr>
             <td class="tdBonus" colspan="7">
                 <?php if($valAirline): ?>
-                <div class="breakDownMenu">
-                    <?php echo CHtml::activeDropDownList(
-                    $model,
-                    "[$i]bonusCardAirlineCode",
-                    $allianceAirlines,
-                    array(
-                        'data-placeholder' => "Авиакомпания...",
-                        'class' => "chzn-select",
-                        'style' => "width:207px;",
-                    )
-                ); ?>
+                    <?php $model->bonusCardAirlineCode = $valAirline->code;?>
+                    <div class="breakDownMenu">
+                        <?php echo CHtml::activeDropDownList(
+                        $model,
+                        "[$i]bonusCardAirlineCode",
+                        $allianceAirlines,
+                        array(
+                            'data-placeholder' => "Авиакомпания...",
+                            'class' => "chzn-select",
+                            'style' => "width:207px;",
+                            'disabled' => (count($allianceAirlines) > 1 ? '' : 'disabled'),
+                            'value' => $valAirline->code
+                        )
+                    ); ?>
                 </div>
                 <div class="inputBonus">
                     <input type="text" placeholder="Номер карты" name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCard]" >

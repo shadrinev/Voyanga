@@ -204,6 +204,7 @@
         </tr>
         <tr>
             <td class="tdName">
+                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :'');?>', checked: 0}">
             </td>
             <td class="tdLastname">
 
@@ -225,6 +226,30 @@
                        name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i;?>][srok]">
                 <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 1}" checked="checked"
                        name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
+            </td>
+        </tr>
+        <tr>
+            <td class="tdBonus" colspan="7">
+                <?php if($valAirline): ?>
+                <?php $model->bonusCardAirlineCode = $valAirline->code;?>
+                <div class="breakDownMenu">
+                    <?php echo CHtml::activeDropDownList(
+                    $model,
+                    "[$curEl][$i]bonusCardAirlineCode",
+                    $allianceAirlines,
+                    array(
+                        'data-placeholder' => "Авиакомпания...",
+                        'class' => "chzn-select",
+                        'style' => "width:207px;",
+                        'disabled' => (count($allianceAirlines) > 1 ? '' : 'disabled'),
+                        'value' => $valAirline->code
+                    )
+                ); ?>
+                </div>
+                <div class="inputBonus">
+                    <input type="text" placeholder="Номер карты" name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCard]" >
+                </div>
+                <?php endif; ?>
             </td>
         </tr>
         </tbody>

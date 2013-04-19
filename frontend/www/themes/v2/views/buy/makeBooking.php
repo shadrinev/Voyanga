@@ -95,7 +95,9 @@
                 'headers'=>$headersForAmbigous,
                 'roomCounters'=>$roomCounters,
                 'hide' => false,
-                'valAirline' =>$valAirline
+                'valAirline' =>$valAirline,
+                'alliance'=>$alliance,
+                'allianceAirlines'=>$allianceAirlines
             )); ?>
         <?php else: ?>
             <?php $this->renderPartial('_simplePassport', array(
