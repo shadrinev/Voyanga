@@ -13,6 +13,7 @@
                 </td>
                 <td class="tdPath">
                     <div class="timeAndPath">
+                        <div class="stopOver" data-bind="text: $data.activeVoyage().stopOverAmount()">2 пересадки</div>
                         <div class="ico-path" data-bind="click: $data.showDetailsOverview">
                             <span data-bind="html: $data.activeVoyage().stopoverHtml()"></span>
                         </div>

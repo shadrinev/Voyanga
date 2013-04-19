@@ -176,8 +176,9 @@ HotelsPanel = (function(_super) {
   HotelsPanel.prototype.afterRender = function() {
     resizePanel();
     if (this.city() && (!this.checkIn() || !this.checkOut())) {
-      return this.minimizedCalendar(false);
+      this.minimizedCalendar(false);
     }
+    return inputIEplaceholder();
   };
 
   return HotelsPanel;

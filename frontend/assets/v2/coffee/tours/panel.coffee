@@ -192,6 +192,7 @@ class TourPanelSet
     do resizePanel
     if ((@activeCity()) && ((!@activeCalendarPanel().checkIn()) || (!@activeCalendarPanel().checkOut())))
       @activeCalendarPanel().showCalendar(false)
+    inputIEplaceholder()
 
   beforeRemove: (el) ->
     if $(el).hasClass 'panel'

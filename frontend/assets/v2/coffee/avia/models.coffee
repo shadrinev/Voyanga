@@ -192,6 +192,12 @@ class Voyage #Voyage Plus loin que la nuit et le jour = LOL)
 
     return htmlResult
 
+  stopOverAmount: ->
+    if @direct
+      return
+    amount = @parts.length - 1
+    return Utils.wordAfterNum(amount, 'пересадка', 'пересадки', 'пересадок')
+
   stopoverHtml: ->
     if @direct
       return 'Без пересадок'

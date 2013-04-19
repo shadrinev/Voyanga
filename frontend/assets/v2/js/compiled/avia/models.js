@@ -253,6 +253,15 @@ Voyage = (function() {
     return htmlResult;
   };
 
+  Voyage.prototype.stopOverAmount = function() {
+    var amount;
+    if (this.direct) {
+      return;
+    }
+    amount = this.parts.length - 1;
+    return Utils.wordAfterNum(amount, 'пересадка', 'пересадки', 'пересадок');
+  };
+
   Voyage.prototype.stopoverHtml = function() {
     var htmlResult, part, _i, _len, _ref;
     if (this.direct) {

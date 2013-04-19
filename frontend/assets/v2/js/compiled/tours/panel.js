@@ -261,8 +261,9 @@ TourPanelSet = (function() {
   TourPanelSet.prototype.afterRender = function(el) {
     resizePanel();
     if ((this.activeCity()) && ((!this.activeCalendarPanel().checkIn()) || (!this.activeCalendarPanel().checkOut()))) {
-      return this.activeCalendarPanel().showCalendar(false);
+      this.activeCalendarPanel().showCalendar(false);
     }
+    return inputIEplaceholder();
   };
 
   TourPanelSet.prototype.beforeRemove = function(el) {

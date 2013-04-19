@@ -134,7 +134,8 @@ class OrderBooking extends CActiveRecord
             }
         }
         if($this->phone){
-            $this->phone = str_replace(array(' ','(',')','-'),'',$this->phone);
+            $this->phone = preg_replace('/[^0-9]/u', '', $this->phone);
+            $this->phone = '+'.$this->phone;
         }
         return parent::beforeSave();
     }

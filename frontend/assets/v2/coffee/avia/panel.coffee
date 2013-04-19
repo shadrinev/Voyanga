@@ -197,6 +197,7 @@ class AviaPanel extends SearchPanel
       $('.how-many-man .btn')
       if (@departureCity() && @arrivalCity().length > 0 && (!@departureDate() || (@rt() && (!@rtDate))))
         @minimizedCalendar(false)
+      inputIEplaceholder()
     do resizePanel
 
 $(document).on "autocompleted", "input.departureCity", ->

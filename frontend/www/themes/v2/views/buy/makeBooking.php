@@ -95,7 +95,9 @@
                 'headers'=>$headersForAmbigous,
                 'roomCounters'=>$roomCounters,
                 'hide' => false,
-                'valAirline' =>$valAirline
+                'valAirline' =>$valAirline,
+                'alliance'=>$alliance,
+                'allianceAirlines'=>$allianceAirlines
             )); ?>
         <?php else: ?>
             <?php $this->renderPartial('_simplePassport', array(
@@ -137,7 +139,7 @@
             <div class="bgGradient"></div>
         </div>
         <div class="someText">
-            Бронирование билетов выполняется автоматическ<br> сразу же после перехода к оплате
+            Бронирование выполняется автоматически<br> сразу же после перехода к оплате
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
@@ -165,8 +167,9 @@
     </div>
     <!--=== ===-->
     <div class="payCardPal" style="display: none;">
-        <h3 style="text-align: center; font-size: 26px;">Билеты успешно забронированы.</h3>
+
         <div class="centerBlock">
+            <h3 style="text-align: center; font-size: 26px;">Билеты успешно забронированы</h3>
             <table class="headerTitle">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
@@ -176,7 +179,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span style="line-height: 18px;">Ваши билеты готовы и будут отправлены по электронной почте сразу после оплаты.</span>
+                        <span style="line-height: 18px;">Билеты будут отправлены по электронной почте сразу после оплаты.</span>
                     </td>
                     <td style="text-align: right; font-size: 12px;">
                         <span style="line-height: 18px;">Не закрывайте страницу до завершения оплаты.</span>

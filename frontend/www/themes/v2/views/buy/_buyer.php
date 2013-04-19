@@ -18,12 +18,11 @@
                 </td>
                 <td class="tdTelefon">
                     <div class="divInputTelefon <?php if ($hide) echo "inactive" ?>">
-
-                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone', 'placeholder' => '+7 (910) 123-45-67 ')); ?>
+                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone', 'placeholder' => '+79101234567 ')); ?>
                     </div>
                 </td>
                 <td class="tdText">
-                    На адрес электронной почты будут высланы билеты, а по указанному номеру мы отправим смс с подтверждением
+                    На указанный адрес электронной почты будет выслано подтверждение бронирования
                 </td>
             </tr>
             </tbody>
