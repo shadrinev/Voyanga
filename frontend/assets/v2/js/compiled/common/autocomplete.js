@@ -4,7 +4,8 @@ var _this = this;
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
     $(element).focus(function() {
-      return this.select();
+      this.select();
+      return this.setSelectionRange(0, 9999);
     }).mouseup(function(e) {
       return e.preventDefault();
     });
