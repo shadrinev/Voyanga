@@ -119,7 +119,23 @@ function deletePopUpHide() {
 
 function telefonLoad() {
     if ($('#contactPhone').length > 0 && $('#contactPhone').is(':visible')) {
-        $('#contactPhone').mask('+7 (999) 999-99-99');
+        $('#contactPhone').click(function(){
+            if ($(this).val()=='')
+                $(this).val('+7');
+                var v = $(this).val();
+                $(this).val(v);
+        })
+        .focus(function(){
+            if ($(this).val()=='')
+                $(this).val('+7');
+                _.delay(function(){
+                    $('#contactPhone')[0].setSelectionRange(2,2)
+                }, 10);
+        })
+        .blur(function(){
+            if ($(this).val()=='+7')
+                $(this).val('')
+        })
     }
     else {
         return

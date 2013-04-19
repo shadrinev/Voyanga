@@ -18,8 +18,7 @@
                 </td>
                 <td class="tdTelefon">
                     <div class="divInputTelefon <?php if ($hide) echo "inactive" ?>">
-
-                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone', 'placeholder' => '+7 (910) 123-45-67 ')); ?>
+                        <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone', 'placeholder' => '+79101234567 ')); ?>
                     </div>
                 </td>
                 <td class="tdText">
