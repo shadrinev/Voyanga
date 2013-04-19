@@ -263,7 +263,7 @@ function disableAllFieldsAndHideButton() {
     $('.expiration').each(function () {
         $(this).closest('.checkOn').attr('data-is-active', $(this).closest('.checkOn').hasClass('active'));
     });
-    $("select option:selected").each(function () {
+    $(".tdNationality select option:selected").each(function () {
         var template = '<input type="text" class="tmp" disabled="disabled" value="' + $(this).text() + '">';
         $(this).closest('select').siblings('.chzn-container').hide().parent().append(template);
     });
@@ -289,7 +289,7 @@ function enableAllFieldsAndShowButton() {
     $('.oneBlock input').not('.expiration').each(function () {
         $(this).removeAttr('disabled');
     });
-    $("select option:selected").each(function () {
+    $(".tdNationality select option:selected").each(function () {
         $('.tmp').remove();
         $(this).closest('select').siblings('.chzn-container').show();
     });

@@ -113,7 +113,10 @@ class MakeBookingAction extends CAction
             foreach($airlines as $airline){
                 $allianceAirlines[$airline->code] = $airline->localRu;
             }
+            //echo $valAirline->allianceId;
             $alliance = Alliances::model()->findByPk($valAirline->allianceId);
+            //print_r($alliance);
+            //die();
         }elseif($valAirline){
             $allianceAirlines[$valAirline->code] = $valAirline->localRu;
         }

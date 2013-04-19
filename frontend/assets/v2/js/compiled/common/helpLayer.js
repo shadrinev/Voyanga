@@ -151,7 +151,9 @@ HelpLayer = (function() {
     if (this.pageElements[this.pageName()]) {
       val = $.cookie(key);
       if (!val) {
-        $.cookie(key, true);
+        $.cookie(key, true, {
+          expires: 1825
+        });
         return this.show();
       }
     }

@@ -77,7 +77,7 @@ class HelpLayer
     if @pageElements[@pageName()]
       val = $.cookie(key)
       if !val
-        $.cookie(key, true)
+        $.cookie(key, true,{expires: 1825})
         @show()
 
   zindex: =>

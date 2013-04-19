@@ -95,7 +95,9 @@
                 'headers'=>$headersForAmbigous,
                 'roomCounters'=>$roomCounters,
                 'hide' => false,
-                'valAirline' =>$valAirline
+                'valAirline' =>$valAirline,
+                'alliance'=>$alliance,
+                'allianceAirlines'=>$allianceAirlines
             )); ?>
         <?php else: ?>
             <?php $this->renderPartial('_simplePassport', array(
@@ -137,7 +139,7 @@
             <div class="bgGradient"></div>
         </div>
         <div class="someText">
-            Бронирование билетов выполняется автоматическ<br> сразу же после перехода к оплате
+            Бронирование билетов выполняется автоматически<br> сразу же после перехода к оплате
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
