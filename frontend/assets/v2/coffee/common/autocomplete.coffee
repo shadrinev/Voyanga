@@ -1,7 +1,7 @@
 ko.bindingHandlers.autocomplete =
   init: (element, valueAccessor) ->
-    $(element).bind "focus", ->
-      $(element).select()
+    $(document).bind "click", $(element), (e) ->
+      $(e.target).select()
     $(element).typeahead
       name: 'cities' + valueAccessor().name
       limit: 5 # The max number of suggestions from the dataset to display for a given query

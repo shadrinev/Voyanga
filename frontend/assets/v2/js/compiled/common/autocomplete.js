@@ -3,8 +3,8 @@ var _this = this;
 
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
-    $(element).bind("focus", function() {
-      return $(element).select();
+    $(document).bind("click", $(element), function(e) {
+      return $(e.target).select();
     });
     $(element).typeahead({
       name: 'cities' + valueAccessor().name,
