@@ -1883,7 +1883,43 @@ function resizeLandsHotels() {
 function inputIEplaceholder() {
     if($.browser.msie)
     {
-        $('.second-path').each(function() {
+        $('.panelTable.hotel .second-path').each(function() {
+            if ($(this).val() == '') {
+                $(this).addClass('placeholder');
+            }
+            else {
+                $(this).removeClass('placeholder');
+            }
+        }).focusin(function() {
+            $(this).removeClass('placeholder');
+        }).focusout(function() {
+            if ($(this).val() == '' || $(this).val() == ' ') {
+                $(this).addClass('placeholder');
+            }
+            else {
+                $(this).removeClass('placeholder');
+            }
+        });
+
+        $('.panelTable.constructorTable .second-path').each(function() {
+            if ($(this).val() == '') {
+                $(this).addClass('placeholder');
+            }
+            else {
+                $(this).removeClass('placeholder');
+            }
+        }).focusin(function() {
+                $(this).removeClass('placeholder');
+        }).focusout(function() {
+            if ($(this).val() == '' || $(this).val() == ' ') {
+                $(this).addClass('placeholder');
+            }
+            else {
+                $(this).removeClass('placeholder');
+            }
+        });
+
+        $('.panelTable.avia .second-path').each(function() {
             if ($(this).val() == '') {
                 $(this).addClass('placeholder');
             }
