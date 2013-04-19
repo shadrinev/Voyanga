@@ -241,8 +241,9 @@ AviaPanel = (function(_super) {
       _this.rtTumbler(_this.rt());
       $('.how-many-man .btn');
       if (_this.departureCity() && _this.arrivalCity().length > 0 && (!_this.departureDate() || (_this.rt() && (!_this.rtDate)))) {
-        return _this.minimizedCalendar(false);
+        _this.minimizedCalendar(false);
       }
+      return inputIEplaceholder();
     });
     return resizePanel();
   };
