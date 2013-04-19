@@ -282,6 +282,7 @@ function disableAllFieldsAndHideButton() {
     /* hide button */
     $('#submit-passport').hide();
     $('.agreeConditions').hide();
+    $('.someText').hide();
 }
 
 function enableAllFieldsAndShowButton() {
@@ -315,6 +316,7 @@ function enableAllFieldsAndShowButton() {
     /* hide button */
     $('#submit-passport').show();
     $('.agreeConditions').show();
+    $('.someText').show();
 }
 
 var _rollbar = _rollbar || [];
