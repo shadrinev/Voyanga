@@ -167,8 +167,9 @@
     </div>
     <!--=== ===-->
     <div class="payCardPal" style="display: none;">
-        <h3 style="text-align: center; font-size: 26px;">Билеты успешно забронированы.</h3>
+
         <div class="centerBlock">
+            <h3 style="text-align: center; font-size: 26px;">Билеты успешно забронированы.</h3>
             <table class="headerTitle">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
