@@ -4,7 +4,7 @@ var _this = this;
 ko.bindingHandlers.autocomplete = {
   init: function(element, valueAccessor) {
     $(document).bind("click", $(element), function(e) {
-      return $(e.target).select();
+      return $(e.target).select().setSelectionRange(0, 9999);
     });
     $(element).typeahead({
       name: 'cities' + valueAccessor().name,
