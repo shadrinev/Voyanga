@@ -767,6 +767,8 @@ function ResizeAviaClb() {
     //slideToursPanel();
     resizeLandsHotels();
     DayMonthYear();
+
+    inputIEplaceholder();
 }
 
 function ResizeFun() {
@@ -1782,7 +1784,7 @@ function startIE() {
             $(this).find('.second-path').focus();
         });
 
-        $("body").find("input[type='text'], input[type='email']").each(function() {
+        $("#passport_form").find("input[type='text'], input[type='email']").each(function() {
             if ($(this).attr('disabled') == 'disabled') {
                 return true;
             }
@@ -1812,16 +1814,6 @@ function startIE() {
                 }
             }
         });
-
-//        /* Protected send form */
-//        $("body").submit(function() {
-//            $(this).find("input[type='text']").each(function() {
-//                var val = $(this).attr('placeholder');
-//                if($(this).val() == val) {
-//                    $(this).attr('value','');
-//                }
-//            })
-//        });
         }
 }
 
@@ -1884,5 +1876,29 @@ function resizeLandsHotels() {
         _blocksWrap.css('height',  _blocksWrapHeight +'px');
         _blocksWrap.find('.maps').find('.innerBlockMain').css('height', _blocksWrapHeightMaps +'px');
         _blocksWrap.find('.panel-index').css('bottom', '-159px');
+    }
+}
+
+
+function inputIEplaceholder() {
+    if($.browser.msie)
+    {
+        $('.second-path').each(function() {
+            if ($(this).val() == '') {
+                $(this).addClass('placeholder');
+            }
+            else {
+                $(this).removeClass('placeholder');
+            }
+        }).focusin(function() {
+            $(this).removeClass('placeholder');
+        }).focusout(function() {
+            if ($(this).val() == '' || $(this).val() == ' ') {
+                $(this).addClass('placeholder');
+            }
+            else {
+                $(this).removeClass('placeholder');
+            }
+        });
     }
 }
