@@ -11,7 +11,7 @@
             <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q03')">3. Бронирование отелей</a></li>
             <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q04')">4. Оформление заказа</a></li>
             <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q05')">5. Возврат билетов</a></li>
-            <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q05')">6. Остались вопросы?</a></li>
+            <li><a href="javascript:void(0)" onclick="Utils.scrollTo('#q06')">6. Остались вопросы?</a></li>
         </ul>
     </div>
     <div class="floatRight">
