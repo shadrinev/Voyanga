@@ -184,7 +184,8 @@ Application = (function(_super) {
   Application.prototype.render = function(data, view) {
     this.viewData(data);
     this._view(view);
-    return $(window).resize();
+    $(window).resize();
+    return inputIEplaceholder();
   };
 
   Application.prototype.register = function(prefix, module, isDefault) {

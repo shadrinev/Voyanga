@@ -122,6 +122,7 @@ class Application extends Backbone.Router
     @viewData(data)
     @_view(view)
     $(window).resize()
+    inputIEplaceholder()
 
   # Register routes from controller
   #
@@ -215,7 +216,6 @@ class Application extends Backbone.Router
     @trigger @activeModule() + ':contentRendered'
     ResizeFun()
     WidthMine()
-    inputIEplaceholder()
     if !@runned
       @runned = true
       return
