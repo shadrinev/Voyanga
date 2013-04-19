@@ -5,6 +5,9 @@
  * Date: 07.08.12
  * Time: 12:17
  */
+
+require_once('common/config/partner_directions_to_skip.php');
+
 class SearchController extends ApiController
 {
     public $defaultAction = 'default';
@@ -264,6 +267,15 @@ class SearchController extends ApiController
         $destinations = array();
         $from = $this->normalizeIataCodeToCityCode($from);
         $to = $this->normalizeIataCodeToCityCode($to);
+
+        if($this->shouldSkip($from, $to)) {
+            $results = Array();
+            $prepared = $this->prepareForAviasales($results, $cabin);
+            $this->data = $prepared;
+            $this->_sendResponse(true, 'application/xml');
+            return;
+        }
+
         $destinations[] = array(
             'departure' => $from,
             'arrival' => $to,
@@ -365,5 +377,20 @@ class SearchController extends ApiController
         $prepared = preg_replace('/segment\d+/', 'segment', $prepared);
         $prepared = preg_replace('/flight\d+/', 'flight', $prepared);
         return $prepared;
+    }
+
+    /* Следует ли нам пропустить поиск
+       и отдать нет результатов для партнера
+     */
+    private function shouldSkip($from, $to) {
+        global $PARTNER_DIRECTIONS_TO_SKIP;
+        $parts = array($from, $to);
+        sort($parts);
+        $key = implode("", $parts);
+
+        if(in_array($key,$PARTNER_DIRECTIONS_TO_SKIP))
+            return true;
+        return false;
+
     }
 }
