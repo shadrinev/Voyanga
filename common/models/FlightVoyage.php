@@ -517,7 +517,7 @@ class FlightVoyage extends CApplicationComponent
         }
     }
 
-    //уникальный хэш перелёта. используется для выкидывания рейсов, которые не подтверждены.
+    //уникальный хэш перелёта. используется для выкидывания из статистики.
     public function getHash()
     {
         if ($this->_hash === null)
@@ -528,7 +528,26 @@ class FlightVoyage extends CApplicationComponent
                 foreach ($flight->flightParts as $flightPart)
                 {
                     $res .= implode('',$flightPart->bookingCodes);
-                    $res .= $this->webService . $flightPart->timestampBegin . $flightPart->departureAirportId . $flightPart->transportAirlineCode . $flightPart->timestampBegin . $flightPart->arrivalAirportId;
+                    $res .= $this->webService . $flightPart->timestampBegin . $flightPart->departureAirportId . $flightPart->transportAirlineCode . $flightPart->timestampEnd . $flightPart->arrivalAirportId;
+                }
+            }
+            $this->_hash = $res;
+        }
+        return $this->_hash;
+    }
+
+    //псевдоуникальный хэш набора рейсов. используется для выкидывания рейсов, которые не подтверждены.
+    public function getExcludeHash()
+    {
+        if ($this->_hash === null)
+        {
+            $res = '';
+            foreach ($this->flights as $flight)
+            {
+                foreach ($flight->flightParts as $flightPart)
+                {
+                    $res .= implode('',$flightPart->bookingCodes);
+                    $res .= $this->webService .  $flightPart->departureAirportId . $flightPart->transportAirlineCode . $flightPart->arrivalAirportId . $this->price;
                 }
             }
             $this->_hash = $res;
