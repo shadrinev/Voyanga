@@ -139,7 +139,7 @@
             <div class="bgGradient"></div>
         </div>
         <div class="someText">
-            Бронирование билетов выполняется автоматически<br> сразу же после перехода к оплате
+            Бронирование выполняется автоматически<br> сразу же после перехода к оплате
         </div>
         <div class="agreeConditions">
            <label for="agreeCheck">
