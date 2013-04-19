@@ -2,7 +2,7 @@
 .ie .ticket-items .content .center-ticket .other-time ul.minimize .ico-path-time .path{line-height:20px;}
 .ie .pressButton .rur{height:30px;line-height:28px;}
 .ie .pressButton .rur.f21{margin-top:0px;}
-.ie .second-path.placeholder{background:url(../images/text-where.png) no-repeat 11px 1px !important;}
+.ie .second-path.placeholder{background:url(../images/text-where.png) no-repeat 11px 1px;}
 .ie8 .input-path{padding-top:6px;height:30px;}
 .ie8 .second-path{padding-top:6px;height:30px;}
 .ie8 .how-many-man .popup .adults input,.ie8 .how-many-man .popup .childs input,.ie8 .how-many-man .popup .small-childs input{padding-top:2px;height:30px;}
