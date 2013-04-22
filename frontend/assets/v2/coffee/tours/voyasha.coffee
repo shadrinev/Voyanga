@@ -16,9 +16,9 @@ class Voyasha
       result = []
       for item in  @toursResultSet.data()
           if item.isAvia()
-            result.push (if !item.noresults then @handleAvia item else null)
+            result.push (if !item.noresults() then @handleAvia item else null)
           else
-            result.push (if !item.noresults then @handleHotels item else null)
+            result.push (if !item.noresults() then @handleHotels item else null)
       result
     @price = ko.computed =>
       result = 0
@@ -70,9 +70,9 @@ class Voyasha
     # we can just use selected here and still use @best @cheapest in avia handlers
     for item in  @toursResultSet.data()
       if item.isAvia()
-        item.select (if item.noresults then null else @handleAvia item)
+        item.select (if item.noresults() then null else @handleAvia item)
       else
-        item.select (if item.noresults then null else @handleHotels item)
+        item.select (if item.noresults() then null else @handleHotels item)
     do @toursResultSet.showOverview
 
 class VoyashaCheapest extends Voyasha

@@ -42,9 +42,9 @@ Voyasha = (function() {
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         if (item.isAvia()) {
-          result.push((!item.noresults ? _this.handleAvia(item) : null));
+          result.push((!item.noresults() ? _this.handleAvia(item) : null));
         } else {
-          result.push((!item.noresults ? _this.handleHotels(item) : null));
+          result.push((!item.noresults() ? _this.handleHotels(item) : null));
         }
       }
       return result;
@@ -124,9 +124,9 @@ Voyasha = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
       if (item.isAvia()) {
-        item.select((item.noresults ? null : this.handleAvia(item)));
+        item.select((item.noresults() ? null : this.handleAvia(item)));
       } else {
-        item.select((item.noresults ? null : this.handleHotels(item)));
+        item.select((item.noresults() ? null : this.handleHotels(item)));
       }
     }
     return this.toursResultSet.showOverview();
