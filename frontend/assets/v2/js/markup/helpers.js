@@ -212,7 +212,12 @@ function onFocusInput() {
         else {
 
         }
-        $(this).parent().parent().next().find('input.dd').focus();
+        if ($(this).parent().parent().hasClass('hotel')) {
+            $(this).parent().parent().parent().next().next().find('.tdName input').focus();
+        }
+        else {
+            $(this).parent().parent().next().find('input.dd').focus();
+        }
     });
 
     $('.female input').focusin(function() {
@@ -240,7 +245,12 @@ function onFocusInput() {
         else {
 
         }
-        $(this).parent().parent().next().find('input.dd').focus();
+        if ($(this).parent().parent().hasClass('hotel')) {
+            $(this).parent().parent().parent().next().next().find('.tdName input').focus();
+        }
+        else {
+            $(this).parent().parent().next().find('input.dd').focus();
+        }
     });
 //    $('.female input').click(function() {
 //        $(this).parent().prev().find('input').removeAttr('checked');
@@ -253,7 +263,13 @@ function onFocusInput() {
                 e.preventDefault();
                 var _this = $(e.target);
                 if ($(_this).is(':checked')) {
-                    $(_this).parent().parent().next().find('input.dd').focus();
+
+                    if ($(_this).parent().parent().hasClass('hotel')) {
+                        $(_this).parent().parent().parent().next().next().find('.tdName input').focus();
+                    }
+                    else {
+                        $(_this).parent().parent().next().find('input.dd').focus();
+                    }
                 }
                 else {
                     $(_this).parent().next().find('input').focus();
@@ -264,7 +280,13 @@ function onFocusInput() {
                 e.preventDefault();
                 var _this = $(e.target);
                 if ($(_this).is(':checked')) {
-                    $(_this).parent().parent().next().find('input.dd').focus();
+                    if ($(_this).parent().parent().hasClass('hotel')) {
+                        $(_this).parent().parent().parent().next().next().find('.tdName input').focus();
+                    }
+                    else {
+                        $(_this).parent().parent().next().find('input.dd').focus();
+                    }
+
                 }
                 else {
                     $(_this).parent().prev().find('input').focus();

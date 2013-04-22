@@ -2624,7 +2624,10 @@ input.hotel-input {
 }
 
 .infoPassengers .tdLastname {
-	width: 175px;
+	width: 179px;
+}
+.infoPassengers .tdSex {
+    width: 77px;
 }
 .infoPassengers .tdLastname input[type='text'] {
 	width: 159px;
@@ -2641,7 +2644,7 @@ input.hotel-input {
 }
 
 .infoPassengers .tdDocumentNumber {
-	width: 165px;
+	width: 168px;
 }
 .infoPassengers .tdDocumentNumber input[type="text"] {
     background-position: -662px 0;

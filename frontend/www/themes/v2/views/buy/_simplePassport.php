@@ -18,7 +18,7 @@
         Фамилия
     </td>
     <td class="tdSex">
-
+        Пол
     </td>
     <td class="tdBirthday">
 
@@ -80,20 +80,21 @@
                     (<?php echo $roomCounters[$currentRoomId]['label'] ?>)</h3></td>
         </tr>
     <?php endif ?>
-    <script type="text/javascript">
-        $(function () {
-            $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
-            $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
-        });
-    </script>
+
     <tr>
         <td class="tdName">
+            <script type="text/javascript">
+                $(function () {
+                    $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
+                    $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
+                });
+            </script>
             <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
         </td>
         <td class="tdLastname">
             <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
         </td>
-        <td class="tdSex">
+        <td class="tdSex hotel">
             <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
                 <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
                        value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
@@ -221,10 +222,17 @@
                     <input type="text" placeholder="Номер карты" name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCard]" >
                 </div>
                 <?php endif; ?>
+
+
             </td>
         </tr>
     <?php else: ?>
-        <input type="hidden" value="1" name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
+        <tr style="display: none">
+           <td colspan="7">
+               <input type="hidden" value="1" name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
+           </td>
+        </tr>
+
     <?php endif ?>
 <?php endforeach; ?>
 <!-- NEW USER -->
