@@ -214,10 +214,8 @@ function onFocusInput() {
         }
         if ($(this).parent().parent().hasClass('hotel')) {
             $(this).parent().parent().parent().next().next().find('.tdName input').focus();
-            console.log('WHATS 1');
         }
         else {
-            console.log('WHATS 2');
             $(this).parent().parent().next().find('input.dd').focus();
         }
     });
