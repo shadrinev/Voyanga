@@ -146,7 +146,7 @@ VisualLoader = (function() {
     this.tooltips.push('Мы всегда показываем только финальную цену без скрытых платежей и комиссий');
     this.tooltips.push('При бронировании комплексных поездок (авиабилет плюс гостиница) мы даём скидку до 10%');
     this.tooltips.push('Наш сайт полностью отвечает международным требованиям безопасности платежных систем');
-    this.tooltips.push('Воянга любит тебя сильнее чем твоя бабушка');
+    this.tooltips.push('Воянга любит тебя сильнее, чем твоя бабушка');
     this.tooltipInd = null;
     this.tooltipHandler = null;
     this.description = ko.observable('');
