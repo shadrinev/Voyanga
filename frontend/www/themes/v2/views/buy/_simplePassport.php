@@ -94,7 +94,7 @@
         <td class="tdLastname">
             <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
         </td>
-        <td class="tdSex hotel">
+        <td class="tdSex<?php if ($roomCounters): ?> hotel<?php endif ?>">
             <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
                 <input type="radio" name="<?php echo get_class($model) ?>[<?php echo $i ?>][genderId]" id="male<?php echo $i ?>"
                        value="<?php echo BaseFlightPassportForm::GENDER_MALE?>"
