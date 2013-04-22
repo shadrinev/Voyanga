@@ -26,6 +26,7 @@ TourEntry = (function() {
     this.isAvia = __bind(this.isAvia, this);
     _.extend(this, Backbone.Events);
     this.savingsWithAviaOnly = false;
+    this.noresults = ko.observable(false);
   }
 
   TourEntry.prototype.isAvia = function() {
@@ -44,7 +45,7 @@ TourEntry = (function() {
   };
 
   TourEntry.prototype.priceHtml = function() {
-    if (this.noresults) {
+    if (this.noresults()) {
       return "Нет результатов";
     }
     if (this.selection() === null) {
@@ -186,7 +187,7 @@ ToursAviaResultSet = (function(_super) {
       return _this.select(res, result, elem);
     };
     this.avia = true;
-    this.noresults = result.noresults;
+    this.noresults(result.noresults);
     this.results(result);
     return this.selection(null);
   };
@@ -221,7 +222,7 @@ ToursAviaResultSet = (function(_super) {
   };
 
   ToursAviaResultSet.prototype.findAndSelect = function(result) {
-    if (this.noresults) {
+    if (this.noresults()) {
       return;
     }
     result = this.results().findAndSelect(result);
@@ -234,7 +235,7 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.findAndSelectHash = function(hash) {
     var result;
-    if (this.noresults) {
+    if (this.noresults()) {
       return;
     }
     result = this.results().findAndSelectHash(hash);
@@ -329,7 +330,7 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.minPrice = function() {
     var cheapest;
-    if (this.noresults) {
+    if (this.noresults()) {
       return 0;
     }
     cheapest = _.reduce(this.results().data, function(el1, el2) {
@@ -344,7 +345,7 @@ ToursAviaResultSet = (function(_super) {
 
   ToursAviaResultSet.prototype.maxPrice = function() {
     var mostExpensive;
-    if (this.noresults) {
+    if (this.noresults()) {
       return 0;
     }
     mostExpensive = _.reduce(this.results().data, function(el1, el2) {
@@ -793,7 +794,7 @@ ToursHotelsResultSet = (function(_super) {
     this.hotels = true;
     this.selection(null);
     this.activeHotel('nope');
-    this.noresults = result.noresults;
+    this.noresults(result.noresults);
     return this.results(result);
   };
 
@@ -963,7 +964,7 @@ ToursHotelsResultSet = (function(_super) {
   ToursHotelsResultSet.prototype.destinationText = function() {
     var sp;
     sp = this.observableSP();
-    if (this.noresults) {
+    if (this.noresults()) {
       return sp.cityFull.caseNom;
     } else {
       return "<span class='hotel-left-long'>Отель в " + sp.cityFull.casePre + "</span><span class='hotel-left-short'>" + sp.cityFull.caseNom + "</span>";

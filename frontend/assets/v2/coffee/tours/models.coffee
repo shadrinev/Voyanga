@@ -3,6 +3,7 @@ class TourEntry
     # Mix in events
     _.extend @, Backbone.Events
     @savingsWithAviaOnly = false
+    @noresults = ko.observable false
 
   isAvia: =>
     return @avia
@@ -16,7 +17,7 @@ class TourEntry
     @selection().price
 
   priceHtml: =>
-    if @noresults
+    if @noresults()
       return "Нет результатов"
     if @selection() == null
       return "<span class='noChoise'>Не выбрано</span>"
@@ -79,7 +80,7 @@ class ToursAviaResultSet extends TourEntry
       @select res, result,elem
 
     @avia = true
-    @noresults = result.noresults
+    @noresults result.noresults
     @results result
     @selection null
 
@@ -106,7 +107,7 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   findAndSelect: (result)=>
-    if @noresults
+    if @noresults()
       return
     result = @results().findAndSelect(result)
     if !result
@@ -115,7 +116,7 @@ class ToursAviaResultSet extends TourEntry
     return result
 
   findAndSelectHash: (hash)=>
-    if @noresults
+    if @noresults()
       return
     result = @results().findAndSelectHash(hash)
     if !result
@@ -200,7 +201,7 @@ class ToursAviaResultSet extends TourEntry
     @results().filters.airline.options().length
 
   minPrice: =>
-    if @noresults
+    if @noresults()
       return 0
     cheapest = _.reduce @results().data,
       (el1, el2)->
@@ -209,7 +210,7 @@ class ToursAviaResultSet extends TourEntry
     cheapest.price
 
   maxPrice: =>
-    if @noresults
+    if @noresults()
       return 0
     mostExpensive = _.reduce @results().data,
       (el1, el2)->
@@ -468,7 +469,7 @@ class ToursHotelsResultSet extends TourEntry
     @hotels = true
     @selection null
     @activeHotel 'nope'
-    @noresults = result.noresults
+    @noresults result.noresults
     @results result
 
   GAKey: =>
@@ -605,7 +606,7 @@ class ToursHotelsResultSet extends TourEntry
   destinationText: =>
     # trigger dependencies
     sp = @observableSP()
-    if @noresults
+    if @noresults()
       sp.cityFull.caseNom
     else
       "<span class='hotel-left-long'>Отель в " + sp.cityFull.casePre + "</span><span class='hotel-left-short'>" + sp.cityFull.caseNom + "</span>"
