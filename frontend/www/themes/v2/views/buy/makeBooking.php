@@ -1,7 +1,7 @@
 <script type="text/javascript">
     <?php $tripRaw = 'window.tripRaw = ' . $trip; ?>
     <?php echo $tripRaw ?>;
-    window.currentModule = '<?php echo Yii::app()->user->getState('currentModule'); ?>';
+    window.currentModule = '<?php echo Yii::app()->user->getState('currentModule', 'Avia'); ?>';
     window.secretKey = '<?php echo $secretKey ?>';
     $(function () {
         initCredentialsPage();
