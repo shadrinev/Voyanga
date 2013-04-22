@@ -15,6 +15,7 @@ return array(
     'app.api.flightSearchUrl' => 'http://api.test.voyanga.com/v1/flight/search/BE',
     'app.api.flightSearchNoSecure' => 'http://api.test.voyanga.com/v1/flight',
     'app.api.hotelSearchUrl' => 'http://api.test.voyanga.com/v1/hotel/search',
+    'app.api.hotelSearchNoSecure' => 'http://api.voyanga.com/v1/hotel',
 
     "baseUrl" => 'http://test.voyanga.com',
     "domain" => '.test.voyanga.com',
