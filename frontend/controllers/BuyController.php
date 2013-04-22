@@ -53,7 +53,7 @@ class BuyController extends FrontendController
             Yii::app()->user->setState('currentModule', $_GET['item'][0]['module']);
         else
             //todo: think what is default here
-            Yii::app()->user->setState('currentModule', 'Tours');
+            Yii::app()->user->setState('currentModule', 'Avia');
         $marker = (isset($_GET['marker'])) ? '?marker='.$_GET['marker'] : '';
         if (isset($_GET['pid'])) //если мы пришли от партнёра, то проверяем перелёт
         {
