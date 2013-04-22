@@ -166,7 +166,7 @@ class FlightManager
 
     static private function getCacheIdForExcludedFlight($flight)
     {
-        $flightId = md5($flight->getHash());
+        $flightId = md5($flight->getExcludeHash());
         return 'exclFl-'.$flightId;
     }
 }
