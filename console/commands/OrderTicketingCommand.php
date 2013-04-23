@@ -35,7 +35,7 @@ EOD;
                 Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
                 Yii::app()->cron->add(time() + 75, 'orderticketing', 'confirmpayment', array('orderId'=>$orderId));
             } else {
-                Yii::app()->cron->add(time() + 4*60*60, 'orderticketing', 'voidpayment', array('orderId'=>$orderId));
+                Yii::app()->cron->add(time() + Yii::app()->params->voidPaymentTimelimit, 'orderticketing', 'voidpayment', array('orderId'=>$orderId));
                 $this->sendFailed($orderId);
             }
         }
