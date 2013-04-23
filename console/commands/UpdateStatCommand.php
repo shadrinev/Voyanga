@@ -6,7 +6,7 @@ class UpdateStatCommand extends CConsoleCommand
     {
         $criteria = new CDbCriteria();
         $criteria->order = 'id desc';
-        $criteria->limit = 3000;
+        $criteria->limit = 500;
         $criteria->addCondition('parnerId is not null');
         if (!$force)
         {
