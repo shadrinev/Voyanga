@@ -326,12 +326,18 @@ class SearchController extends ApiController
     private function normalizeIataCodeToCityCode($code)
     {
         $city = City::model()->findByAttributes(array('code'=>$code));
+        $ret = false;
         if (!$city)
         {
             $airport = Airport::getAirportByCode($code);
-            $city = City::getCityByPk($airport->cityId);
+            if($airport){
+                $city = City::getCityByPk($airport->cityId);
+            }
         }
-        return $city->code;
+        if($city){
+            $ret = $city->code;
+        }
+        return $ret;
     }
 
     private function prepareForAviasales(&$results, $cabin)
