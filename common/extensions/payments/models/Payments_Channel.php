@@ -72,9 +72,50 @@ abstract class Payments_Channel {
         return md5($stringToSign);
     }
 
+    public function void()
+    {
+        //! FIXME should we only accept bills in certain states ?
+        $entry = PaymentLog::forMethod('void');
+        $entry->orderId = $this->baseBooker->orderBookingId . '-' . $this->bill->id;
+        $url = 'transaction/void';
+        $credentials = $this->credentials;
+
+        $params = array();
+        $params['MerchantId'] = $credentials['id'];
+
+        $params['TransactionId'] = $this->bill->transactionId;
+        $params['ContentType'] = 'text';
+        $params = $this->contributeToConfirm($params);
+
+        $params['SecurityKey'] = $this->getSignature($params);
+        $entry->request = json_encode($params);
+        $entry->startProfile();
+        $entry->save();
+        list($code, $result) = $this->callApi($url, $params);
+        $entry->finishProfile();
+        $entry->response = json_encode($result);
+        if(isset($result['TransactionId'])) {
+            $entry->transactionId = $result['TransactionId'];
+            $entry->save();
+        }
+            // FIXME check AMOUNT?
+        if($result['Result'] == 'Ok')
+        {
+//            $bill->status = Bill::STATUS_PAID;
+            $this->bill->transactionId = $result['TransactionId'];
+            $this->bill->status = 'PAI';
+            $this->bill->save();
+            return true;
+        }
+        $entry->errorDescription = "ConfirmError: " . $this->rawResponse;
+        $entry->save();
+        return false;
+    }
+
+
     public function confirm()
     {
-        //! FIXME shuld we only accept bills in certain states ?
+        //! FIXME should we only accept bills in certain states ?
         $entry = PaymentLog::forMethod('complete');
         $entry->orderId = $this->baseBooker->orderBookingId . '-' . $this->bill->id;
         $url = 'transaction/complete';

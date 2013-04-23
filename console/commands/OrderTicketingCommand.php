@@ -34,7 +34,8 @@ EOD;
             if($this->isDone($orderId)) {
                 Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
                 Yii::app()->cron->add(time() + 75, 'orderticketing', 'confirmpayment', array('orderId'=>$orderId));
-           } else {
+            } else {
+                Yii::app()->cron->add(time() + 4*60*60, 'orderticketing', 'voidpayment', array('orderId'=>$orderId));
                 $this->sendFailed($orderId);
             }
         }
@@ -54,6 +55,26 @@ EOD;
     }
 
 
+    /**
+     * Снимает предавторизацию с невыполненного заказа
+    */
+    public function actionVoidpayment($orderId) {
+        if($this->isDone($orderId)) {
+            echo "ERROR: Void called for successfull order #". $orderId . "\n";
+        } else {
+            $order = Yii::app()->order;
+            $order->initByOrderBookingId($orderId);
+            $payments = Yii::app()->payments;
+            $bookers = $payments->preProcessBookers($order->getBookers());
+            foreach($bookers as $booker) {
+                $bill = $payments->getBillForBooker($booker);
+                if (!$bill->getChannel()->void()) {
+                    //! fixme log exceptions
+                    echo "Void failed for bill #" . $bill->id . " transaction #" . $bill->transactionId . "\n";
+                }
+            }
+        }
+    }
 
 
     /**
