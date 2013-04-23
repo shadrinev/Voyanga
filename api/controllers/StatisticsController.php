@@ -31,7 +31,7 @@ class StatisticsController extends ApiController
         $ordersReady = array();
         foreach ($orders as $i => $order)
         {
-            $state = $order->status;
+            $state = $order->partner_status;
             if (!$this->isUniqueOrder($order, $state))
                 continue;
             $ordersReady[] = $order;

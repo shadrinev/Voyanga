@@ -6,11 +6,11 @@ class UpdateStatCommand extends CConsoleCommand
     {
         $criteria = new CDbCriteria();
         $criteria->order = 'id desc';
-        $criteria->limit = 3000;
-        $criteria->addCondition('parnerId is not null');
+        $criteria->limit = 500;
+        $criteria->addCondition('partnerId is not null');
         if (!$force)
         {
-            $criteria->addCondition('hash is null');
+            $criteria->addCondition('hash is null or partner_status is null');
         }
         $orders = OrderBooking::model()->with(array(
                                                    'flightBookers' => array(
