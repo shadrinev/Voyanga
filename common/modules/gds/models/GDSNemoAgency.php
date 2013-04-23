@@ -5,6 +5,8 @@ class GDSNemoAgency extends CComponent
     public static $lastRequestDescription = '';
     public static $passportTypesMap = array(1 => 'P', 2 => 'P', 3 => 'P',4 => 'P',5 => 'P');
     public static $requestIds = array();
+    public static $ambiguousArrivalCodes = array();
+    public static $arrivalCodes;
     const ERROR_CODE_EMPTY = 1;
     const ERROR_CODE_INVALID = 2;
 
@@ -412,7 +414,7 @@ class GDSNemoAgency extends CComponent
                                 '{code}' => $route->arrivalCity->code,
                                 '{codes}' => implode(', ', $aCities)
                             )));*/
-                            Yii::log(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cityes: {codes}. FlightId: {flightId}', array(
+                            Yii::log(Yii::t('application', 'Not found segment with code arrival city {code}. Segment cities: {codes}. FlightId: {flightId}', array(
                                 '{code}' => $route->arrivalCity->code,
                                 '{codes}' => implode(', ', $aCities),
                                 '{flightId}' => $oSoapFlight->FlightId
