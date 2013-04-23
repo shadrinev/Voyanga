@@ -10,7 +10,7 @@ class UpdateStatCommand extends CConsoleCommand
         $criteria->addCondition('partnerId is not null');
         if (!$force)
         {
-            $criteria->addCondition('hash is null');
+            $criteria->addCondition('hash is null or partner_status is null');
         }
         $orders = OrderBooking::model()->with(array(
                                                    'flightBookers' => array(
