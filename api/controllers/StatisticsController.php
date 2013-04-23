@@ -23,7 +23,10 @@ class StatisticsController extends ApiController
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
         $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
         $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
-        $orders = OrderBooking::model()->findAll($criteria);
+        $orders = OrderBooking::model()->with(
+            array('flightBookers'=> array(
+                'select' => 'id, status, flightVoyageInfo'
+            )))->findAll($criteria);
         $results = array();
         $ordersReady = array();
         foreach ($orders as $i => $order)
@@ -37,7 +40,7 @@ class StatisticsController extends ApiController
         foreach ($ordersReady as $i => $order)
         {
             $price = $order->fullPrice;
-            $state = $this->flights[$order->getHash()];
+            $state = $this->flights[$order->hash];
             $el = array(
                 'id' => $order->readableId,
                 'created_at' => date('Y-m-d H:i', strtotime($order->timestamp) - 4 * 3600),
@@ -70,7 +73,7 @@ class StatisticsController extends ApiController
      */
     private function isUniqueOrder($order, $state)
     {
-        $hash = $order->getHash();
+        $hash = $order->hash;
         if ($state == 'PAID')
         {
             $this->flights[$hash] = $state;

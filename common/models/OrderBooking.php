@@ -222,6 +222,34 @@ class OrderBooking extends CActiveRecord
         return $state;
     }
 
+    public function buildPartnerStatus()
+    {
+        $state = '';
+        $ok = true;
+        $first = true;
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            $first = false;
+            $cur = $this->getPrefixlessState($flightBooker->status);
+            $ok = $ok && ($cur=='done');
+            if (($cur=='error') || ($cur=='canceled') || ($cur=='paymentError') || ($cur=='ticketingError'))
+                $state = 'CANCELLED';
+            $timeOfCreatingOrder = strtotime($flightBooker->timestamp);
+            $currentTime = time();
+            $ago = ($currentTime - $timeOfCreatingOrder);
+            if (($cur=='waitingForPayment') and ($ago>6*3600))
+                $state = 'CANCELLED';
+            elseif (($cur=='enterCredentials') and ($ago>3*3600))
+                $state = 'CANCELLED';
+        }
+        if (($ok) && (!$first))
+            $state = 'PAID';
+        elseif ($state=='')
+            $state = 'PROCESSING';
+        $this->partner_status = $state;
+        $this->update('partner_status');
+    }
+
     public function buildHash()
     {
         try
