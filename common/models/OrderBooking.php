@@ -235,7 +235,7 @@ class OrderBooking extends CActiveRecord
         {
             $result .= md5($hotelBooker->hotelInfo);
         }
-        $this->_hash = $result;
+        $this->_hash = md5($result);
         return $result;
     }
 
