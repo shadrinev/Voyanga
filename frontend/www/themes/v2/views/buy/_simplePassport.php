@@ -232,7 +232,6 @@
                <input type="hidden" value="1" name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
            </td>
         </tr>
-
     <?php endif ?>
 <?php endforeach; ?>
 <!-- NEW USER -->

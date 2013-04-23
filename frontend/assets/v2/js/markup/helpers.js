@@ -213,7 +213,9 @@ function onFocusInput() {
 
         }
         if ($(this).parent().parent().hasClass('hotel')) {
-            $(this).parent().parent().parent().next().next().find('.tdName input').focus();
+            var indCur = $(this).closest('tr')[0].rowIndex; //нахожу в какой строке текущий инпут
+            //и пытаюсь переключить фокус на инпут в следующей строке
+            $($('.tdSex.hotel')[0]).closest('table').find('tr').eq(indCur+2).find('input').eq(0).focus();
         }
         else {
             $(this).parent().parent().next().find('input.dd').focus();
