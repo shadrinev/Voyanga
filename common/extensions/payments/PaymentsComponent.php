@@ -98,7 +98,7 @@ class PaymentsComponent extends CApplicationComponent
         $bill->amount = $booker->price;
 
         if($this->testMode)
-            $bill->amount = 201;
+            $bill->amount = 200;
 
         $bill->save();
         $booker->bill = $bill;
