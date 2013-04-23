@@ -19,6 +19,7 @@ class StatisticsController extends ApiController
         $to = strtotime($date2) + 4 * 3600 + (24 * 3600 - 1);
         $to = date('Y-m-d H:i:s', $to);
         $criteria = new CDbCriteria();
+        $criteria->select = 'readableId, partnerId, timestamp, marker';
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
         $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
         $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
@@ -32,7 +33,7 @@ class StatisticsController extends ApiController
                 continue;
             $ordersReady[] = $order;
         }
-
+        unset($orders);
         foreach ($ordersReady as $i => $order)
         {
             $price = $order->fullPrice;
