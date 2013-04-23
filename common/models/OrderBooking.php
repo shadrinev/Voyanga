@@ -222,10 +222,8 @@ class OrderBooking extends CActiveRecord
         return $state;
     }
 
-    public function getHash()
+    public function buildHash()
     {
-        if ($this->_hash != null)
-            return $this->_hash;
         $result = $this->userId;
         foreach ($this->flightBookers as $flightBooker)
         {
@@ -235,8 +233,9 @@ class OrderBooking extends CActiveRecord
         {
             $result .= md5($hotelBooker->hotelInfo);
         }
-        $this->_hash = md5($result);
-        return $this->_hash;
+        $this->hash = md5($result);
+        $this->update(array('hash'));
+        return $this->hash;
     }
 
     private function getPrefixlessState($state) {

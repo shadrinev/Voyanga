@@ -19,14 +19,11 @@ class StatisticsController extends ApiController
         $to = strtotime($date2) + 4 * 3600 + (24 * 3600 - 1);
         $to = date('Y-m-d H:i:s', $to);
         $criteria = new CDbCriteria();
-        $criteria->select = 'direct, readableId, partnerId, timestamp, marker';
+        $criteria->select = 'direct, readableId, partnerId, timestamp, marker, hash';
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
         $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
         $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
-        $orders = OrderBooking::model()->with(
-            array('flightBookers'=> array(
-                'select' => 'id, status, flightVoyageInfo'
-            )))->findAll($criteria);
+        $orders = OrderBooking::model()->findAll($criteria);
         $results = array();
         $ordersReady = array();
         foreach ($orders as $i => $order)
