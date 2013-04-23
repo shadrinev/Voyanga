@@ -7,7 +7,7 @@ class UpdateStatCommand extends CConsoleCommand
         $criteria = new CDbCriteria();
         $criteria->order = 'id desc';
         $criteria->limit = 500;
-        $criteria->addCondition('parnerId is not null');
+        $criteria->addCondition('partnerId is not null');
         if (!$force)
         {
             $criteria->addCondition('hash is null');
