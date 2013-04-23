@@ -38,10 +38,10 @@
             <thead>
             <tr>
                 <td class="tdName">
-                    Имя
+                    Фамилия
                 </td>
                 <td class="tdLasname">
-                    Фамилия
+                    Имя
                 </td>
                 <td class="tdSex">
                     Пол
@@ -60,11 +60,11 @@
         <?php $hotelHeaderPrinted = true; ?>
         <tbody>
         <tr>
+            <td class="tdLastname">
+                <?php echo CHtml::textField($prefix.'['.$curEl.']['.$i.'][lastName]','', array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
+            </td>
             <td class="tdName">
                 <?php echo CHtml::textField($prefix.'['.$curEl.']['.$i.'][firstName]','', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
-            </td>
-            <td class="tdLastname">
-                <?php echo CHtml::textField($prefix.'['.$curEl.']['.$i.'][lastName]','', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'PETROV')); ?>
             </td>
             <td class="tdSex hotel">
                 <label class="male" for="male<?php echo $i ?>">
@@ -104,11 +104,11 @@
         <?php endif ?>
         <?php if (!$flightHeaderPrinted): ?>
             <tr>
+                <td class="tdLastname">
+                    Фамилия
+                </td>
                 <td class="tdName">
                     Имя
-                </td>
-                <td class="tdLasname">
-                    Фамилия
                 </td>
                 <td class="tdSex">
                     Пол
@@ -134,11 +134,11 @@
         <?php $flightHeaderPrinted = true; ?>
         <tbody>
         <tr>
-            <td class="tdName">
-                <?php echo CHtml::activeTextField($model, "[$curEl][$i]firstName", array('id' => 'syncTranslitFirstName' . $i)); ?>
-            </td>
             <td class="tdLastname">
-                <?php echo CHtml::activeTextField($model, "[$curEl][$i]lastName", array('id' => 'syncTranslitLastName' . $i)); ?>
+                <?php echo CHtml::activeTextField($model, "[$curEl][$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder'=>'PETROV')); ?>
+            </td>
+            <td class="tdName">
+                <?php echo CHtml::activeTextField($model, "[$curEl][$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder'=>'IVAN')); ?>
             </td>
             <td class="tdSex">
                 <label class="male" for="male<?php echo $i ?>">
@@ -203,10 +203,10 @@
             </td>
         </tr>
         <tr>
-            <td class="tdName">
+            <td class="tdLastname">
                 <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :' авиакомпании');?>', checked: 0}">
             </td>
-            <td class="tdLastname">
+            <td class="tdName">
 
             </td>
             <td class="tdSex">
@@ -228,7 +228,7 @@
                        name="FlightAdultPassportForm[<?php echo $curEl ?>][<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
-        <tr>
+        <tr style="display: none">
             <td class="tdBonus" colspan="7">
                 <?php if($valAirline): ?>
                 <?php $model->bonusCardAirlineCode = $valAirline->code;?>
