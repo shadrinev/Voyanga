@@ -1,0 +1,11 @@
+{
+    "dependencies": {
+	"coffee-script": "1.4.0",
+	"jasmine-node" : "1.5.0",
+	"pegjs": "0.7.0"
+    },
+    "scripts": {
+	"start": "coffee -cbwo ./frontend/assets/v2/js/compiled ./frontend/assets/v2/coffee",
+	"test": "jasmine-node --autotest --coffee --captureExceptions frontend/assets/v2/spec"
+    }
+}
