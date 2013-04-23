@@ -66,7 +66,7 @@
             <td class="tdLastname">
                 <?php echo CHtml::textField($prefix.'['.$curEl.']['.$i.'][lastName]','', array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'PETROV')); ?>
             </td>
-            <td class="tdSex">
+            <td class="tdSex hotel">
                 <label class="male" for="male<?php echo $i ?>">
                     <input name="<?php echo $prefix ?>[<?php echo $curEl?>][<?php echo $i ?>][genderId]" type="radio" name="sex" id="male<?php echo $i ?>" value="<?php echo BaseFlightPassportForm::GENDER_MALE?>" <?php if ($model->genderId == BaseFlightPassportForm::GENDER_MALE) echo 'checked="checked"' ?>>
                 </label>
