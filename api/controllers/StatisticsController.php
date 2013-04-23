@@ -40,7 +40,7 @@ class StatisticsController extends ApiController
         foreach ($ordersReady as $i => $order)
         {
             $price = $order->fullPrice;
-            $state = $this->flights[$order->getHash()];
+            $state = $this->flights[$order->hash];
             $el = array(
                 'id' => $order->readableId,
                 'created_at' => date('Y-m-d H:i', strtotime($order->timestamp) - 4 * 3600),
@@ -73,7 +73,7 @@ class StatisticsController extends ApiController
      */
     private function isUniqueOrder($order, $state)
     {
-        $hash = $order->getHash();
+        $hash = $order->hash;
         if ($state == 'PAID')
         {
             $this->flights[$hash] = $state;

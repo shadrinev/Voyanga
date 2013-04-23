@@ -7,9 +7,10 @@ class UpdateStatCommand extends CConsoleCommand
         $criteria = new CDbCriteria();
         $criteria->order = 'id desc';
         $criteria->limit = 3000;
+        $criteria->addCondition('parnerId is not null');
         if (!$force)
         {
-            $criteria->condition = 'hash is null';
+            $criteria->addCondition('hash is null');
         }
         $orders = OrderBooking::model()->with(array(
                                                    'flightBookers' => array(
@@ -20,6 +21,7 @@ class UpdateStatCommand extends CConsoleCommand
         foreach ($orders as $order)
         {
             $order->buildHash();
+            $order->buildPartnerStatus();
         }
         echo "Done\n";
     }
