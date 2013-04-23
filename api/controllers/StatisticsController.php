@@ -19,10 +19,14 @@ class StatisticsController extends ApiController
         $to = strtotime($date2) + 4 * 3600 + (24 * 3600 - 1);
         $to = date('Y-m-d H:i:s', $to);
         $criteria = new CDbCriteria();
+        $criteria->select = 'direct, readableId, partnerId, timestamp, marker';
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
         $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
         $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
-        $orders = OrderBooking::model()->with('flightBookers')->findAll($criteria);
+        $orders = OrderBooking::model()->with(
+            array('flightBookers'=> array(
+                'select' => 'id, status, flightVoyageInfo'
+            )))->findAll($criteria);
         $results = array();
         $ordersReady = array();
         foreach ($orders as $i => $order)
@@ -32,7 +36,7 @@ class StatisticsController extends ApiController
                 continue;
             $ordersReady[] = $order;
         }
-
+        unset($orders);
         foreach ($ordersReady as $i => $order)
         {
             $price = $order->fullPrice;
@@ -52,7 +56,7 @@ class StatisticsController extends ApiController
                     $results['order' . $i] = $el;
             }
         }
-
+        unset($ordersReady);
         $xml = new ArrayToXml('bookings');
         $prepared = $xml->toXml($results);
         $prepared = preg_replace('/order\d+/', 'booking', $prepared);

@@ -21,6 +21,7 @@ class Airport extends CActiveRecord
 {
     private static $airports = array();
     private static $codeIdMap = array();
+    public static $notFoundCodes = array();
 
     public static function model($className = __CLASS__)
     {
@@ -47,10 +48,11 @@ class Airport extends CActiveRecord
             }
             else
             {
-                Yii::log('Unknown airport ' . $code . ' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
-                throw new CException(Yii::t('application', 'Airport with code {code} not found', array(
-                    '{code}' => $code
-                )));
+                //Yii::log('Unknown airport ' . $code . ' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
+                self::$notFoundCodes[$code] = $code;
+                //throw new CException(Yii::t('application', 'Airport with code {code} not found', array(
+                //    '{code}' => $code
+                //)));
             }
         }
     }

@@ -20,6 +20,7 @@ class GDSAdapter extends CApplicationComponent
     {
         $nemo = new GDSNemoAgency();
         $response = $nemo->FlightSearch($flightSearchParams);
+        City::saveAllNotFoundCodes();
 
         return $response;
     }

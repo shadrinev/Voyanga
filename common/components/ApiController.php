@@ -63,6 +63,7 @@ class ApiController extends Controller
             else
                 echo $json;
         }
+        die();
     }
 
     public function send($data, $raw=false)

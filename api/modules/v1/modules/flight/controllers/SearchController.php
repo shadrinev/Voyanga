@@ -160,6 +160,7 @@ class SearchController extends ApiController
     public function actionWithParams(array $destinations, $adt = 1, $chd = 0, $inf = 0, $serviceClass = 'A', $format='json')
     {
         Yii::app()->user->setState('directRequest', true);
+
         $flightSearchParams = $this->buildSearchParams($destinations, $adt, $chd, $inf, $serviceClass);
         $results = array(
             'flights' => $this->doFlightSearch($flightSearchParams),
@@ -211,15 +212,21 @@ class SearchController extends ApiController
     private function buildSearchParams($destinations, $adt, $chd, $inf, $service_class)
     {
         $flightSearchParams = new FlightSearchParams();
+
         foreach ($destinations as $route)
         {
             $departureDate = date('d.m.Y', strtotime($route['date']));
             $departureCity = City::model()->getCityByCode($route['departure']);
-            if (!$departureCity)
-                $this->sendError(400, 'Incorrect IATA code for deparure city');
+
+            if (!$departureCity){
+                City::saveAllNotFoundCodes();
+                $this->sendError(400, 'Incorrect IATA code for departure city');
+            }
             $arrivalCity = City::model()->getCityByCode($route['arrival']);
-            if (!$arrivalCity)
+            if (!$arrivalCity){
+                City::saveAllNotFoundCodes();
                 $this->sendError(400, 'Incorrect IATA code for arrival city');
+            }
             $flightSearchParams->addRoute(array(
                 'adult_count' => $adt,
                 'child_count' => $chd,
@@ -267,6 +274,7 @@ class SearchController extends ApiController
         $destinations = array();
         $from = $this->normalizeIataCodeToCityCode($from);
         $to = $this->normalizeIataCodeToCityCode($to);
+        City::saveAllNotFoundCodes();
 
         if($this->shouldSkip($from, $to)) {
             $results = Array();
@@ -318,12 +326,18 @@ class SearchController extends ApiController
     private function normalizeIataCodeToCityCode($code)
     {
         $city = City::model()->findByAttributes(array('code'=>$code));
+        $ret = false;
         if (!$city)
         {
             $airport = Airport::getAirportByCode($code);
-            $city = City::getCityByPk($airport->cityId);
+            if($airport){
+                $city = City::getCityByPk($airport->cityId);
+            }
         }
-        return $city->code;
+        if($city){
+            $ret = $city->code;
+        }
+        return $ret;
     }
 
     private function prepareForAviasales(&$results, $cabin)

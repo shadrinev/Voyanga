@@ -208,7 +208,7 @@ class BaseFlightPassportForm extends BasePassportForm
         ));
     }
 
-    public static  function getPossibleTypes()
+    public static function getPossibleTypes()
     {
         return array(
             self::TYPE_RF => 'Паспорт РФ',

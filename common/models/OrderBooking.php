@@ -235,8 +235,8 @@ class OrderBooking extends CActiveRecord
         {
             $result .= md5($hotelBooker->hotelInfo);
         }
-        $this->_hash = $result;
-        return $result;
+        $this->_hash = md5($result);
+        return $this->_hash;
     }
 
     private function getPrefixlessState($state) {
