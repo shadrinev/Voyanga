@@ -11,11 +11,11 @@
             : <?php echo $roomCounters[$currentRoomId]['label'] ?></h3></td>
 </tr>
 <tr>
+    <td class="tdLastname">
+        Фамилия
+    </td>
     <td class="tdName">
         Имя
-    </td>
-    <td class="tdLasname">
-        Фамилия
     </td>
     <td class="tdSex">
         Пол
@@ -35,11 +35,11 @@
 <?php else: ?>
     <thead>
     <tr>
+        <td class="tdLastname">
+            Фамилия
+        </td>
         <td class="tdName">
             Имя
-        </td>
-        <td class="tdLasname">
-            Фамилия
         </td>
         <td class="tdSex">
             Пол
@@ -82,17 +82,17 @@
     <?php endif ?>
 
     <tr>
-        <td class="tdName">
+        <td class="tdLastname">
             <script type="text/javascript">
                 $(function () {
                     $('#syncTranslitFirstName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitFirstName<?php echo $i ?>'});
                     $('#syncTranslitLastName<?php echo $i ?>').syncTranslit({destination: 'syncTranslitLastName<?php echo $i ?>'});
                 });
             </script>
-            <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
-        </td>
-        <td class="tdLastname">
             <?php echo CHtml::activeTextField($model, "[$i]lastName", array('id' => 'syncTranslitLastName' . $i, 'placeholder' => 'PETROV')); ?>
+        </td>
+        <td class="tdName">
+            <?php echo CHtml::activeTextField($model, "[$i]firstName", array('id' => 'syncTranslitFirstName' . $i, 'placeholder' => 'IVAN')); ?>
         </td>
         <td class="tdSex<?php if ($roomCounters): ?> hotel<?php endif ?>">
             <label class="male <?php if ($hide) echo 'inactive' ?>" for="male<?php echo $i ?>">
@@ -184,7 +184,7 @@
     </tr>
     <?php if ((!$hide) && (!$roomCounters)): ?>
         <tr class="trDurationPadding">
-            <td class="tdName" colspan="2">
+            <td class="tdLastname" colspan="2">
                 <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :' авиакомпании');?>', checked: 0}">
             </td>
             <td class="tdSex"></td>
@@ -200,7 +200,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr style="display: none">
             <td class="tdBonus" colspan="7">
                 <?php if($valAirline): ?>
                     <?php $model->bonusCardAirlineCode = $valAirline->code;?>

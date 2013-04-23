@@ -414,7 +414,7 @@ function InputCheckOn() {
     });
 }
 function InputBonusCardCheckOn() {
-    $('.tdName input[type="checkbox"]').each(function (index) {
+    $('.tdLastname input[type="checkbox"]').each(function (index) {
         voyanga_debug('check '+index,$(this).attr('checked'));
         if ($(this).attr('checked') == 'checked') {
             var rowTr = $(this).closest('tr').next();
@@ -447,7 +447,7 @@ function InputActiveFinishDate() {
     $('.tdDuration label.ui-hover').click(function () {
         InputCheckOn();
     });
-    $('.tdName label.ui-hover').click(function () {
+    $('.tdLastname label.ui-hover').click(function () {
         InputBonusCardCheckOn();
     });
 }
