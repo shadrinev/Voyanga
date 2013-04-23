@@ -27,6 +27,8 @@ class City extends CActiveRecord
     private static $codeIdMap = array();
     private static $idHotelbookIdMap = array();
     private static $idMaxmindIdMap = array();
+    public static $notFoundCodes = array();
+
 
     /**
      * Returns the static model of the specified AR class.
@@ -201,6 +203,8 @@ class City extends CActiveRecord
             $city = City::model()->findByAttributes(array(
                 'code' => $code
             ));
+
+
             if ($city)
             {
                 City::$cities[$city->id] = $city;
@@ -213,9 +217,12 @@ class City extends CActiveRecord
             }
             else
             {
-                throw new CException(Yii::t('application', 'City with code {code} not found', array(
+                self::$notFoundCodes[$code] = $code;
+                //echo "City with code {$code} not found!!!!";
+                //die();
+                /*throw new CException(Yii::t('application', 'City with code {code} not found', array(
                     '{code}' => $code
-                )));
+                )));*/
             }
         }
     }
@@ -382,5 +389,23 @@ class City extends CActiveRecord
             }
         }
         return $items;
+    }
+
+    static function saveAllNotFoundCodes(){
+        if(Airport::$notFoundCodes || City::$notFoundCodes){
+            $codes = array_merge(Airport::$notFoundCodes,City::$notFoundCodes);
+            foreach($codes as $code=>$val){
+                $codes[$code] = "'{$val}'";
+            }
+
+            //echo "try insert ".implode(',',$codes);die();
+            $connection=Yii::app()->db;
+
+            $sql = 'INSERT IGNORE INTO airport_codes (airportCode) VALUES ('.implode(',',$codes).')';
+            //$sql .= " (".implode(',',$in).")";
+            //$sql .= " ON DUPLICATE KEY UPDATE rating=VALUES(rating),minPrice=VALUES(minPrice)";
+            $command=$connection->createCommand($sql);
+            $command->execute();
+        }
     }
 }
