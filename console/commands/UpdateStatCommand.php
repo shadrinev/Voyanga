@@ -5,6 +5,8 @@ class UpdateStatCommand extends CConsoleCommand
     public function actionRun($force = false)
     {
         $criteria = new CDbCriteria();
+        $criteria->order = 'id desc';
+        $criteria->limit = 3000;
         if (!$force)
         {
             $criteria->condition = 'hash is null';
