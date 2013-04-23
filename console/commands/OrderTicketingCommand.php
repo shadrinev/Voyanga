@@ -34,10 +34,7 @@ EOD;
             if($this->isDone($orderId)) {
                 Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
                 Yii::app()->cron->add(time() + 75, 'orderticketing', 'confirmpayment', array('orderId'=>$orderId));
-
-                $this->sendNotifications($orderId);
-                $this->confirmPayment($orderId);
-            } else {
+           } else {
                 $this->sendFailed($orderId);
             }
         }
