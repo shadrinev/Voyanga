@@ -224,17 +224,25 @@ class OrderBooking extends CActiveRecord
 
     public function buildHash()
     {
-        $result = $this->userId;
-        foreach ($this->flightBookers as $flightBooker)
+        try
         {
-            $result .= md5($flightBooker->getFlightVoyage()->getHash());
+            $result = $this->userId;
+            foreach ($this->flightBookers as $flightBooker)
+            {
+                $result .= md5($flightBooker->getFlightVoyage()->getHash());
+            }
+            foreach ($this->hotelBookers as $hotelBooker)
+            {
+                $result .= md5($hotelBooker->hotelInfo);
+            }
+            $this->hash = md5($result);
+            $this->update(array('hash'));
         }
-        foreach ($this->hotelBookers as $hotelBooker)
+        catch (Exception $e)
         {
-            $result .= md5($hotelBooker->hotelInfo);
+            $this->hash = md5($result.time());
+            $this->update(array('hash'));
         }
-        $this->hash = md5($result);
-        $this->update(array('hash'));
         return $this->hash;
     }
 
