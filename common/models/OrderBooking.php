@@ -361,6 +361,13 @@ class OrderBooking extends CActiveRecord
         return $price;
     }
 
+    public function buildFullPartnerPrice()
+    {
+        $price = $this->getFullPrice();
+        $this->full_partner_price = $price;
+        $this->update(array('full_partner_price'));
+    }
+
     public static function  buildReadableNumber($number)
     {
         $prefix = date('md', time());

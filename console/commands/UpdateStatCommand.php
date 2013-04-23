@@ -10,7 +10,7 @@ class UpdateStatCommand extends CConsoleCommand
         $criteria->addCondition('partnerId is not null');
         if (!$force)
         {
-            $criteria->addCondition('hash is null or partner_status is null');
+            $criteria->addCondition('hash is null or partner_status is null or full_partner_price is null');
         }
         $orders = OrderBooking::model()->with(array(
                                                    'flightBookers' => array(
@@ -22,6 +22,7 @@ class UpdateStatCommand extends CConsoleCommand
         {
             $order->buildHash();
             $order->buildPartnerStatus();
+            $order->buildFullPartnerPrice();
         }
         echo "Done\n";
     }
