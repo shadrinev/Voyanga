@@ -248,7 +248,7 @@ function onFocusInput() {
 
         }
         if ($(this).parent().parent().hasClass('hotel')) {
-            $(this).parent().parent().parent().next().next().find('.tdName input').focus();
+            $($('.tdSex.hotel')[0]).closest('table').find('tr').eq(indCur+2).find('input').eq(0).focus();
         }
         else {
             $(this).parent().parent().next().find('input.dd').focus();
@@ -267,7 +267,7 @@ function onFocusInput() {
                 if ($(_this).is(':checked')) {
 
                     if ($(_this).parent().parent().hasClass('hotel')) {
-                        $(_this).parent().parent().parent().next().next().find('.tdName input').focus();
+                        $($('.tdSex.hotel')[0]).closest('table').find('tr').eq(indCur+2).find('input').eq(0).focus();
                     }
                     else {
                         $(_this).parent().parent().next().find('input.dd').focus();
@@ -283,7 +283,7 @@ function onFocusInput() {
                 var _this = $(e.target);
                 if ($(_this).is(':checked')) {
                     if ($(_this).parent().parent().hasClass('hotel')) {
-                        $(_this).parent().parent().parent().next().next().find('.tdName input').focus();
+                        $($('.tdSex.hotel')[0]).closest('table').find('tr').eq(indCur+2).find('input').eq(0).focus();
                     }
                     else {
                         $(_this).parent().parent().next().find('input.dd').focus();
