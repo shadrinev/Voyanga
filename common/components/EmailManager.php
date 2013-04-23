@@ -54,14 +54,18 @@ class EmailManager
             $msg->attach($attachment);
         }
 
-        Yii::app()->mail->send($msg);
+        try {
+            Yii::app()->mail->send($msg);
+        } catch (Exception $e) {
+            return false;
+        }
         foreach($pdfFileNames as $key=>$pdfInfo){
             if(file_exists($pdfInfo['filename']))
             {
                 unlink($pdfInfo['filename']);
             }
         }
-
+        return true;
     }
 
     static public function sendOrderCanceled($params)

@@ -468,10 +468,14 @@ class OrderComponent extends CApplicationComponent
                     }
                 }
             }
-            EmailManager::sendEmailOrderInfo(array(
+            $result = EmailManager::sendEmailOrderInfo(array(
                                                  'orderBookingId'=>$orderBooking->readableId,
                                                  'email'=>$orderBooking->email
                                                  ),$pdfFileNames);
+            //! посыл почты не удался
+            if(!$result) {
+                return false;
+            }
         } catch (Exception $e) {
             Yii::app()->RSentryException->logException($e);
         }
@@ -480,6 +484,7 @@ class OrderComponent extends CApplicationComponent
         } catch (Exception $e) {
             Yii::app()->RSentryException->logException($e);
         }
+        return true;
     }
 
     public function sendFailed()
