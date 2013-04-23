@@ -33,7 +33,10 @@ EOD;
     private function sendNotifications($orderId) {
         $order = Yii::app()->order;
         $order->initByOrderBookingId($orderId);
-        $order->sendNotifications();
+        if(!$order->sendNotifications()) {
+            echo "SEND MAIL FAILED: RESCHEDULING\n";
+            Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
+        };
     }
 
     private function isDone($orderId) {

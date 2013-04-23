@@ -32,6 +32,9 @@ EOD;
                 //! Remove scheduled change to BookingTimilimit state
             }
             if($this->isDone($orderId)) {
+                Yii::app()->cron->add(time() + 75, 'orderemail', 'cron', array('orderId'=>$orderId));
+                Yii::app()->cron->add(time() + 75, 'orderticketing', 'confirmpayment', array('orderId'=>$orderId));
+
                 $this->sendNotifications($orderId);
                 $this->confirmPayment($orderId);
             } else {
@@ -43,16 +46,6 @@ EOD;
             echo $this->getHelp();
         }
     }
-
-    /**
-       Sends order email/sms/whatever
-    */
-    private function sendNotifications($orderId) {
-        $order = Yii::app()->order;
-        $order->initByOrderBookingId($orderId);
-        $order->sendNotifications();
-    }
-
 
     /**
        Уведомляем супорт о фейле заказа
@@ -69,18 +62,21 @@ EOD;
     /**
      *  Confirms preauthorized transactions
     */
-    private function confirmPayment($orderId) {
-        $order = Yii::app()->order;
-        $order->initByOrderBookingId($orderId);
-        $payments = Yii::app()->payments;
-        $bookers = $payments->preProcessBookers($order->getBookers());
-        foreach($bookers as $booker)
-        {
-            $bill = $payments->getBillForBooker($booker);
-            if (!$bill->getChannel()->confirm()) {
-                //! fixme log exceptions
-                echo "Confirm failed for bill #" . $bill->id . " transaction #" . $bill->transactionId . "\n";
+    public function actionConfirmpayment($orderId) {
+        if($this->isDone($orderId)) {
+            $order = Yii::app()->order;
+            $order->initByOrderBookingId($orderId);
+            $payments = Yii::app()->payments;
+            $bookers = $payments->preProcessBookers($order->getBookers());
+            foreach($bookers as $booker) {
+                $bill = $payments->getBillForBooker($booker);
+                if (!$bill->getChannel()->confirm()) {
+                    //! fixme log exceptions
+                    echo "Confirm failed for bill #" . $bill->id . " transaction #" . $bill->transactionId . "\n";
+                }
             }
+        } else {
+            echo "ERROR: Confirm called for failed order #". $orderId . "\n";
         }
     }
 
