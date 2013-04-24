@@ -99,7 +99,7 @@ class TourBuilderForm extends CFormModel
 
     public function setStartCityName($value)
     {
-        $items = City::model()->guess($value);
+        $items = City::getCityByCode($value);
         $this->startCityModel = $items[0];
     }
 
