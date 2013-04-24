@@ -1,13 +1,16 @@
 {
     "name": "voyanga-toolset",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "dependencies": {
 	"coffee-script": "1.4.0",
 	"jasmine-node" : "1.5.0",
-	"pegjs": "0.7.0"
+	"pegjs": "0.7.0",
+	"less": "1.3.3",
+	"watch-less": "0.0.3"
     },
     "scripts": {
 	"start": "coffee -cbwo ./frontend/assets/v2/js/compiled ./frontend/assets/v2/coffee",
-	"test": "jasmine-node --autotest --coffee --captureExceptions frontend/assets/v2/spec"
+	"test": "jasmine-node --autotest --coffee --captureExceptions frontend/assets/v2/spec",
+	"less": "watch-less -d ./frontend/assets/v2/less -e css -c -opt 2 -o ./frontend/assets/v2/css"
     }
 }

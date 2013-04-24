@@ -236,4 +236,74 @@ class BaseFlightPassportForm extends BasePassportForm
         $newValue = str_replace('N', '', $newValue);
         $this->seriesNumber = $newValue;
     }
+
+    public function tryToPrefetch($index)
+    {
+        $orderBooking = $this->getOrderBookingBySessionId($index); //сперва пытаемся достать по ключу в сессии
+        if (!$orderBooking) //если не получилось - то пробуем достать по юзеру
+            $orderBooking = $this->getOrderBookingByUser($index);
+        if (!$orderBooking)
+            return;
+        if ((isset($orderBooking->flightBookers[0])) && (isset($orderBooking->flightBookers[0]->flightBookingPassports[0])))
+        {
+            $this->fillAttributes($orderBooking->flightBookers[0]->flightBookingPassports[0]);
+        }
+    }
+
+    private function getOrderBookingBySessionId($index)
+    {
+        $criteria = new CDbCriteria();
+        $unique_id = Yii::app()->request->cookies->contains('unique_id') ? Yii::app()->request->cookies['unique_id']->value : false;
+        if (!$unique_id)
+            return;
+        $criteria->together = true;
+        $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
+        $criteria->addCondition('firstName is not null');
+        $criteria->order='t.id desc, flightBookingPassports.id desc';
+        $criteria->addCondition('unique_id=:uniq');
+        $criteria->params = array(':uniq'=>$unique_id);
+        $criteria->offset = $index;
+        $criteria->limit=1;
+        $orderBooking = OrderBooking::model()->find($criteria);
+        return $orderBooking;
+    }
+
+    private function getOrderBookingByUser($index)
+    {
+        $criteria = new CDbCriteria();
+        $userId = Yii::app()->user->isGuest ? 0 : Yii::app()->user->id;
+        if ($userId == 0)
+            return;
+        $criteria->addCondition('userId=:userId');
+        $criteria->params = array(':userId'=>$userId);
+        $criteria->together = true;
+        $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
+        $criteria->addCondition('firstName is not null');
+        $criteria->order='t.id desc, flightBookingPassports.id desc';
+        $criteria->offset = $index;
+        $criteria->limit=1;
+        $orderBooking = OrderBooking::model()->find($criteria);
+        return $orderBooking;
+    }
+
+    private function fillAttributes($row)
+    {
+        $this->birthday = DateTime::createFromFormat('Y-m-d', $row->birthday)->format('d.m.Y');
+        $this->srok = true;
+        if ($row->expiration)
+        {
+            $this->srok = false;
+            $this->expirationDate = DateTime::createFromFormat('Y-m-d', $row->expiration)->format('d.m.Y');
+        }
+
+        $this->firstName = $row->firstName;
+        $this->lastName = $row->lastName;
+        $this->countryId = $row->countryId;
+        $this->number = $row->number;
+        $this->originalSeriesNumber = $row->original_number;
+        $this->series = $row->original_number;
+        $this->genderId = $row->genderId;
+        $this->bonusCard = $row->bonusCard;
+        $this->bonusCardAirlineCode = $row->bonusCardAirlineCode;
+    }
 }

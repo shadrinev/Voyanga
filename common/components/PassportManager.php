@@ -147,18 +147,70 @@ class PassportManager
 
     private function generatePassportFormsForAllTrip()
     {
+        $prefetched = 0;
         for ($i = 0; $i < $this->counters['adultCount']; $i++)
+        {
+            $el = new FlightAdultPassportForm();
+            $el->tryToPrefetch($i);
+            if ($this->isUnique($el))
+            {
+                $this->passportForms[] = $el;
+                $prefetched++;
+            }
+        }
+        for ($i = $prefetched; $i < $this->counters['adultCount']; $i++)
         {
             $this->passportForms[] = new FlightAdultPassportForm();
         }
+
+        $prefetched = 0;
         for ($i = 0; $i < $this->counters['childCount']; $i++)
+        {
+            $el = new FlightChildPassportForm();
+            $el->tryToPrefetch($i);
+            if ($this->isUnique($el))
+            {
+                $this->passportForms[] = $el;
+                $prefetched++;
+            }
+        }
+        for ($i = $prefetched; $i < $this->counters['childCount']; $i++)
         {
             $this->passportForms[] = new FlightChildPassportForm();
         }
+
+        $prefetched = 0;
         for ($i = 0; $i < $this->counters['infantCount']; $i++)
+        {
+            $el = new FlightInfantPassportForm();
+            $el->tryToPrefetch($i);
+            if ($this->isUnique($el))
+            {
+                $this->passportForms[] = $el;
+            }
+        }
+        for ($i = $prefetched; $i < $this->counters['childCount']; $i++)
         {
             $this->passportForms[] = new FlightInfantPassportForm();
         }
+    }
+
+    private function isUnique($el)
+    {
+        $un = true;
+        foreach ($this->passportForms as $cur)
+        {
+            if (
+                ($cur->firstName == $el->firstName) &&
+                ($cur->lastName == $el->lastName) &&
+                ($cur->number == $el->number)
+            )
+            {
+                $un = false;
+                break;
+            }
+        }
+        return $un;
     }
 
     public function fillFromArray($passports)

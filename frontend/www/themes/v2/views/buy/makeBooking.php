@@ -56,32 +56,45 @@
     </div>
     <div class="lineUp" <?php if (isset($_COOKIE['credentials-cross'])) echo 'style="display: none"' ?>>
         <a href="#" class="btn-close"></a>
+        <?php $partner = Partner::getCurrentPartner(); $logo = false; ?>
+        <?php if (($partner) && ($partner->name=='aviasales')): ?>
+            <?php $logo = true; ?>
+            <div class="ico-aviasales"></div>
+        <?php elseif (($partner) && ($partner->name=='buruki')): ?>
+            <?php $logo = true; ?>
+            <div class="ico-buruki"></div>
+        <?php elseif (($partner) && ($partner->name=='skyscanner')): ?>
+            <?php $logo = true; ?>
+            <div class="ico-skyscanner"></div>
+        <?php endif ?>
         <div class="center-block">
             <table class="advantageTable">
                 <tr>
                     <td class="first">
+                        <?php if (!$logo): ?>
                         <strong>Почему <span class="text-ticket1">билеты</span><br>
-                        покупают у нас?</strong>
+                            покупают у нас?</strong>
+                        <?php endif ?>
                     </td>
                     <td>
                         <span class="ico-price"></span>
                         Окончательная цена,<br>
-                        никаких комиссий
+                        нет комиссий
                     </td>
                     <td>
                         <span class="ico-secqury"></span>
                         Безопасность платежей,<br>
-                        оплата Visa или Mastercard
+                        международные стандарты
                     </td>
                     <td>
                         <span class="ico-time"></span>
-                        Моментальное оформление,<br>
+                        Быстрое оформление,<br>
                         <span class="text-ticket2">билет</span> ваш через 2 минуты
                     </td>
                     <td>
                         <span class="ico-helps"></span>
                         Помощь в решении<br>
-                        любых вопросов
+                        любых проблем
                     </td>
                 </tr>
             </table>
@@ -146,7 +159,7 @@
                <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и <a onclick=\'window.app.itemsToBuy.showTariffRules()\' href=\'#\'>правилами возврата</a>', checked: 1}" name="agree" id="agreeCheck">
            </label>
         </div>
-        <div class="pressButton inactive" id='submit-passport'>
+        <div class="pressButton active" id='submit-passport'>
             <span style="font-size: 18px;">4. Перейти к оплате</span>&nbsp;&nbsp;
             <span class="price"data-bind="text: Utils.formatPrice(itemsToBuy.totalCost)">33 770</span>
             <span class="rur">o</span>

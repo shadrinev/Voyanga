@@ -23,12 +23,14 @@
                 <script type="text/javascript" src="//vk.com/js/api/openapi.js?79"></script>
 
                 <script type="text/javascript">
+                if(window.VK)
                     VK.init({apiId: 3377254, onlyWidgets: true});
                 </script>
 
                 <!-- Put this div tag to the place, where the Like block will be -->
                 <div id="vk_like"></div>
                 <script type="text/javascript">
+                if(window.VK)
                     VK.Widgets.Like("vk_like", {type: "mini", height: 20});
                 </script>
             </li>

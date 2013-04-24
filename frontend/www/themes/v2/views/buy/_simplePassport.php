@@ -185,22 +185,20 @@
     <?php if ((!$hide) && (!$roomCounters)): ?>
         <tr class="trDurationPadding">
             <td class="tdLastname" colspan="2">
-                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :' авиакомпании');?>', checked: 0}">
+                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :' авиакомпании');?>', checked: <?php if (strlen($model->bonusCard)>0) echo 1; else echo 0 ?>}">
             </td>
             <td class="tdSex"></td>
             <td class="tdBirthday"></td>
             <td class="tdNationality"></td>
             <td class="tdDocumentNumber"></td>
             <td class="tdDuration">
-
-                <input type="hidden" value="0"
-                       name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]">
-                <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: 0}"
+                <?php echo CHtml::activeHiddenField($model, "[$i]srok", array('value'=>0)) ?>
+                <input type="checkbox" data-bind="checkbox:{label: 'Без срока', checked: <?php echo $model['srok'] ? 1 : 0 ?>}"
                        name="<?php echo get_class($model) ?>[<?php echo $i;?>][srok]" id="srok<?php echo $i;?>">
             </td>
         </tr>
 
-        <tr style="display: none">
+        <tr <?php if (strlen($model->bonusCard)==0) echo "style='display: none'" ?>>
             <td class="tdBonus" colspan="7">
                 <?php if($valAirline): ?>
                     <?php $model->bonusCardAirlineCode = $valAirline->code;?>
@@ -214,12 +212,14 @@
                             'class' => "chzn-select",
                             'style' => "width:207px;",
                             'disabled' => (count($allianceAirlines) > 1 ? '' : 'disabled'),
-                            'value' => $valAirline->code
                         )
                     ); ?>
+                    <?php if (count($allianceAirlines)==1): ?>
+                            <?php echo CHtml::activeHiddenField($model, "[$i]bonusCardAirlineCode"); ?>
+                    <?php endif ?>
                 </div>
                 <div class="inputBonus">
-                    <input type="text" placeholder="Номер карты" name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCard]" >
+                    <input type="text" placeholder="Номер карты" name="<?php echo get_class($model) ?>[<?php echo $i;?>][bonusCard]" value="<?php echo $model->bonusCard ?>">
                 </div>
                 <?php endif; ?>
 

@@ -19,6 +19,10 @@ ko.bindingHandlers.checkbox =
     htm += '</div>';
     htm += '</label>';
     new_el = $(htm)
+    if checked
+      $(element).attr 'checked', 'checked'
+    else
+      $(element).removeAttr 'checked'
     new_el.click (e)->
       if ($(e.target).is('a'))
         return
@@ -38,8 +42,6 @@ ko.bindingHandlers.checkbox =
 
     el.after(new_el)
     el.hide()
-
-
 
   update: (element, valueAccessor) ->
     label = ko.utils.unwrapObservable valueAccessor().label
