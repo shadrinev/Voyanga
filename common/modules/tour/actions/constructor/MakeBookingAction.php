@@ -26,7 +26,7 @@ class MakeBookingAction extends CAction
         }
 
         $this->controller->assignTitle('enterCredentials');
-        $this->getController()->layout = 'static';
+        $this->getController()->layout = 'enterCredentials';
 
         $dataProvider = new TripDataProvider();
         $dataProvider->restoreOrderBookingFromDb($this->orderBooking->id);
