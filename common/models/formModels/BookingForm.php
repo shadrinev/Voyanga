@@ -65,7 +65,6 @@ class BookingForm extends CFormModel
 
     public function tryToPrefetch()
     {
-        $criteria = new CDbCriteria();
         $unique_id = Yii::app()->user->getState('unique_id');
         $orderBooking = $this->getOrderBookingBySessionId();
         if (!$orderBooking)
