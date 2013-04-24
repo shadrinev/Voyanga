@@ -363,7 +363,21 @@ class OrderBooking extends CActiveRecord
 
     public function buildFullPartnerPrice()
     {
-        $price = $this->getFullPrice();
+        $price = 0;
+        foreach ($this->flightBookers as $flightBooker)
+        {
+            if ($flightBooker->price)
+            {
+                $price += $flightBooker->price;
+            }
+            else
+            {
+                if ($flightBooker->flightVoyage->price)
+                {
+                    $price += $flightBooker->flightVoyage->price;
+                }
+            }
+        }
         $this->full_partner_price = $price;
         $this->update(array('full_partner_price'));
     }
