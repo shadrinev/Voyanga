@@ -253,7 +253,9 @@ class BaseFlightPassportForm extends BasePassportForm
     private function getOrderBookingBySessionId($index)
     {
         $criteria = new CDbCriteria();
-        $unique_id = Yii::app()->user->getState('unique_id');
+        $unique_id = Yii::app()->request->cookies->contains('unique_id') ? Yii::app()->request->cookies['unique_id']->value : false;
+        if (!$unique_id)
+            return;
         $criteria->together = true;
         $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
         $criteria->addCondition('firstName is not null');

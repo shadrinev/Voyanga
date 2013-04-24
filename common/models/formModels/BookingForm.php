@@ -65,12 +65,12 @@ class BookingForm extends CFormModel
 
     public function tryToPrefetch()
     {
-        $unique_id = Yii::app()->user->getState('unique_id');
+        $unique_id = Yii::app()->request->cookies->contains('unique_id') ? Yii::app()->request->cookies['unique_id']->value : false;
         $orderBooking = $this->getOrderBookingBySessionId();
         if (!$orderBooking)
         {
             $this->unique_id = md5(time().rand(0, 100000));
-            Yii::app()->user->setState('unique_id', $this->unique_id);
+            Yii::app()->request->cookies['unique_id'] = new CHttpCookie('unique_id', $this->unique_id, array('expire'=>time()+2*30*24*3600));
             $orderBooking = $this->getOrderBookingByUser();
         }
         else
@@ -89,7 +89,9 @@ class BookingForm extends CFormModel
     private function getOrderBookingBySessionId()
     {
         $criteria = new CDbCriteria();
-        $unique_id = Yii::app()->user->getState('unique_id');
+        $unique_id = Yii::app()->request->cookies->contains('unique_id') ? Yii::app()->request->cookies['unique_id']->value : false;
+        if (!$unique_id)
+            return;
         $criteria->together = true;
         $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
         $criteria->addCondition('firstName is not null');
