@@ -2,10 +2,11 @@
 
 class UpdateStatCommand extends CConsoleCommand
 {
-    public function actionRun($force = false)
+    public function actionRun($force = false, $offset=0)
     {
         $criteria = new CDbCriteria();
         $criteria->order = 'id desc';
+        $criteria->offset = $offset;
         $criteria->limit = 500;
         $criteria->addCondition('partnerId is not null');
         if (!$force)

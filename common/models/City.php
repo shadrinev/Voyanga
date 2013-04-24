@@ -28,6 +28,7 @@ class City extends CActiveRecord
     private static $idHotelbookIdMap = array();
     private static $idMaxmindIdMap = array();
     public static $notFoundCodes = array();
+    const EXCEPTION_NO_MESSAGE = 8;
 
 
     /**
@@ -220,9 +221,9 @@ class City extends CActiveRecord
                 self::$notFoundCodes[$code] = $code;
                 //echo "City with code {$code} not found!!!!";
                 //die();
-                /*throw new CException(Yii::t('application', 'City with code {code} not found', array(
+                throw new CException(Yii::t('application', 'City with code {code} not found', array(
                     '{code}' => $code
-                )));*/
+                )),self::EXCEPTION_NO_MESSAGE);
             }
         }
     }

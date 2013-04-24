@@ -21,12 +21,11 @@ class StatisticsController extends ApiController
         $criteria = new CDbCriteria();
         $criteria->select = 'direct, readableId, partnerId, timestamp, marker, hash, partner_status, full_partner_price';
         $criteria->compare('partnerId', Partner::getCurrentPartner()->id);
+        $criteria->addCondition('partner_status is not null');
+        $criteria->addCondition('full_partner_price>0');
         $criteria->addCondition('t.timestamp >= \'' . $from . '\'');
         $criteria->addCondition('t.timestamp <= \'' . $to . '\'');
-        $orders = OrderBooking::model()->with(
-            array('flightBookers'=> array(
-                'select' => 'id, status, flightVoyageInfo'
-            )))->findAll($criteria);
+        $orders = OrderBooking::model()->findAll($criteria);
         $results = array();
         $ordersReady = array();
         foreach ($orders as $i => $order)

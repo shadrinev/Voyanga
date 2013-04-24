@@ -216,13 +216,21 @@ class SearchController extends ApiController
         foreach ($destinations as $route)
         {
             $departureDate = date('d.m.Y', strtotime($route['date']));
-            $departureCity = City::model()->getCityByCode($route['departure']);
+            try{
+                $departureCity = City::model()->getCityByCode($route['departure']);
+            }catch (CException $e){
+                $departureCity = false;
+            }
 
             if (!$departureCity){
                 City::saveAllNotFoundCodes();
                 $this->sendError(400, 'Incorrect IATA code for departure city');
             }
-            $arrivalCity = City::model()->getCityByCode($route['arrival']);
+            try{
+                $arrivalCity = City::model()->getCityByCode($route['arrival']);
+            }catch (CException $e){
+                $arrivalCity = false;
+            }
             if (!$arrivalCity){
                 City::saveAllNotFoundCodes();
                 $this->sendError(400, 'Incorrect IATA code for arrival city');
@@ -327,15 +335,19 @@ class SearchController extends ApiController
     {
         $city = City::model()->findByAttributes(array('code'=>$code));
         $ret = false;
-        if (!$city)
-        {
-            $airport = Airport::getAirportByCode($code);
-            if($airport){
-                $city = City::getCityByPk($airport->cityId);
+        try{
+            if (!$city)
+            {
+                $airport = Airport::getAirportByCode($code);
+                if($airport){
+                    $city = City::getCityByPk($airport->cityId);
+                }
             }
-        }
-        if($city){
-            $ret = $city->code;
+            if($city){
+                $ret = $city->code;
+            }
+        }catch (CException $e){
+
         }
         return $ret;
     }
