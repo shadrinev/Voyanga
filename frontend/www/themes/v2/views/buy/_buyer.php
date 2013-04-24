@@ -20,6 +20,7 @@
                     <div class="divInputTelefon <?php if ($hide) echo "inactive" ?>">
                         <?php echo CHtml::activeTextField($model, "contactPhone", array('id' => 'contactPhone', 'placeholder' => '+79101234567 ')); ?>
                     </div>
+                    <?php echo CHtml::activeHiddenField($model, "unique_id") ?>
                 </td>
                 <td class="tdText">
                     На указанный адрес электронной почты будет выслано подтверждение бронирования

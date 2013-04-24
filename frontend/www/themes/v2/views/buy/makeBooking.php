@@ -148,7 +148,7 @@
                <input type="checkbox" data-bind="checkbox:{label: 'Я согласен с <a href=\'/agreement\' target=\'_blank\'>условиями использования</a>,<br><a href=\'/iata\' target=\'_blank\'>правилами IATA</a> и <a onclick=\'window.app.itemsToBuy.showTariffRules()\' href=\'#\'>правилами возврата</a>', checked: 1}" name="agree" id="agreeCheck">
            </label>
         </div>
-        <div class="pressButton inactive" id='submit-passport'>
+        <div class="pressButton active" id='submit-passport'>
             <span style="font-size: 18px;">4. Перейти к оплате</span>&nbsp;&nbsp;
             <span class="price"data-bind="text: Utils.formatPrice(itemsToBuy.totalCost)">33 770</span>
             <span class="rur">o</span>

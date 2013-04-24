@@ -60,6 +60,7 @@ class OrderBooking extends CActiveRecord
         return array(
             //array('timestamp', 'required'),
             array('email, phone, userId, partnerId', 'length', 'max' => 45),
+            array('unique_id', 'safe'),
             array('email', 'email'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -144,6 +145,7 @@ class OrderBooking extends CActiveRecord
     {
         $this->email = $booking->contactEmail;
         $this->phone = $booking->contactPhone;
+        $this->unique_id = $booking->unique_id;
     }
 
     public function getUserDescription()

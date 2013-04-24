@@ -39,9 +39,7 @@ class MakeBookingAction extends CAction
         {
             if ($tripItem instanceof HotelTripElement)
             {
-
                 $haveHotels = true;
-
             }
             elseif ($tripItem instanceof FlightTripElement)
             {
@@ -49,7 +47,8 @@ class MakeBookingAction extends CAction
                 $flightParams['cityFrom'] = $tripItem->flightVoyage->getDepartureCity(0)->code;
                 $flightParams['cityTo'] = $tripItem->flightVoyage->getArrivalCity(0)->code;
                 $dateTime = new DateTime($tripItem->flightVoyage->getDepartureDate(0));
-                if(!$valAirline){
+                if (!$valAirline)
+                {
                     $valAirline = $tripItem->flightVoyage->valAirline;
                 }
                 $dateTime->setTime(0, 0, 0);
@@ -102,22 +101,23 @@ class MakeBookingAction extends CAction
             }
         }
         $this->bookingForm = new BookingForm();
+        $this->bookingForm->tryToPrefetch();
         $tripStorage = new TripDataProvider();
         $trip = $tripStorage->getSortedCartItemsOnePerGroupAsJson();
         list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
-        $airline = 123;
         $alliance = null;
         $allianceAirlines = array();
-        if($valAirline && $valAirline->allianceId){
-            $airlines = Airline::model()->findAllByAttributes(array('allianceId'=>$valAirline->allianceId));
-            foreach($airlines as $airline){
+        if ($valAirline && $valAirline->allianceId)
+        {
+            $airlines = Airline::model()->findAllByAttributes(array('allianceId' => $valAirline->allianceId));
+            foreach ($airlines as $airline)
+            {
                 $allianceAirlines[$airline->code] = $airline->localRu;
             }
-            //echo $valAirline->allianceId;
             $alliance = Alliances::model()->findByPk($valAirline->allianceId);
-            //print_r($alliance);
-            //die();
-        }elseif($valAirline){
+        }
+        elseif ($valAirline)
+        {
             $allianceAirlines[$valAirline->code] = $valAirline->localRu;
         }
         $viewData = array(
@@ -134,7 +134,7 @@ class MakeBookingAction extends CAction
             'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
             'roomCounters' => (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false,
             'secretKey' => $secretKey,
-            'valAirline' =>$valAirline,
+            'valAirline' => $valAirline,
             'alliance' => $alliance,
             'allianceAirlines' => $allianceAirlines
         );

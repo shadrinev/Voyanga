@@ -88,7 +88,7 @@ abstract class TripElementWorkflow extends CComponent implements ITripElementWor
     {
         $bookingForm = Yii::app()->user->getState('bookingForm');
         if (is_object($bookingForm))
-            return array('email'=>$bookingForm->contactEmail, 'phone'=>$bookingForm->contactPhone);
+            return array('email'=>$bookingForm->contactEmail, 'phone'=>$bookingForm->contactPhone, 'unique_id'=>$bookingForm->unique_id);
         else
             return array('email'=>'', 'phone'=>'');
     }
