@@ -55,7 +55,7 @@
                     <div class="time"><span data-bind="text: $data[0].rtArrivalTime()">2:35</span>, <span class="date" data-bind="text: $data[0].rtArrivalDayMo()">28 мая</span></div>
                 </td>
                 <td class="tdAvia">
-                    <div class="airline" data-bind="text:$data[0].rtAirlineName">Аэрофлот</div>
+                    <div class="airline" data-bind="text:$data[0].rtFirstAirlineName()">Аэрофлот</div>
                     <div class="voyage"><span data-bind="text:$data[0].rtFlightCodesText()">Рейс</span>: <span class="number" data-bind="html: $data[0].rtFlightCodes()">S7-76</span></div>
                     <div class="class">Класс: <span class="classMine" data-bind='text: $data[0].serviceClassReadable'>Эконом</span></div>
                 </td>
