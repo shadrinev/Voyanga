@@ -50,9 +50,9 @@ class Airport extends CActiveRecord
             {
                 //Yii::log('Unknown airport ' . $code . ' ', CLogger::LEVEL_INFO, 'application.db.missing.airports');
                 self::$notFoundCodes[$code] = $code;
-                //throw new CException(Yii::t('application', 'Airport with code {code} not found', array(
-                //    '{code}' => $code
-                //)));
+                throw new CException(Yii::t('application', 'Airport with code {code} not found', array(
+                    '{code}' => $code
+                )), City::EXCEPTION_NO_MESSAGE);
             }
         }
     }

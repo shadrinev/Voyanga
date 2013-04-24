@@ -311,7 +311,9 @@ class GDSNemoAgency extends CComponent
                     catch (Exception $e)
                     {
                         Yii::log('Error while parsing gds nemo results: '.$e->getMessage());
-                        Yii::app()->RSentryException->logException($e,$e->getMessage());
+                        if(!($e->getCode() == City::EXCEPTION_NO_MESSAGE)){
+                            Yii::app()->RSentryException->logException($e,$e->getMessage());
+                        }
                         $needSave = false;
                     }
                 }

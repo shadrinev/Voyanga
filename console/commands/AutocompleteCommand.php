@@ -17,35 +17,140 @@ EOD;
     {
         if ($type == 'cities')
         {
-            $result = array();
+
+
             $popularCitiesCodes = $this->getPopularCitiesIds();
-            $criteria = new CDbCriteria();
-            $criteria->addInCondition('id', $popularCitiesCodes);
-            $criteria->order = 'position desc';
-            $cities = City::model()->findAll($criteria);
-            foreach ($cities as $i=>$city)
-            {
-                if ($i%100==0) echo $i."\n";
-                $one = array(
-                    'value' => $city->localRu,
-                    'tokens' => $this->getTokensForCity($city),
-                    'code' => $city->code,
-                    'country' => $city->country->localRu,
-                    'name' => $city->caseNom,
-                    'nameAcc' => $city->caseAcc,
-                    'nameGen' => $city->caseGen,
-                    'namePre' => $city->casePre,
-                );
-                $result[] = $one;
+            echo "End make logs\n";
+            $connection=Yii::app()->db;
+            $places = $this->getPlaces();
+            foreach($places as $place){
+                if($place['aviaCitiesIds']){
+                    foreach($place['aviaCitiesIds'] as $cityId){
+                        $popularCitiesCodes[$cityId] = $cityId;
+                    }
+                }
+                if($place['hotelCitiesIds']){
+                    foreach($place['hotelCitiesIds'] as $cityId){
+                        $popularCitiesCodes[$cityId] = $cityId;
+                    }
+                }
             }
-            $jsonResult = json_encode($result, JSON_UNESCAPED_UNICODE);
+            //print_r($popularCitiesCodes);
+            //die();
+            $sql = 'SELECT id,localRu FROM `country`';
+            $command=$connection->createCommand($sql);
+            $dataReader=$command->query();
+            $countries = array();
+            while(($row=$dataReader->read())!==false) {
+                $countries[$row['id']] = $row;
+            }
+            $sql = 'SELECT * FROM `city` WHERE id IN ('.join(',',$popularCitiesCodes).') ORDER BY position desc';
+            $command=$connection->createCommand($sql);
+            $dataReader=$command->query();
+            //$command->execute();
+            $i = 0;
+            $result = array();
+            $cityIdMap = array();
+            while(($row=$dataReader->read())!==false) {
+                $one = array(
+                    'value' => $row['localRu'],
+                    'tokens' => $this->getTokensForCity($row),
+                    'code' => $row['code'],
+                    'country' => $countries[$row['countryId']]['localRu'],
+                    'name' => $row['caseNom'],
+                    'nameAcc' => $row['caseAcc'],
+                    'nameGen' => $row['caseGen'],
+                    'namePre' => $row['casePre'],
+                    't' => 1,
+                    'i'=>$i
+                );
+                $result[$i] = $one;
+                $cityIdMap[$row['id']] = $i;
+                $i++;
+            }
+            $placeResult = array();
+            foreach($places as $ind=>$place){
+
+                $country = '';
+                if($place['aviaCitiesIds']){
+                    $citiesIds = array();
+                    foreach($place['aviaCitiesIds'] as $cityId){
+                        $citiesIds[] = $cityIdMap[$cityId];
+                        if(!$country){
+                            $country = $result[$cityIdMap[$cityId]]['country'];
+                        }
+                    }
+                    $place['aviaCitiesIds'] = $citiesIds;
+                }
+                if($place['hotelCitiesIds']){
+                    $citiesIds = array();
+                    foreach($place['hotelCitiesIds'] as $cityId){
+                        $citiesIds[] = $cityIdMap[$cityId];
+                        if(!$country){
+                            $country = $result[$cityIdMap[$cityId]]['country'];
+                        }
+                    }
+                    $place['hotelCitiesIds'] = $citiesIds;
+                }
+                $one = array(
+                    'value' => $place['localRu'],
+                    'tokens' => array($place['localRu'],$place['localEn']),
+                    'code' => '',
+                    'country' => $country,
+                    'name' => $place['caseNom'],
+                    'nameAcc' => $place['caseAcc'],
+                    'nameGen' => $place['caseGen'],
+                    'namePre' => $place['casePre'],
+                    'aviaIds' => $place['aviaCitiesIds'],
+                    'hotelIds' => $place['hotelCitiesIds'],
+                    't' => 2,
+                );
+                $placeResult[] = $one;
+            }
+            echo "Cityes added ".count($result).' '.count($placeResult)."\n";
+
+            $jsonResult = json_encode($result);
             $this->saveToOutputFolder($jsonResult);
+            $jsonResult = json_encode($placeResult);
+            $this->saveToOutputFolder($jsonResult,'places.json');
         }
         else
         {
             echo "Unknown type\n";
             echo $this->getHelp();
         }
+    }
+
+    public function getPlaces()
+    {
+        $connection=Yii::app()->db;
+
+        $sql = 'SELECT * FROM `place`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        //$command->execute();
+        $places = array();
+        while(($row=$dataReader->read())!==false) {
+            $places[$row['id']] = $row;
+            $places[$row['id']]['aviaCitiesIds'] = array();
+            $places[$row['id']]['hotelCitiesIds'] = array();
+        }
+
+        $sql = 'SELECT * FROM `city_has_place`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        while(($row=$dataReader->read())!==false) {
+            $places[$row['placeId']]['hotelCitiesIds'][$row['cityId']] = $row['cityId'];
+        }
+
+        $sql = 'SELECT * FROM `avia_city_has_place`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->query();
+        while(($row=$dataReader->read())!==false) {
+            $places[$row['placeId']]['aviaCitiesIds'][$row['cityId']] = $row['cityId'];
+        }
+
+        return $places;
     }
 
     public function actionConvert()
@@ -72,23 +177,23 @@ EOD;
         {
             $fromId = intval($direct->_id['departureCityId']);
             $toId = intval($direct->_id['arrivalCityId']);
-            $result[] = $fromId;
-            $result[] = $toId;
+            $result[$fromId] = $fromId;
+            $result[$toId] = $toId;
         }
-        $result = array_unique($result);
+        //$result = array_unique($result);
         return $result;
     }
 
-    private function getTokensForCity(City $city)
+    private function getTokensForCity($cityRow)
     {
-        return array($city->localRu, $city->localEn, $city->code);
+        return array($cityRow['localRu'], $cityRow['localEn'], $cityRow['code']);
     }
 
-    private function saveToOutputFolder($result)
+    private function saveToOutputFolder($result,$filename = 'cities.json')
     {
         $folderAlias = 'frontend.www.js';
         $folder = Yii::getPathOfAlias($folderAlias);
-        $filename = 'cities.json';
+        //$filename = 'cities.json';
         file_put_contents($folder . DIRECTORY_SEPARATOR . $filename, $result);
     }
 }
