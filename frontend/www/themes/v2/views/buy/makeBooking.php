@@ -56,14 +56,25 @@
     </div>
     <div class="lineUp" <?php if (isset($_COOKIE['credentials-cross'])) echo 'style="display: none"' ?>>
         <a href="#" class="btn-close"></a>
-        <div class="ico-aviasales" style="display: none"></div>
-        <div class="ico-buruki" style="display: none"></div>
-        <div class="ico-skyscanner" style="display: none"></div>
+        <?php $partner = Partner::getCurrentPartner(); $logo = false; ?>
+        <?php if (($partner) && ($partner->name=='aviasales')): ?>
+            <?php $logo = true; ?>
+            <div class="ico-aviasales"></div>
+        <?php elseif (($partner) && ($partner->name=='buruki')): ?>
+            <?php $logo = true; ?>
+            <div class="ico-buruki"></div>
+        <?php elseif (($partner) && ($partner->name=='skyscanner')): ?>
+            <?php $logo = true; ?>
+            <div class="ico-skyscanner"></div>
+        <?php endif ?>
         <div class="center-block">
             <table class="advantageTable">
                 <tr>
                     <td class="first">
-
+                        <?php if (!$logo): ?>
+                        <strong>Почему <span class="text-ticket1">билеты</span><br>
+                            покупают у нас?</strong>
+                        <?php endif ?>
                     </td>
                     <td>
                         <span class="ico-price"></span>
