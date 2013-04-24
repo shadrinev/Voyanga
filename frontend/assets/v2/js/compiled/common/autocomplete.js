@@ -18,6 +18,17 @@ ko.bindingHandlers.autocomplete = {
       engine: Hogan
     });
     $(element).on('typeahead:selected typeahead:autocompleted', function(e, data) {
+      var city, dataset, ind, _i, _len, _ref;
+      voyanga_debug('allinone', $(element).data(), data, e);
+      dataset = $(element).data('ttView').datasets[0];
+      if (data.t === 2) {
+        _ref = data.aviaIds;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          ind = _ref[_i];
+          city = dataset.itemHash[dataset.uniqFindId(ind, '/js/cities.json')].datum;
+          console.log('avia in place', ind, dataset.uniqFindId(ind, '/js/cities.json'), city);
+        }
+      }
       valueAccessor().iata(data.code);
       valueAccessor().readable(data.name);
       valueAccessor().readableGen(data.nameGen);
