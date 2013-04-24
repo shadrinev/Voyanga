@@ -143,6 +143,7 @@ class FlightBookingPassport extends CActiveRecord
         $this->lastName = $passport->lastName;
         $this->countryId = $passport->countryId;
         $this->number = $passport->number;
+        $this->original_number = $passport->originalSeriesNumber;
         $this->series = $passport->series;
         $this->genderId = $passport->genderId;
         $this->ticketNumber = $passport->ticketNumber;
