@@ -34,6 +34,7 @@ class BaseFlightPassportForm extends BasePassportForm
 
     public $series='';
     public $seriesNumber;
+    public $originalSeriesNumber;
 
     public $birthdayDay;
     public $birthdayMonth;
@@ -229,6 +230,7 @@ class BaseFlightPassportForm extends BasePassportForm
     public function handleFields()
     {
         $oldValue = $this->seriesNumber;
+        $this->originalSeriesNumber = $oldValue;
         $newValue = preg_replace('/[^А-Яа-яёЁA-Za-z0-9]/u', '', $oldValue);
         $newValue = str_replace('n', '', $newValue);
         $newValue = str_replace('N', '', $newValue);

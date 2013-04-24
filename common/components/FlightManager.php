@@ -151,7 +151,7 @@ class FlightManager
     static public function excludeFlight(FlightVoyage $flight)
     {
         $cacheId = self::getCacheIdForExcludedFlight($flight);
-        $expirationTime = Yii::app()->params['flight_search_cache_time'];
+        $expirationTime = Yii::app()->params['flight_search_cache_excluded_time'];
         Yii::app()->sharedCache->set($cacheId, 1, $expirationTime);
     }
 
