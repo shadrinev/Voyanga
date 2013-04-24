@@ -56,32 +56,34 @@
     </div>
     <div class="lineUp" <?php if (isset($_COOKIE['credentials-cross'])) echo 'style="display: none"' ?>>
         <a href="#" class="btn-close"></a>
+        <div class="ico-aviasales" style="display: none"></div>
+        <div class="ico-buruki" style="display: none"></div>
+        <div class="ico-skyscanner" style="display: none"></div>
         <div class="center-block">
             <table class="advantageTable">
                 <tr>
                     <td class="first">
-                        <strong>Почему <span class="text-ticket1">билеты</span><br>
-                        покупают у нас?</strong>
+
                     </td>
                     <td>
                         <span class="ico-price"></span>
                         Окончательная цена,<br>
-                        никаких комиссий
+                        нет комиссий
                     </td>
                     <td>
                         <span class="ico-secqury"></span>
                         Безопасность платежей,<br>
-                        оплата Visa или Mastercard
+                        международные стандарты
                     </td>
                     <td>
                         <span class="ico-time"></span>
-                        Моментальное оформление,<br>
+                        Быстрое оформление,<br>
                         <span class="text-ticket2">билет</span> ваш через 2 минуты
                     </td>
                     <td>
                         <span class="ico-helps"></span>
                         Помощь в решении<br>
-                        любых вопросов
+                        любых проблем
                     </td>
                 </tr>
             </table>
