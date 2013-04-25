@@ -185,7 +185,7 @@
     <?php if ((!$hide) && (!$roomCounters)): ?>
         <tr class="trDurationPadding">
             <td class="tdLastname" colspan="2">
-                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :' авиакомпании');?>', checked: <?php if (strlen($model->bonusCard)>0) echo 1; else echo 0 ?>}">
+                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' альянса '.$alliance->name :' авиакомпании');?>', checked: <?php if (strlen($model->bonusCard)>0) echo 1; else echo 0 ?>}">
             </td>
             <td class="tdSex"></td>
             <td class="tdBirthday"></td>
