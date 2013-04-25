@@ -39,7 +39,7 @@ class TourBuilderForm extends CFormModel
 
     public function init()
     {
-        $this->setStartCityName('Санкт-Петербург');
+        $this->setStartCityName('LED');
         $this->setEventStartCities();
         $this->setRooms();
     }
@@ -100,7 +100,7 @@ class TourBuilderForm extends CFormModel
     public function setStartCityName($value)
     {
         $items = City::getCityByCode($value);
-        $this->startCityModel = $items[0];
+        $this->startCityModel = $items;
     }
 
     public function attributeLabels()
