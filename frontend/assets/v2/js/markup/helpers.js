@@ -303,6 +303,7 @@ function onFocusInput() {
         }
     });
 
+
 }
 $(window).load(onFocusInput);
 function showUserMenu() {

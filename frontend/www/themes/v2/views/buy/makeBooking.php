@@ -173,7 +173,7 @@
                 <span class="l"></span>
             </div>
             <div class="text">
-                Подождите, бронирование займет от 5 до 30 секунд
+                Подождите, бронирование займет от <strong>5 до 30 секунд</strong>
             </div>
         </div>
         <div class="clear"></div>
