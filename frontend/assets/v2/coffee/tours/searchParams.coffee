@@ -248,7 +248,10 @@ class TourSearchParams
       @activeSP = @complexSP
       @complex = true
     @activeSP.fromString data
-  
+    @flightHash = @activeSP.flightHash
+    @eventId = @activeSP.eventId
+    @orderId = @activeSP.orderId
+      
   fromObject: (data)->
     @simpleSP.fromObject data
 

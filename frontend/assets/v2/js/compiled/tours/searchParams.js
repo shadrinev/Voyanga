@@ -395,7 +395,10 @@ TourSearchParams = (function() {
       this.activeSP = this.complexSP;
       this.complex = true;
     }
-    return this.activeSP.fromString(data);
+    this.activeSP.fromString(data);
+    this.flightHash = this.activeSP.flightHash;
+    this.eventId = this.activeSP.eventId;
+    return this.orderId = this.activeSP.orderId;
   };
 
   TourSearchParams.prototype.fromObject = function(data) {
