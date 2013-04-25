@@ -24,6 +24,11 @@ ko.bindingHandlers.checkbox = {
     htm += '</div>';
     htm += '</label>';
     new_el = $(htm);
+    if (checked) {
+      $(element).attr('checked', 'checked');
+    } else {
+      $(element).removeAttr('checked');
+    }
     new_el.click(function(e) {
       if ($(e.target).is('a')) {
         return;

@@ -105,14 +105,15 @@ EOD;
                     'hotelIds' => $place['hotelCitiesIds'],
                     't' => 2,
                 );
-                $placeResult[] = $one;
+                //$placeResult[] = $one;
+                $result[] = $one;
             }
             echo "Cityes added ".count($result).' '.count($placeResult)."\n";
 
-            $jsonResult = json_encode($result);
+            $jsonResult = json_encode($result,JSON_UNESCAPED_UNICODE);
             $this->saveToOutputFolder($jsonResult);
-            $jsonResult = json_encode($placeResult);
-            $this->saveToOutputFolder($jsonResult,'places.json');
+            //$jsonResult = json_encode($placeResult);
+            //$this->saveToOutputFolder($jsonResult,'places.json');
         }
         else
         {

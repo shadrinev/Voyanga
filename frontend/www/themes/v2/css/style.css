@@ -4033,6 +4033,7 @@ a.whereData span {
     font-size: 14px;
     color: #323842;
     padding-left: 10px;
+    width: 188px;
 }
 .lineUp .advantageTable td {
     height: 62px;
@@ -4046,6 +4047,30 @@ a.whereData span {
     right: 14px;
     top: 7px;
     z-index: 3;
+}
+.lineUp .ico-aviasales {
+    width: 176px;
+    height: 92px;
+    background: url(../images/ico_partners_aviasales.png) no-repeat;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.lineUp .ico-buruki {
+    width: 176px;
+    height: 92px;
+    background: url(../images/ico_partners_buruki.png) no-repeat;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.lineUp .ico-skyscanner {
+    width: 176px;
+    height: 92px;
+    background: url(../images/ico_partners_skyscanner.png) no-repeat;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 .andOthers {
     color: #292D35;

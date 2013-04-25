@@ -204,7 +204,7 @@
         </tr>
         <tr>
             <td class="tdLastname">
-                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' '.$alliance->name.' альянса' :' авиакомпании');?>', checked: 0}">
+                <input type="checkbox" data-bind="checkbox:{label: 'Есть бонусная карта<?php echo ''.($alliance ? ' альянса '.$alliance->name :' авиакомпании');?>', checked: 0}">
             </td>
             <td class="tdName">
 
