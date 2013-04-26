@@ -4207,3 +4207,10 @@ a.whereData span {
     top: 0;
     width: 5%;
 }
+
+.iphone .pressButton, .ipad .pressButton {
+    line-height: 31px;
+}
+.iphone .pressButton .rur, .ipad .pressButton .rur  {
+    line-height: 27px;
+}
