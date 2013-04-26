@@ -44,7 +44,7 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
 </head>
-<body style="width: 100%;">
+<body>
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
