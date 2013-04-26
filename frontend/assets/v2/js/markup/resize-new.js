@@ -1827,7 +1827,7 @@ function ifIpadLoad() {
         }
 
         if ($('body').hasClass('pd')) {
-            $(this).find('wrapper').css('min-width', '980px').css('width', '980px').css('overflow', 'hidden');
+            $('body').find('wrapper').css('min-width', '980px').css('width', '980px').css('overflow', 'hidden');
         }
         if ($('.maps').length > 0 && $('.maps').is(':visible')) {
             if ($('.maps').find('.layers').length < 1) {
