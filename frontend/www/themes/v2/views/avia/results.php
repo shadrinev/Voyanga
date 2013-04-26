@@ -79,9 +79,9 @@
     <!-- END FINISH -->
     <div class="clear"></div>
     <div class="airlinesLogo">
-        <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+        <img data-bind="attr: {'src': '/img/airline_logos/' + firstAirline() +'.png'}" >
         <br>
-        <span data-bind="text:airlineName">Россия</span>
+        <span data-bind="text:firstAirlineName()">Россия</span>
     </div>
 </div>
 <!-- END DATE TIME CITY -->
@@ -154,9 +154,9 @@
     <!-- END FINISH -->
     <div class="clear"></div>
     <div class="airlinesLogo" style="margin-top: -40px;">
-      <img data-bind="attr: {'src': '/img/airline_logos/' + airline +'.png'}" >
+      <img data-bind="attr: {'src': '/img/airline_logos/' + rtFirstAirline() +'.png'}" >
       <br>
-      <span data-bind="text:airlineName">Россия</span>
+      <span data-bind="text:rtFirstAirlineName()">Россия</span>
     </div>
 </div>
 <!-- END DATE TIME CITY -->
