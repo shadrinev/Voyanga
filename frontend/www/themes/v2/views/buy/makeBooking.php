@@ -182,7 +182,8 @@
     <div class="payCardPal" style="display: none;">
 
         <div class="centerBlock">
-            <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Билеты успешно забронированы</h3>
+            <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Билеты успешно забронированы<br>
+            <span style="font-size: 12px;">Цена билета изменилась, новая цена 10 115</span> <span class="rur" style="font-size: 12px;">o</span></h3>
             <table class="headerTitle">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
@@ -196,11 +197,6 @@
                     </td>
                     <td style="text-align: right; font-size: 12px;">
                         <span style="line-height: 18px;">Не закрывайте страницу до завершения оплаты</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="line-height: 18px;">
-                        Цена билета увеличелась потому что авиакомпания не в лучшем положение, теперь ваша цена 20 000 <span class="rur">o</span>
                     </td>
                 </tr>
             </table>
