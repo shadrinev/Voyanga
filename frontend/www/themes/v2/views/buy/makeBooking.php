@@ -173,7 +173,7 @@
                 <span class="l"></span>
             </div>
             <div class="text">
-                Подождите, бронирование займет от 5 до 30 секунд
+                Это займет от <strong>5 до 30 секунд</strong>
             </div>
         </div>
         <div class="clear"></div>
@@ -192,10 +192,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <span style="line-height: 18px;">Билеты будут отправлены по электронной почте сразу после оплаты.</span>
+                        <span style="line-height: 18px;">Билеты будут отправлены по электронной почте сразу после оплаты</span>
                     </td>
                     <td style="text-align: right; font-size: 12px;">
-                        <span style="line-height: 18px;">Не закрывайте страницу до завершения оплаты.</span>
+                        <span style="line-height: 18px;">Не закрывайте страницу до завершения оплаты</span>
                     </td>
                 </tr>
             </table>

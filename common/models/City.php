@@ -396,13 +396,13 @@ class City extends CActiveRecord
         if(Airport::$notFoundCodes || City::$notFoundCodes){
             $codes = array_merge(Airport::$notFoundCodes,City::$notFoundCodes);
             foreach($codes as $code=>$val){
-                $codes[$code] = "'{$val}'";
+                $codes[$code] = "('{$val}')";
             }
 
             //echo "try insert ".implode(',',$codes);die();
             $connection=Yii::app()->db;
 
-            $sql = 'INSERT IGNORE INTO airport_codes (airportCode) VALUES ('.implode(',',$codes).')';
+            $sql = 'INSERT IGNORE INTO airport_codes (airportCode) VALUES '.implode(',',$codes);
             //$sql .= " (".implode(',',$in).")";
             //$sql .= " ON DUPLICATE KEY UPDATE rating=VALUES(rating),minPrice=VALUES(minPrice)";
             $command=$connection->createCommand($sql);

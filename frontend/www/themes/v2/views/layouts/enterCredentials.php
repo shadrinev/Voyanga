@@ -54,7 +54,7 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
     window.use_transport = '<?php echo Partner::getCurrentPartnerUseTransport() ?>';
 </script>
 
-<div class="wrapper">
+<div class="wrapper" style="min-width: 980px; width:980px; overflow: hidden;">
 
     <?php echo $this->renderPartial('//layouts/_header'); ?>
 
