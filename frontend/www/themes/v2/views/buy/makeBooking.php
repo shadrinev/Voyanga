@@ -198,6 +198,11 @@
                         <span style="line-height: 18px;">Не закрывайте страницу до завершения оплаты</span>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2" style="line-height: 18px;">
+                        Ты лох!!!
+                    </td>
+                </tr>
             </table>
             <table class="mainTable">
                 <tr>
