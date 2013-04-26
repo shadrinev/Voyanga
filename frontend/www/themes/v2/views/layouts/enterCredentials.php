@@ -44,7 +44,7 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyBdPg3WqRnITMLhY4OeXyk4bCa4qBEdF8U&sensor=false">
     </script>
 </head>
-<body>
+<body class="pd">
 <?php $this->renderPartial('//layouts/_counters'); ?>
 <script type="text/javascript">
     window.currentCityCode = '<?php echo Geoip::getCurrentCity()->code;?>';
@@ -54,7 +54,7 @@ Yii::app()->clientScript->registerScriptFile('/js/tourPage.js');
     window.use_transport = '<?php echo Partner::getCurrentPartnerUseTransport() ?>';
 </script>
 
-<div class="wrapper" style="min-width: 980px; width:980px; overflow: hidden;">
+<div class="wrapper">
 
     <?php echo $this->renderPartial('//layouts/_header'); ?>
 
