@@ -183,7 +183,8 @@
 
         <div class="centerBlock">
             <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Билеты успешно забронированы<br>
-            <span style="font-size: 12px;">Цена билета изменилась, новая цена 10 115</span> <span class="rur" style="font-size: 12px;">o</span></h3>
+            <div style="font-size: 12px;">Цена билета изменилась, новая цена 10 115 <span class="rur" style="font-size: 12px;">o</span></div>
+            </h3>
             <table class="headerTitle">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
