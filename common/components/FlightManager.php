@@ -27,7 +27,7 @@ class FlightManager
                         unset($newFlight->economFreeWeight);
                         unset($newFlight->businessFreeWeight);
                         unset($newFlight->economDescription);
-                        unset($newFlight->businessDescription);                        
+                        unset($newFlight->businessDescription);
                     }
                     else
                     {

@@ -57,6 +57,8 @@ class FlightVoyageStack
                 foreach ($params['flights'] as $oFlightParams)
                 {
                     $oFlightVoyage = new FlightVoyage($oFlightParams);
+                    if (!FlightManager::isIncluded($oFlightVoyage))
+                        continue;
                     $bNeedSave = TRUE;
 
                     $priceInfo = FlightPricing::getPriceInfo($oFlightVoyage);
@@ -66,14 +68,22 @@ class FlightVoyageStack
                     //If already have same flight select cheaper flight
                     if (isset($flightsCodes[$flightCodes]))
                     {
+                        //exclude current voyage because it already saved
+                        $bNeedSave = FALSE;
+
                         $oldPriceInfo = FlightPricing::getPriceInfo($this->flightVoyages[$flightsCodes[$flightCodes]]);
                         if ($priceInfo['fullPrice'] < $oldPriceInfo['fullPrice'])
                         {
                             //$oFlightVoyage->setPriceInfo($priceInfo);
                             //replace already saved flight voyage
                             $this->flightVoyages[$flightsCodes[$flightCodes]] = $oFlightVoyage;
-                            //exclude current voyage because it already saved
-                            $bNeedSave = FALSE;
+                        }
+
+                        # When price is equal prefer galileo
+                        if ($priceInfo['fullPrice'] == $oldPriceInfo['fullPrice']) {
+                            if($oFlightVoyage->webService == 'GALILEO') {
+                                $this->flightVoyages[$flightsCodes[$flightCodes]] = $oFlightVoyage;
+                            }
                         }
                     }
 
@@ -225,10 +235,7 @@ class FlightVoyageStack
         foreach ($this->flightVoyages as $flightVoyage)
         {
             $res = $flightVoyage->getJsonObject();
-            if (FlightManager::isIncluded($flightVoyage))
-            {
-                $ret['flightVoyages'][] = $res;
-            }
+            $ret['flightVoyages'][] = $res;
         }
         $ret = CMap::mergeArray($ret, $inject);
         return json_encode($ret);
@@ -240,10 +247,7 @@ class FlightVoyageStack
         foreach ($this->flightVoyages as $flightVoyage)
         {
             $res = $flightVoyage->getJsonObject();
-            if (FlightManager::isIncluded($flightVoyage))
-            {
-                $ret['flightVoyages'][] = $res;
-            }
+            $ret['flightVoyages'][] = $res;
         }
         return $ret;
     }
