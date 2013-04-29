@@ -24,15 +24,16 @@ EOD;
             foreach($places as $place){
                 if($place['aviaCitiesIds']){
                     foreach($place['aviaCitiesIds'] as $cityId){
-                        $popularCitiesCodes[$cityId] = $cityId;
+                        $popularCitiesCodes[] = $cityId;
                     }
                 }
                 if($place['hotelCitiesIds']){
                     foreach($place['hotelCitiesIds'] as $cityId){
-                        $popularCitiesCodes[$cityId] = $cityId;
+                        $popularCitiesCodes[] = $cityId;
                     }
                 }
             }
+            $popularCitiesCodes = array_unique($popularCitiesCodes);
 
             $sql = 'SELECT id,localRu FROM `country`';
             $command=$connection->createCommand($sql);
@@ -41,7 +42,7 @@ EOD;
             while(($row=$dataReader->read())!==false) {
                 $countries[$row['id']] = $row;
             }
-            $sql = 'SELECT * FROM `city` WHERE id IN ('.join(',',$popularCitiesCodes).') ORDER BY position desc';
+            $sql = 'SELECT * FROM `city` WHERE id IN ('.join(',',$popularCitiesCodes).') ORDER BY FIELD (id, '.join(',',$popularCitiesCodes).')';
             $command=$connection->createCommand($sql);
             $dataReader=$command->query();
             $i = 0;
@@ -173,14 +174,14 @@ EOD;
             $toId = intval($direct->_id['arrivalCityId']);
             if (in_array($fromId, $existed))
             {
-                $result[$fromId] = $fromId;
+                $result[] = $fromId;
             }
             if (in_array($toId, $existed))
             {
-                $result[$toId] = $toId;
+                $result[] = $toId;
             }
         }
-        return $result;
+        return array_unique($result);
     }
 
 
