@@ -453,18 +453,24 @@ class OrderComponent extends CApplicationComponent
                 {
                     if ($item->hotelBookerId)
                     {
-                        if ($pdfFileInfo =  $pdf->forHotelItem($item, $this->isTour))
-                            $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
-                        else
-                            return false;
+                        $status = $item->getHotelBookerStatus();
+                        if(strpos($status,'done') !== false){
+                            if ($pdfFileInfo =  $pdf->forHotelItem($item, $this->isTour))
+                                $pdfFileNames[] = array('type'=>'hotel','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
+                            else
+                                return false;
+                        }
                     }
                 }
                 elseif ($item instanceof FlightTripElement)
                 {
                     if ($item->flightBookerId)
                     {
-                        if ($pdfFileInfo =  $pdf->forFlightItem($item, $this->isTour))
-                            $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
+                        $status = $item->getFlightBookerStatus();
+                        if(strpos($status,'done') !== false){
+                            if ($pdfFileInfo =  $pdf->forFlightItem($item, $this->isTour))
+                                $pdfFileNames[] = array('type'=>'avia','filename'=>$pdfFileInfo['realName'],'visibleName'=>$pdfFileInfo['visibleName']);
+                        }
                     }
                 }
             }
