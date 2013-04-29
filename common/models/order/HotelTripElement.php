@@ -144,6 +144,13 @@ class HotelTripElement extends TripElement
         );
     }
 
+    public function getHotelBookerStatus()
+    {
+        $hotelBookerId = $this->hotelBookerId;
+        $hotelBooker = HotelBooker::model()->findByPk($hotelBookerId);
+        return $hotelBooker->status;
+    }
+
     public function setPassports($booking, $roomsPassports)
     {
         $this->passports = new HotelPassportForm();
