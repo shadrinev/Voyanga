@@ -157,6 +157,13 @@ class FlightTripElement extends TripElement
         );
     }
 
+    public function getFlightBookerStatus()
+    {
+        $flightBookerId = $this->flightBookerId;
+        $flightBooker = FlightBooker::model()->findByPk($flightBookerId);
+        return $flightBooker->status;
+    }
+
     public function setPassports($adults, $children=array(), $infants=array())
     {
         $this->passengerPassports = new PassengerPassportForm();
