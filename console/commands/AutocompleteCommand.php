@@ -159,8 +159,32 @@ EOD;
         $result = file_put_contents($folder . DIRECTORY_SEPARATOR . $filename2, $result2);
     }
 
-
     private function getPopularCitiesIds()
+    {
+        Yii::import('site.common.components.statistic.reports.*');
+        $report = new PopularityOfFlightsSearch();
+        $model = ReportExecuter::run($report);
+        $directs = $model->findAll();
+        $result = array();
+        $existed = $this->getExistedCitiesIds();
+        foreach ($directs as $i=>$direct)
+        {
+            $fromId = intval($direct->_id['departureCityId']);
+            $toId = intval($direct->_id['arrivalCityId']);
+            if (in_array($fromId, $existed))
+            {
+                $result[$fromId] = $fromId;
+            }
+            if (in_array($toId, $existed))
+            {
+                $result[$toId] = $toId;
+            }
+        }
+        return $result;
+    }
+
+
+    private function getExistedCitiesIds()
     {
         $connection=Yii::app()->db;
         $sql = 'SELECT distinct `from`,`to` FROM `flight_cache`';
@@ -183,6 +207,7 @@ EOD;
 
         return array_keys($fids);
     }
+
 
     private function getTokensForCity($cityRow)
     {
