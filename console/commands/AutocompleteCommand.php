@@ -17,10 +17,8 @@ EOD;
     {
         if ($type == 'cities')
         {
-
-
             $popularCitiesCodes = $this->getPopularCitiesIds();
-            echo "End make logs\n";
+            echo "End getting ids from cache logs\n";
             $connection=Yii::app()->db;
             $places = $this->getPlaces();
             foreach($places as $place){
@@ -35,8 +33,7 @@ EOD;
                     }
                 }
             }
-            //print_r($popularCitiesCodes);
-            //die();
+
             $sql = 'SELECT id,localRu FROM `country`';
             $command=$connection->createCommand($sql);
             $dataReader=$command->query();
@@ -47,7 +44,6 @@ EOD;
             $sql = 'SELECT * FROM `city` WHERE id IN ('.join(',',$popularCitiesCodes).') ORDER BY position desc';
             $command=$connection->createCommand($sql);
             $dataReader=$command->query();
-            //$command->execute();
             $i = 0;
             $result = array();
             $cityIdMap = array();
@@ -105,15 +101,12 @@ EOD;
                     'hotelIds' => $place['hotelCitiesIds'],
                     't' => 2,
                 );
-                //$placeResult[] = $one;
                 $result[] = $one;
             }
-            echo "Cityes added ".count($result).' '.count($placeResult)."\n";
+            echo "Cities added ".count($result).' '.count($placeResult)."\n";
 
             $jsonResult = json_encode($result,JSON_UNESCAPED_UNICODE);
             $this->saveToOutputFolder($jsonResult);
-            //$jsonResult = json_encode($placeResult);
-            //$this->saveToOutputFolder($jsonResult,'places.json');
         }
         else
         {
@@ -129,7 +122,7 @@ EOD;
         $sql = 'SELECT * FROM `place`';
         $command=$connection->createCommand($sql);
         $dataReader=$command->query();
-        //$command->execute();
+
         $places = array();
         while(($row=$dataReader->read())!==false) {
             $places[$row['id']] = $row;
@@ -169,32 +162,43 @@ EOD;
 
     private function getPopularCitiesIds()
     {
-        Yii::import('site.common.components.statistic.reports.*');
-        $report = new PopularityOfFlightsSearch();
-        $model = ReportExecuter::run($report);
-        $directs = $model->findAll();
-        $result = array();
-        foreach ($directs as $i=>$direct)
+        $connection=Yii::app()->db;
+        $sql = 'SELECT distinct `from`,`to` FROM `flight_cache`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->queryAll();
+        $fids = array();
+        foreach ($dataReader as $one)
         {
-            $fromId = intval($direct->_id['departureCityId']);
-            $toId = intval($direct->_id['arrivalCityId']);
-            $result[$fromId] = $fromId;
-            $result[$toId] = $toId;
+            $fids[$one['from']] = 1;
+            $fids[$one['to']] = 1;
         }
-        //$result = array_unique($result);
-        return $result;
+
+        $sql = 'SELECT distinct `cityId` FROM `hotel_cache`';
+        $command=$connection->createCommand($sql);
+        $dataReader=$command->queryAll();
+        foreach ($dataReader as $one)
+        {
+            $fids[$one['cityId']] = 1;
+        }
+
+        return array_keys($fids);
     }
 
     private function getTokensForCity($cityRow)
     {
-        return array($cityRow['localRu'], $cityRow['localEn'], $cityRow['code']);
+        $airports = Airport::model()->findAll(array('condition'=>'cityId = '.$cityRow['id']));
+        $ret = array($cityRow['localRu'], $cityRow['localEn'], $cityRow['code']);
+        foreach ($airports as $a)
+        {
+            $ret[] = $a->code;
+        }
+        return $ret;
     }
 
-    private function saveToOutputFolder($result,$filename = 'cities.json')
+    private function saveToOutputFolder($result, $filename = 'cities.json')
     {
         $folderAlias = 'frontend.www.js';
         $folder = Yii::getPathOfAlias($folderAlias);
-        //$filename = 'cities.json';
         file_put_contents($folder . DIRECTORY_SEPARATOR . $filename, $result);
     }
 }

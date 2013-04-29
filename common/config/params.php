@@ -117,7 +117,6 @@ return CMap::mergeArray(array(
                 )
     ),
     'payonline.testMode' => false,
-
     'voidPaymentTimelimit' => 4*60*60,
 
 ), CMap::mergeArray( $commonParamsEnv, $commonParamsLocal));
