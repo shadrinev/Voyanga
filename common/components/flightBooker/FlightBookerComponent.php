@@ -173,6 +173,10 @@ class FlightBookerComponent extends CApplicationComponent
                 break;
             }
         }
+        //! Не нашли билет
+        if (!$flightVoyage)
+            return $this->status('bookingError');
+
         $flightVoyage->useAlternatePartnerCredentials = true;
         $this->flightBooker->flightVoyage = $flightVoyage;
         // book
