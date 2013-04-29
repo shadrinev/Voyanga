@@ -160,6 +160,8 @@ class FlightBookerComponent extends CApplicationComponent
         //! FIXME set current partner
         // Partner::
         $fs = new FlightSearch();
+        //! Не возымеет эффекта в случае если это не партнерский бук
+        ConfigManager:: $forcePartnerAndGalileo = true;
         $results = $fs->sendRequest($searchParams, false);
         //find similar
         $flightVoyage = false;
@@ -171,7 +173,7 @@ class FlightBookerComponent extends CApplicationComponent
                 break;
             }
         }
-
+        $flightVoyage->useAlternatePartnerCredentials = true;
         $this->flightBooker->flightVoyage = $flightVoyage;
         // book
         if($flightBookingResponse = $this->book_()) {
@@ -218,6 +220,9 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageTicketing()
     {
+        //! Если был ребукинг, тикетинг тоже должен пройти с альтернативными реквизитами
+        if($this->flightBooker->flightVoyage->useAlternatePartnerCredentials)
+            ConfigManager:: $forcePartnerAndGalileo = true;
         /** @var FlightBookingResponse $flightBookingResponse  */
         $flightTicketingParams = new FlightTicketingParams();
         $flightTicketingParams->nemoBookId = $this->flightBooker->nemoBookId;
@@ -225,7 +230,7 @@ class FlightBookerComponent extends CApplicationComponent
         $flightTicketingResponse = Yii::app()->gdsAdapter->FlightTicketing($flightTicketingParams);
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
         GDSNemoAgency::$requestIds = array();
-
+        ConfigManager:: $forcePartnerAndGalileo = false;
 #        VarDumper::dump($flightTicketingResponse);
         if($flightTicketingResponse->responseStatus == ResponseStatus::ERROR_CODE_NO_ERRORS)
         {

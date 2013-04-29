@@ -35,6 +35,9 @@ class FlightVoyage extends CApplicationComponent
     public $refundable;
     public $searchKey;
 
+    //! Использовать ли при тикетинге альтернативные реквизиты(с галилео)
+    public $useAlternatePartnerCredentials = false;
+
     private $_hash;
 
     /**
