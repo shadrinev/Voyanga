@@ -103,11 +103,29 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
+        if($this->book_())
+        {
+            $this->status('waitingForPayment');
+        }
+        else
+        {
+            $this->status('reBooking');
+        }
+    }
+
+    /**
+     * Бронируем вояж.
+     * FIXME узнать что делает book и переименовать один из методов
+     */
+    private function book_($fake=false) {
+        if($fake)
+            return false;
+        $flightVoyage = $this->flightBooker->flightVoyage;
         $flightBookingParams = new FlightBookingParams();
         $orderBooking = $this->flightBooker->orderBooking;
         $flightBookingParams->contactEmail = $orderBooking->email;
         $flightBookingParams->phoneNumber = $orderBooking->phone;
-        $flightBookingParams->flightId = $this->flightBooker->flightVoyage->flightKey;
+        $flightBookingParams->flightId = $flightVoyage->flightKey;
 
         foreach($this->flightBooker->flightBookingPassports as $passport)
         {
@@ -117,7 +135,7 @@ class FlightBookerComponent extends CApplicationComponent
             $flightBookingParams->addPassenger($passenger);
         }
 
-        $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams, $this->flightBooker->flightVoyage);
+        $flightBookingResponse = Yii::app()->gdsAdapter->FlightBooking($flightBookingParams, $flightVoyage);
 
         SWLogActiveRecord::$requestIds = array_merge(SWLogActiveRecord::$requestIds,GDSNemoAgency::$requestIds);
         GDSNemoAgency::$requestIds = array();
@@ -129,10 +147,36 @@ class FlightBookerComponent extends CApplicationComponent
             $this->flightBooker->timeout = date('y-m-d H:i:s',$flightBookingResponse->expiration);
             $this->flightBooker->flightVoyage->updateInfo($flightBookingResponse->updateInfo);
             $this->flightBooker->flightVoyage = $this->flightBooker->flightVoyage;
-            $this->status('waitingForPayment');
+            return true;
+        } else {
+            return false;
         }
-        else
-        {
+    }
+
+    //! Ищем тот же билет  и бронируем
+    public function stageReBooking() {
+        // do search
+        $searchParams = unserialize($this->flightBooker->searchParams);
+        //! FIXME set current partner
+        // Partner::
+        $fs = new FlightSearch();
+        $results = $fs->sendRequest($searchParams, false);
+        //find similar
+        $flightVoyage = false;
+        $targetKey = implode("_", $this->flightBooker->flightVoyage->getFlightCodes());
+        foreach ($results->flightVoyages as $result) {
+            $possibleKey = implode('_', $result->getFlightCodes());
+            if($targetKey == $possibleKey) {
+                $flightVoyage = $result;
+                break;
+            }
+        }
+
+        $this->flightBooker->flightVoyage = $flightVoyage;
+        // book
+        if($flightBookingResponse = $this->book_()) {
+            $this->status('waitingForPayment');
+        } else {
             $this->status('bookingError');
         }
     }

@@ -3,7 +3,8 @@ return array(
     'initial' => 'enterCredentials',
     'node' => array(
         array('id'=>'enterCredentials',         'transition'=> 'booking'),
-        array('id'=>'booking',                  'transition'=>'waitingForPayment,bookingError'),
+        array('id'=>'booking',                  'transition'=>'waitingForPayment,reBooking'),
+        array('id'=>'reBooking',                'transition'=>'waitingForPayment,bookingError'),
         array('id'=>'bookingError',             'transition'=>'error'),
         array('id'=>'waitingForPayment',        'transition'=>'paymentInProgress, paymentError,bookingTimeLimitError'),
         array('id'=>'paymentInProgress',        'transition'=>'paid,paymentCanceledError,paymentError,startPayment,bookingTimeLimitError'),
