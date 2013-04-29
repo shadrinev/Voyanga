@@ -103,7 +103,7 @@ class FlightBookerComponent extends CApplicationComponent
 
     public function stageBooking()
     {
-        if($this->book_(true))
+        if($this->book_())
         {
             $this->status('waitingForPayment');
         }
