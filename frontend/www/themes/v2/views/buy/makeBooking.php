@@ -183,7 +183,7 @@
 
         <div class="centerBlock">
             <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Билеты успешно забронированы
-            <div style="font-size: 13px;">Цена билета изменилась, новая цена 10 115 <span class="rur" style="font-size: 12px;">o</span></div>
+            <div style="font-size: 13px; display: none;" id="priceUpdatedAfterBooking">Цена билета изменилась, новая цена <span class='price'>10 115</span> <span class="rur" style="font-size: 12px;">o</span></div>
             </h3>
             <table class="headerTitle">
                 <tr>
