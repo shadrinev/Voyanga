@@ -119,14 +119,7 @@ class BuyController extends FrontendController
         {
             $flightBookerComponent = new FlightBookerComponent();
             $flightBookerComponent->setFlightBookerFromId($id);
-            try
-            {
-                $flightBookerComponent->status('canceledByUser');
-            }
-            catch (Exception $e)
-            {
-                //игнорируем
-            }
+            $flightBookerComponent->status('canceledByUser');
         }
     }
 
