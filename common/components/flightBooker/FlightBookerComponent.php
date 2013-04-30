@@ -187,6 +187,13 @@ class FlightBookerComponent extends CApplicationComponent
         }
     }
 
+    public function stageCanceledByUser()
+    {
+        $bookingId = $this->flightBooker->nemoBookId;
+        $result = Yii::app()->gdsAdapter->cancelBooking($bookingId);
+        $this->status('enterCredentials');
+    }
+
     public function stageWaitingForPayment()
     {
     }
@@ -363,7 +370,6 @@ class FlightBookerComponent extends CApplicationComponent
     public function setFlightBookerFromId($flightBookerId)
     {
         $this->flightBooker = FlightBooker::model()->findByPk($flightBookerId);
-
         if(!$this->flightBooker) throw new CException('FlightBooker with id '.$flightBookerId.' not found');
         $this->flightBooker->setFlightBookerComponent($this);
     }

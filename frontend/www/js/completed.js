@@ -6,6 +6,7 @@ function mapping(status)
 {
     var dictionary = {
         "booking" : "Бронирование",
+        "reBooking" : "Бронирование",
         "bookingError" : "Ошибка бронирования",
         "waitingForPayment" : "Ожидание оплаты",
         "paymentInProgress" : "Ожидание оплаты",
@@ -25,7 +26,8 @@ function mapping(status)
         "manualSuccess" : "скачать PDF",
         "confirmMoney" : "Ожидание оплаты",
         "done" : "скачать PDF",
-	"canceled": "Отменен",
+	    "canceled": "Отменен",
+	    "canceledByUser": "Отменен",
         "error" : "Ошибка"
     }
     if (dictionary[status] != "undefined")

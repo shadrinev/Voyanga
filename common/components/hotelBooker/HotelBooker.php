@@ -143,7 +143,7 @@ class HotelBooker extends SWLogActiveRecord
         return array(
             'orderBooking' => array(self::BELONGS_TO, 'OrderBooking', 'orderBookingId'),
             'bill' => array(self::BELONGS_TO, 'Bill', 'billId'),
-            'hotelBookingPassports' => array(self::HAS_MANY, 'HotelBookingPassport', 'hotelBookingId'),
+            'hotelBookingPassports' => array(self::HAS_MANY, 'HotelBookingPassport', 'hotelBookingId', 'condition'=>'is_actual=1'),
         );
     }
 

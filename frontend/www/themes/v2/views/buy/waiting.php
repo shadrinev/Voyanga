@@ -38,7 +38,10 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
     $(function(){
       "use strict";
       if(window.top)
-        window.top.app.itemsToBuy.trackBuyDone('<?= $order->getOrderBooking()->id ?>')
+      {
+          window.top.app.itemsToBuy.trackBuyDone('<?= $order->getOrderBooking()->id ?>')
+          window.top.disableWarning();
+      }
       var item, done=false;
       var blocks = ['waiting', 'show', 'fail'];
       var show = function(id) {

@@ -135,7 +135,8 @@ class FlightBooker extends SWLogActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'orderBooking' => array(self::BELONGS_TO, 'OrderBooking', 'orderBookingId'),
-            'flightBookingPassports' => array(self::HAS_MANY, 'FlightBookingPassport', 'flightBookingId'),
+            'flightBookingPassports' => array(self::HAS_MANY, 'FlightBookingPassport', 'flightBookingId', 'condition'=>'is_actual=1'),
+            'flightBookingPassportsAll' => array(self::HAS_MANY, 'FlightBookingPassport', 'flightBookingId'),
             'bill' => array(self::BELONGS_TO, 'Bill', 'billId'),
         );
     }

@@ -30,6 +30,7 @@ class MakeBookingAction extends CAction
 
         $dataProvider = new TripDataProvider();
         $dataProvider->restoreOrderBookingFromDb($this->orderBooking->id);
+        $this->markPreviousCredentialsAsInactive();
         $this->tripItems = $dataProvider->getSortedCartItems();
         $haveHotels = false;
         $haveFlights = false;
@@ -139,6 +140,29 @@ class MakeBookingAction extends CAction
             'allianceAirlines' => $allianceAirlines
         );
         $this->controller->render('makeBooking', $viewData);
+    }
+
+    private function markPreviousCredentialsAsInactive()
+    {
+        foreach ($this->orderBooking->flightBookers as $flightBooker)
+        {
+            $dbCriteria = new CDbCriteria();
+            $dbCriteria->addColumnCondition(array(
+                                                 'is_actual' => 1,
+                                                 'flightBookingId' => $flightBooker->id
+                                            ));
+            FlightBookingPassport::model()->updateAll(array('is_actual' => 0), $dbCriteria);
+        }
+
+        foreach ($this->orderBooking->hotelBookers as $hotelBooker)
+        {
+            $dbCriteria = new CDbCriteria();
+            $dbCriteria->addColumnCondition(array(
+                                                 'is_actual' => 1,
+                                                 'flightBookingId' => $hotelBooker->id
+                                            ));
+            HotelBookingPassport::model()->updateAll(array('is_actual' => 0), $dbCriteria);
+        }
     }
 
     private function weGotPassportsAndBooking()

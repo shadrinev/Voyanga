@@ -246,9 +246,9 @@ class BaseFlightPassportForm extends BasePassportForm
             $orderBooking = $this->getOrderBookingByUser($index);
         if (!$orderBooking)
             return;
-        if ((isset($orderBooking->flightBookers[0])) && (isset($orderBooking->flightBookers[0]->flightBookingPassports[0])))
+        if ((isset($orderBooking->flightBookers[0])) && (isset($orderBooking->flightBookers[0]->flightBookingPassportsAll[0])))
         {
-            $this->fillAttributes($orderBooking->flightBookers[0]->flightBookingPassports[0]);
+            $this->fillAttributes($orderBooking->flightBookers[0]->flightBookingPassportsAll[0]);
         }
     }
 
@@ -259,9 +259,9 @@ class BaseFlightPassportForm extends BasePassportForm
         if (!$unique_id)
             return;
         $criteria->together = true;
-        $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
+        $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassportsAll'=>array('joinType'=>'RIGHT JOIN'));
         $criteria->addCondition('firstName is not null');
-        $criteria->order='t.id desc, flightBookingPassports.id desc';
+        $criteria->order='t.id desc, flightBookingPassportsAll.id desc';
         $criteria->addCondition('unique_id=:uniq');
         $criteria->params = array(':uniq'=>$unique_id);
         $criteria->offset = $index;
@@ -279,9 +279,9 @@ class BaseFlightPassportForm extends BasePassportForm
         $criteria->addCondition('userId=:userId');
         $criteria->params = array(':userId'=>$userId);
         $criteria->together = true;
-        $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
+        $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassportsAll'=>array('joinType'=>'RIGHT JOIN'));
         $criteria->addCondition('firstName is not null');
-        $criteria->order='t.id desc, flightBookingPassports.id desc';
+        $criteria->order='t.id desc, flightBookingPassportsAll.id desc';
         $criteria->offset = $index;
         $criteria->limit=1;
         $orderBooking = OrderBooking::model()->find($criteria);

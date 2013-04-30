@@ -12,15 +12,42 @@ class BuyController extends FrontendController
     public function filters()
     {
         return array(
-            'accessControl', // perform access control for CRUD operations
+            'accessControl',
+            // perform access control for CRUD operations
         );
     }
 
     public function accessRules()
     {
         return array(
-            array('allow', 'actions' => array('checkFlight', 'makeBooking','makeBookingForItem', 'startPayment', 'getPayment', 'new', 'flightSearch','hotelSearch','showBasket','index','done','waitpayment','status', 'paymentStatus')),
-            array('allow', 'actions' => array('order','pdf'), 'users' => array('@')),
+            array(
+                'allow',
+                'actions' => array(
+                    'checkFlight',
+                    'makeBooking',
+                    'makeBookingForItem',
+                    'startPayment',
+                    'getPayment',
+                    'new',
+                    'flightSearch',
+                    'hotelSearch',
+                    'showBasket',
+                    'index',
+                    'done',
+                    'waitpayment',
+                    'status',
+                    'paymentStatus',
+                    'cancelBooking'
+                )
+            ),
+            array(
+                'allow',
+                'actions' => array(
+                    'order',
+                    'pdf'
+                ),
+                'users' => array('@')
+            ),
             array('deny'),
         );
     }
@@ -28,14 +55,14 @@ class BuyController extends FrontendController
     public function actions()
     {
         return array(
-            'makeBooking' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingAction'),
-            'makeBookingForItem' => array('class'=>'site.common.modules.tour.actions.constructor.MakeBookingForItemAction'),
-            'startPayment' => array('class'=>'site.common.modules.tour.actions.constructor.StartPaymentAction'),
-            'getPayment' => array('class'=>'site.common.modules.tour.actions.constructor.GetPaymentAction'),
-            'new' => array('class'=>'site.common.modules.tour.actions.constructor.NewAction'),
-            'flightSearch' => array('class'=>'site.common.modules.tour.actions.constructor.FlightSearchAction'),
-            'hotelSearch' => array('class'=>'site.common.modules.tour.actions.constructor.HotelSearchAction'),
-            'showBasket' => array('class'=>'site.common.modules.tour.actions.constructor.ShowBasketAction'),
+            'makeBooking' => array('class' => 'site.common.modules.tour.actions.constructor.MakeBookingAction'),
+            'makeBookingForItem' => array('class' => 'site.common.modules.tour.actions.constructor.MakeBookingForItemAction'),
+            'startPayment' => array('class' => 'site.common.modules.tour.actions.constructor.StartPaymentAction'),
+            'getPayment' => array('class' => 'site.common.modules.tour.actions.constructor.GetPaymentAction'),
+            'new' => array('class' => 'site.common.modules.tour.actions.constructor.NewAction'),
+            'flightSearch' => array('class' => 'site.common.modules.tour.actions.constructor.FlightSearchAction'),
+            'hotelSearch' => array('class' => 'site.common.modules.tour.actions.constructor.HotelSearchAction'),
+            'showBasket' => array('class' => 'site.common.modules.tour.actions.constructor.ShowBasketAction'),
         );
     }
 
@@ -54,7 +81,7 @@ class BuyController extends FrontendController
         else
             //todo: think what is default here
             Yii::app()->user->setState('currentModule', 'Avia');
-        $marker = (isset($_GET['marker'])) ? '?marker='.$_GET['marker'] : '';
+        $marker = (isset($_GET['marker'])) ? '?marker=' . $_GET['marker'] : '';
         if (isset($_GET['pid'])) //если мы пришли от партнёра, то проверяем перелёт
         {
             Yii::app()->user->setState('fromPartner', 1);
@@ -66,7 +93,7 @@ class BuyController extends FrontendController
         $direct = isset($_GET['dir']);
         $orderBooking = $this->createNewOrderBooking($direct);
         $this->createBookers();
-        $this->redirect('buy/makeBooking/secretKey/'.$orderBooking->secretKey.$marker);
+        $this->redirect('buy/makeBooking/secretKey/' . $orderBooking->secretKey . $marker);
     }
 
     public function actionCheckFlight()
@@ -77,7 +104,23 @@ class BuyController extends FrontendController
         $el = $tdp->getSortedCartItemsOnePerGroup();
         if ($el[0] instanceof FlightTripElement)
             $result = $el[0]->flightVoyage->getIsValid();
-        echo json_encode(array('result'=>$result));
+        echo json_encode(array('result' => $result));
+    }
+
+    public function actionCancelBooking()
+    {
+        header("Content-Length: 0");
+        header("Connection: close");
+        flush();
+
+        $ids = $_POST['ids'];
+        $ids = explode(',', $ids);
+        foreach ($ids as $id)
+        {
+            $flightBookerComponent = new FlightBookerComponent();
+            $flightBookerComponent->setFlightBookerFromId($id);
+            $flightBookerComponent->status('canceledByUser');
+        }
     }
 
     private function redirectToSearchResults()
@@ -89,7 +132,7 @@ class BuyController extends FrontendController
     {
         $secretKey = $id;
         $this->layout = 'static';
-        $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+        $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey' => $secretKey));
         if (!$orderBooking)
             throw new CHttpException(404, 'Page not found');
         if ($orderBooking->userId != Yii::app()->user->id)
@@ -100,27 +143,26 @@ class BuyController extends FrontendController
         $readableOrderId = $orderBooking->readableId;
         list ($passports, $ambigous, $roomCounters) = $this->getPassports($tripStorage);
         list ($icon, $header) = $tripStorage->getIconAndTextForPassports();
-        $this->render('complete',
-            array(
-                'trip'=>$trip,
-                'readableOrderId'=>$readableOrderId,
-                'orderId'=>$orderId,
-                'secretKey' => $secretKey,
-                'ambigousPassports' => $ambigous,
-                'passportForms' => $passports,
-                'bookingForm' => $this->getBookingForm($orderBooking),
-                'icon' => $icon,
-                'header' => $header,
-                'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
-                'roomCounters' => $roomCounters
-            ));
+        $this->render('complete', array(
+                                       'trip' => $trip,
+                                       'readableOrderId' => $readableOrderId,
+                                       'orderId' => $orderId,
+                                       'secretKey' => $secretKey,
+                                       'ambigousPassports' => $ambigous,
+                                       'passportForms' => $passports,
+                                       'bookingForm' => $this->getBookingForm($orderBooking),
+                                       'icon' => $icon,
+                                       'header' => $header,
+                                       'headersForAmbigous' => $tripStorage->getHeadersForPassportDataPage(),
+                                       'roomCounters' => $roomCounters
+                                  ));
     }
 
     public function actionStatus($id)
     {
         $secretKey = $id;
         $this->layout = 'static';
-        $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey'=>$secretKey));
+        $orderBooking = OrderBooking::model()->findByAttributes(array('secretKey' => $secretKey));
         if (!$orderBooking)
             throw new CHttpException(404, 'Page not found');
         $statuses = array();
@@ -150,8 +192,8 @@ class BuyController extends FrontendController
             {
                 if ($item->getId() == $id)
                 {
-                    $fileNameInfo =  $pdf->forHotelItem($item);
-                    Yii::app()->request->sendFile($fileNameInfo['visibleName'],file_get_contents($fileNameInfo['realName']));
+                    $fileNameInfo = $pdf->forHotelItem($item);
+                    Yii::app()->request->sendFile($fileNameInfo['visibleName'], file_get_contents($fileNameInfo['realName']));
                     @unlink($fileNameInfo['realName']);
                     break;
                 }
@@ -161,7 +203,7 @@ class BuyController extends FrontendController
                 if ($item->getId() == $id)
                 {
                     $fileNameInfo = $pdf->forFlightItem($item);
-                    Yii::app()->request->sendFile($fileNameInfo['visibleName'],file_get_contents($fileNameInfo['realName']));
+                    Yii::app()->request->sendFile($fileNameInfo['visibleName'], file_get_contents($fileNameInfo['realName']));
                     @unlink($fileNameInfo['realName']);
                     break;
                 }
@@ -173,11 +215,11 @@ class BuyController extends FrontendController
     {
         $pos = strpos($status, '/');
         if ($pos !== false)
-            $status = substr($status, $pos+1);
+            $status = substr($status, $pos + 1);
         return $status;
     }
 
-    public function addItems($from='GET')
+    public function addItems($from = 'GET')
     {
         $items = ($from == 'GET') ? $_GET['item'] : $_POST['item'];
         Yii::app()->shoppingCart->clear();
@@ -185,9 +227,9 @@ class BuyController extends FrontendController
         {
             if (!isset($item['type']))
                 continue;
-            if ($item['type']=='avia')
+            if ($item['type'] == 'avia')
                 $this->addFlightToTrip($item['searchKey'], $item['searchId']);
-            if ($item['type']=='hotel')
+            if ($item['type'] == 'hotel')
                 $this->addHotelToTrip($item['searchKey'], $item['searchId']);
         }
     }
@@ -232,7 +274,7 @@ class BuyController extends FrontendController
         $key = md5(serialize($flightSearchParams));
         if (!isset($this->keys[$key]))
             $this->keys[$key] = 0;
-        if ($this->keys[$key]==1)
+        if ($this->keys[$key] == 1)
         {
             $flightTripElement->fillFromSearchParams($flightSearchParams, true);
         }
@@ -269,9 +311,9 @@ class BuyController extends FrontendController
     {
         $this->layout = false;
         $order = Yii::app()->order;
-        $this->render('waiting',array(
-                          'order' => $order
-                          ));
+        $this->render('waiting', array(
+                                      'order' => $order
+                                 ));
 
     }
 
@@ -282,19 +324,29 @@ class BuyController extends FrontendController
         $bookers = $payments->preProcessBookers($order->getBookers());
         $paid = true;
         $error = false;
-        foreach($bookers as $booker)
+        foreach ($bookers as $booker)
         {
-            if(!in_array($payments->getStatus($booker),Array('paid', 'ticketReady', 'done', 'ticketing', 'ticketingRepeat')))
+            if (!in_array($payments->getStatus($booker), Array(
+                                                              'paid',
+                                                              'ticketReady',
+                                                              'done',
+                                                              'ticketing',
+                                                              'ticketingRepeat'
+                                                         ))
+            )
             {
                 $paid = false;
             }
-            if(strpos(strtolower($payments->getStatus($booker)), 'error')!==FALSE)
+            if (strpos(strtolower($payments->getStatus($booker)), 'error') !== FALSE)
             {
                 $error = true;
             }
         }
         header("Content-type: application/json");
-        echo json_encode(Array("paid"=>$paid, "error"=>$error));
+        echo json_encode(Array(
+                              "paid" => $paid,
+                              "error" => $error
+                         ));
     }
 
     private function getPassports($tripStorage)
@@ -306,7 +358,11 @@ class BuyController extends FrontendController
         $passports = $this->restorePassportsFromDb($items, $ambigousPassports);
         $passportManager->fillFromArray($passports);
         $roomCounters = (sizeof($passportManager->roomCounters) > 0) ? $passportManager->roomCounters : false;
-        return array($passportManager->passportForms, $ambigousPassports, $roomCounters);
+        return array(
+            $passportManager->passportForms,
+            $ambigousPassports,
+            $roomCounters
+        );
     }
 
     private function restorePassportsFromDb($items, $ambigous)
@@ -337,16 +393,16 @@ class BuyController extends FrontendController
         else
             $directValue = 0;
         if (is_numeric(Yii::app()->user->getState('todayOrderId')))
-            return OrderBooking::model()->findByAttributes(array('readableId'=>Yii::app()->user->getState('todayOrderId')));
+            return OrderBooking::model()->findByAttributes(array('readableId' => Yii::app()->user->getState('todayOrderId')));
         $orderBooking = new OrderBooking();
-        $orderBooking->secretKey = md5(microtime().time().appParams('salt'));
+        $orderBooking->secretKey = md5(microtime() . time() . appParams('salt'));
         $orderBooking->readableId = ""; //to prevent warning about "string should be here" of EAdvancedArBehavior
         $orderBooking->direct = $directValue;
         $orderBooking->meta = serialize($_SERVER);
         $orderBooking->save();
-        $todayOrderId = OrderBooking::model()->count(array('condition'=>"DATE(`timestamp`) = CURDATE()"));
+        $todayOrderId = OrderBooking::model()->count(array('condition' => "DATE(`timestamp`) = CURDATE()"));
         $readableNumber = OrderBooking::buildReadableNumber($todayOrderId);
-        $orderBooking->saveAttributes(array('readableId'=>$readableNumber));
+        $orderBooking->saveAttributes(array('readableId' => $readableNumber));
         Yii::app()->user->setState('orderBookingId', $orderBooking->id);
         Yii::app()->user->setState('todayOrderId', $readableNumber);
         Yii::app()->user->setState('secretKey', $orderBooking->secretKey);
