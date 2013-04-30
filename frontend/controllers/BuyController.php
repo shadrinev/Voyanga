@@ -109,7 +109,7 @@ class BuyController extends FrontendController
 
     public function actionCancelBooking()
     {
-        $ids = $_GET['ids'];
+        $ids = $_POST['ids'];
         $ids = explode(',', $ids);
         foreach ($ids as $id)
         {
