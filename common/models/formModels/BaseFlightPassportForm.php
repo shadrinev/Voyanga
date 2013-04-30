@@ -50,6 +50,8 @@ class BaseFlightPassportForm extends BasePassportForm
 
     public $srok = false;
 
+    public $sequence;
+
     /**
      * Declares the validation rules.
      */
@@ -63,7 +65,7 @@ class BaseFlightPassportForm extends BasePassportForm
             array('documentTypeId', 'in', 'range'=>array_keys(self::getPossibleTypes())),
             array('genderId', 'in', 'range'=>array_keys(self::getPossibleGenders())),
             array('birthday', 'date', 'format' => 'dd.MM.yyyy'),
-            array('srok, expirationDay, expirationMonth, expirationYear, bonusCard, bonusCardAirlineCode', 'safe'),
+            array('srok, expirationDay, expirationMonth, expirationYear, bonusCard, bonusCardAirlineCode, sequence', 'safe'),
             array('expirationDate', 'validateExpirationDate'),
         ));
     }

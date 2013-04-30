@@ -20,6 +20,7 @@
  * @property string $timestamp
  * @property string $bonusCard
  * @property string $bonusCardAirlineCode
+ * @property string $sequence
  *
  * The followings are the available model relations:
  * @property FlightBooker $flightBooking
@@ -57,7 +58,7 @@ class FlightBookingPassport extends CActiveRecord
             array('flightBookingId, documentTypeId,passengerType, countryId, genderId, passengerType', 'numerical', 'integerOnly'=>true),
             array('firstName, lastName, birthday, series, number, bonusCard, bonusCardAirlineCode', 'length', 'max'=>45),
             array('ticketNumber','length','max'=>15),
-            array('expiration, timestamp', 'safe'),
+            array('expiration, timestamp, sequence', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, firstName, lastName, birthday, series, number, flightBookingId, documentTypeId, countryId, expiration, genderId, ticketNumber, timestamp, bonusCard, bonusCardAirlineCode', 'safe', 'on'=>'search'),
@@ -152,6 +153,7 @@ class FlightBookingPassport extends CActiveRecord
         $this->bonusCard = $passport->bonusCard;
         $this->bonusCardAirlineCode = $passport->bonusCardAirlineCode;
         $this->flightBookingId = $flightBookerId;
+        $this->sequence = $passport->sequence;
     }
 
     public function getType()

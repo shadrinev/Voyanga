@@ -95,7 +95,7 @@ class BookingForm extends CFormModel
         $criteria->together = true;
         $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
         $criteria->addCondition('firstName is not null');
-        $criteria->order='t.id desc, flightBookingPassports.id desc';
+        $criteria->order='t.id desc, flightBookingPassports.sequence, flightBookingPassports.id desc';
         $criteria->addCondition('unique_id=:uniq');
         $criteria->params = array(':uniq'=>$unique_id);
         $criteria->limit=1;
@@ -114,7 +114,7 @@ class BookingForm extends CFormModel
         $criteria->together = true;
         $criteria->with = array('flightBookers', 'flightBookers.flightBookingPassports'=>array('joinType'=>'RIGHT JOIN'));
         $criteria->addCondition('firstName is not null');
-        $criteria->order='t.id desc, flightBookingPassports.id desc';
+        $criteria->order='t.id desc, flightBookingPassports.sequence, flightBookingPassports.id desc';
         $criteria->limit=1;
         $orderBooking = OrderBooking::model()->find($criteria);
         return $orderBooking;

@@ -192,10 +192,7 @@ class MakeBookingAction extends CAction
         }
         $bt = DateTime::createFromFormat('Y-m-d', $bbd);
         $diff = $bt->diff($at);
-        //print_r($diff->days);
-        //echo "diff: ".($diff->days*($diff->invert ? -1 : 1))." abd:$abd bbd: $bbd";
         $ret = (($diff->days * ($diff->invert ? -1 : 1)) > 0) ? 1 : ((($diff->days * ($diff->invert ? -1 : 1)) < 0) ? -1 : 0);
-        //echo "ret: $ret ||";
         return $ret;
     }
 
@@ -210,7 +207,6 @@ class MakeBookingAction extends CAction
             $adcnt = isset($_POST['FlightAdultPassportForm']) ? count($_POST['FlightAdultPassportForm']) : 0;
             $chcnt = isset($_POST['FlightChildPassportForm']) ? count($_POST['FlightChildPassportForm']) : 0;
             $incnt = isset($_POST['FlightInfantPassportForm']) ? count($_POST['FlightAdultPassportForm']) : 0;
-            //echo "adcnt: {$adcnt} chcnt: {$chcnt} incnt: {$incnt}";
             $formsData = array();
             $i = 0;
             if (isset($_POST['FlightAdultPassportForm']))
@@ -258,6 +254,7 @@ class MakeBookingAction extends CAction
                     $adcnt--;
                     $adultPassport = new FlightAdultPassportForm();
                     $adultPassport->attributes = $formInfo['formData'];
+                    $adultPassport->sequence = $formInfo['i'];
                     $adultPassport->handleFields();
                     $adultsPassports[] = $adultPassport;
                     $p = $adultsPassports[(count($adultsPassports) - 1)];
@@ -268,6 +265,7 @@ class MakeBookingAction extends CAction
                     $chcnt--;
                     $childrenPassport = new FlightChildPassportForm();
                     $childrenPassport->attributes = $formInfo['formData'];
+                    $childrenPassport->sequence = $formInfo['i'];
                     $childrenPassport->handleFields();
                     $childrenPassports[] = $childrenPassport;
                     $p = $childrenPassports[(count($childrenPassports) - 1)];
@@ -278,6 +276,7 @@ class MakeBookingAction extends CAction
                     $incnt--;
                     $infantsPassport = new FlightInfantPassportForm();
                     $infantsPassport->attributes = $formInfo['formData'];
+                    $infantsPassport->sequence = $formInfo['i'];
                     $infantsPassport->handleFields();
                     $infantsPassports[] = $infantsPassport;
                     $p = $infantsPassports[(count($infantsPassports) - 1)];
