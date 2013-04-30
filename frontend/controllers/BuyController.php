@@ -109,13 +109,20 @@ class BuyController extends FrontendController
 
     public function actionCancelBooking()
     {
-        $ids = $_POST['ids'];
+        $ids = $_GET['ids'];
         $ids = explode(',', $ids);
         foreach ($ids as $id)
         {
             $flightBookerComponent = new FlightBookerComponent();
-            $flightBookerComponent->setFlightBookerFromId($id);
-            $flightBookerComponent->status('canceledByUser');
+            try
+            {
+                $flightBookerComponent->setFlightBookerFromId($id);
+                $flightBookerComponent->status('canceledByUser');
+            }
+            catch (Exception $e)
+            {
+
+            }
         }
     }
 
