@@ -159,7 +159,7 @@ class MakeBookingAction extends CAction
             $dbCriteria = new CDbCriteria();
             $dbCriteria->addColumnCondition(array(
                                                  'is_actual' => 1,
-                                                 'flightBookingId' => $hotelBooker->id
+                                                 'hotelBookingId' => $hotelBooker->id
                                             ));
             HotelBookingPassport::model()->updateAll(array('is_actual' => 0), $dbCriteria);
         }
