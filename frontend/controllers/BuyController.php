@@ -109,10 +109,6 @@ class BuyController extends FrontendController
 
     public function actionCancelBooking()
     {
-        header("Content-Length: 0");
-        header("Connection: close");
-        flush();
-
         $ids = $_POST['ids'];
         $ids = explode(',', $ids);
         foreach ($ids as $id)
