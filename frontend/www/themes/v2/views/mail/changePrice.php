@@ -12,6 +12,6 @@
     Билет:
     <?php echo $voyage->getDepartureDate()." ".$voyage->getDepartureCity()->code."-&gt;".$voyage->getArrivalCity()->code.
     ($voyage->isRoundTrip() ? " ".$voyage->getDepartureDate(1)." ".$voyage->getDepartureCity(1)->code."-&gt;".$voyage->getArrivalCity(1)->code : '').
-    $voyage->getTransportAirlines().' '.$voyage->getFlightCodes();?>
+    $voyage->getTransportAirlines().' '.implode(',',$voyage->getFlightCodes());?>
 </p>
 <p>Спасибо!</p>
