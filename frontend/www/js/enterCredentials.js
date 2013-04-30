@@ -338,6 +338,12 @@ function startPayment() {
                 $('iframe').unbind('load');
             });
             window.app.breakdown(data.breakdown);
+            if(data.payonline.Amount && window.app.itemsToBuy.totalCost){
+                if((data.payonline.Amount/window.app.itemsToBuy.totalCost) >= 1.05){
+                    $('#priceUpdatedAfterBooking').show();
+                    $('#priceUpdatedAfterBooking .price').html( Utils.formatPrice(data.payonline.Amount));
+                }
+            }
             Utils.submitPayment(data.payonline);
         }
     });

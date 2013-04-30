@@ -67,8 +67,8 @@ return array(
                 'port' => 6379
             ),
             'serializer' => array(
-                'serialize',
-                'unserialize'
+                'igbinary_serialize',
+                'igbinary_unserialize'
             ),
         ),
 
