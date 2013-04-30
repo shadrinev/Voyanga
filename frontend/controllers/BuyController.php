@@ -113,6 +113,8 @@ class BuyController extends FrontendController
         $ids = explode(',', $ids);
         foreach ($ids as $id)
         {
+            if (!is_numeric($id))
+                continue;
             $flightBookerComponent = new FlightBookerComponent();
             try
             {
