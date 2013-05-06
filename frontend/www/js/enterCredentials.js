@@ -144,6 +144,7 @@ function enableBindingForUnloadWindow() {
         }
         return ("Внимание! При закрытии или обновлении страницы, забронированные билеты будут аннулированы. Вы действительно хотите покинуть эту страницу?");
     });
+    $(window).off("unload");
     $(window).bind('unload', function () {
         disableBookings();
     });
