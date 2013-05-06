@@ -248,6 +248,7 @@ function onFocusInput() {
 
         }
         if ($(this).parent().parent().hasClass('hotel')) {
+            var indCur = $(this).closest('tr')[0].rowIndex; //нахожу в какой строке текущий инпут
             $($('.tdSex.hotel')[0]).closest('table').find('tr').eq(indCur+2).find('input').eq(0).focus();
         }
         else {

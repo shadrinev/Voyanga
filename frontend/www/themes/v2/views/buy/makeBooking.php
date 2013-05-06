@@ -32,7 +32,19 @@
             </div>
         </div>
     </div>
-
+</script>
+<script id="on-close-firefox-template" type="text/html">
+    <div id="tariff-rules" style="display: block;" class="contentWrapBg">
+        <div class="wrapDiv">
+            <div class="wrapContent">
+                <h1>Внимание!</h1>
+                <div>
+                    При закрытии или обновлении страницы, забронированные билеты будут аннулированы. Вы действительно хотите покинуть эту страницу?
+                </div>
+                <div data-bind="click: close" class="boxClose"></div>
+            </div>
+        </div>
+    </div>
 </script>
 <div id="content" style="overflow: hidden;">
     <div class="panelBuy">

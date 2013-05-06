@@ -138,6 +138,9 @@ function enableBindingForUnloadWindow() {
         return;
 
     $(window).bind('beforeunload', function () {
+        if ($('html').hasClass('gecko')) {
+            var popup = new GenericPopup('#on-close-firefox');
+        }
         return ("Внимание! При закрытии или обновлении страницы, забронированные билеты будут аннулированы. Вы действительно хотите покинуть эту страницу?");
     });
     $(window).bind('unload', function () {

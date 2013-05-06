@@ -112,9 +112,12 @@ class BuyController extends FrontendController
         header("Connection: close", true);
         header("Content-Length: 0", true);
         flush();
-        fastcgi_finish_request(); // important when using php-fpm!
+        if (function_exists('fastcgi_finish_request'))
+        {
+            fastcgi_finish_request(); // important when using php-fpm!
+        }
 
-        $ids = $_POST['ids'];
+        $ids = (isset($_POST['ids'])) ? $_POST['ids'] : '';
         $ids = explode(',', $ids);
         foreach ($ids as $id)
         {
