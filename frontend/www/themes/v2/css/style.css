@@ -3651,6 +3651,7 @@ a.whereData span {
     color: #1d222b;
     margin-top: 25px;
     margin-bottom: 30px;
+    text-shadow: #ffffff 0px 1px 0px;
 }
 .allTripEvent .secondTd {
     width: 98px;
