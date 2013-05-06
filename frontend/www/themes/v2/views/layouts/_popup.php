@@ -151,6 +151,10 @@
                 <div class="floatLeft">Служба поддержки<br>10:00 - 22:00</div>
                 <div class="floatRight">8 800 333-45-06</div>
             </div>
+            <div class="textBlock skype" style="display: none">
+                <div class="floatLeft"></div>
+                <div class="floatRight"><div id="skypeStatus" style="display: none;"></div><a href='skype:voyanga?call'>voyanga</a></div>
+            </div>
             <div class="textBlock hEmail">
                 <div class="floatLeft">
                     По вопросам бронирования, <br>

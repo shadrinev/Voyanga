@@ -633,3 +633,20 @@ function DayMonthYear() {
 
     }
 }
+
+$(document).ready(function(){
+    var username = 'voyanga';
+    var skypeUrl = '/ajax/SkypeStatus/username/'+username;
+    $.get(skypeUrl, function(data){
+        var data = parseInt(data);
+        var offlines = [0,6,1];
+        var img = $('').attr('src','/images/skype/'+data+'.png').attr('border','0');
+        var isOffline = false;
+        for(var i=0;i<offlines.length;i++)
+        {
+            if(parseInt(data)==offlines[i])
+                isOffline=true;
+        }
+        $('#skypeStatus').append(img);
+});
+});

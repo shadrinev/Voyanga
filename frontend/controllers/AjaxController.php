@@ -203,4 +203,27 @@ class AjaxController extends BaseAjaxController
 
         $this->send($response);
     }
+
+    public function actionSkypeStatus()
+    {
+        if(isset($_GET['username']))
+        {
+            $ostatus = fopen('http://mystatus.skype.com/'
+                .intval(strip_tags($_GET['username'])) . '.num', 'r');
+
+            if(!$ostatus)
+            {
+                $status = '1';
+            }
+
+            while (!feof($ostatus))
+            {
+                $status = fgets($ostatus, 1024);
+            }
+
+            fclose($ostatus);
+
+            echo $status;
+        }
+    }
 }
