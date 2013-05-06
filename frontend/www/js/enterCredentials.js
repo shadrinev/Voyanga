@@ -137,6 +137,7 @@ function enableBindingForUnloadWindow() {
     if (window.app.itemsToBuy.flightCounter()==0)
         return;
 
+    $(window).off("beforeunload");
     $(window).bind('beforeunload', function () {
         if ($('html').hasClass('gecko')) {
             var popup = new GenericPopup('#on-close-firefox');
