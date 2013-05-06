@@ -2152,7 +2152,7 @@ input.hotel-input {
 .allTicketsDIV .tdPrice .statusOrder {
     font-size: 11px;
     height: 44px;
-    margin-top: -22px;
+    margin-top: -7px;
     position: absolute;
     top: 50%;
     text-align: center;
@@ -2318,6 +2318,7 @@ input.hotel-input {
 .statusOrder .price {
     width: 100%;
     left: 0px;
+    white-space: nowrap;
 }
 .allTicketsDIV .price .rur {
     font-size: 21px;
