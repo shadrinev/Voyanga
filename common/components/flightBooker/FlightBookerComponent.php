@@ -219,16 +219,6 @@ class FlightBookerComponent extends CApplicationComponent
         }
     }
 
-/*    public function stageStartPayment()
-    {
-        $res = Yii::app()->cron->add(time() + appParams('time_for_payment'), 'flightbooking', 'ChangeState', array('flightBookerId' => $this->flightBooker->id, 'newState' => 'waitingForPayment'));
-        if ($res)
-        {
-            $this->flightBooker->saveTaskInfo('paymentTimeLimit', $res);
-            return true;
-        }
-    } */
-
     public function stageTicketing()
     {
         //! Если был ребукинг, тикетинг тоже должен пройти с альтернативными реквизитами
