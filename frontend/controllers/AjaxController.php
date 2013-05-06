@@ -206,24 +206,22 @@ class AjaxController extends BaseAjaxController
 
     public function actionSkypeStatus()
     {
-        if(isset($_GET['username']))
+        $cacheKey = 'skypeStatus';
+        if ($result = Yii::app()->cache->get($cacheKey))
+            return $result;
+        $ostatus = fopen('http://mystatus.skype.com/voyanga.num', 'r');
+        if(!$ostatus)
         {
-            $ostatus = fopen('http://mystatus.skype.com/'
-                .intval(strip_tags($_GET['username'])) . '.num', 'r');
-
-            if(!$ostatus)
-            {
-                $status = '1';
-            }
-
-            while (!feof($ostatus))
-            {
-                $status = fgets($ostatus, 1024);
-            }
-
-            fclose($ostatus);
-
-            echo $status;
+            $status = '2'; //by default let's show that we are online
         }
+        while (!feof($ostatus))
+        {
+            $status = fgets($ostatus, 1024);
+        }
+        fclose($ostatus);
+
+        Yii::app()->cache->set($cacheKey, $ostatus, 300); //cache result for 5 min
+
+        echo $status;
     }
 }

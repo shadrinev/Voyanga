@@ -635,8 +635,7 @@ function DayMonthYear() {
 }
 
 $(document).ready(function(){
-    var username = 'voyanga';
-    var skypeUrl = '/ajax/SkypeStatus/username/'+username;
+    var skypeUrl = '/ajax/SkypeStatus';
     $.get(skypeUrl, function(data){
         var data = parseInt(data);
         var offlines = [0,6,1];
