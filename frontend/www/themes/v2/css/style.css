@@ -1592,7 +1592,7 @@ input.hotel-input {
     margin-top: 15px;
     position: relative;
     width: 15%;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .slideTours.small .toursTicketsMain {
 	height: 122px;
