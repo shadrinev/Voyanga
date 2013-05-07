@@ -41,6 +41,7 @@ Yii::app()->clientScript->registerCssFile('/themes/v2/css/style.css');
       {
           window.top.app.itemsToBuy.trackBuyDone('<?= $order->getOrderBooking()->id ?>')
           window.top.disableWarning();
+          window.top.stopCountdown();
       }
       var item, done=false;
       var blocks = ['waiting', 'show', 'fail'];

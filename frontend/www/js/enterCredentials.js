@@ -154,7 +154,7 @@ function enableBindingForUnloadWindow() {
 }
 
 function disableBookings() {
-    $.ajax({
+    return $.ajax({
         type: 'POST',
         url: '/buy/cancelBooking',
         data: { ids: fids.join(',') },
@@ -375,6 +375,7 @@ function startPayment() {
                 ResizeAvia();
                 Utils.scrollTo('#paybuyContent', true);
                 $('iframe').unbind('load');
+		startCountdown();
             });
             window.app.breakdown(data.breakdown);
             if (data.payonline.Amount && window.app.itemsToBuy.totalCost) {
@@ -513,3 +514,39 @@ $(function () {
         return false;
     });
 })
+
+
+//! Склонятор, нужно унести в utils.coffee
+function declOfNum(number, titles)  
+{  
+    var cases = [2, 0, 1, 1, 1, 2];  
+    return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+}  
+
+//! Стартует отсчет времени до оплаты, отменяет бронь
+function startCountdown() {
+    var targetTime = new Date().getTime() + 59*60*1000 ;
+    var interval;
+    var poll = function () {
+	var currentTime = new Date().getTime();
+	var diff = targetTime - currentTime;
+	var numberOfMinutes = 1;
+	if(diff > 0) {
+	    numberOfMinutes = Math.ceil(diff/1000/60);
+	} else {
+	    stopCountdown();
+	    disableBookings().done(function() {
+                new ErrorPopup('paymentTimeLimiteError', false, function () {
+                        window.location.href = '/#' + window.redirectHash;
+                });
+                _rollbar.push({level: 'error', msg: "paymentTimelimit"});
+	    });
+	}
+	$('#payCardTimer').html(numberOfMinutes + " " + declOfNum(numberOfMinutes, ["минуты", "минут", "минут"]));
+    };
+    interval = window.setInterval(poll, 1000*30);
+    window.stopCountdown = function() {
+	window.clearInterval(interval);
+    };
+}
+

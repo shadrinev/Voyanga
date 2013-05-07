@@ -201,7 +201,7 @@
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
                     <td class="time">
-                       Необходимо оплатить в течение <strong>1 часа</strong>
+                       Необходимо оплатить в течение <strong id="payCardTimer">1 часа</strong>
                     </td>
                 </tr>
                 <tr>

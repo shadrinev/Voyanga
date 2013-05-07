@@ -44,7 +44,11 @@ ERRORS =
     title: "Ошибка бронирования"
     text: "Это могло произойти по причине того что выбранный вариант уже купил кто-то другой. Попробуйте выбрать другой вариант."
     buttonText: "Выбрать другой"
-      
+
+  paymentTimeLimiteError:
+    title: "Время оплаты истекло"
+    text: "Истекло время проведения платежа, брони отменены."
+    buttonText: "Вернуться к результатам поиска"
 
 class ErrorPopup extends GenericPopup
   constructor: (key, params = false, @onclose=false)->
