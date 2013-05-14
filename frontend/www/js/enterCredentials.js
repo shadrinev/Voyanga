@@ -537,7 +537,8 @@ function startCountdown() {
 	    stopCountdown();
 	    disableBookings().done(function() {
                 new ErrorPopup('paymentTimeLimiteError', false, function () {
-                        window.location.href = '/#' + window.redirectHash;
+		    disableWarning();
+		    window.location.reload();
                 });
                 _rollbar.push({level: 'error', msg: "paymentTimelimit"});
 	    });

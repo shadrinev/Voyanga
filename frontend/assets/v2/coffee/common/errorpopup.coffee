@@ -48,7 +48,7 @@ ERRORS =
   paymentTimeLimiteError:
     title: "Время оплаты истекло"
     text: "К сожалению, истекло время, отведенное на завершение процесса оплаты, бронирование всех сегментов отменено. Если вы всё ещё планируете завершить оплату - начните процедуру заново."
-    buttonText: "Вернуться к результатам поиска"
+    buttonText: "Повторить"
 
 class ErrorPopup extends GenericPopup
   constructor: (key, params = false, @onclose=false)->
