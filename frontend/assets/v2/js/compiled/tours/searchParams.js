@@ -465,7 +465,10 @@ TourSearchParams = (function() {
     return this.activeSP.urlChanged();
   };
 
-  TourSearchParams.prototype.hotelId = function() {
+  TourSearchParams.prototype.hotelId = function(val) {
+    if (val != null) {
+      this.activeSP.hotelId(val);
+    }
     return this.activeSP.hotelId();
   };
 

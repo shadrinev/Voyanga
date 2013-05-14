@@ -329,7 +329,9 @@ class TourSearchParams
     @activeSP.urlChanged()
 
   # FIXME можно жить без него
-  hotelId: =>
+  hotelId: (val) =>
+    if val?
+      @activeSP.hotelId val
     @activeSP.hotelId()
 
   # FIXME можно жить без него ??!
