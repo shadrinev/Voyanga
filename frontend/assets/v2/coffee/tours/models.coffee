@@ -1519,7 +1519,7 @@ class TourResultSet
           @lastHotel.isHotel = ko.observable(item.isHotel)
           @lastHotel.startDate = @lastHotel.checkIn
           @lastHotel.searchParams = item.searchParams
-          @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
+          @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.searchParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
           @lastHotel.overviewTemplate = 'tours-event-hotels-ticket' 
           @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut) + '</div>')
           @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()

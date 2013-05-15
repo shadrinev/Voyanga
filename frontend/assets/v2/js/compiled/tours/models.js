@@ -2254,7 +2254,7 @@ TourResultSet = (function() {
           _this.lastHotel.isHotel = ko.observable(item.isHotel);
           _this.lastHotel.startDate = _this.lastHotel.checkIn;
           _this.lastHotel.searchParams = item.searchParams;
-          _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
+          _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.searchParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
           _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
           _this.lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkOut) + '</div>');
           _this.activePanel().selectedParams.ticketParams.push(_this.lastHotel.getParams());
