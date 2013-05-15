@@ -2196,6 +2196,7 @@ TourResultSet = (function() {
     panelSet = new TourPanelSet();
     this.activePanel(panelSet);
     if (this.resultSet.items[0].isFlight) {
+      console.log('1. First item is flight');
       startCity = this.resultSet.items[0].searchParams.destinations[0].departure_iata;
       startCityReadable = this.resultSet.items[0].searchParams.destinations[0].departure;
     } else {
@@ -2238,6 +2239,7 @@ TourResultSet = (function() {
           aviaResult.isHotel = ko.observable(item.isHotel);
           aviaResult.startDate = aviaResult.departureDate();
           aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (_this.roundTrip ? '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' : ''));
+          aviaResult.searchParams = item.searchParams;
           _this.activePanel().selectedParams.ticketParams.push(aviaResult.getParams());
           aviaResult.overviewPeople = ko.observable;
           _this.items.push(aviaResult);
@@ -2251,8 +2253,8 @@ TourResultSet = (function() {
           _this.lastHotel.isAvia = ko.observable(item.isFlight);
           _this.lastHotel.isHotel = ko.observable(item.isHotel);
           _this.lastHotel.startDate = _this.lastHotel.checkIn;
-          _this.lastHotel.serachParams = item.searchParams;
-          _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
+          _this.lastHotel.searchParams = item.searchParams;
+          _this.lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + _this.lastHotel.searchParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + _this.lastHotel.address + "</span>");
           _this.lastHotel.overviewTemplate = 'tours-event-hotels-ticket';
           _this.lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(_this.lastHotel.checkOut) + '</div>');
           _this.activePanel().selectedParams.ticketParams.push(_this.lastHotel.getParams());
@@ -2260,9 +2262,11 @@ TourResultSet = (function() {
           return _this.totalCost += _this.lastHotel.roomSets()[0].discountPrice;
         }
       });
+      console.log("4. Resulting items", this.items());
       _.sortBy(this.items(), function(item) {
         return item.startDate;
       });
+      console.log("5. Sorted resulting items", this.items());
       this.startDate = this.items()[0].startDate;
       this.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(this.startDate) + '</div>');
       firstHotel = true;
@@ -2273,12 +2277,16 @@ TourResultSet = (function() {
           if (!firstHotel) {
             this.activePanel().addPanel(true);
           } else {
-            this.activePanel().sp.fromObject(item.serachParams);
+            this.activePanel().sp.fromObject(item.searchParams);
             firstHotel = false;
           }
           this.activePanel().lastPanel.checkIn(moment(item.checkIn)._d);
           this.activePanel().lastPanel.checkOut(moment(item.checkOut)._d);
           this.activePanel().lastPanel.city(item.cityCode);
+        } else if (this.items().length === 1) {
+          this.activePanel().lastPanel.checkIn(moment(item.departureDate())._d);
+          this.activePanel().lastPanel.checkOut(moment(item.rtDepartureDate())._d);
+          this.activePanel().lastPanel.city(item.searchParams.destinations[0].arrival_iata);
         }
       }
       this.activePanel().saveStartParams();
@@ -2296,6 +2304,7 @@ TourResultSet = (function() {
       }, 200);
       this.correctTour(true);
     } catch (exept) {
+      console.log("Exception:", exept);
       this.correctTour(false);
     }
     if (this.resultSet.price) {

@@ -69,8 +69,8 @@ $(function () {
     });
     $(function () {
         $('.agreeConditions').on('click', function () {
-            var checked = ($('#agreeCheck').is(':checked'));
-            if (!checked)
+            var checked = $('.agreeConditions').find('.ui-control.checkbox.on').length>0;
+            if (checked)
                 $('#submit-passport').removeClass('inactive');
             else
                 $('#submit-passport').addClass('inactive');
