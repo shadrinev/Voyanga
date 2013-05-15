@@ -1545,7 +1545,7 @@ class TourResultSet
           @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
           @activePanel().lastPanel.checkOut(moment(item.checkOut)._d)
           @activePanel().lastPanel.city(item.cityCode)
-        else
+        else if @items().length == 1
           @activePanel().lastPanel.checkIn(moment(item.departureDate())._d)
           @activePanel().lastPanel.checkOut(moment(item.rtDepartureDate())._d)
           @activePanel().lastPanel.city(item.searchParams.destinations[0].arrival_iata)

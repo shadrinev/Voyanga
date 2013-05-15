@@ -305,7 +305,6 @@ class AviaResult
       v = new Voyage(flights[1], @airline)
       @activeVoyage.push v
 
-
     @voyages = []
     @voyages.push @activeVoyage
     @activeVoyage = ko.observable(@activeVoyage)
