@@ -21,7 +21,7 @@ class FlightVoyageStack
     public $bestPriceInd;
 
 
-    public function __construct($params = NULL)
+    public function __construct($params = NULL, $dontStackResults = false)
     {
         if ($params)
         {
@@ -66,7 +66,7 @@ class FlightVoyageStack
 
                     $flightCodes = implode(',', $oFlightVoyage->getFlightCodes());
                     //If already have same flight select cheaper flight
-                    if (isset($flightsCodes[$flightCodes]))
+                    if (isset($flightsCodes[$flightCodes])&&!$dontStackResults)
                     {
                         //exclude current voyage because it already saved
                         $bNeedSave = FALSE;

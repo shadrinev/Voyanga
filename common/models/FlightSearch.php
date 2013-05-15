@@ -37,11 +37,12 @@ class FlightSearch extends CModel implements IStatisticItem
 
     /**
      * @param FlightSearchParams $flightSearchParams
-     * @param bool $returnCacheRecord
+     * @param bool $returnCacheRecord не используется, его можно выпилить после того как проверим что его никто не передает
+     * @param bool $dontStackResults не выкидывать более дорогие похожие рейсы
      * @return bool|FlightCache
      * @throws CException
      */
-    public function sendRequest(FlightSearchParams $flightSearchParams, $returnCacheRecord = true)
+    public function sendRequest(FlightSearchParams $flightSearchParams, $returnCacheRecord = true, $dontStackResults=false)
     {
         Yii::app()->observer->notify('onBeforeFlightSearch', $this);
         if ($flightSearchParams instanceof FlightSearchParams)
@@ -57,7 +58,7 @@ class FlightSearch extends CModel implements IStatisticItem
                 {
                     $paramsFs = $sJdata;
                     $paramsFs['fsKey'] = $this->key;
-                    $flightVoyageStack = new FlightVoyageStack($paramsFs);
+                    $flightVoyageStack = new FlightVoyageStack($paramsFs, $dontStackResults);
                     $this->flightVoyageStack = $flightVoyageStack;
                     Yii::app()->cache->set('flightSearch' . $this->key, $this, Yii::app()->params['fligh_search_cache_time']);
 

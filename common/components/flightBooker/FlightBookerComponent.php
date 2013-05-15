@@ -162,7 +162,7 @@ class FlightBookerComponent extends CApplicationComponent
         $fs = new FlightSearch();
         //! Не возымеет эффекта в случае если это не партнерский бук
         ConfigManager:: $forcePartnerAndGalileo = true;
-        $results = $fs->sendRequest($searchParams, false);
+        $results = $fs->sendRequest($searchParams, false, true);
         //find similar
         $flightVoyage = false;
         $targetKey = implode("_", $this->flightBooker->flightVoyage->getFlightCodes());
@@ -170,7 +170,20 @@ class FlightBookerComponent extends CApplicationComponent
             $possibleKey = implode('_', $result->getFlightCodes());
             if($targetKey == $possibleKey) {
                 $flightVoyage = $result;
-                break;
+                //! Если прошлый бук - сабра, по возможности ищем галилео
+                if($this->flightBooker->flightVoyage->webService == 'SABRE') {
+                    if(!$flightVoyage) {
+                        $flightVoyage = $result;
+                    }
+                    if($result->webService == 'GALILEO') {
+                        $flightVoyage = $result;
+                        break;
+                    }
+
+                } else {
+                    $flightVoyage = $result;
+                    break;
+                }
             }
         }
         //! Не нашли билет
