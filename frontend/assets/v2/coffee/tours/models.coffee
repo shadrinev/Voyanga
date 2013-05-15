@@ -1468,6 +1468,7 @@ class TourResultSet
     panelSet = new TourPanelSet()
     @activePanel(panelSet)
     if @resultSet.items[0].isFlight
+      console.log '1. First item is flight'
       startCity = @resultSet.items[0].searchParams.destinations[0].departure_iata
       startCityReadable = @resultSet.items[0].searchParams.destinations[0].departure
     else
@@ -1503,6 +1504,7 @@ class TourResultSet
           aviaResult.isHotel = ko.observable(item.isHotel)
           aviaResult.startDate = aviaResult.departureDate()
           aviaResult.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.departureDate()) + '</div>' + (if @roundTrip then '<div class="day">' + dateUtils.formatHtmlDayShortMonth(aviaResult.rtDepartureDate()) + '</div>' else ''))
+          aviaResult.searchParams = item.searchParams
           @activePanel().selectedParams.ticketParams.push aviaResult.getParams()
           aviaResult.overviewPeople = ko.observable
           @items.push aviaResult
@@ -1516,15 +1518,18 @@ class TourResultSet
           @lastHotel.isAvia = ko.observable(item.isFlight)
           @lastHotel.isHotel = ko.observable(item.isHotel)
           @lastHotel.startDate = @lastHotel.checkIn
-          @lastHotel.serachParams = item.searchParams
+          @lastHotel.searchParams = item.searchParams
           @lastHotel.overviewText = ko.observable("<span class='hotel-left-long'>Отель в " + @lastHotel.serachParams.cityFull.casePre + "</span><span class='hotel-left-short'>" + @lastHotel.address + "</span>")
           @lastHotel.overviewTemplate = 'tours-event-hotels-ticket' 
           @lastHotel.dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkIn) + '</div>' + '<div class="day">' + dateUtils.formatHtmlDayShortMonth(@lastHotel.checkOut) + '</div>')
           @activePanel().selectedParams.ticketParams.push @lastHotel.getParams()
           @items.push(@lastHotel)
           @totalCost += @lastHotel.roomSets()[0].discountPrice
+      console.log "4. Resulting items", @items()
       _.sortBy @items(), (item)->
         item.startDate
+
+      console.log "5. Sorted resulting items", @items()
 
       @startDate = @items()[0].startDate
       @dateHtml = ko.observable('<div class="day">' + dateUtils.formatHtmlDayShortMonth(@startDate) + '</div>')
@@ -1534,12 +1539,17 @@ class TourResultSet
           if !firstHotel
             @activePanel().addPanel(true)
           else
-            @activePanel().sp.fromObject item.serachParams
+            @activePanel().sp.fromObject item.searchParams
             firstHotel = false
 
           @activePanel().lastPanel.checkIn(moment(item.checkIn)._d)
           @activePanel().lastPanel.checkOut(moment(item.checkOut)._d)
           @activePanel().lastPanel.city(item.cityCode)
+        else
+          @activePanel().lastPanel.checkIn(moment(item.departureDate())._d)
+          @activePanel().lastPanel.checkOut(moment(item.rtDepartureDate())._d)
+          @activePanel().lastPanel.city(item.searchParams.destinations[0].arrival_iata)
+
 
       @activePanel().saveStartParams()
       _.last(@activePanel().panels()).minimizedCalendar(true)
@@ -1558,6 +1568,7 @@ class TourResultSet
       , 200
       @correctTour(true)
     catch exept
+      console.log "Exception:", exept
       @correctTour(false)
 
     if @resultSet.price
