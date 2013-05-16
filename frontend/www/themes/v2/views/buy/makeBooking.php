@@ -194,14 +194,15 @@
     <div class="payCardPal" style="display: none;">
 
         <div class="centerBlock">
-            <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Билеты успешно забронированы
-            <div style="font-size: 13px; display: none;" id="priceUpdatedAfterBooking">Цена билета изменилась, новая цена <span class='price'>10 115</span> <span class="rur" style="font-size: 12px;">o</span></div>
-            </h3>
-            <table class="headerTitle">
+<!--            <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Билеты успешно забронированы-->
+<!--            <div style="font-size: 13px; display: none;" id="priceUpdatedAfterBooking">Цена билета изменилась, новая цена <span class='price'>10 115</span> <span class="rur" style="font-size: 12px;">o</span></div>-->
+<!--            </h3>-->
+            <h3 style="text-align: center; font-size: 26px; margin-bottom: 12px;">Оплата временно недоступна</h3>
+            <table class="headerTitle" style="opacity: 0.5;">
                 <tr>
                     <td class="h1">Оплатить <span class="grey">банковской картой или</span> <a href="javascript:javascript:history.go(-1)">вернуться к выбору вариантов</a> </td>
                     <td class="time">
-                       Необходимо оплатить в течение <strong id="payCardTimer">1 часа</strong>
+                       Необходимо оплатить в течение <strong>1 часа</strong>
                     </td>
                 </tr>
                 <tr>
@@ -235,7 +236,7 @@
                         <!-- /ko -->
                     </td>
                     <td class="tdIframe" data-bind='attr: {style: breakdown.length?"":"text-align: center; width: 100%"}'>
-                        <div class="iframeDiv">
+                        <div class="iframeDiv" style="opacity: 0.5; pointer-events: none;">
                             <iframe id="payment_frame" name="payment_frame" class="payCardPaliFrame"></iframe>
                         </div>
                     </td>
