@@ -251,7 +251,6 @@
     font-size: 11px;
     text-align: left;
     cursor: pointer;
-    
 }
 .date-time-city .how-long .path {
 	line-height: 15px;
@@ -494,11 +493,24 @@
 	padding-top: 30px;
 }
 .ticket-items.small .content .center-ticket .date-time-city .how-long .time {
-	display: none;
+    text-align: center;
+    margin-left: -20px;
+    line-height: 20px;
+    margin-top: -5px;
+}
+.ticket-items.small .content .center-ticket .date-time-city .how-long .time span {
+    display: none;
 }
 .ticket-items.small .content .center-ticket .date-time-city .how-long .path {
+    display: none;
 	opacity: 0;
 	white-space: nowrap;
+}
+.ticket-items .content .center-ticket .date-time-city .how-long .time2 {
+    display: none;
+}
+.ticket-items.small .content .center-ticket .date-time-city .how-long .time2 {
+    display: block;
 }
 .ticket-items.small .content .center-ticket .date-time-city .how-long .ico-path .down {
 	display: none;
@@ -844,10 +856,10 @@
 	min-width: 250px;
 }
 .recommended-ticket .ticket-items.small .content .how-long {
-	padding-top: 20px;	
+
 }
 .recommended-ticket .ticket-items.small  .content .how-long .path, .recommended-ticket .ticket-items.small  .content .how-long .time {
-	display: none;
+
 }
 
 

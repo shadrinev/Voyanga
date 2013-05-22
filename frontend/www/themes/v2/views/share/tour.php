@@ -311,6 +311,7 @@ $cs->registerMetaTag('@voyanga', NULL, NULL, array('property' => 'twitter:site')
                         </div>
                         <div class="path" data-bind="text:stopoverText(), css: {'no-wait': direct()}">
                         </div>
+
                     </div>
                     <!-- END HOW LONG -->
                     <div class="finish">

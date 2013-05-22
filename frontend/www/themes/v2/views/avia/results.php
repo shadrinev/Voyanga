@@ -60,6 +60,7 @@
       </div>
       <div class="path tooltip" data-bind="text:stopoverText(), css: {'no-wait': direct()}, attr:{'rel': stopoverRelText()}">
       </div>
+        <div class="time time2" data-bind="text: duration()">8 ч. 30 м.</div>
     </div>
     <!-- END HOW LONG -->
     <div class="finish">
@@ -135,6 +136,7 @@
       </div>
       <div class="path tooltip" data-bind="text:rtStopoverText(), css: {'no-wait': rtDirect()}, attr:{'rel': rtStopoverRelText()}">
       </div>
+        <div class="time time2" data-bind="text: duration()">8 ч. 30 м.</div>
     </div>
     <!-- END HOW LONG -->
     <div class="finish">

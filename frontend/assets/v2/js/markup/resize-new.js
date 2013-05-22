@@ -589,7 +589,7 @@ function ResizeCenterBlock() {
             var minWid = 820;
         }
         else {
-            var minWid = 670;
+            var minWid = 640;
         }
 		if (widthContent < minWid) {
 
