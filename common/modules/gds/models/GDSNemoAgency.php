@@ -64,7 +64,8 @@ class GDSNemoAgency extends CComponent
         {
             $soapResponse = $client->$methodName($params);
         } catch(SoapFault $e) {
-            Yii::log(CVarDumper::dumpAsString($e), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
+            Yii::log("Error while execution $methodName using ".CVarDumper::dump($params), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
+            //Yii::log(CVarDumper::dumpAsString($e), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
             //! FIXME log nemo fail
         }
         catch (Exception $e)
