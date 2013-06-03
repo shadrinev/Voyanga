@@ -75,10 +75,10 @@ class GDSNemoSoapClient extends SoapClient
             $sXML = $this->makeSoapRequest($request, $location, $action, $version);
             $endTime = microtime(true);
             $this->gdsRequest->executionTime = ($endTime - $startTime);
-            if ( strpos($action,'Search') === FALSE )
-            {
+            //if ( strpos($action,'Search') === FALSE )
+            //{
                 $this->gdsRequest->responseXml = UtilsHelper::formatXML($sXML);
-            }
+            //}
 
             if (appParams('enableFlightLogging'))
                 $this->gdsRequest->save();
