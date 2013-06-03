@@ -64,7 +64,7 @@ class GDSNemoAgency extends CComponent
         {
             $soapResponse = $client->$methodName($params);
         } catch(SoapFault $e) {
-            Yii::log("Error while execution $methodName using ".CVarDumper::dump($params), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
+            Yii::log("Error while execution $methodName using ".CVarDumper::dumpAsString($params), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
             //Yii::log(CVarDumper::dumpAsString($e), CLogger::LEVEL_ERROR, 'application.Gds.GdsNemoAgency.request');
             //! FIXME log nemo fail
         }
@@ -215,8 +215,6 @@ class GDSNemoAgency extends CComponent
         unset($traveller);
 
         $soapResponse = self::request('Search', $params);
-        //print_r($soapResponse);die();
-        $errorDescription = '';
 
         if (!$soapResponse)
         {
@@ -235,7 +233,6 @@ class GDSNemoAgency extends CComponent
             {
                 Yii::trace(CVarDumper::dumpAsString($soapResponse), 'Gds.GdsNemoAgency.request');
                 Yii::app()->RSentryException->logException(new CException('Incorrect soap response or no results for search request('.self::$lastRequestDescription.'): '.CVarDumper::dumpAsString($soapResponse)));
-                //throw new CException('Incorrect soap response: '.CVarDumper::dumpAsString($soapResponse));
             }
         }
 
@@ -304,7 +301,7 @@ class GDSNemoAgency extends CComponent
                         UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
                         foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
                         {
-                            $oPart->aBookingCodes[] = UtilsHelper::soapElementValue($sBookingCode);
+                            $oPart->aBookingCodes[] = $sBookingCode->BookingCode;
                         }
                         $aParts[$oSegment->SegNum] = $oPart;
                         $eTicket = $eTicket && $oSegment->ETicket;
