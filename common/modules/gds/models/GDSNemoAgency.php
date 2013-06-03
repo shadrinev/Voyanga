@@ -75,7 +75,8 @@ class GDSNemoAgency extends CComponent
             throw $e;
         }
         Yii::endProfile('processingSoap' . $methodName);
-        return $soapResponse;
+        VarDumper::dump($soapResponse);
+        //return $soapResponse;
     }
 
     private function requestCached($methodName, $params, $expirationTimeInSeconds = 120)
