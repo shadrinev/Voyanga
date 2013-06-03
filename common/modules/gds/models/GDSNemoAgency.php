@@ -33,7 +33,7 @@ class GDSNemoAgency extends CComponent
             'Ticketing'=>true,
             'AirAvail'=>true
         );
-
+        ini_set("soap.wsdl_cache_enabled", 0);
         if (!($wsdl = isset($methodMap[$methodName]) ? $methodMap[$methodName] : false))
         {
             throw new CException('Unknown method request');
@@ -75,8 +75,7 @@ class GDSNemoAgency extends CComponent
             throw $e;
         }
         Yii::endProfile('processingSoap' . $methodName);
-        VarDumper::dump($soapResponse);
-        //return $soapResponse;
+        return $soapResponse;
     }
 
     private function requestCached($methodName, $params, $expirationTimeInSeconds = 120)
