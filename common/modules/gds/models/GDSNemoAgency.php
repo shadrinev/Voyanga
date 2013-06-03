@@ -863,7 +863,7 @@ class GDSNemoAgency extends CComponent
                     UtilsHelper::soapObjectsArray($oSegment->BookingCodes->BookingCode);
                     foreach ($oSegment->BookingCodes->BookingCode as $sBookingCode)
                     {
-                        $oPart->aBookingCodes[] = UtilsHelper::soapElementValue($sBookingCode);
+                        $oPart->aBookingCodes[] = $sBookingCode->BookingCode;
                     }
                     $aParts[$oSegment->SegNum] = $oPart;
                 }catch (CException $e){
