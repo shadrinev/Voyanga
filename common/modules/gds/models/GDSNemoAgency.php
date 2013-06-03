@@ -60,6 +60,7 @@ class GDSNemoAgency extends CComponent
         $gdsRequest->requestDescription = self::$lastRequestDescription;
         $client->gdsRequest = $gdsRequest;
         Yii::beginProfile('processingSoap' . $methodName);
+        $soapResponse = '';
         try
         {
             $soapResponse = $client->$methodName($params);
